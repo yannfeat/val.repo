@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+tmp
+
+/.quarto/
+_site/
+search.json

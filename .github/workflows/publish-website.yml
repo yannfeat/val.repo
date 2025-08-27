@@ -1,0 +1,40 @@
+name: Publish website
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: quarto-dev/quarto-actions/setup@v2
+      with:
+        version: 1.7.13
+
+    - name: Unpack existing reports
+      working-directory: reports
+      run: |
+        tar xzf reports.tar.gz
+        rm reports.tar.gz
+
+    - name: Create _site directory
+      run: mkdir -p _site
+
+    - name: Render html pages
+      uses: quarto-dev/quarto-actions/render@v2
+
+    - name: Remove search.json file
+      run: rm _site/search.json
+
+    - uses: quarto-dev/quarto-actions/publish@v2
+      name: Publish to GitHub Pages (and render)
+      with:
+        target: main
+        render: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

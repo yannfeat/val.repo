@@ -1,0 +1,30 @@
+project:
+    type: website
+    resources: []
+
+website:
+    title: "val.repo: risk assessment reports"
+    site-url: https://pharmar.github.io/val.repo
+    description: List of risk-assessed R packages.
+    search: false
+
+    repo-url: https://github.com/pharmaR/val.repo
+    repo-actions: [issue]
+
+    open-graph: false
+
+    navbar:
+        right:
+            - icon: github
+              href: https://github.com/pharmaR/val.repo
+              aria-label: GitHub repo
+
+format:
+    html:
+        theme:
+            light: [litera]
+            dark: [darkly]
+        highlight-style: a11y-dark
+        mainfont: "Atkinson Hyperlegible"
+        code-copy: true
+        code-overflow: wrap

@@ -1,0 +1,14 @@
+---
+listing:
+  contents: reports/*.md
+  feed: false
+  sort: "date desc"
+  type: grid
+  categories: false
+  sort-ui: true
+  filter-ui: true
+  image-placeholder: images/image-placeholder.png
+  fields: [date, title]
+page-layout: full
+title-block-banner: true
+---
