@@ -17,7 +17,7 @@ jobs:
         version: 1.7.13
 
     - name: Unpack existing reports
-      working-directory: reports
+      working-directory: src/contrib/Meta
       run: |
         tar xzf reports.tar.gz
         rm reports.tar.gz
@@ -34,7 +34,7 @@ jobs:
     - uses: quarto-dev/quarto-actions/publish@v2
       name: Publish to GitHub Pages (and render)
       with:
-        target: main
+        target: gh-pages
         render: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
