@@ -14,18 +14,18 @@ repository to the pharmapkgs repository hosted on GitHub.
 
 ``` r
 options(
-    repos = "https://raw.githubusercontent.com/pharmaR/val.repo/refs/heads/main/repos",
-    pkgType = "source"
+    Pharma = "https://raw.githubusercontent.com/pharmaR/val.repo/refs/heads/main/repos",
+    CRAN = "https://cran.r-project.org"
 )
-available_packages <- available.packages()
-nrow(available_packages)
-#> [1] 7336
 ```
 
 Once set, calling `available.packages()` will list the packages
-available in the pharmapkgs repository. The repository currently
-contains around 7,000 packages, a subset of CRAN’s nearly 30,000
-packages.
+available in either the val.repo repository or in CRAN. Since the val.repo
+repository is incomplete, this set-up is necessary so that dependencies that
+are not part of val.repo can be fetched from CRAN. The repository currently
+contains around 15,000 packages, a subset of CRAN’s nearly 23,000 packages.
+Specifying the repositories in this order ensures that val.repo is used in
+priority when installing a package or when accessing its metadata.
 
 ### Installation Limitations
 
@@ -78,19 +78,6 @@ This command filters packages where the `dependencies` score is greater than
 0.6.
 
 Notice how `filtered_packages` has less rows than `available_packages`.
-
-## Handling Dependencies
-
-Since the val.repo repository is incomplete, some dependencies may not
-be available. To mitigate this, users can specify multiple repositories
-so that missing packages are fetched from CRAN.
-
-``` r
-options(repos = c(Pharma = "https://raw.githubusercontent.com/pharmaR/val.repo/refs/heads/main/repos", CRAN = "https://cran.r-project.org"))
-```
-
-This setup allows pak to first check val.repo, then fall back to CRAN
-if a package is missing.
 
 ## Technical Details
 
