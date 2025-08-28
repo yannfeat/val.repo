@@ -79,6 +79,17 @@ This command filters packages where the `dependencies` score is greater than
 
 Notice how `filtered_packages` has fewer rows than `available_packages`.
 
+Note that recent R versions feature the `available_packages_filters` options,
+which works similarly, but is not able to take advantage of our custom metrics
+directly yet.
+
+``` r
+options(available_packages_filters = list(function(pkg) pkg[is.na(pkg[, "Imports"]),] ))
+head(available.packages())
+nrow(available.packages())
+#> [1] 4203
+```
+
 ## Technical Details
 
 ### Repository Structure
