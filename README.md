@@ -39,10 +39,6 @@ should use **pak** to install packages from this repository.
 ## Installation via `pak`
 
 ``` r
-options(
-    repos = "https://raw.githubusercontent.com/pharmaR/val.repo/refs/heads/main/repos",
-    pkgType = "source"
-)
 install.packages("pak")
 pak::pkg_install("<package_name>")
 ```
