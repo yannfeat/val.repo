@@ -77,7 +77,7 @@ nrow(filtered_packages)
 This command filters packages where the `dependencies` score is greater than
 0.6.
 
-Notice how `filtered_packages` has less rows than `available_packages`.
+Notice how `filtered_packages` has fewer rows than `available_packages`.
 
 ## Technical Details
 
