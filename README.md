@@ -1,7 +1,7 @@
 # val.repo
 
 val.repo is a curated repository of R packages that is structured similarly to
-CRAN but with additional metadata. It also hosts risk-assessment reports on its
+CRAN but with additional metadata: It hosts validation reports on its
 associated website, published via GitHub Pages.
 
 ## Repository Functionality
