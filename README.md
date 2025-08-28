@@ -84,7 +84,7 @@ which works similarly, but is not able to take advantage of our custom metrics
 directly yet.
 
 ``` r
-options(available_packages_filters = list(function(pkg) pkg[is.na(pkg[, "Imports"]),] ))
+options(available_packages_filters = list(function(pkg) pkg[is.na(pkg[, "Imports"]),]))
 head(available.packages())
 nrow(available.packages())
 #> [1] 4203
