@@ -47,7 +47,6 @@ jobs:
               with:
                   install-quarto: false
                   dependencies: '"hard"'
-                  cache: "always"
 
             - name: Delete dummy DESCRIPTION file
               run: |
