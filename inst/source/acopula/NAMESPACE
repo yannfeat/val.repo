@@ -1,9 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-importFrom("stats", "cor", "integrate", "nlminb", "nls", "optim",
-             "pnorm", "qnorm", "quantile", "residuals", "rnorm", "runif",
-             "uniroot")
-importFrom("utils", "setTxtProgressBar", "txtProgressBar")
-S3method(print, eCopulaArchimax)
-S3method(print, eCopulaGeneric)
-S3method(print, gCopula)
-S3method(print, isCopula)
