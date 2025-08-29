@@ -1,0 +1,63 @@
+name: Update package repositories
+
+on:
+    schedule:
+        - cron: 0 3 * * *
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+env:
+    PHARMAPKGS_REMOTE_REPO: https://cloud.r-project.org/
+    PHARMAPKGS_LOCAL_REPO: ${{ github.workspace }}/inst/repos
+    PHARMAPKGS_LIMIT: ${{ vars.PHARMAPKGS_LIMIT || 100}}
+    PHARMAPKGS_EXCLUDED_METRICS: ${{ vars.PHARMAPKGS_EXCLUDED_METRICS || 'assess_covr_coverage,assess_r_cmd_check' }}
+    LOGGER_LOG_LEVEL: DEBUG
+
+jobs:
+    main:
+        strategy:
+            matrix:
+                platform: [ubuntu-22.04]
+                r_version: ["4.4"]
+        runs-on: ${{ matrix.platform }}
+        steps:
+            - uses: actions/checkout@v2
+            - uses: r-lib/actions/setup-r@v2
+              with:
+                  r-version: "${{matrix.r_version}}"
+            - uses: r-lib/actions/setup-r-dependencies@v2
+              with:
+                  install-quarto: false
+                  extra-packages: |
+                      pharmaR::pharmapkgs
+            - uses: quarto-dev/quarto-actions/setup@v2
+
+            - name: Unpack existing reports
+              working-directory: src/contrib/Meta
+              run: |
+                  tar xzf reports.tar.gz
+                  rm reports.tar.gz
+
+            - name: Update package repositories
+              env:
+                  PHARMAPKGS_PLATFORM: ${{ matrix.platform }}
+                  PHARMAPKGS_R_VERSION: ${{ matrix.r_version }}
+              shell: Rscript {0}
+              run: |
+                  library("pharmapkgs")
+                  github_actions()
+
+            - name: Compress reports
+              working-directory: src/contrib/Meta
+              run: |
+                  tar czf reports.tar.gz *.md
+                  rm *.md
+
+            - uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "Auto-update: ${{matrix.platform}}, R-${{matrix.r_version}}"
+
+            - name: Remove untracked files
+              run: git clean -fdx
