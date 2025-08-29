@@ -1,5 +1,4 @@
 name: Publish website
-
 on:
   workflow_dispatch:
 
