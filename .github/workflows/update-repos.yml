@@ -45,6 +45,7 @@ jobs:
             - uses: r-lib/actions/setup-r-dependencies@v2
               with:
                   install-quarto: false
+                  dependencies: '"hard"'
             - uses: quarto-dev/quarto-actions/setup@v2
 
             - name: Unpack existing reports
