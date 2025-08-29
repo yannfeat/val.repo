@@ -1,0 +1,16 @@
+export("Binom_Sim","Ehrenfest","Geom_Sim","kurtcoeff","LRNormal2Mean",
+       "LRNormalMean_KV","LRNormalMean_UV","LRNormalVariance_UM",
+        "lval","MPbinomial","MPNormal","MPPoisson","msteptpm",
+	"pareto_density","pareto_quantile","Poisson_Sim","powertestplot",
+	"QH_CI","resistant_line","siegel.tukey","skewcoeff",
+	"stationdistTPM","ST_Ordered","ST_Unordered","TM","TMH",
+	"UMPExponential","UMPNormal","UMPUniform","vonNeumann","WilsonCI",
+	"ww.test")
+
+import("MASS")
+
+importFrom("graphics", "abline", "plot")
+importFrom("stats", "dbinom", "dnorm", "dpois", "fivenum", "median",
+             "pbinom", "pnorm", "ppois", "qchisq", "qgamma", "qnorm",
+             "qt", "quantile", "runif", "sd", "var")
+

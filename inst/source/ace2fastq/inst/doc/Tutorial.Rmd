@@ -1,0 +1,85 @@
+---
+title: "Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ace2fastq)
+```
+# Introduction
+
+The package provides a function that converts ".ace" files (ABI Sanger capillary sequence assembly files) to standard ".fastq" files. The file format is currently used in genomics to store contigs. To the best of our knowledge, no R function is available to convert this format into the more popular fastq file format. Each file may contain one or more contig sequences and corresponding quality values.
+
+The function expects as a minimum a full path to the .ace file. By default a corresponding file with .fastq extension instead of .ace will be created. Also by default, the id line in the fastq file start after the obligatory @ with the name of the original .ace file without the extension followed by the internal original id from the .ace file.
+
+A default example follows:
+
+```{r}
+library(ace2fastq)
+
+filename <- system.file("sampledat/1.seq.ace", package = "ace2fastq")
+
+out_file <- ace_to_fastq(filename, target_dir = tempdir())
+
+lines <- readLines(out_file$path)
+
+length(lines)
+
+```
+
+```{r echo=FALSE}
+# shortened lines
+n <- 40
+substr(lines[1], 1, n)
+substr(lines[2], 60, 60+n)
+substr(lines[3], 1, 1)
+substr(lines[4], 60, 60+n)
+
+```
+A example with the alternative id pattern follows:
+
+```{r}
+library(ace2fastq)
+
+filename <- system.file("sampledat/1.seq.ace", package = "ace2fastq")
+
+out_file <- ace_to_fastq(filename = filename, target_dir = tempdir(), name2id = FALSE)
+
+lines <- readLines(out_file$path)
+```
+
+```{r echo=FALSE}
+substr(lines[1], 1, n)
+```
+
+The target directory path can also be changed.
+
+## Multiple contig sequences
+
+A default example follows with three contigs resulting in four lines:
+
+```{r}
+library(ace2fastq)
+
+filename <- system.file("sampledat/3.seq.ace", package = "ace2fastq")
+
+out_file <- ace_to_fastq(filename, target_dir = tempdir())
+
+lines <- readLines(out_file$path)
+
+length(lines)
+
+```
+
+

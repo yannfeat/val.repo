@@ -1,0 +1,9 @@
+86e9382b998a7e202856f02861a0e80e *DESCRIPTION
+6d11db2b124d25ff635ed6f6e8336800 *NAMESPACE
+1414b1d4d5bf8057d0c312a438a209c4 *NEWS.md
+e417721a8f5322fd1bb36e81eeb03812 *R/BayesGlassoBlock.R
+1c3841ee50951e11a3b8d5dc7509e6f0 *README.md
+636bb191f1283f72ef6a24a098d708e1 *build/partial.rdb
+ab966c60bc792e436af420debf650a94 *man/BayesGlassoBlock.Rd
+ca754016340e9ac741166ca0b5c087a0 *tests/testthat.R
+d34d57f82ae1e156fb594850d28fc2ff *tests/testthat/test-BayesGLassoGDP.R

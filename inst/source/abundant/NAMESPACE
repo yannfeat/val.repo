@@ -1,0 +1,4 @@
+export(fit.pfc)
+export(pred.response)
+import(glasso)
+useDynLib(abundant) 

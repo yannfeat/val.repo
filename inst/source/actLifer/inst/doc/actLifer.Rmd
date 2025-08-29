@@ -1,0 +1,187 @@
+---
+title: "actLifer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{actLifer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, echo = FALSE}
+library(htmltools)
+htmltools::img(src = knitr::image_uri("hex-actLifer2.png"), alt = 'logo', style = 'position:absolute; top:0; right:0; padding:10px; width: 100px; height: 100px; border:0')
+```
+
+### Grace Rade, Maeve Tyler-Penny, Julia Ting
+
+```{r setup}
+library(actLifer)
+```
+
+
+The actLifer package contains functions to create actuarial life tables and three datasets ready to be made into a life table. Each mathematical step in transforming mortality data into life expectancy has a corresponding function, which builds the table up to that step. The datasets have been prepared are are ready to use in our functions. 
+
+## Inspiriation
+
+Mathematically speaking, mortality data is the first step in calculating life expectancy. There are several intermediate calculations between the number of deaths at a given age and life expectancy, and each step builds on the previous values. With this in mind, we created several functions that calculated each intermediate value that build a complete actuarial lifetable when combined. Lifetables can be rather easily created in a spreadsheet, but is a rather involved process in R. Our functions simplify the procedure of creating a lifetable into one function with the option to group by different categorical variables.  
+
+The actLifer package is a useful tool for anyone who works with mortality data, wants to calculate life expectancy, or wants to find any of the intermediate values between number of deaths and life expectancy. 
+
+## Functions
+
+All of the functions take in a dataset that has columns for age group ($x$), deaths at each age ($D_x$), and the midyear population at each age ($P_x$). 
+
+* `central_death_rate()`: Calculates the central/crude death rate, $M_x$, which is the number of deaths in a given period divided by the population at risk in that same given period. 
+
+  + Formula: $M_x = \frac{D_x}{P_x}$
+  
+  + This is an optional column in the life table, but can be useful to ascertain a general indication of the health status of a given area or population. 
+  
+* `conditional_death_prob()`: Calculates the conditional probability of death at each age ($q_x$), which is the probability of dying at a certain age within a given period. 
+
+  + Formula: $q_x = \frac{D_x}{P_x + \frac{D_x}{2}}$
+
+  
+* `conditional_life_prob()`: Calculates the conditional prbability of life at each age ($p_x$), which is the probability of living to a certain age within a given period. 
+
+  + Formula: $p_x = 1 - q_x$
+
+*please note that R will round the conditional probability of life to 1, this will not present problems to later calculations*
+  
+* `number_to_survive()`: Calculates the number of people to survive to a given age interval ($l_x$), starting with an arbitrary number of 100,000 at age 0 (or age < 1).
+
+  + Formula: $l_x = l_{x-1} \cdot p_{x-1}; l_0 = 100,000$
+
+* `prop_to_survive()`: Calculates the proportion of the population surviving to age $x$. 
+
+  + Formula: $l_x/100000$
+  
+  + This is another optional column in the life table, and can be removed after all of the calculations are completed. 
+
+* `person_years()`: Calculates the person years lived at each age (), which is the total number of years lived at each age $x$ by all people who survive to that age. 
+
+  + Formula: $ L_x = \frac{l_x + l_{x+1}}{2}$
+  
+* `total_years_lived()`: Calculates the total years lived to each age $x$, which is the sum of all person years from $0$ to age $x$. 
+
+  + Formula: $T_x = \sum_{i = 0}^{x}L_x$
+
+* `life_expectancy()`: Calculates the life expectancy at age $x$ ($e_x$), which is the number of years an average person is expected to live beyond their current age. 
+
+  + Formula: $e_x = \frac{T_x}{l_x}$
+  
+  + This function will output a complete life table, without the added customization of the `lifetable()` function. 
+  
+* `lifetable()`: Outputs a complete lifetable with the ability to customize which of the optional columns are included, and add extra grouping variables.
+
+  + if `includeAllSteps = TRUE`, the lifetable will include `CentralDeathRate` and `PropToSurvive` in the final output
+  
+  + if `includeCDR = FALSE`, `CentralDeathRate` will not be included in the final output
+  
+  + if `includePS = FALSE`, `PropToSurvive` will not be included in the dataset
+  
+  + `includeAllSteps`, `includeCDR`, and `includePS` are all `TRUE` by default
+  
+```{r}
+example <- lifetable(mortality2, "age_group", "population", "deaths")
+```
+
+```{r, echo = FALSE}
+example[1:5,]
+
+```
+
+Calculating life extpectancy is an iterative process, building on the previous intermediate calculations. Each of the functions will call the function of the previous step as it executes, meaning that the output dataset will include the columns of the previous steps. For this reason, there is no need to run each step individually on a dataset, simply run the function for the last step that you are trying to complete. 
+
+Central Death Rate is an optional column in the dataset and must be called in addition to the other functions. 
+
+## Datasets
+
+The package includes three datasets, all sourced from the CDC Wonder Database (https://wonder.cdc.gov/ucd-icd10.html). 
+
++ `mortality` contains data from the year 2018 with single-year age groups
+
++ `mortality2` contains data from the year 2016 with single-year age gaps
+
++ `mortality3` contains data from the year 2016 with single-year age gaps and a gender grouping variable
+
+
+### What Do These Datasets Look Like?
+
+Each of the included data sets include an age group variable, a population variable, and a deaths variable. Population represents the mid-year population for each age group. Deaths represents the number of people in each age group that have died. 
+
+Here's what the first five rows of `mortality2` look like. 
+
+```{r, echo = FALSE}
+mortality2[1:5,]
+```
+
+## Who Should Use This Package?
+
+This package can be used by researchers, actuaries, or anyone that is working with mortality data. This can be particularly useful for those wanting to calculate life expectancy of specific groups, as life expectancy data for sub-groups of the total population of a given area is difficult to find. Additionally, out package can be used to compare life expectancy at different points in time, such as before and after the COVID-19 pandemic. 
+
+## What Can We Do With This Data? 
+
+We can use this package to address question such as:
+
+  1. How does life expectancy differ between population groups?
+  
+  2. Is there a specific age-range where life expectancy dramatically changes?
+  
+  3. Does the central death rate significantly differ from the probability of death at a certain age?
+  
+And many more! 
+
+  
+### Example 1: 
+**How does life expectancy differ between population groups?**
+
+The built-in dataset `mortality3` provides a `gender` variable that can be used to group the data. The `lifetable` function allows for extra grouping arguments, so that is the function we will use. 
+
+* Please note that `gender` is the variable name that the CDC uses to mean biological sex (Male, Female)
+
+```{r}
+lifetable(mortality3, "age_group", "population", "deaths", FALSE, FALSE, FALSE, "gender")
+```
+
+The output is a tibble data frame that has calculated life expectancy for each gender. From this we can see any differences in life expectancy between males and females. 
+
+Users can use many extra grouping variables to get even more specific with population subgroups. Some suggested variables include (but are not limited to) state/geographic area, race, sex, income group, or health status. 
+
+
+### Example 2:
+
+**Is there a specific age-range where life expectancy dramatically changes?**
+
+The `mortality` dataset has the age grouped in single-year intervals. We can use this dataset to see if life expectancy changes dramatically from one interval to the next. 
+
+```{r}
+lifetable(mortality2, "age_group", "population", "deaths", TRUE, FALSE, FALSE)
+```
+
+From the abbreviated output, we can see that life expectancy does not change dramatically from year to year. 
+
+
+### Example 3:
+
+**Does the central death rate significantly differ from the probability of death at a certain age?**
+
+Central Death Rate (also known as the Crude Death or Mortality Rate), is not a necessary intermediate step for calculating life expectancy, so the `conditional_death_prop()` function does not call `central_death_rate()`. To compare the two measures, we will have to run both the functions. 
+
+```{r}
+mort<- mortality2 %>% 
+  central_death_rate("age_group", "population", "deaths") %>% 
+  conditional_death_prob("age_group", "population", "deaths")
+
+head(mort)
+tail(mort)
+```
+
+Central Death Rate and Conditional Probability of Death start off being very similar in value, as you can see from the first five rows of `mort`. However, as one ages, the difference between Central Death Rate and Conditional Probability of Death becomes larger, as you can see from the last five rows of the dataset.  

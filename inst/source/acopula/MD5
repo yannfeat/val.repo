@@ -1,0 +1,16 @@
+5c035a44fdeec89d3c15fd80d882f841 *DESCRIPTION
+3b095f8cf475df6b1a69b7b7da619930 *NAMESPACE
+b6d0ad389b3778ee10ca27ff937a9ae1 *NEWS
+1f4b1b878618894dbea4932fa3275099 *R/acopula.r
+46a72871f7b5221dc70afd4a94c84788 *inst/CITATION
+169ad83918d65c1e3fb9e22eacb29c9b *inst/doc/acopula-userguide_0.9.2.pdf
+98692ea64592a22bde6c6ad927040bfd *inst/doc/acopula_overview.pdf
+e9ce537e49339270dfcd4c0f345415f8 *man/acopula-package.Rd
+ac1491258d5c4bb2f2d940b9ae169dd6 *man/copula.Rd
+654d38e262bd5b694159b2b0457b0723 *man/depfun.Rd
+f6b836b9b848c1ebe79fa29750b6a941 *man/generator.Rd
+b1b26d0ad2bae9b0423bf83dda3e4ad1 *man/nderive.Rd
+52311ec3cdfe9c216a18cc98181424d7 *man/nintegrate.Rd
+0ba385a875599a670a18e45727f8ee82 *man/vpartition.Rd
+057dddbcff79c4e8e081b63e86ec5400 *man/xCopula.Rd
+9a718dd39a2d607d8d04dad435040a54 *man/xPareto.Rd

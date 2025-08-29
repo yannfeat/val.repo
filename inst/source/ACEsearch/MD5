@@ -1,0 +1,14 @@
+32bced1124cca86e1c8bc8dba38188b3 *DESCRIPTION
+a79f7626a8977e1f0c5537b47fb4dddf *LICENSE
+0a3ed303757dd94e1534d6b5d5350995 *NAMESPACE
+a8f7a730eae0e442c9e98d04cec42d09 *R/api.R
+62a7757ac442be34122bbeb43b73f027 *R/connect.R
+f6e494b88f14400adc423a499ef08859 *R/query.R
+4faeb5bf57304d3704c6af9cd9781def *man/ACEsearch.connect.Rd
+feb4cdcd33e2ddf14d70498bd001c758 *man/ACEsearch.contains.Rd
+80084d9254c6ec07d9e575670dbe228e *man/ACEsearch.csv.Rd
+233d29d689cf22043f267a5ef759ea2b *man/ACEsearch.dump.Rd
+0eaab5d4cf4ea12d818687ec76d276ea *man/ACEsearch.query.Rd
+3dbd9e08ecf4403d7c0febcce59ff8c9 *man/ACEsearch.status.Rd
+1795b440c131406c841ff8bce506e524 *tests/testthat.R
+22bcb4f5f295c9206b71a1b63d121fdd *tests/testthat/test_connection.R

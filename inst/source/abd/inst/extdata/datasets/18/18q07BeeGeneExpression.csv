@@ -1,0 +1,7 @@
+type,colony,expression
+nurse,1,.99
+forager,1,1.93
+nurse,2,1
+forager,2,2.36
+nurse,3,.24
+forager,3,1.96

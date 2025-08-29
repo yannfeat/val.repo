@@ -1,0 +1,13 @@
+c4403427edce646a041b0b35ed630b89 *DESCRIPTION
+937b3e2252f7668f0ad9f8faea9a365e *NAMESPACE
+f6408d9024dffa84691d99b4b6ad2e9c *R/acca_package.R
+35566f31665c4a692e1e37892feb2106 *R/cc.R
+2088e0664b5939ace5b1d7eafd3873da *R/cc_inference.R
+951ac0ede8eed60c2c6192a3ac40a2dd *R/cc_utils.R
+a22879947d2c781967e5b2e39b245dbd *R/ccbiplot.R
+1ecc9dce2296bcf8c2c2b38d52697fab *R/utility_functions.R
+66cb3d82de7e81d86408c409d94f4d3e *man/acca-method.Rd
+62f9becf1873b209aa7ab81f748f6c02 *man/acca-package.Rd
+59babb87578b878d950776ad3d76fb1a *man/cc.Rd
+ae31125ac28be557fd52275c80550b4e *man/cc_inference.Rd
+24585bb1326c898129fa03a2dfddb8fb *man/ccbiplot.Rd

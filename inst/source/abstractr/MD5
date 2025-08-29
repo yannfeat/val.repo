@@ -1,0 +1,12 @@
+774ef8f03fd32e7a703d90778c442ee0 *DESCRIPTION
+1eec27cb0af07d585c6fa24c6988ef0a *NAMESPACE
+96767c6bc5db7cad236f90e8579f3f7a *R/abstractr.R
+3ec36fadd6f77febadc04482a0077690 *build/vignette.rds
+5ca08924e0c005c26f29caff20cccc4a *inst/abstractR/app.R
+ac97d63500171164de65ce01484c6bb5 *inst/doc/intro.R
+82ec184a6efe7d76dc63ef9a5070e31d *inst/doc/intro.Rmd
+a4d0afd4976e6774bd9d58fdf9229d15 *inst/doc/intro.html
+9af1e54c96f7541ff55ad4ab5dd05207 *man/abstractr.Rd
+82ec184a6efe7d76dc63ef9a5070e31d *vignettes/intro.Rmd
+2ef1dfd9e8b2c1cf67ee8f3a554017de *vignettes/support/final.png
+c94e21976bddfc45081e9d933b20b1f8 *vignettes/support/panel1.png

@@ -1,0 +1,248 @@
+---
+title: "Multi-trip activity models"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Multi-trip activity models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+author: 
+- "Robin Lovelace and Lucas Dias"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+Simple representations of transport systems based on origin-destination data often represent daily travel patterns as a single main trip per day, without distinguishing between multiple stages in a multi-stage trip (walk -> bus -> walk -> destination trips are simply represented as bus -> destination) or even multiple trips during the course of the day (omitting the fact that many people take a lunchtime trip to get lunch or simply to stretch their legs each day).
+
+The concept of an 'activity model' aims to address these limitations by representing the complete list of activities undertaken by people throughout the day in the activity model.
+In this sense A/B Street can be seen as an activity model.
+
+To show how A/B Street represents activity model data, we will take a hypothetical example, a trip from home to work and then to the park, to lunch and then to work before returning home after work.
+This 5 trip activity is more realistic that simple OD based models that just represents people travelling from home to work (and not back again in many cases), and is illustrated in the figure below.
+
+![](od-sketch.png)
+
+How to get this information into a format for modelling?
+This article demonstrates how the data can be represented in R with the `abstr` package, and then converted into a format that can be imported by A/B Street.
+
+```{r setup}
+library(abstr)
+```
+
+# Minimal example
+
+In R code, the minimal example shown above can be represented as two data frames (tabular datasets), one representing trip origins and destinations and the other representing movement between them, as follows:
+
+```{r getlocations, eval=FALSE, echo=FALSE}
+home = stplanr::geo_code("potternewton park")
+work = stplanr::geo_code("university of leeds")
+park = stplanr::geo_code("woodhouse moore park")
+cafe = stplanr::geo_code("heart centre leeds")
+cafe = stplanr::geo_code("worsley building leeds")
+```
+
+
+```{r places}
+places = tibble::tribble(
+  ~name, ~x, ~y,
+  "Home", -1.524, 53.819,
+  "Work", -1.552, 53.807,
+  "Park", -1.560, 53.812,
+  "Cafe", -1.556, 53.802
+)
+places_sf = sf::st_as_sf(places, coords = c("x", "y"), crs = 4326)
+plot(places_sf, pch = places$name)
+# mapview::mapview(places_sf, pch = places$name)
+```
+
+
+```{r placestoosimple, eval=FALSE, echo=FALSE}
+places = tibble::tribble(
+  ~name, ~x, ~y,
+  "Home", 5, 0,
+  "Work", 2, 5,
+  "Park", 1, 4,
+  "Cafe", 2, 4
+)
+places_sf = sf::st_as_sf(places, coords = c("x", "y"))
+plot(places_sf, pch = places$name)
+```
+
+
+```{r lines}
+od = tibble::tribble(
+  ~o, ~d, ~mode, ~departure, ~person,
+  "Home", "Work", "Bike", "08:30", 1,
+  "Work", "Park", "Walk", "11:30", 1,
+  "Park", "Cafe", "Walk", "12:15", 1,
+  "Cafe", "Work", "Walk", "12:45", 1,
+  "Work", "Home", "Bike", "17:00", 1
+)
+```
+
+The two datasets can be joined, giving spatial attributes (origin and destination locations creating a straight line) for each OD pairs, using the `od_to_sf()` function from the `od` package as follows:
+
+```{r}
+od_sf = od::od_to_sf(od, places_sf)
+plot(od_sf["departure"], reset = FALSE, key.pos = 1, lwd = 6:2)
+plot(places_sf$geometry, pch = places$name, add = TRUE, cex =2)
+# mapview::mapview(od_sf["departure"])
+```
+
+As an aside, another way of representing the spatial attributes of the OD data: four columns with 'X' and 'Y' coordinates for both origins and destinations:
+
+```{r}
+(od::od_coordinates(od_sf))
+```
+
+We will assign departure times and randomise the exact time (representing the fact that people rarely depart when they plan to, let alone exactly on the hour) with the `ab_time_normal()` function as follows:
+
+
+```{r}
+departure_times = c(
+  8.5,
+  11.5,
+  12.25,
+  12.75,
+  17
+)
+set.seed(42) # if you want deterministic results, set a seed.
+od_sf$departure = ab_time_normal(hr = departure_times, sd = 0.15, n = length(departure_times))
+```
+
+The `ab_json()` function converts the 'spatial data frame' representation of activity patterns shown above into the 'nested list' format required by A/B Street as follows (with the first line converting only the first row and the second line converting all 5 OD pairs):
+
+```{r}
+od_json1 = ab_json(od_sf[1, ], scenario_name = "activity")
+od_json = ab_json(od_sf, scenario_name = "activity")
+```
+
+Finally, the list representation can be saved as a `.json` file as follows:
+
+```{r absave}
+ab_save(od_json1, f = "scenario1.json")
+```
+
+Note: you may want to save the full output to a different location, e.g. to the directory where you have cloned the `a-b-street/abstreet` repo (see below for more on this and change the commented `~/orgs/a-b-street/abstreet` text to the location where the repo is saved on your computer for easy import into A/B Street):
+
+```{r}
+# Save in the current directory:
+ab_save(od_json, f = "activity_leeds.json")
+# Save in a directory where you cloned the abstreet repo for the simulation
+# ab_save(od_json, f = "~/orgs/a-b-street/abstreet/activity_leeds.json")
+
+
+```
+
+
+```{r, eval=FALSE, echo=FALSE}
+# Regenerate json data 
+ab_save(od_json, "inst/extdata/activity_leeds.json")
+```
+
+
+That results in the following file (see [activity_leeds.json](https://github.com/a-b-street/abstr/blob/main/inst/extdata/activity_leeds.json) in the package's external data for the full dataset in JSON form):
+
+```{r, eval=FALSE}
+file.edit("scenario1.json")
+```
+
+
+```json
+{
+  "scenario_name": "activity",
+  "people": [
+    {
+      "trips": [
+        {
+          "departure": 313400000,
+          "origin": {
+            "Position": {
+              "longitude": -1.524,
+              "latitude": 53.819
+            }
+          },
+          "destination": {
+            "Position": {
+              "longitude": -1.552,
+              "latitude": 53.807
+            }
+          },
+          "mode": "Bike",
+          "purpose": "Work"
+        }
+      ]
+    }
+  ]
+}
+```
+
+You can check the 'round trip' conversion of this JSON representation back into the data frame representation as follows:
+
+<!-- Todo: these are not totally identical, only the geomtry is: -->
+
+```{r}
+od_sf_roundtrip = ab_sf("activity_leeds.json")
+# Or in the file saved in the abstr package
+# od_sf_roundtrip = ab_sf(json = system.file("extdata/activity_leeds.json", package = "abstr"))
+identical(od_sf$geometry, od_sf_roundtrip$geometry) 
+```
+
+```{r, include=FALSE}
+file.remove("scenario1.json")
+```
+
+
+## Importing into A/B Street
+
+1.  Install the [latest build](https://a-b-street.github.io/docs/user/index.html) of A/B Street for your platform.
+2.  Run the software, and choose "Sandbox" on the title screen.
+3.  Change the map to North Leeds. You can navigate by country and city, or search all maps.
+4.  Download data for Leeds, if this is your first time.
+5.  Change the scenario from the default "none" pattern, as shown below. Choose "import JSON scenario," then select your `scenario1.json` file.
+
+![](https://user-images.githubusercontent.com/1825120/133446982-043eaad3-e832-4e7e-bcd3-2371a9094ad8.png)
+
+You should see something like this (see [#76](https://github.com/a-b-street/abstr/issues/76) for animated version of the image below):
+
+
+![](https://user-images.githubusercontent.com/1825120/133152963-a57d3812-e05c-4acb-8969-5464ab2b5d74.png)
+
+Of course, the steps outlined above work for anywhere in the world.
+Possible next step to sharpen your A/B Street/R skills: try adding a small scenario for a city you know and explore scenarios of change.
+
+<!-- Todo: -->
+
+<!-- possible -->
+<!-- # Montlake example -->
+
+# Intermediate example: Sao Paulo
+
+```{r}
+head(sao_paulo_activity_sf_2)
+sp_2_json = ab_json(sao_paulo_activity_sf_2, mode_column = "mode", scenario_name = "2-agents")
+```
+
+```{r, eval=FALSE}
+ab_save(sp_2_json, "activity_sp_2.json")
+```
+
+```{r}
+head(sao_paulo_activity_sf_20)
+sp_20_json = ab_json(sao_paulo_activity_sf_20, mode_column = "mode", scenario_name = "20-agents")
+```
+
+```{r, eval=FALSE}
+ab_save(sp_20_json, "activity_sp_20.json") # save in current folder, or:
+# save to directory where you cloned the abstreet repo 
+# (replace '~/orgs...' with the path to your local directory)
+# ab_save(sp_20_json, "~/orgs/a-b-street/abstreet/activity_sp_20.json")
+```
+
+As with the Leeds example, you can import the data, after saving it with `ab_save()`. Use A/B Street to download São Paulo, then import the JSON file.

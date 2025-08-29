@@ -1,0 +1,151 @@
+---
+title: "absorber package"
+author: "Mary E. Savino"
+date: " "
+output: pdf_document
+vignette: >
+ %\VignetteEngine{knitr::knitr}
+ %\VignetteIndexEntry{absorber package}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE,warning = FALSE)
+library(absorber)
+library(sparsegl)
+library(fda)
+library(irlba)
+library(ggplot2)
+```
+
+
+# Introduction
+
+The package \textsf{absorber} provides a tool to select variables in a nonlinear multivariate model. More precisely, it consists in providing a variable selection tool from $n$ observations satisfying the following nonparametric regression model:
+\begin{equation} \label{eq:model}
+Y_i = f(x_i) + \varepsilon_i, \quad x_i = \left(x_i^{(1)}, \ldots, x_i^{(p)}\right),  \quad 1\leq i \leq n,
+\end{equation} 
+where $f$ is an unknown real-valued function and where the $\varepsilon_i$'s are i.i.d centered random variables of variance $\sigma^2$. The $x_i$'s are observation points which belong to a compact set $S$ of $\mathbb{R}^p$. We will also assume that $f$ actually depends on only $d$ variables instead of $p$, with $d<p$, which means that there exists a real-valued function $\widetilde{f}$ such that $f(x)=\widetilde{f}(\widetilde{x})$, where $x\in\mathbb{R}^p$ and $\widetilde{x}\in\mathbb{R}^d$. Variable selection consists in identifying the components of $\widetilde{x}$.
+This variable selection approach is described in [1]. We refer the reader to this paper for further details and references.
+
+# Installing
+
+You can install the released version of \textsf{absorber} from [CRAN](https://CRAN.R-project.org) with:
+```{r, echo = TRUE, eval = FALSE}
+install.packages("absorber")
+```
+
+
+# Variable selection 
+
+We first propose to apply our method to $n=700$ observations satisfying Model \eqref{eq:model} with $f=f_1$ where $p=5$, defined in [1]. These observations are obtained with a Gaussian noise of $\sigma = 0.25$. 
+In the following, the $d=2$ relevant variables to select are $\{3,5\}$ and the irrelevant ones to discard are $\{1,2,4\}$:
+```{r}
+true.dimensions = c(3,5) ; false.dimensions = c(1,2,4)
+```
+
+## Description of the dataset
+
+The observation set is loaded from files which are provided within the package, as follows: 
+```{r}
+# --- Loading the values of the observation sets --- ##
+data('x_obs') ;
+head(x_obs)
+## --- Loading the values of  corresponding noisy values of the response variable --- ##
+data('y_obs') ;
+head(y_obs)
+```
+
+
+## Application of $\texttt{absorber}$ to select the relevant variables
+The $\texttt{absorber}$ function of the $\texttt{absorber}$ package is applied by using the following arguments: 
+
+* the input values $(x_i)_{1 \leq i \leq n}$ ($\texttt{x}$) where $x_i$ belongs to $[0,1]^p$, $1\leq i \leq n$,
+* the corresponding $(Y_i)_{1 \leq i \leq n}$ ($\texttt{y}$), 
+* the order of the B-spline basis used in the regression model ($\texttt{M}$). The default value is $3$ (quadratic B-splines).
+
+```{r Bsplines5D}
+res = absorber(x = x_obs, y = y_obs, M = 3)
+```
+
+Additional arguments can also be provided in this function:
+
+* $\texttt{K}$: Integer, number $K$ of evenly spaced knots to use in the B-spline basis. The default value is $1$.
+* $\texttt{all.variables}$: List of characters or integers, labels of the variables. The default value is $\texttt{NULL}$.
+* $\texttt{parallel}$: Logical, if set to $\texttt{TRUE}$ then a parallelized version of the code is used. The default value is $\texttt{FALSE}$.
+* $\texttt{nbCore}$: Numerical, it represents the number of cores used for parallelization, if parallel is set to $\texttt{TRUE}$.
+
+The resulting outputs are the following: 
+
+* $\texttt{lambdas}$: sequence of the used penalization parameters $\lambda$.
+* $\texttt{selec.var}$: list of sequences of the selected variables, one sequence for each penalization parameter.
+* $\texttt{aic.var}$: sequence of variables selected using the AIC.
+
+
+First, we can print the sequence of penalization parameters $\lambda$ used in our method:
+```{r}
+head(res$lambdas)
+```
+
+We can then print the corresponding sequences of selected variables for each penalization parameter:
+```{r}
+head(res$selec.var)
+```
+
+and finally the variables selected with AIC:
+```{r}
+res$aic.var
+```
+
+## Visualization of the percentage of selection for each variable with $\texttt{plot\_selection}$
+
+The $\texttt{plot\_selection}$ function of the $\texttt{absorber}$ package produces a histogram of the variable selection percentage for each variable on which $f$ depends. It also displays in red the results obtained with the AIC.
+```{r plotAbsorber, out.width="50%", fig.align = 'center'}
+plot_selection(res)
+```
+We can compare this visualization to the one indicating the relevant and the irrelevant variables in red and green, respectively, as in Figure 6 of [1].
+To do so, we gather the results into a data.frame as follows:
+```{r}
+nlam = length(res$lambdas)
+occurrence = data.frame(table(unlist(res$selec.var))) ; 
+colnames(occurrence) = c("Covariable", "Percentage") ;
+occurrence$Percentage =occurrence$Percentage*100/nlam ;
+occurrence = occurrence[order(-occurrence$Percentage),,drop=FALSE] ;
+occurrence$Covariable = factor(occurrence$Covariable,
+                                       levels = unique(occurrence$Covariable)) ;
+
+occurrence$Category = as.factor(ifelse(occurrence$Covariable %in% true.dimensions, 
+                                   'real features', 'fake features')) ;
+str(occurrence) ;
+```
+
+We can then plot the results as a histogram of variable selection percentage:
+```{r, out.width="50%", fig.align = 'center'}
+color.order = c('firebrick', 'forestgreen')[which( c('fake features', 'real features') 
+                                                   %in% levels(occurrence$Category))]
+
+plt_occ = ggplot(data = occurrence, aes(x = Covariable, y = Percentage, fill = Category)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = color.order) +
+  ylab('Percentage of selection') +
+  theme_bw() +
+  theme(legend.title = element_blank(),
+        axis.text.x = element_text(size = 16, face = 'bold'),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(size = 15),
+        legend.text =  element_text(size = 14),
+        legend.position = 'bottom',
+        legend.key.size = unit(1, "cm"), 
+        panel.grid.major = element_line(size = 0.6, linetype = 'solid',
+                                           colour = "darkgrey"), 
+           panel.grid.minor = element_line(size = 0.2, linetype = 'solid',
+                                           colour = "darkgrey"))
+
+print(plt_occ)
+```
+The results obtained with the AIC allows us to retrieve the correct relevant variables since it selects $\{3,5\}$ while discarding the irrelevant ones. 
+
+**References**
+
+[1] Savino, M. E. and Lévy-Leduc, C. (2024) A novel variable selection method in nonlinear multivariate models using B-splines with an application to geoscience. ⟨hal-04434820⟩.

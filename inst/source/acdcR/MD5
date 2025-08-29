@@ -1,0 +1,15 @@
+4e4917b50514ecf165fd52a63d6a0b59 *DESCRIPTION
+b6a44e5bfec2aaa9b5a9a3e9c94d9480 *NAMESPACE
+06ae5af102dbd39fc4309809e6055537 *R/dsingdd.R
+fc4e5ffb79c93eb21e8f843467a1f7e0 *R/dtrigdd.R
+6a63e0ce11ecc6e10683898a0f4dea5d *R/gddcal.R
+0bab38885997593c6779822b05fd771e *R/gddprism.R
+758ff48c2a2ba9fd1ba6826494759abc *R/globals.R
+922a37170d42e084440bcb9f8a005902 *R/grid2stco.R
+9fb01d101faae03738bd24f5e6196840 *R/pptprism.R
+817de536053724a71f8761a3707fa4f8 *R/ssingdd.R
+9db868a7cb61410fd40caddeb0d49ecc *R/strigdd.R
+fc5e2728d03f0b1454395c8e1e577fb6 *man/gddcal.Rd
+4b8e5d680b9f6767541c05097b0de9c0 *man/gddprism.Rd
+1acc516e67b5c8aab8e6738e9a241823 *man/grid2stco.Rd
+3be5ac177d6a6e3c2f2e6cad5b577f1b *man/pptprism.Rd

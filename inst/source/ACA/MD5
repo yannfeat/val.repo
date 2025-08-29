@@ -1,0 +1,10 @@
+bc78243b012867f6e1965f3831bb21bc *DESCRIPTION
+313c0c5d96162cfe4032d116e6530abc *NAMESPACE
+9a66c72961bac447decfe7026d55e127 *R/SDScan.R
+fde0bfe49abcdf9a531140ee913b6fd2 *R/extdata_amorese.R
+eccd941f1108c5227338d23654935a1b *R/extdata_soccer.R
+5bf8bec1096ad8bd0d5b2ea2c71e4eb8 *inst/extdata/amorese.data.txt
+8e1a2dcf3c6de9255df9ba6cda671d25 *inst/extdata/soccer.data.txt
+ab3ece7f4a90fa317c9a08ec5137e8ab *man/SDScan.Rd
+a93775c148fb9eb6872cea4fe6eb03db *man/amorese.data.txt.Rd
+f3683c957a83a0dccf5bc19bbdcd5d61 *man/soccer.data.txt.Rd

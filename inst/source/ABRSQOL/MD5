@@ -1,0 +1,10 @@
+c4d498a7b1d88056b50dae5acb8e9ad3 *DESCRIPTION
+85ecca88aa320aeb6ead6ed0dbb1b31c *LICENSE
+7422e487886afd9b047eec1dadc89493 *NAMESPACE
+fa71dd1209b0393bb6fe4aea0adb66c1 *R/ARBSQOL_testdata.R
+d07f30b0484c8c9585ae51c9c2659678 *R/functions.R
+3f4e2538cb34fd91944134738bc64477 *data/ABRSQOL_testdata.rda
+b6d57890672cde811717a22e99aecb2d *man/ABRSQOL.Rd
+a5270131b1992f8c1adddbb3be295c32 *man/ABRSQOL_testdata.Rd
+df0337ac4b935e633ed80fbf56125494 *tests/testthat.R
+a95eb415c16dc5ef58a68d7d34793420 *tests/testthat/test-functions.R

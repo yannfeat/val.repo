@@ -1,0 +1,6 @@
+export("absorber", "plot_selection") 
+import(sparsegl, fda, ggplot2, Matrix, irlba, parallel)
+importFrom(sparsegl,sparsegl)
+importFrom("Matrix","rankMatrix")
+importFrom("MASS","ginv")
+importFrom("stats", "median")

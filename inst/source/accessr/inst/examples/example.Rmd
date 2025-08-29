@@ -1,0 +1,129 @@
+---
+title: "A basic example Rmd document"
+author: "Paul Northrop"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+params: 
+    hide: FALSE
+lang: "en-gb"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, prompt = TRUE, fig.align = 'center')
+knitr::opts_knit$set(global.par = TRUE)
+```
+
+# Text, bullets, links
+
+```{r knitr}
+library(knitr)
+```
+
+For more information see the [accessr site](https://paulnorthrop.github.io/accessr/) on GitHub
+
+* Bullet 1
+* Bullet 2
+
+# Displayed equations {.smaller}
+
+$$
+\begin{eqnarray}
+T = \left\{\begin{array}{ll}
+\overline{X}     & \mbox{ with probability } 1 - 1/n \,,  \\
+\overline{X} + n & \mbox{ with probability } 1/n \,. \\
+\end{array}\right.
+\end{eqnarray}
+$$
+
+\[
+\begin{aligned}
+P(X \leq x)
+&= P(F^{-1}(U) \leq x) \\
+&= P(F(F^{-1}(U)) \leq F(x)) \\
+&= P(U \leq F(x)) = F(x).
+\end{aligned}
+\]
+
+Tips (prompted by issues when creating Word output):
+
+* We need to wrap LaTeX maths environments in ```$$ ... $$```.  Otherwise, the maths is ignored.
+* Use ```\text{}``` or ```\mbox{}``` for text in an maths environment. (```\rm{}``` causes problems.)
+
+# R-generated figure
+
+```{r plot_margins, echo = FALSE}
+oldpar <- par(mar = c(4, 4, 1, 1))
+```
+
+```{r r_figure, fig.alt = "Alt text.", fig.cap = "Use knitr chunk options fig.alt (alternative text) and fig.cap (caption).", echo = TRUE, fig.width = 6, fig.height= 4, fig.align='center'}
+plot(1:10, 1:10, pch = 1:10, xlab = "x", ylab = "y")
+```
+
+# External figure (png file)
+
+```{r ext_figure, fig.alt = "Alt text.", fig.cap = "Use knitr::include_graphics().", echo = TRUE, out.width="50%", fig.align='center'}
+include_graphics(system.file(package = "accessr", "examples", "plot.png"))
+```
+
+# Table 
+
+The table will only appear if both of the packages `dplyr` or `huxtable` are installed.  The `huxtable` code is hidden because it is lengthy. Of course, there are many other ways to create tables in R markdown.
+
+```{r package_check, echo = FALSE}
+got_dplyr <- requireNamespace("dplyr", quietly = TRUE)
+got_huxtable <- requireNamespace("huxtable", quietly = TRUE)
+got_both <- got_dplyr && got_huxtable
+```
+
+```{r table, echo = FALSE, message = FALSE, eval = got_both}
+library(dplyr, warn.conflicts = FALSE)
+library(huxtable, warn.conflicts = FALSE)
+row1 <- c("1", "A", "36", "24")
+row2 <- c("", "B", "24", "16")
+row3 <- c("2", "A", "4", "16")
+row4 <- c("", "B", "16", "64")
+blank <- rep("", 4)
+x <- as.data.frame(rbind(row1, row2, row3, row4))
+colnames(x) <- c("clinic", "drug", "success (S)", "failure (F)")
+x_hux <- x %>% 
+  as_hux() %>%
+  set_top_border(c(2, 4), everywhere, brdr(1, "solid", "black")) %>%
+  set_right_border(everywhere, 1:3, brdr(1, "solid", "black")) %>%
+  set_align(everywhere, 1:4, "center") %>%
+  set_width(0.8) %>% 
+  set_height(0.001) %>% 
+  set_number_format(everywhere, everywhere, 0) %>% 
+  set_all_padding(3) %>%
+  set_outer_padding(0) %>%
+  set_caption("Table caption")
+x_hux    
+```
+
+# Hiding stuff using `echo`
+
+```{r, echo = FALSE}
+# hide = TRUE to hide certain parts 
+# hide = FALSE to include them
+hide <- params$hide
+```
+
+```{asis, echo = !hide}
+This text will appear only if `params$hide = FALSE`
+```
+
+```{asis, echo = hide}
+Setting `params$hide = TRUE` can be used to hide content
+```
+
+# Hiding a figure using `eval`
+
+```{asis, echo = hide}
+The figure is missing because `params$hide = TRUE`
+```
+
+```{r hidden_r_figure, eval = !hide, fig.alt = "Alt text.", fig.cap = "This figure appears only if params$hide = FALSE. ", echo = TRUE, fig.width = 6, fig.height= 4, fig.align='center'}
+plot(1:10, 1:10, pch = 1:10, xlab = "x", ylab = "y")
+```
+
+```{r plot_margins_reset, echo = FALSE}
+par(oldpar)
+```

@@ -1,0 +1,11 @@
+98af82ae1515d5f4def933a3b6d36488 *DESCRIPTION
+2a9c0cfac7712d0501be73a799e3c4e2 *NAMESPACE
+72d99dde9d1325111af4fed87c040d1f *R/ActiveDriver.R
+f66cf339d16e746ad6e2bb400a587872 *data/ActiveDriver_data.RData
+e15b2ccf767aefb9b920e9e219f9289a *man/ActiveDriver.Rd
+e5bee9fd108dfaf1ea94b49dd0bb9d5f *man/kinase_domains.Rd
+89e96ab2eb488b70daf4c66fa698c422 *man/mutations.Rd
+1368775560194f69e1fee3c0248d54a7 *man/phosphosites.Rd
+389394a64dbac8b3997ba9ea43dc4e3a *man/read_fasta.Rd
+131b3583043cd61a696951f9943e771e *man/sequence_disorder.Rd
+ef6c61774da94e2a5ad769e6425132fe *man/sequences.Rd

@@ -1,0 +1,15 @@
+8988ffe8154247a72cd172efbbe2b2a2 *DESCRIPTION
+a3cafabbe344546dfaa74286f0c369ae *NAMESPACE
+5ec80affdacdf515a91e4a531e9af1ee *R/plot_actogram.R
+c02c28b0cd1d0beea0bd6779c172bc36 *R/process_data.R
+129175e4312db701e1d3d2537b453479 *R/read_clock_lab.R
+bb49224eb9f76b6e409ff63e3940cb6b *README.md
+85a94f7d624c1c7b2a29948db5987f25 *inst/testdata/WT010G3NCIB6F20404F-4-CIR-WT0906Z
+90edd951c458728601fb385b408e8bb8 *inst/testdata/WT010G3NCIB6F20407M-7-CIR-WT0906W
+36a3fe8644370f607d25f267a324bac7 *inst/testdata/WT010G3NCIB6F20408M-8-CIR-WT0906W
+61956e8832232aaf61edd82a617f48ca *inst/testdata/WT010G3NCIB6F20409M-9-CIR-WT0906Y
+a46a76243f4d951c6296d67fc921d011 *man/bin_data.Rd
+c2b64b4ee9026d576b45dbcca0c62b15 *man/plot_actogram.Rd
+20c6d00a7a4585228398d82f060e3ea3 *man/read_clock_lab_files.Rd
+82d416a31d820c94380d5f03c19abb27 *tests/testthat.R
+23d44cbcba72e398b211113f57d0b46c *tests/testthat/test_read_clock_lab.R

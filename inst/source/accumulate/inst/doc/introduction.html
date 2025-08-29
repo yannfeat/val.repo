@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Mark P.J. van der Loo" />
+  <title>Introduction to accumulate</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">
+body {
+max-width: 50rem;
+margin-left: auto;
+margin-right: auto;
+font-family: system-ui;
+color: black;
+
+}
+figure {
+margin: 0;
+padding: 0;
+}
+p, li {
+text-align: justify;
+}
+pre {
+background: #F8F9F9;
+padding: 0.5rem;
+}
+h1, h2, h3, h4, h5 {
+color: orange;
+font-weight: bold;
+}
+h4, h5 {
+color: inherit;
+}
+h2 {
+margin-top: 3rem;
+}
+a {
+color: orange;
+}
+a:hover {
+color: lightblue;
+}
+
+p.author {
+font-weight : bold;
+color: orange;
+}
+</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Introduction to <code>accumulate</code></h1>
+<p class="author">Mark P.J. van der Loo</p>
+</header>
+<!--
+%\VignetteEngine{simplermarkdown::mdweave_to_html}
+%\VignetteIndexEntry{Introduction to accumulate}
+-->
+<p>Package version 1.0.0.</p>
+<p>Use <code>citation(&#39;accumulate&#39;)</code> to cite the package.</p>
+<h2 id="introduction">Introduction</h2>
+<p><code>Accumulate</code> is a package for grouped aggregation, where
+the groups can be dynamically collapsed into larger groups. When this
+collapsing takes place and how collapsing takes place is
+user-defined.</p>
+<h2 id="installation">Installation</h2>
+<p>The latest CRAN release can be installed as follows.</p>
+<pre><code>install.packages(&quot;accumulate&quot;)</code></pre>
+<p>Next, the package can be loaded. You can use
+<code>packageVersion</code> (from base R) to check which version you
+have installed.</p>
+<div class="sourceCode" id="load_package"><pre class="sourceCode R"><code class="sourceCode r"><span id="load_package-1"><a href="#load_package-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(accumulate)</span>
+<span id="load_package-2"><a href="#load_package-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># check the package version</span></span>
+<span id="load_package-3"><a href="#load_package-3" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">packageVersion</span>(<span class="st">&quot;accumulate&quot;</span>)</span>
+<span id="load_package-4"><a href="#load_package-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] ‘<span class="dv">1</span>.<span class="fl">0.0</span>’</span></code></pre></div>
+<h2 id="a-first-example">A first example</h2>
+<p>We will use a built-in dataset as example.</p>
+<div class="sourceCode" id="loading_data"><pre class="sourceCode R"><code class="sourceCode r"><span id="loading_data-1"><a href="#loading_data-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">data</span>(producers)</span>
+<span id="loading_data-2"><a href="#loading_data-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(producers)</span>
+<span id="loading_data-3"><a href="#loading_data-3" aria-hidden="true" tabindex="-1"></a>   sbi size industrial trade other other_income  total</span>
+<span id="loading_data-4"><a href="#loading_data-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>    <span class="dv">8</span>     <span class="dv">151722</span>  <span class="dv">2135</span>     <span class="dv">0</span>        <span class="sc">-</span><span class="dv">1775</span> <span class="dv">152082</span></span>
+<span id="loading_data-5"><a href="#loading_data-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>    <span class="dv">7</span>      <span class="dv">50816</span>    <span class="cn">NA</span>   <span class="dv">158</span>          <span class="dv">949</span>  <span class="dv">59876</span></span>
+<span id="loading_data-6"><a href="#loading_data-6" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>    <span class="dv">5</span>       <span class="dv">4336</span>    <span class="cn">NA</span>     <span class="dv">0</span>           <span class="dv">36</span>   <span class="dv">4959</span></span>
+<span id="loading_data-7"><a href="#loading_data-7" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span>    <span class="dv">6</span>      <span class="dv">18508</span>    <span class="cn">NA</span>     <span class="dv">0</span>           <span class="dv">80</span>  <span class="dv">20682</span></span>
+<span id="loading_data-8"><a href="#loading_data-8" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span>    <span class="dv">7</span>      <span class="dv">21071</span>     <span class="dv">0</span>     <span class="dv">0</span>          <span class="dv">442</span>  <span class="dv">21513</span></span>
+<span id="loading_data-9"><a href="#loading_data-9" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">3410</span>    <span class="dv">6</span>      <span class="dv">24220</span>  <span class="dv">1069</span>     <span class="dv">0</span>          <span class="dv">239</span>  <span class="dv">25528</span></span></code></pre></div>
+<p>This synthetic dataset contains information on various sources of
+turnover from producers, that are labeled with an economic activity
+classification (<code>sbi</code>) and a <code>size</code> class
+(0-9).</p>
+<p>We wish to find a group mean by <code>sbi x size</code>. However, we
+demand that the group has at least five records, otherwise we combine
+the size classes of a single <code>sbi</code> group. This can be done as
+follows.</p>
+<div class="sourceCode" id="first_example"><pre class="sourceCode R"><code class="sourceCode r"><span id="first_example-1"><a href="#first_example-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">accumulate</span>(producers</span>
+<span id="first_example-2"><a href="#first_example-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>               , <span class="at">collapse =</span> sbi<span class="sc">*</span>size <span class="sc">~</span> sbi</span>
+<span id="first_example-3"><a href="#first_example-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>               , <span class="at">test =</span> <span class="fu">min_records</span>(<span class="dv">5</span>)</span>
+<span id="first_example-4"><a href="#first_example-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>               , <span class="at">fun  =</span> mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="first_example-5"><a href="#first_example-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(<span class="fu">round</span>(a))</span>
+<span id="first_example-6"><a href="#first_example-6" aria-hidden="true" tabindex="-1"></a>   sbi size level industrial trade other other_income  total</span>
+<span id="first_example-7"><a href="#first_example-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>    <span class="dv">8</span>     <span class="dv">1</span>     <span class="dv">364397</span>  <span class="dv">2859</span>    <span class="dv">33</span>          <span class="dv">353</span> <span class="dv">546117</span></span>
+<span id="first_example-8"><a href="#first_example-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>    <span class="dv">7</span>     <span class="dv">0</span>      <span class="dv">23160</span>   <span class="dv">823</span>    <span class="dv">49</span>          <span class="dv">329</span>  <span class="dv">25812</span></span>
+<span id="first_example-9"><a href="#first_example-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>    <span class="dv">5</span>    <span class="cn">NA</span>         <span class="cn">NA</span>    <span class="cn">NA</span>    <span class="cn">NA</span>           <span class="cn">NA</span>     <span class="cn">NA</span></span>
+<span id="first_example-10"><a href="#first_example-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span>    <span class="dv">6</span>     <span class="dv">0</span>      <span class="dv">20710</span>   <span class="dv">504</span>   <span class="dv">112</span>          <span class="dv">200</span>  <span class="dv">21702</span></span>
+<span id="first_example-11"><a href="#first_example-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span>    <span class="dv">7</span>     <span class="dv">0</span>      <span class="dv">27954</span>  <span class="dv">1268</span>    <span class="dv">55</span>          <span class="dv">456</span>  <span class="dv">30468</span></span>
+<span id="first_example-12"><a href="#first_example-12" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">3410</span>    <span class="dv">6</span>     <span class="dv">1</span>     <span class="dv">364397</span>  <span class="dv">2859</span>    <span class="dv">33</span>          <span class="dv">353</span> <span class="dv">546117</span></span></code></pre></div>
+<p>The accumulate function does the following:</p>
+<ul>
+<li>For each combination of <code>sbi</code> and <code>size</code>
+occurring in the data, it checks whether <code>test</code> is satisfied.
+Here, it tests whether there are at least five records.
+<ul>
+<li>If the test is satisfied, the mean is computed for each non-grouping
+variable in the data. The output column <code>level</code> is set to 0
+(no collapsing took place).</li>
+<li>If the test is <em>not</em> satisfied, it will only use
+<code>sbi</code> as grouping variable for the current combination of
+<code>sbi</code> and <code>size</code>. Then, if there are enough
+records, the mean is computed for each variable and the output variable
+<code>level</code> is set to 1 (first level of collapsing has been
+used).</li>
+<li>If the test is still not satisfied, no computation is possible and
+all outputs are <code>NA</code> for the current <code>sbi</code> and
+<code>size</code> combination.</li>
+</ul></li>
+</ul>
+<p>Explicitly, for this example we see that for
+<code>(sbi,size)==(2752,5)</code> no satisfactory group of records was
+found under the current collapsing scheme. Therefore the
+<code>level</code> variable equals <code>NA</code> and all aggregated
+variables are missing as well. For <code>(sbi,size)==(2840,7)</code>
+there are sufficient records, and since <code>level=0</code> no
+collapsing was necessary. For the group <code>(sbi,size)=(3410,8)</code>
+there were not enough records to compute a mean, but taking all records
+in <code>sbi==3410</code> gave enough records. This is signified by
+<code>level=1</code>, meaning that one collapsing step has taken place
+(from <code>sbi x size</code> to <code>sbi</code>).</p>
+<p>Let us see how we specified this call to <code>accumulate</code></p>
+<ul>
+<li>The first argument is the data to be aggregated.</li>
+<li>The second argument is a formula of the form
+<code>target groups ~ collapsing scheme</code>. The output is always at
+the level of the target groups. The collapsing scheme determines which
+records are used to compute a value for the target groups if the
+<code>test</code> is not satisfied.</li>
+<li>The third argument, called <code>test</code> is a function that
+should accept any subset of records of <code>producers</code> and return
+<code>TRUE</code> or <code>FALSE</code>. In this case we used the
+convenience function <code>min_records(5)</code> provided by
+<code>accumulate</code>. The function <code>min_records()</code> creates
+a testing function for us that we can pass as testing function.</li>
+<li>Finally, the argument <code>fun</code> is the aggregation function
+that will be applied to each group.</li>
+</ul>
+<p>Observe that the accumulate function is similar to R’s built-in
+<code>aggregate</code> function (this is by design). There is a second
+function called <code>cumulate</code> that has an interface that is
+similar to <code>dplyr::summarise</code>.</p>
+<div class="sourceCode" id="cumulate_formula"><pre class="sourceCode R"><code class="sourceCode r"><span id="cumulate_formula-1"><a href="#cumulate_formula-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">cumulate</span>(producers, <span class="at">collapse =</span> sbi<span class="sc">*</span>size <span class="sc">~</span> sbi</span>
+<span id="cumulate_formula-2"><a href="#cumulate_formula-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>       , <span class="at">test =</span> <span class="cf">function</span>(d) <span class="fu">nrow</span>(d) <span class="sc">&gt;=</span> <span class="dv">5</span></span>
+<span id="cumulate_formula-3"><a href="#cumulate_formula-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>       , <span class="at">mu_industrial =</span> <span class="fu">mean</span>(industrial, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cumulate_formula-4"><a href="#cumulate_formula-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>       , <span class="at">sd_industrial =</span> <span class="fu">sd</span>(industrial, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cumulate_formula-5"><a href="#cumulate_formula-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(<span class="fu">round</span>(a))</span>
+<span id="cumulate_formula-6"><a href="#cumulate_formula-6" aria-hidden="true" tabindex="-1"></a>   sbi size level mu_industrial sd_industrial</span>
+<span id="cumulate_formula-7"><a href="#cumulate_formula-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>    <span class="dv">8</span>     <span class="dv">1</span>        <span class="dv">364397</span>        <span class="dv">535446</span></span>
+<span id="cumulate_formula-8"><a href="#cumulate_formula-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>    <span class="dv">7</span>     <span class="dv">0</span>         <span class="dv">23160</span>         <span class="dv">13937</span></span>
+<span id="cumulate_formula-9"><a href="#cumulate_formula-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>    <span class="dv">5</span>    <span class="cn">NA</span>            <span class="cn">NA</span>            <span class="cn">NA</span></span>
+<span id="cumulate_formula-10"><a href="#cumulate_formula-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span>    <span class="dv">6</span>     <span class="dv">0</span>         <span class="dv">20710</span>         <span class="dv">21151</span></span>
+<span id="cumulate_formula-11"><a href="#cumulate_formula-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span>    <span class="dv">7</span>     <span class="dv">0</span>         <span class="dv">27954</span>         <span class="dv">15089</span></span>
+<span id="cumulate_formula-12"><a href="#cumulate_formula-12" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">3410</span>    <span class="dv">6</span>     <span class="dv">1</span>        <span class="dv">364397</span>        <span class="dv">535446</span></span></code></pre></div>
+<p>Notice that here, we wrote our own test function.</p>
+<h3 id="exercises">Exercises</h3>
+<ol type="1">
+<li>How many combinations of <code>(sbi, size)</code> could not be
+computed, even when collapsing to <code>sbi</code>? (You need to run the
+code and investigate the output).</li>
+<li>Compute the trimmed mean of all numeric variables where you trim 5%
+of each side the distribution. See <code>?mean</code> on how to compute
+trimmed means.</li>
+</ol>
+<h2 id="the-formula-interface-for-specifying-collapsing-schemes">The
+formula interface for specifying collapsing schemes</h2>
+<p>A collapsing scheme can be defined in a data frame or with a formula
+of the form</p>
+<pre><code>target grouping ~ collapse1 + collapse2 + ... + collapseN</code></pre>
+<p>Here, the <code>target grouping</code> is a variable or product of
+variables. Each <code>collapse</code> term is also a variable or product
+of variables. Each subsequent term defines the next collapsing step. Let
+us show the idea with a more involved example.</p>
+<p>The <code>sbi</code> variable in the <code>producers</code> dataset
+encodes a hierarchical classification where longer digit sequences
+indicate higher level of detail. Hence we can collapse to lower levels
+of detail by deleting digits at the end. Let us enrich the
+<code>producers</code> dataset with extra grouping levels.</p>
+<div class="sourceCode" id="derive_sbi_levels"><pre class="sourceCode R"><code class="sourceCode r"><span id="derive_sbi_levels-1"><a href="#derive_sbi_levels-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> producers<span class="sc">$</span>sbi3 <span class="ot">&lt;-</span> <span class="fu">substr</span>(producers<span class="sc">$</span>sbi,<span class="dv">1</span>,<span class="dv">3</span>)</span>
+<span id="derive_sbi_levels-2"><a href="#derive_sbi_levels-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> producers<span class="sc">$</span>sbi2 <span class="ot">&lt;-</span> <span class="fu">substr</span>(producers<span class="sc">$</span>sbi,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="derive_sbi_levels-3"><a href="#derive_sbi_levels-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(producers,<span class="dv">3</span>)</span>
+<span id="derive_sbi_levels-4"><a href="#derive_sbi_levels-4" aria-hidden="true" tabindex="-1"></a>   sbi size industrial trade other other_income  total sbi3 sbi2</span>
+<span id="derive_sbi_levels-5"><a href="#derive_sbi_levels-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>    <span class="dv">8</span>     <span class="dv">151722</span>  <span class="dv">2135</span>     <span class="dv">0</span>        <span class="sc">-</span><span class="dv">1775</span> <span class="dv">152082</span>  <span class="dv">341</span>   <span class="dv">34</span></span>
+<span id="derive_sbi_levels-6"><a href="#derive_sbi_levels-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>    <span class="dv">7</span>      <span class="dv">50816</span>    <span class="cn">NA</span>   <span class="dv">158</span>          <span class="dv">949</span>  <span class="dv">59876</span>  <span class="dv">284</span>   <span class="dv">28</span></span>
+<span id="derive_sbi_levels-7"><a href="#derive_sbi_levels-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>    <span class="dv">5</span>       <span class="dv">4336</span>    <span class="cn">NA</span>     <span class="dv">0</span>           <span class="dv">36</span>   <span class="dv">4959</span>  <span class="dv">275</span>   <span class="dv">27</span></span></code></pre></div>
+<p>We can now use a more involved collapsing scheme as follows.</p>
+<div class="sourceCode" id="accumulate_formula"><pre class="sourceCode R"><code class="sourceCode r"><span id="accumulate_formula-1"><a href="#accumulate_formula-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">accumulate</span>(producers, <span class="at">collapse =</span> sbi<span class="sc">*</span>size <span class="sc">~</span> sbi <span class="sc">+</span> sbi3 <span class="sc">+</span> sbi2</span>
+<span id="accumulate_formula-2"><a href="#accumulate_formula-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">test =</span> <span class="fu">min_records</span>(<span class="dv">5</span>), <span class="at">fun =</span> mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="accumulate_formula-3"><a href="#accumulate_formula-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(<span class="fu">round</span>(a))</span>
+<span id="accumulate_formula-4"><a href="#accumulate_formula-4" aria-hidden="true" tabindex="-1"></a>   sbi size level industrial trade other other_income  total</span>
+<span id="accumulate_formula-5"><a href="#accumulate_formula-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>    <span class="dv">8</span>     <span class="dv">1</span>     <span class="dv">364397</span>  <span class="dv">2859</span>    <span class="dv">33</span>          <span class="dv">353</span> <span class="dv">546117</span></span>
+<span id="accumulate_formula-6"><a href="#accumulate_formula-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>    <span class="dv">7</span>     <span class="dv">0</span>      <span class="dv">23160</span>   <span class="dv">823</span>    <span class="dv">49</span>          <span class="dv">329</span>  <span class="dv">25812</span></span>
+<span id="accumulate_formula-7"><a href="#accumulate_formula-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>    <span class="dv">5</span>     <span class="dv">2</span>      <span class="dv">19526</span>    <span class="dv">39</span>    <span class="dv">52</span>          <span class="dv">151</span>  <span class="dv">20603</span></span>
+<span id="accumulate_formula-8"><a href="#accumulate_formula-8" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span>    <span class="dv">6</span>     <span class="dv">0</span>      <span class="dv">20710</span>   <span class="dv">504</span>   <span class="dv">112</span>          <span class="dv">200</span>  <span class="dv">21702</span></span>
+<span id="accumulate_formula-9"><a href="#accumulate_formula-9" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span>    <span class="dv">7</span>     <span class="dv">0</span>      <span class="dv">27954</span>  <span class="dv">1268</span>    <span class="dv">55</span>          <span class="dv">456</span>  <span class="dv">30468</span></span>
+<span id="accumulate_formula-10"><a href="#accumulate_formula-10" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">3410</span>    <span class="dv">6</span>     <span class="dv">1</span>     <span class="dv">364397</span>  <span class="dv">2859</span>    <span class="dv">33</span>          <span class="dv">353</span> <span class="dv">546117</span></span></code></pre></div>
+<p>For <code>(sbi,size) == (2752,5)</code> we have 2 levels of
+collapsing. In other words, for that aggregate, all records in
+<code>sbi3 == 275</code> were used.</p>
+<h3 id="exercises-1">Exercises</h3>
+<ol type="1">
+<li>Compute standard deviation for <code>trade</code> and
+<code>total</code> using the <code>cumulate</code> function under the
+same collapsing scheme as defined above.</li>
+<li>What is the maximum collapsing level in the collapsing scheme
+above?</li>
+<li>Find out how many combinations of <code>(sbi,size)</code> have been
+collapsed to level 0, 1, 2, or 3. Tabulate them.</li>
+<li>Define a collapsing scheme that ends with a single-digit
+<code>sbi</code> code and compute the means of all variables.</li>
+</ol>
+<h2 id="the-data-frame-interface-for-defining-collapsing-schemes">The
+data frame interface for defining collapsing schemes</h2>
+<p>Collapsing schemes can be represented in data frames that have the
+form</p>
+<pre><code>[target group, parent of target group, parent of parent of target group,...].</code></pre>
+<p>The package comes with a helper function that creates such a scheme
+from hierarchical classifications that are encoded as digits.</p>
+<p>For the <code>sbi</code> example we can do the following to derive a
+collapsing scheme.</p>
+<div class="sourceCode" id="dataframe_construction"><pre class="sourceCode R"><code class="sourceCode r"><span id="dataframe_construction-1"><a href="#dataframe_construction-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sbi <span class="ot">&lt;-</span> <span class="fu">unique</span>(producers<span class="sc">$</span>sbi)</span>
+<span id="dataframe_construction-2"><a href="#dataframe_construction-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> csh <span class="ot">&lt;-</span> <span class="fu">csh_from_digits</span>(sbi)</span>
+<span id="dataframe_construction-3"><a href="#dataframe_construction-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(csh)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;sbi&quot;</span></span>
+<span id="dataframe_construction-4"><a href="#dataframe_construction-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(csh)</span>
+<span id="dataframe_construction-5"><a href="#dataframe_construction-5" aria-hidden="true" tabindex="-1"></a>   sbi   A1  A2 A3 A4</span>
+<span id="dataframe_construction-6"><a href="#dataframe_construction-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span> <span class="dv">3410</span> <span class="dv">341</span> <span class="dv">34</span>  <span class="dv">3</span></span>
+<span id="dataframe_construction-7"><a href="#dataframe_construction-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span> <span class="dv">2840</span> <span class="dv">284</span> <span class="dv">28</span>  <span class="dv">2</span></span>
+<span id="dataframe_construction-8"><a href="#dataframe_construction-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span> <span class="dv">2752</span> <span class="dv">275</span> <span class="dv">27</span>  <span class="dv">2</span></span>
+<span id="dataframe_construction-9"><a href="#dataframe_construction-9" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span> <span class="dv">3120</span> <span class="dv">312</span> <span class="dv">31</span>  <span class="dv">3</span></span>
+<span id="dataframe_construction-10"><a href="#dataframe_construction-10" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span> <span class="dv">2524</span> <span class="dv">252</span> <span class="dv">25</span>  <span class="dv">2</span></span>
+<span id="dataframe_construction-11"><a href="#dataframe_construction-11" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">2875</span> <span class="dv">2875</span> <span class="dv">287</span> <span class="dv">28</span>  <span class="dv">2</span></span></code></pre></div>
+<p>Here, the column <code>sbi</code> denotes the original (maximally)
+5-digit codes, <code>A1</code> the 4-digit codes, and so on. It is
+important that the name of the first column matches a column in the data
+to be agregated. Both <code>cumlate</code> and <code>accumulate</code>
+accept such a data frame as an argument. Here is an example with
+<code>cumulate</code>.</p>
+<div class="sourceCode" id="dataframe_cumulate"><pre class="sourceCode R"><code class="sourceCode r"><span id="dataframe_cumulate-1"><a href="#dataframe_cumulate-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">cumulate</span>(producers, <span class="at">collapse =</span> csh, <span class="at">test =</span> <span class="cf">function</span>(d) <span class="fu">nrow</span>(d) <span class="sc">&gt;=</span> <span class="dv">5</span></span>
+<span id="dataframe_cumulate-2"><a href="#dataframe_cumulate-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>        , <span class="at">mu_total =</span> <span class="fu">mean</span>(total, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="dataframe_cumulate-3"><a href="#dataframe_cumulate-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>        , <span class="at">sd_total =</span> <span class="fu">sd</span>(total, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="dataframe_cumulate-4"><a href="#dataframe_cumulate-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(a)</span>
+<span id="dataframe_cumulate-5"><a href="#dataframe_cumulate-5" aria-hidden="true" tabindex="-1"></a>   sbi level  mu_total  sd_total</span>
+<span id="dataframe_cumulate-6"><a href="#dataframe_cumulate-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>     <span class="dv">0</span> <span class="fl">546117.22</span> <span class="fl">844001.47</span></span>
+<span id="dataframe_cumulate-7"><a href="#dataframe_cumulate-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>     <span class="dv">0</span>  <span class="fl">31265.28</span>  <span class="fl">35053.37</span></span>
+<span id="dataframe_cumulate-8"><a href="#dataframe_cumulate-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>     <span class="dv">2</span>  <span class="fl">20603.08</span>  <span class="fl">31286.51</span></span>
+<span id="dataframe_cumulate-9"><a href="#dataframe_cumulate-9" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span>     <span class="dv">0</span>  <span class="fl">26548.61</span>  <span class="fl">26784.60</span></span>
+<span id="dataframe_cumulate-10"><a href="#dataframe_cumulate-10" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span>     <span class="dv">0</span>  <span class="fl">23434.68</span>  <span class="fl">18022.32</span></span>
+<span id="dataframe_cumulate-11"><a href="#dataframe_cumulate-11" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span> <span class="dv">2875</span>     <span class="dv">0</span>  <span class="fl">15962.24</span>   <span class="fl">9640.14</span></span></code></pre></div>
+<p>In this representation is is not possible to use multiple grouping
+variables, unless you combine multiple grouping variables into a single
+one, for example by pasting them together.</p>
+<p>The advantage of this representation is that it allows users to
+externally define a (manually edited) collapsing scheme.</p>
+<h3 id="exercises-2">Exercises</h3>
+<ol type="1">
+<li>Use <code>csh</code> to compute the median of all numerical
+variables of the <code>producers</code> dataset with
+<code>accumulate</code> (hint: you need to remove the <code>size</code>
+variable).</li>
+</ol>
+<h2 id="convenience-functions-to-define-tests">Convenience functions to
+define tests</h2>
+<p>There are several options to define test on groups of records:</p>
+<ol type="1">
+<li>Use one of the built-in functions to specify common test conditions:
+<code>min_records()</code>, <code>min_complete()</code>, or
+<code>frac_complete()</code>.</li>
+<li>Use a ruleset defined with the <a href="https://cran.r-project.org/package=validate">validate</a> package,
+with the <code>from_validator()</code> function.</li>
+<li>Write your own custom test function.</li>
+</ol>
+<p>Let us look at a small example for each case. For comparison we will
+always test that there are a minimum of five records.</p>
+<div class="sourceCode" id="helpers"><pre class="sourceCode R"><code class="sourceCode r"><span id="helpers-1"><a href="#helpers-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># load the data again to loose columns &#39;sbi2&#39; and &#39;sbi3&#39; and work</span></span>
+<span id="helpers-2"><a href="#helpers-2" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="co"># with the original data.</span></span>
+<span id="helpers-3"><a href="#helpers-3" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">data</span>(producers)</span>
+<span id="helpers-4"><a href="#helpers-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># 1. using a helper function</span></span>
+<span id="helpers-5"><a href="#helpers-5" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">accumulate</span>(producers, <span class="at">collapse =</span> sbi<span class="sc">*</span>size <span class="sc">~</span> sbi</span>
+<span id="helpers-6"><a href="#helpers-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">test =</span> <span class="fu">min_records</span>(<span class="dv">5</span>)</span>
+<span id="helpers-7"><a href="#helpers-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">fun  =</span> mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="helpers-8"><a href="#helpers-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># 2. using a &#39;validator&#39; object</span></span>
+<span id="helpers-9"><a href="#helpers-9" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> rules <span class="ot">&lt;-</span> validate<span class="sc">::</span><span class="fu">validator</span>(<span class="fu">nrow</span>(.) <span class="sc">&gt;=</span> <span class="dv">5</span>)</span>
+<span id="helpers-10"><a href="#helpers-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">accumulate</span>(producers, <span class="at">collapse =</span> sbi<span class="sc">*</span>size <span class="sc">~</span> sbi</span>
+<span id="helpers-11"><a href="#helpers-11" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">test =</span> <span class="fu">from_validator</span>(rules)</span>
+<span id="helpers-12"><a href="#helpers-12" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">fun  =</span> mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="helpers-13"><a href="#helpers-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># 3. using a custom function</span></span>
+<span id="helpers-14"><a href="#helpers-14" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">accumulate</span>(producers, <span class="at">collapse=</span>sbi<span class="sc">*</span>size <span class="sc">~</span> sbi</span>
+<span id="helpers-15"><a href="#helpers-15" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">test =</span> <span class="cf">function</span>(d) <span class="fu">nrow</span>(d) <span class="sc">&gt;=</span> <span class="dv">5</span></span>
+<span id="helpers-16"><a href="#helpers-16" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                , <span class="at">fun  =</span> mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<h2 id="complex-aggregates">Complex aggregates</h2>
+<p>An aggregate may be something more complex than a scalar. The
+<code>accumulate</code> package also supports complex aggregates such as
+linear models.</p>
+<div class="sourceCode" id="complex"><pre class="sourceCode R"><code class="sourceCode r"><span id="complex-1"><a href="#complex-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">cumulate</span>(producers, <span class="at">collapse =</span> sbi<span class="sc">*</span>size <span class="sc">~</span> sbi</span>
+<span id="complex-2"><a href="#complex-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                        , <span class="at">test =</span> <span class="fu">min_complete</span>(<span class="dv">5</span>, <span class="fu">c</span>(<span class="st">&quot;other_income&quot;</span>,<span class="st">&quot;trade&quot;</span>))</span>
+<span id="complex-3"><a href="#complex-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                        , <span class="at">model =</span> <span class="fu">lm</span>(other_income <span class="sc">~</span> trade)</span>
+<span id="complex-4"><a href="#complex-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                        , <span class="at">mean_other =</span> <span class="fu">mean</span>(other_income, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="complex-5"><a href="#complex-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">head</span>(a)</span>
+<span id="complex-6"><a href="#complex-6" aria-hidden="true" tabindex="-1"></a>   sbi size level     model mean_other</span>
+<span id="complex-7"><a href="#complex-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">3410</span>    <span class="dv">8</span>    <span class="cn">NA</span> <span class="sc">&lt;</span>logical<span class="sc">&gt;</span>         <span class="cn">NA</span></span>
+<span id="complex-8"><a href="#complex-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2840</span>    <span class="dv">7</span>     <span class="dv">1</span>      <span class="sc">&lt;</span>lm<span class="sc">&gt;</span>   <span class="fl">249.3333</span></span>
+<span id="complex-9"><a href="#complex-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2752</span>    <span class="dv">5</span>    <span class="cn">NA</span> <span class="sc">&lt;</span>logical<span class="sc">&gt;</span>         <span class="cn">NA</span></span>
+<span id="complex-10"><a href="#complex-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">3120</span>    <span class="dv">6</span>     <span class="dv">0</span>      <span class="sc">&lt;</span>lm<span class="sc">&gt;</span>   <span class="fl">199.8889</span></span>
+<span id="complex-11"><a href="#complex-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2524</span>    <span class="dv">7</span>     <span class="dv">0</span>      <span class="sc">&lt;</span>lm<span class="sc">&gt;</span>   <span class="fl">456.2500</span></span>
+<span id="complex-12"><a href="#complex-12" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">3410</span>    <span class="dv">6</span>    <span class="cn">NA</span> <span class="sc">&lt;</span>logical<span class="sc">&gt;</span>         <span class="cn">NA</span></span></code></pre></div>
+<p>Here, we demand that there are at least five records available for
+estimating the model.</p>
+<p>The linear models are stored in a <code>list</code> of type
+<code>object_list</code>. Subsets or individual elements can be accessed
+as usual with data frames.</p>
+<div class="sourceCode" id="objlist"><pre class="sourceCode R"><code class="sourceCode r"><span id="objlist-1"><a href="#objlist-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a<span class="sc">$</span>model[[<span class="dv">1</span>]]</span>
+<span id="objlist-2"><a href="#objlist-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">NA</span></span>
+<span id="objlist-3"><a href="#objlist-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a<span class="sc">$</span>model[[<span class="dv">2</span>]]</span>
+<span id="objlist-4"><a href="#objlist-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="objlist-5"><a href="#objlist-5" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="objlist-6"><a href="#objlist-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> other_income <span class="sc">~</span> trade)</span>
+<span id="objlist-7"><a href="#objlist-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="objlist-8"><a href="#objlist-8" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="objlist-9"><a href="#objlist-9" aria-hidden="true" tabindex="-1"></a>(Intercept)        trade  </span>
+<span id="objlist-10"><a href="#objlist-10" aria-hidden="true" tabindex="-1"></a>  <span class="fl">221.59429</span>      <span class="fl">0.06937</span>  </span></code></pre></div>
+<h3 id="smoke-testing-your-test-function">Smoke-testing your test
+function</h3>
+<p>If you write your own test function from scratch, it is easy to
+overlook some edge cases like the occurrence of missing data, a column
+that is completely <code>NA</code>, or receiving zero records. The
+function <code>smoke_test()</code> accepts a data set and a test
+function and runs the test function on several common edge cases based
+on the dataset. It does <em>not</em> check whether the test function
+works as expected, but it checks that the output is <code>TRUE</code> or
+<code>FALSE</code> in all cases and reports errors, warnings and mesages
+if they occur.</p>
+<p>As an example we construct a test function that checks whether one of
+the variables has sufficient non-zero values.</p>
+<div class="sourceCode" id="smoketest1"><pre class="sourceCode R"><code class="sourceCode r"><span id="smoketest1-1"><a href="#smoketest1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> my_test <span class="ot">&lt;-</span> <span class="cf">function</span>(d) <span class="fu">sum</span>(other <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">&gt;</span> <span class="dv">3</span></span>
+<span id="smoketest1-2"><a href="#smoketest1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">smoke_test</span>(producers, my_test)</span>
+<span id="smoketest1-3"><a href="#smoketest1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="smoketest1-4"><a href="#smoketest1-4" aria-hidden="true" tabindex="-1"></a>Test with full dataset raised issues.</span>
+<span id="smoketest1-5"><a href="#smoketest1-5" aria-hidden="true" tabindex="-1"></a>   ERR<span class="sc">:</span> object <span class="st">&#39;other&#39;</span> not found</span></code></pre></div>
+<p>Oops, we forgot to refer to the data set. Let’s try it again.</p>
+<div class="sourceCode" id="smoketest2"><pre class="sourceCode R"><code class="sourceCode r"><span id="smoketest2-1"><a href="#smoketest2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> my_test <span class="ot">&lt;-</span> <span class="cf">function</span>(d) <span class="fu">sum</span>(d<span class="sc">$</span>other <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">&gt;</span> <span class="dv">3</span></span>
+<span id="smoketest2-2"><a href="#smoketest2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">smoke_test</span>(producers, my_test)</span>
+<span id="smoketest2-3"><a href="#smoketest2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="smoketest2-4"><a href="#smoketest2-4" aria-hidden="true" tabindex="-1"></a>Test with full dataset raised issues.</span>
+<span id="smoketest2-5"><a href="#smoketest2-5" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-6"><a href="#smoketest2-6" aria-hidden="true" tabindex="-1"></a>Test with first record and other is <span class="cn">NA</span> raised issues.</span>
+<span id="smoketest2-7"><a href="#smoketest2-7" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-8"><a href="#smoketest2-8" aria-hidden="true" tabindex="-1"></a>Test with first record and all values <span class="cn">NA</span> raised issues.</span>
+<span id="smoketest2-9"><a href="#smoketest2-9" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-10"><a href="#smoketest2-10" aria-hidden="true" tabindex="-1"></a>Test with full dataset and sbi is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-11"><a href="#smoketest2-11" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-12"><a href="#smoketest2-12" aria-hidden="true" tabindex="-1"></a>Test with full dataset and size is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-13"><a href="#smoketest2-13" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-14"><a href="#smoketest2-14" aria-hidden="true" tabindex="-1"></a>Test with full dataset and industrial is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-15"><a href="#smoketest2-15" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-16"><a href="#smoketest2-16" aria-hidden="true" tabindex="-1"></a>Test with full dataset and trade is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-17"><a href="#smoketest2-17" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-18"><a href="#smoketest2-18" aria-hidden="true" tabindex="-1"></a>Test with full dataset and other is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-19"><a href="#smoketest2-19" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-20"><a href="#smoketest2-20" aria-hidden="true" tabindex="-1"></a>Test with full dataset and other_income is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-21"><a href="#smoketest2-21" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span>
+<span id="smoketest2-22"><a href="#smoketest2-22" aria-hidden="true" tabindex="-1"></a>Test with full dataset and total is <span class="cn">NA</span> <span class="cf">for</span> all records raised issues.</span>
+<span id="smoketest2-23"><a href="#smoketest2-23" aria-hidden="true" tabindex="-1"></a>   <span class="cn">NA</span> detected <span class="cf">in</span> <span class="fu">output</span> (must be <span class="cn">TRUE</span> or <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Our function is not robust against occurrence of <code>NA</code>.
+Here’s a third attempt.</p>
+<div class="sourceCode" id="smoketest3"><pre class="sourceCode R"><code class="sourceCode r"><span id="smoketest3-1"><a href="#smoketest3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> my_test <span class="ot">&lt;-</span> <span class="cf">function</span>(d) <span class="fu">sum</span>(d<span class="sc">$</span>other <span class="sc">!=</span> <span class="dv">0</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">&gt;</span> <span class="dv">3</span></span>
+<span id="smoketest3-2"><a href="#smoketest3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">smoke_test</span>(producers, my_test)</span></code></pre></div>
+<h3 id="exercises-3">Exercises</h3>
+<ol type="1">
+<li>Compute the mean of all variables using
+<code>sbi*size ~ sbi1 + sbi2</code> as collapsing scheme. Make sure
+there are at least 10 records in each group.</li>
+<li>Compute the mean of the ratio between <code>industrial</code> and
+<code>total</code>, but demand that there are not more than 20% zeros in
+<code>other</code>. Use <code>csh</code> as collapsing scheme.</li>
+</ol>
+</body>
+</html>

@@ -1,0 +1,84 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# IMPORTS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+importFrom("R.methodsS3", "setMethodS3")
+importFrom("R.oo", "setConstructorS3")
+importFrom("R.oo", "extend")
+importFrom("R.oo", "uses")
+importFrom("R.oo", "throw")
+
+## Importing Class:es
+importFrom("R.oo", "Package")
+importFrom("aroma.affymetrix", "AffymetrixCelSet")
+importFrom("aroma.affymetrix", "AllelicCrosstalkCalibration")
+importFrom("aroma.affymetrix", "BasePositionNormalization")
+importFrom("aroma.affymetrix", "ProbeLevelModel")
+importFrom("aroma.affymetrix", "FragmentLengthNormalization")
+
+## Importing generics
+importFrom("aroma.affymetrix", "getFitUnitFunction")
+importFrom("aroma.affymetrix", "getProbeAffinityFile")
+importFrom("R.filesets", "getAsteriskTags")
+
+## Importing functions
+importFrom("aroma.core", "findUnitsTodo")
+importFrom("aroma.core", "fit")
+importFrom("aroma.core", "process")
+importFrom("aroma.affymetrix", "exportTotalAndFracB")
+importFrom("aroma.affymetrix", "fitCnProbes")
+importFrom("aroma.affymetrix", "getChipEffectSet")
+importFrom("aroma.affymetrix", "setDecodeFunction")
+importFrom("aroma.affymetrix", "setEncodeFunction")
+importFrom("aroma.affymetrix", "SnpPlm")
+importFrom("MASS", "ginv")
+importFrom("MASS", "rlm")
+importFrom("matrixStats", "colMedians")
+importFrom("matrixStats", "rowMads")
+importFrom("matrixStats", "rowMedians")
+importFrom("R.oo", "getDate")
+importFrom("R.oo", "getName") ## Multi-sources: R.oo, R.filesets
+importFrom("R.oo", "getPosition")
+importFrom("R.oo", "getVersion")
+importFrom("R.oo", "startupMessage")
+importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
+importFrom("R.utils", "enter")
+importFrom("R.utils", "exit")
+importFrom("R.utils", "less")
+importFrom("R.utils", "stext")
+
+## Manually imported
+importFrom("R.utils", "Arguments")
+
+importFrom("graphics", "abline", "layout", "legend", "lines", "par",
+           "plot", "points", "text", "title")
+importFrom("stats", "cor", "density", "median", "na.omit")
+importFrom("utils", "str")
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# EXPORTS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Export all public methods, that is, those without a preceeding dot
+# in their names.
+exportPattern("^[^\\.]")
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# DECLARATIONS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# AffymetrixCelSet
+S3method("doACNE", "AffymetrixCelSet")
+
+# default
+S3method("doACNE", "default")
+
+# NmfPlm
+S3method("getAsteriskTags", "NmfPlm")
+S3method("getProbeAffinityFile", "NmfPlm")
+S3method("getFitUnitFunction", "NmfPlm")
+
+# NmfSnpPlm
+S3method("getAsteriskTags", "NmfSnpPlm")
+
+# SnpNmfFit
+S3method("plot", "SnpNmfFit")
