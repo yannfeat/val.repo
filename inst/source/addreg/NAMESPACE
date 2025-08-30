@@ -1,0 +1,45 @@
+import(combinat, splines, glm2, turboEM)
+importFrom("grDevices", "rainbow")
+importFrom("graphics", "abline", "lines", "plot")
+importFrom("stats", ".MFclass", ".checkMFClasses", ".getXlevels",
+             "as.formula", "binomial", "coef", "confint.default",
+             "contr.treatment", "contrasts<-", "delete.response",
+             "dnbinom", "dpois", "family", "fitted", "formula",
+             "get_all_vars", "glm.fit", "is.empty.model", "make.link",
+             "model.extract", "model.frame", "model.matrix",
+             "model.offset", "model.response", "na.pass", "napredict",
+             "naprint", "pnorm", "poisson", "predict", "printCoefmat",
+             "quantile", "reformulate", "relevel", "residuals",
+             "rnbinom", "setNames", "stat.anova", "terms",
+             "terms.formula", "uniroot", "update")
+S3method(confint,addreg)
+S3method(anova,addreg)
+S3method(anova,addreglist)
+S3method(vcov,addreg)
+S3method(summary,addreg)
+S3method(print,addreg)
+S3method(print,summary.addreg)
+S3method(predict,addreg)
+S3method(predict,addreg.smooth)
+S3method(plot,addreg.smooth)
+export(B)
+export(Iso)
+export(addreg)
+export(addreg.control)
+export(anova.addreg)
+export(anova.addreglist)
+export(confint.addreg)
+export(contr.isotonic)
+export(contr.opisotonic)
+export(conv.test)
+export(nnnegbin)
+export(nnpois)
+export(predict.addreg)
+export(print.summary.addreg)
+export(summary.addreg)
+export(vcov.addreg)
+export(addreg.smooth)
+export(interpret.addreg.smooth)
+export(predict.addreg.smooth)
+export(plot.addreg.smooth)
+export(negbin1)

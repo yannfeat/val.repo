@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Higher Order Functions</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Higher Order Functions</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This vignette explains some of the more advanced options of
+<code>{admiral}</code> related to higher order functions. A higher order
+function is a function that takes another function as input. By
+introducing these higher order functions, we intend to give the user
+greater power over our derivation functions, whilst trying to negate the
+need for adding additional <code>{admiral}</code> functions or
+arguments, or the user needing many separate steps.</p>
+<p>The functions covered here are:</p>
+<ul>
+<li><code>call_derivation()</code>: Call a single derivation multiple
+times with some arguments being fixed across iterations and others
+varying</li>
+<li><code>restrict_derivation()</code>: Execute a single derivation on a
+subset of the input dataset</li>
+<li><code>slice_derivation()</code>: The input dataset is split into
+slices (subsets) and for each slice a single derivation is called
+separately. Some or all arguments of the derivation may vary depending
+on the slice.</li>
+</ul>
+<p>The examples in this vignette all showcase the higher order functions
+taking other <code>{admiral}</code> functions as input, but in principle
+any functions that modify a dataset (e.g. an extension package function,
+or <code>dplyr::mutate()</code>, etc.) can be passed too. The only
+requirement for a function being passed to <code>derivation</code> is
+that it must take a dataset as its first argument and return a
+dataset.</p>
+<div id="required-packages" class="section level2">
+<h2>Required Packages</h2>
+<p>The examples of this vignette require the following packages.</p>
+<p>For example purpose, the ADSL dataset—which is included in
+<code>{admiral}</code>—and the SDTM datasets from
+<code>{pharmaversesdtm}</code> are used.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>ae <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>ae</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>vs <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>vs</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> admiral<span class="sc">::</span>admiral_adsl</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>ae <span class="ot">&lt;-</span> <span class="fu">convert_blanks_to_na</span>(ae)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>vs <span class="ot">&lt;-</span> <span class="fu">convert_blanks_to_na</span>(vs)</span></code></pre></div>
+<p>The following code creates a minimally viable ADAE dataset to be used
+where needed in the following examples.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>adae <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">left_join</span>(adsl, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;STUDYID&quot;</span>, <span class="st">&quot;USUBJID&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">derive_vars_dt</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">new_vars_prefix =</span> <span class="st">&quot;AST&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="at">dtc =</span> AESTDTC,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="at">highest_imputation =</span> <span class="st">&quot;M&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRTEMFL =</span> <span class="fu">if_else</span>(ASTDT <span class="sc">&gt;=</span> TRTSDT, <span class="st">&quot;Y&quot;</span>, <span class="cn">NA_character_</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="call-derivation" class="section level1">
+<h1>Call Derivation</h1>
+<p>This function exists purely for convenience to save the user
+repeating numerous similar derivation function calls. It is best used
+when multiple derived variables have very similar specifications with
+only slight variations.</p>
+<p>As an example, imagine the case where all the parameters in a BDS
+ADaM required both a highest value flag and a lowest value flag.</p>
+<p>Here is an example of how to achieve this <strong>without</strong>
+using <code>call_derivation()</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>vs_without <span class="ot">&lt;-</span> vs <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">derive_var_extreme_flag</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID, VSTESTCD),</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(VSORRES, VSSEQ),</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">new_var =</span> AHIFL,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">&quot;last&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">derive_var_extreme_flag</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID, VSTESTCD),</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(VSORRES, VSSEQ),</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="at">new_var =</span> ALOFL,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">&quot;first&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">VSTESTCD</th>
+<th align="left">VSORRES</th>
+<th align="left">ALOFL</th>
+<th align="left">AHIFL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.2</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.7</td>
+<td align="left">NA</td>
+<td align="left">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.0</td>
+<td align="left">Y</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">120.0</td>
+<td align="left">NA</td>
+<td align="left">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">117.0</td>
+<td align="left">Y</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">119.0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of how to achieve the same <strong>with</strong>
+using <code>call_derivation()</code>, where any different arguments are
+passed using <code>params()</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>vs_with <span class="ot">&lt;-</span> vs <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">call_derivation</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">derivation =</span> derive_var_extreme_flag,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">variable_params =</span> <span class="fu">list</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>      <span class="fu">params</span>(<span class="at">new_var =</span> AHIFL, <span class="at">mode =</span> <span class="st">&quot;last&quot;</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>      <span class="fu">params</span>(<span class="at">new_var =</span> ALOFL, <span class="at">mode =</span> <span class="st">&quot;first&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    ),</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID, VSTESTCD),</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(VSORRES, VSSEQ)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">VSTESTCD</th>
+<th align="left">VSORRES</th>
+<th align="left">ALOFL</th>
+<th align="left">AHIFL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.2</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.7</td>
+<td align="left">NA</td>
+<td align="left">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.0</td>
+<td align="left">Y</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">120.0</td>
+<td align="left">NA</td>
+<td align="left">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">117.0</td>
+<td align="left">Y</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">119.0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<p>In the example, you can see how in these higher order functions,
+<code>derivation</code> is where the user supplies the name of the
+derivation function to apply, with no trailing parentheses required.
+Then <code>variable_params</code> is used to pass a list of the
+different arguments needed for each derived variable.</p>
+<p>The advantage of this higher order function would be further
+highlighted with examples where more than two variable derivations had
+similar needs, such as the below case where multiple time to AE
+parameters are derived in one call. Note that this example relies on
+pre-defined <code>tte_source</code> objects, as explained at <a href="bds_tte.html">Creating a BDS Time-to-Event ADaM</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>adaette <span class="ot">&lt;-</span> <span class="fu">call_derivation</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">derivation =</span> derive_param_tte,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">variable_params =</span> <span class="fu">list</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="fu">params</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>      <span class="at">event_conditions =</span> <span class="fu">list</span>(ae_event),</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>      <span class="at">set_values_to =</span> <span class="fu">exprs</span>(<span class="at">PARAMCD =</span> <span class="st">&quot;TTAE&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    ),</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    <span class="fu">params</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>      <span class="at">event_conditions =</span> <span class="fu">list</span>(ae_ser_event),</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>      <span class="at">set_values_to =</span> <span class="fu">exprs</span>(<span class="at">PARAMCD =</span> <span class="st">&quot;TTSERAE&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    ),</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>    <span class="fu">params</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>      <span class="at">event_conditions =</span> <span class="fu">list</span>(ae_sev_event),</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>      <span class="at">set_values_to =</span> <span class="fu">exprs</span>(<span class="at">PARAMCD =</span> <span class="st">&quot;TTSEVAE&quot;</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>    ),</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>    <span class="fu">params</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>      <span class="at">event_conditions =</span> <span class="fu">list</span>(ae_wd_event),</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>      <span class="at">set_values_to =</span> <span class="fu">exprs</span>(<span class="at">PARAMCD =</span> <span class="st">&quot;TTWDAE&quot;</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>    )</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>  ),</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>  <span class="at">dataset_adsl =</span> adsl,</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>  <span class="at">source_datasets =</span> <span class="fu">list</span>(<span class="at">adsl =</span> adsl, <span class="at">adae =</span> adae),</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>  <span class="at">censor_conditions =</span> <span class="fu">list</span>(lastalive_censor)</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>)</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; Warning: Dataset &quot;adae&quot; contains duplicate records with respect to `STUDYID`, `USUBJID`,</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt; and `ASTDT`</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; ℹ Run `admiral::get_duplicates_dataset()` to access the duplicate records</span></span></code></pre></div>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="13%" />
+<col width="13%" />
+<col width="5%" />
+<col width="25%" />
+<col width="8%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">PARAMCD</th>
+<th align="left">STARTDT</th>
+<th align="left">ADT</th>
+<th align="right">CNSR</th>
+<th align="left">EVNTDESC</th>
+<th align="left">SRCDOM</th>
+<th align="left">SRCVAR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">TTAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2012-09-07</td>
+<td align="right">0</td>
+<td align="left">ADVERSE EVENT</td>
+<td align="left">ADAE</td>
+<td align="left">ASTDT</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">TTSERAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2012-09-17</td>
+<td align="right">1</td>
+<td align="left">ALIVE</td>
+<td align="left">ADSL</td>
+<td align="left">LSTALVDT</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">TTSEVAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2012-09-17</td>
+<td align="right">1</td>
+<td align="left">ALIVE</td>
+<td align="left">ADSL</td>
+<td align="left">LSTALVDT</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">TTWDAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2012-09-17</td>
+<td align="right">1</td>
+<td align="left">ALIVE</td>
+<td align="left">ADSL</td>
+<td align="left">LSTALVDT</td>
+</tr>
+<tr class="odd">
+<td align="left">01-705-1393</td>
+<td align="left">TTAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2012-09-19</td>
+<td align="right">0</td>
+<td align="left">ADVERSE EVENT</td>
+<td align="left">ADAE</td>
+<td align="left">ASTDT</td>
+</tr>
+<tr class="even">
+<td align="left">01-705-1393</td>
+<td align="left">TTSERAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2013-02-20</td>
+<td align="right">1</td>
+<td align="left">ALIVE</td>
+<td align="left">ADSL</td>
+<td align="left">LSTALVDT</td>
+</tr>
+<tr class="odd">
+<td align="left">01-705-1393</td>
+<td align="left">TTSEVAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2013-01-21</td>
+<td align="right">0</td>
+<td align="left">SEVERE ADVERSE EVENT</td>
+<td align="left">ADAE</td>
+<td align="left">ASTDT</td>
+</tr>
+<tr class="even">
+<td align="left">01-705-1393</td>
+<td align="left">TTWDAE</td>
+<td align="left">2012-09-07</td>
+<td align="left">2013-02-20</td>
+<td align="right">1</td>
+<td align="left">ALIVE</td>
+<td align="left">ADSL</td>
+<td align="left">LSTALVDT</td>
+</tr>
+</tbody>
+</table>
+<p>Developing your ADaM scripts this way using
+<code>call_derivation()</code> could give the following benefits:</p>
+<ul>
+<li>code becomes more efficient and readable</li>
+<li>maintenance would be eased in case of specification changes</li>
+<li>downstream quality checking would require less effort</li>
+</ul>
+</div>
+<div id="restrict-derivation" class="section level1">
+<h1>Restrict Derivation</h1>
+<p>The idea behind this function is that sometimes you want to apply a
+derivation only for certain records from the input dataset. Introducing
+<code>restrict_derivation()</code> therefore gives the users the ability
+to achieve this across any function, without each function needing to
+have such an argument to allow for this.</p>
+<p>An example would be if you wanted to flag the first occurring AE with
+the highest severity for each patient, but you only wanted to do this
+for records occurring on or after study day 1.</p>
+<p>Here is how you could achieve this using
+<code>restrict_derivation()</code>, where the function arguments are
+passed using <code>params()</code> and the restriction criteria is given
+using <code>filter</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ae <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TEMP_AESEVN =</span> <span class="fu">as.integer</span>(<span class="fu">factor</span>(AESEV, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;SEVERE&quot;</span>, <span class="st">&quot;MODERATE&quot;</span>, <span class="st">&quot;MILD&quot;</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">restrict_derivation</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">derivation =</span> derive_var_extreme_flag,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">params</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>      <span class="at">new_var =</span> AHSEVFL,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>      <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID),</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>      <span class="at">order =</span> <span class="fu">exprs</span>(TEMP_AESEVN, AESTDY, AESEQ),</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>      <span class="at">mode =</span> <span class="st">&quot;first&quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    ),</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    <span class="at">filter =</span> AESTDY <span class="sc">&gt;=</span> <span class="dv">1</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">AEDECOD</th>
+<th align="right">AESTDY</th>
+<th align="right">AESEQ</th>
+<th align="left">AESEV</th>
+<th align="left">AHSEVFL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">LOCALISED INFECTION</td>
+<td align="right">-61</td>
+<td align="right">3</td>
+<td align="left">MODERATE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">ERYTHEMA</td>
+<td align="right">-5</td>
+<td align="right">1</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">PRURITUS</td>
+<td align="right">-5</td>
+<td align="right">2</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">ERYTHEMA</td>
+<td align="right">-5</td>
+<td align="right">4</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">PRURITUS</td>
+<td align="right">-5</td>
+<td align="right">5</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">MICTURITION URGENCY</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">ARTHRALGIA</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="left">MODERATE</td>
+<td align="left">Y</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">CELLULITIS</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="left">MODERATE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-705-1393</td>
+<td align="left">PRURITUS</td>
+<td align="right">-277</td>
+<td align="right">2</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-705-1393</td>
+<td align="left">PRURITUS</td>
+<td align="right">-277</td>
+<td align="right">4</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="slice-derivation" class="section level1">
+<h1>Slice Derivation</h1>
+<p>This function in a way combines the features of the above two. It
+allows a single derivation to be applied with different arguments for
+different slices (subsets) of records from the input dataset. You could
+do this with separate <code>restrict_derivation()</code> calls for each
+different set of records, but <code>slice_derivation()</code> allows to
+achieve this in one call.</p>
+<p>An example would be if you wanted to achieve the same derivation as
+above for records occurring on or after study day 1, but for
+pre-treatment AEs you wanted to flag only the last occurring AE.</p>
+<p>Here is how you could achieve this using
+<code>slice_derivation()</code>, where the function arguments are passed
+using <code>params()</code> and via the different slices controlled by
+<code>filter</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>ae <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">slice_derivation</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">derivation =</span> derive_var_extreme_flag,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">params</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>      <span class="at">new_var =</span> AHSEV2FL,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>      <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    ),</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="fu">derivation_slice</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>      <span class="at">filter =</span> AESTDY <span class="sc">&gt;=</span> <span class="dv">1</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>      <span class="at">args =</span> <span class="fu">params</span>(<span class="at">order =</span> <span class="fu">exprs</span>(TEMP_AESEVN, AESTDY, AESEQ), <span class="at">mode =</span> <span class="st">&quot;first&quot;</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    ),</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    <span class="fu">derivation_slice</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>      <span class="at">filter =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>      <span class="at">args =</span> <span class="fu">params</span>(<span class="at">order =</span> <span class="fu">exprs</span>(AESTDY, AESEQ), <span class="at">mode =</span> <span class="st">&quot;last&quot;</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>    )</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">AEDECOD</th>
+<th align="right">AESTDY</th>
+<th align="right">AESEQ</th>
+<th align="left">AESEV</th>
+<th align="left">AHSEV2FL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">LOCALISED INFECTION</td>
+<td align="right">-61</td>
+<td align="right">3</td>
+<td align="left">MODERATE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">ERYTHEMA</td>
+<td align="right">-5</td>
+<td align="right">1</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">PRURITUS</td>
+<td align="right">-5</td>
+<td align="right">2</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">ERYTHEMA</td>
+<td align="right">-5</td>
+<td align="right">4</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">PRURITUS</td>
+<td align="right">-5</td>
+<td align="right">5</td>
+<td align="left">MILD</td>
+<td align="left">Y</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">MICTURITION URGENCY</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">ARTHRALGIA</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="left">MODERATE</td>
+<td align="left">Y</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">CELLULITIS</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="left">MODERATE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-705-1393</td>
+<td align="left">PRURITUS</td>
+<td align="right">-277</td>
+<td align="right">2</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-705-1393</td>
+<td align="left">PRURITUS</td>
+<td align="right">-277</td>
+<td align="right">4</td>
+<td align="left">MILD</td>
+<td align="left">Y</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see in the example, the <code>derivation_slice</code>
+ordering is important. Here we addressed all the AEs on or after study
+day 1 first, and then we used <code>filter = TRUE</code> option to catch
+all remaining records (in this case pre-treatment AEs).</p>
+<p>The ordering is perhaps shown even more when we look at the below
+example where three slices are taken. Remember that observations that
+match with more than one slice are only considered for the first
+matching slice. So in this case we’re creating a flag for each patient
+for the record with the first severe AE, and then the first moderate AE,
+and finally flagging the last occurring AE where not severe or
+moderate.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>ae <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">slice_derivation</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="at">derivation =</span> derive_var_extreme_flag,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">params</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>      <span class="at">new_var =</span> AHSEV3FL,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>      <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    ),</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="fu">derivation_slice</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>      <span class="at">filter =</span> AESEV <span class="sc">==</span> <span class="st">&quot;SEVERE&quot;</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>      <span class="at">args =</span> <span class="fu">params</span>(<span class="at">order =</span> <span class="fu">exprs</span>(AESTDY, AESEQ), <span class="at">mode =</span> <span class="st">&quot;first&quot;</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>    ),</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>    <span class="fu">derivation_slice</span>(</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>      <span class="at">filter =</span> AESEV <span class="sc">==</span> <span class="st">&quot;MODERATE&quot;</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>      <span class="at">args =</span> <span class="fu">params</span>(<span class="at">order =</span> <span class="fu">exprs</span>(AESTDY, AESEQ), <span class="at">mode =</span> <span class="st">&quot;first&quot;</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>    ),</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>    <span class="fu">derivation_slice</span>(</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>      <span class="at">filter =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>      <span class="at">args =</span> <span class="fu">params</span>(<span class="at">order =</span> <span class="fu">exprs</span>(AESTDY, AESEQ), <span class="at">mode =</span> <span class="st">&quot;last&quot;</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>    )</span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">AEDECOD</th>
+<th align="right">AESTDY</th>
+<th align="right">AESEQ</th>
+<th align="left">AESEV</th>
+<th align="left">AHSEV3FL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">LOCALISED INFECTION</td>
+<td align="right">-61</td>
+<td align="right">3</td>
+<td align="left">MODERATE</td>
+<td align="left">Y</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">ERYTHEMA</td>
+<td align="right">-5</td>
+<td align="right">1</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">PRURITUS</td>
+<td align="right">-5</td>
+<td align="right">2</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">ERYTHEMA</td>
+<td align="right">-5</td>
+<td align="right">4</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">PRURITUS</td>
+<td align="right">-5</td>
+<td align="right">5</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">MICTURITION URGENCY</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="left">MILD</td>
+<td align="left">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1111</td>
+<td align="left">ARTHRALGIA</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="left">MODERATE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1111</td>
+<td align="left">CELLULITIS</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="left">MODERATE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-705-1393</td>
+<td align="left">PRURITUS</td>
+<td align="right">-277</td>
+<td align="right">2</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-705-1393</td>
+<td align="left">PRURITUS</td>
+<td align="right">-277</td>
+<td align="right">4</td>
+<td align="left">MILD</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<p>The order is only important when the slices are not mutually
+exclusive, so in the above case the moderate AE slice could have been
+above the severe AE slice, for example, and there would have been no
+difference to the result. However the third slice had to come last to
+check all remaining (i.e. not severe or moderate) records only.</p>
+</div>
+<div id="combining-higher-order-functions" class="section level1">
+<h1>Combining Higher Order Functions</h1>
+<p>It is also possible to use two or more of the higher order functions
+in combination. The most likely use case is employing
+<code>call_derivation()</code> to repeat similar derivations multiple
+times, but within a call to <code>restrict_derivation()</code> to
+execute the derivations on a subset of the input dataset.</p>
+<p>For instance, let’s pick up VS from the
+<code>call_derivation()</code> example and suppose that we wish to
+derive the highest value and lowest value flags for just the temperature
+parameter. We can do this by ensuring that the derivation passed to
+<code>restrict_derivation()</code> is <code>call_derivation()</code>,
+and that the arguments for the latter are all passed through
+<code>args</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>vs_hilotemp <span class="ot">&lt;-</span> vs <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">restrict_derivation</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">derivation =</span> call_derivation,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">params</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>      <span class="at">derivation =</span> derive_var_extreme_flag,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>      <span class="at">variable_params =</span> <span class="fu">list</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">new_var =</span> ATMPHIFL, <span class="at">mode =</span> <span class="st">&quot;last&quot;</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">new_var =</span> ATMPLOFL, <span class="at">mode =</span> <span class="st">&quot;first&quot;</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>      ),</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>      <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID, VSTESTCD),</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>      <span class="at">order =</span> <span class="fu">exprs</span>(VSORRES, VSSEQ)</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>    ),</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>    <span class="at">filter =</span> VSTESTCD <span class="sc">==</span> <span class="st">&quot;TEMP&quot;</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">VSTESTCD</th>
+<th align="left">VSORRES</th>
+<th align="left">ATMPLOFL</th>
+<th align="left">ATMPHIFL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.2</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.7</td>
+<td align="left">NA</td>
+<td align="left">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">TEMP</td>
+<td align="left">97.0</td>
+<td align="left">Y</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">120.0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">117.0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">WEIGHT</td>
+<td align="left">119.0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

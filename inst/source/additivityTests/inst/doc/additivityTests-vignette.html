@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Testing for interaction in two-way ANOVA with no replication</title>
+<style type="text/css">
+/**
+ * Prism.s theme ported from highlight.js's xcode style
+ */
+pre code {
+  padding: 1em;
+}
+.token.comment {
+  color: #007400;
+}
+.token.punctuation {
+  color: #999;
+}
+.token.tag,
+.token.selector {
+  color: #aa0d91;
+}
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #1c00cf;
+}
+.token.property,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #c41a16;
+}
+.token.inserted {
+  background-color: #ccffd8;
+}
+.token.deleted {
+  background-color: #ffebe9;
+}
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #9a6e3a;
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #836c28;
+}
+.token.function,
+.token.class-name {
+  color: #DD4A68;
+}
+.token.regex,
+.token.important,
+.token.variable {
+  color: #5c2699;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+</style>
+<style type="text/css">
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+body, .footnotes, code { font-size: .9em; }
+li li { font-size: .95em; }
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+pre, img { max-width: 100%; }
+pre, pre:hover {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+pre code {
+  display: block;
+  overflow-x: auto;
+}
+code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
+:not(pre) > code, code[class] { background-color: #F8F8F8; }
+code.language-undefined, pre > code:not([class]) {
+  background-color: inherit;
+  border: 1px solid #eee;
+}
+table {
+  margin: auto;
+  border-top: 1px solid #666;
+}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+thead, tfoot, tr:nth-child(even) { background: #eee; }
+blockquote {
+  color: #666;
+  margin: 0;
+  padding-left: 1em;
+  border-left: 0.5em solid #eee;
+}
+hr, .footnotes::before { border: 1px dashed #ddd; }
+.frontmatter { text-align: center; }
+#TOC .numbered li { list-style: none; }
+#TOC .numbered { padding-left: 0; }
+#TOC .numbered ul { padding-left: 1em; }
+table, .body h2 { border-bottom: 1px solid #666; }
+.body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
+.footnote-ref a::before { content: "["; }
+.footnote-ref a::after { content: "]"; }
+section.footnotes::before {
+  content: "";
+  display: block;
+  max-width: 20em;
+}
+
+@media print {
+  body {
+    font-size: 12pt;
+    max-width: 100%;
+  }
+  tr, img { page-break-inside: avoid; }
+}
+@media only screen and (min-width: 992px) {
+  pre { white-space: pre; }
+}
+</style>
+</head>
+<body>
+<div class="frontmatter">
+<div class="title"><h1>Testing for interaction in two-way ANOVA with no replication</h1></div>
+<div class="author"><h2></h2></div>
+<div class="date"><h3></h3></div>
+</div>
+<div class="body">
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Testing for interaction in two-way ANOVA with no replication}
+-->
+<h1 id="testing-for-interaction-in-two-way-anova-with-no-replication">Testing for interaction in two-way ANOVA with no replication</h1>
+<p>========================================================</p>
+<p>In many applications of statistical methods, it is assumed that the response
+variable is a sum of several factors and a random noise. In a real world this may
+not be an appropriate model. For example, some patients may react differently
+to the same drug treatment or the effect of fertilizer may be influenced
+by the type of a soil. There might exist an interaction between factors.</p>
+<p>If there is more than one observation per cell then standard ANOVA techniques
+may be applied. Unfortunately, in many cases it is infeasible to get
+more than one observation taken under the same conditions. For instance, it
+is not logical to ask the same student the same question twice.</p>
+<p>Six tests of additivity hypothesis (under various alternatives) have been included in this package:
+Tukey test, modified Tukey test, Johnson-Graybill test, LBI test, Mandel test and Tusell test.</p>
+<h2 id="example">Example</h2>
+<p>Let us generate 10 random subjects, 10 random treatmeants and combine them into a dataset (with no interaction):</p>
+<pre><code class="language-r">    require(additivityTests)
+</code></pre>
+<pre><code>## Loading required package: additivityTests
+</code></pre>
+<pre><code class="language-r">    set.seed(123)
+    subjects = rnorm(10)
+    treatments = rnorm(10)
+    noise = rnorm(100)/100
+    Y = matrix(rep(subjects,10), 10, 10) + matrix(rep(treatments, each=10), 10, 10) + noise
+</code></pre>
+<p>The tests should <strong>not</strong> reject the additive hypothesis:</p>
+<pre><code class="language-r">    tukey.test(Y)
+</code></pre>
+<pre><code>## 
+## Tukey test on 5% alpha-level:
+## 
+## Test statistic: 2.016 
+## Critival value: 3.96 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<pre><code class="language-r">    mandel.test(Y)
+</code></pre>
+<pre><code>## 
+## Mandel test on 5% alpha-level:
+## 
+## Test statistic: 1.394 
+## Critival value: 2.013 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<pre><code class="language-r">    lbi.test(Y)
+</code></pre>
+<pre><code>## 
+## Locally Best Invariant test on 5% alpha-level:
+## 
+## Test statistic: 0.2316 
+## Critival value: 0.2729 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<pre><code class="language-r">    tusell.test(Y)
+</code></pre>
+<pre><code>## 
+## Tusell test on 5% alpha-level:
+## 
+## Test statistic: 2.833e-13 
+## Critival value: 5.281e-16 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<pre><code class="language-r">    johnson.graybill.test(Y)
+</code></pre>
+<pre><code>## 
+## Johnson and Graybill test on 5% alpha-level:
+## 
+## Test statistic: 0.3252 
+## Critival value: 0.4375 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<pre><code class="language-r">    mandel.test(Y)
+</code></pre>
+<pre><code>## 
+## Mandel test on 5% alpha-level:
+## 
+## Test statistic: 1.394 
+## Critival value: 2.013 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<pre><code class="language-r">    mtukey.test(Y, correction=2, Nboot=1000)
+</code></pre>
+<pre><code>## 
+## Modified Tukey test (small sample size correction, type 2) on 5% alpha-level:
+## 
+## Test statistic: 0.5091 
+## Critival value: 0.9232 
+## The additivity hypothesis cannot be rejected.
+</code></pre>
+<p>Now, the extra effect will be added to the last 5 subjects. The tests <strong>should</strong> reject the additive hypothesis:</p>
+<pre><code class="language-r">    Y[1:5,] = Y[1:5,] + 10*rep(treatments, each=5)
+    
+    tukey.test(Y)
+</code></pre>
+<pre><code>## 
+## Tukey test on 5% alpha-level:
+## 
+## Test statistic: 134.2 
+## Critival value: 3.96 
+## The additivity hypothesis was rejected.
+</code></pre>
+<pre><code class="language-r">    mandel.test(Y)
+</code></pre>
+<pre><code>## 
+## Mandel test on 5% alpha-level:
+## 
+## Test statistic: 3377187 
+## Critival value: 2.013 
+## The additivity hypothesis was rejected.
+</code></pre>
+<pre><code class="language-r">    lbi.test(Y)
+</code></pre>
+<pre><code>## 
+## Locally Best Invariant test on 5% alpha-level:
+## 
+## Test statistic: 1 
+## Critival value: 0.2704 
+## The additivity hypothesis was rejected.
+</code></pre>
+<pre><code class="language-r">    tusell.test(Y)
+</code></pre>
+<pre><code>## 
+## Tusell test on 5% alpha-level:
+## 
+## Test statistic: 1.548e-57 
+## Critival value: 5.424e-16 
+## The additivity hypothesis was rejected.
+</code></pre>
+<pre><code class="language-r">    johnson.graybill.test(Y)
+</code></pre>
+<pre><code>## 
+## Johnson and Graybill test on 5% alpha-level:
+## 
+## Test statistic: 1 
+## Critival value: 0.4382 
+## The additivity hypothesis was rejected.
+</code></pre>
+<pre><code class="language-r">    mandel.test(Y)
+</code></pre>
+<pre><code>## 
+## Mandel test on 5% alpha-level:
+## 
+## Test statistic: 3377187 
+## Critival value: 2.013 
+## The additivity hypothesis was rejected.
+</code></pre>
+<pre><code class="language-r">    mtukey.test(Y, correction=2, Nboot=1000)
+</code></pre>
+<pre><code>## 
+## Modified Tukey test (small sample size correction, type 2) on 5% alpha-level:
+## 
+## Test statistic: 432.9 
+## Critival value: 1.152 
+## The additivity hypothesis was rejected.
+</code></pre>
+<h2 id="references">References</h2>
+<p>Simecek, Petr and Simeckova, Marie. “Modification of Tukey’s additivity test.” Journal of Statistical Planning and Inference (2012). <a href="https://www.sciencedirect.com/science/article/pii/S037837581200239X">[ScienceDirect]</a> <a href="http://arxiv.org/abs/1207.2883">[arXiv]</a></p>
+<p>Rasch, Dieter, et al. “Tests of additivity in mixed and fixed effect two-way ANOVA models with single sub-class numbers.” Statistical Papers 50.4 (2009): 905-916. <a href="https://rd.springer.com/article/10.1007/s00362-009-0254-4#page-1">[Springer]</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+</body>
+</html>

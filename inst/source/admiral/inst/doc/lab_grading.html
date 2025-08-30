@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Lab Grading</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Lab Grading</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Within the ADLB ADaM data set there is a concept of lab grading,
+where there is a set of criteria for particular lab tests that grade the
+severity or abnormality of a lab value. The grades are from 0 to 4,
+where grade 0 can be viewed generally as a “NORMAL” value. The higher
+the grade the more severe or more abnormal the lab value is. There are
+several sets of lab grading criteria, currently <code>{admiral}</code>
+has implemented NCI-CTCAEv4, NCI-CTCAEv5 and DAIDS grading criteria. In
+future releases <code>{admiral}</code> may look to implement further
+grading criteria.</p>
+<p>The NCI-CTCAEv4 criteria can be found under the heading <a href="https://dctd.cancer.gov/research/ctep-trials/trial-development#ctcae-and-ctep-codes"><strong>CTCAE
+and CTEP Codes</strong></a></p>
+<p>The NCI-CTCAEv5 criteria can be found under the heading <a href="https://dctd.cancer.gov/research/ctep-trials/for-sites/adverse-events#ctep-ctcae"><strong>CTEP
+CTCAE</strong></a></p>
+<p>The DAIDS grading criteria can be found here: <a href="https://rsc.niaid.nih.gov/clinical-research-sites/daids-adverse-event-grading-tables" class="uri">https://rsc.niaid.nih.gov/clinical-research-sites/daids-adverse-event-grading-tables</a>
+.</p>
+<p>The DAIDS criteria can be found under the heading <a href="https://rsc.niaid.nih.gov/sites/default/files/daidsgradingcorrectedv21.pdf"><strong>DAIDS
+Table for Grading the Severity of Adult and Pediatric Adverse Events
+Corrected Version 2.1</strong></a></p>
+</div>
+<div id="grading-metadata" class="section level1">
+<h1>Grading metadata</h1>
+<p><code>{admiral}</code> will store two sets of metadata data set for
+each set of grading criteria in the data folder of
+<code>{admiral}</code>, one for SI units, and one for US (conventional)
+units. These are as follows:</p>
+<p>NCI-CTCAEv4 + <code>atoxgr_criteria_ctcv4</code> for SI units. +
+<code>atoxgr_criteria_ctcv4_uscv</code> for US (conventional) units.</p>
+<p>NCI-CTCAEv5 + <code>atoxgr_criteria_ctcv5</code> for SI units. +
+<code>atoxgr_criteria_ctcv5_uscv</code> for US (conventional) units.</p>
+<p>DAIDS + <code>atoxgr_criteria_daids</code> for SI units. +
+<code>atoxgr_criteria_daids_uscv</code> for US (conventional) units.</p>
+<p>Each metadata data set has required variables and optional variables,
+the optional variables are purely for transparency, and will contain
+detailed information about the grading criteria. The required variables
+are those used by<code>{admiral}</code> to create the grade.</p>
+<div id="structure-of-metadata-set" class="section level2">
+<h2>Structure of metadata set</h2>
+<p>Each metadata data set has the following structure for the required
+variables:</p>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="27%" />
+<col width="20%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Scope</th>
+<th>Type</th>
+<th>Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>TERM</strong></td>
+<td>Term describing the criteria applied to a particular lab test.</td>
+<td>Character</td>
+<td>“Anemia”</td>
+</tr>
+<tr class="even">
+<td><strong>DIRECTION</strong></td>
+<td>The direction of the abnormality of a particular lab test value</td>
+<td>Character</td>
+<td>“L” or “H”.</td>
+</tr>
+<tr class="odd">
+<td><strong>UNIT_CHECK</strong></td>
+<td>Unit of lab test, to check against input data if criteria is based
+on absolute values.</td>
+<td>Character</td>
+<td>“mmol/L”</td>
+</tr>
+<tr class="even">
+<td><strong>VAR_CHECK</strong></td>
+<td>Comma separated list of variables used in criteria, to check input
+data that variables exist.</td>
+<td>Character</td>
+<td>“AVAL, ANRLO”</td>
+</tr>
+<tr class="odd">
+<td><strong>FILTER</strong></td>
+<td>Only required for DAIDS grading. Variable to hold code that filters
+the lab data based on contents of column SUBGROUP.</td>
+<td>Character</td>
+<td>R code that is valid within a <code>filter</code> function
+call.</td>
+</tr>
+<tr class="even">
+<td><strong>GRADE_CRITERIA_CODE</strong></td>
+<td>Variable to hold code that creates grade based on defined
+criteria.</td>
+<td>Character</td>
+<td>R code that is a valid case statement within a <code>mutate</code>
+function call.</td>
+</tr>
+</tbody>
+</table>
+<p>The metadata data set has the following structure for the optional
+variables:</p>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="27%" />
+<col width="20%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Scope</th>
+<th>Type</th>
+<th>Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>SOC</strong></td>
+<td>System Organ Class the lab test belongs to.</td>
+<td>Character</td>
+<td>“Investigations”</td>
+</tr>
+<tr class="even">
+<td><strong>SUBGROUP</strong></td>
+<td>Only required for DAIDS grading. Description of subgroup of lab
+data.</td>
+<td>Character</td>
+<td>“&gt; 15 years of age”.</td>
+</tr>
+<tr class="odd">
+<td><strong>GRADE_1</strong></td>
+<td>Grade 1 criteria for lab test, normally straight from source
+document.</td>
+<td>Character</td>
+<td>“&gt;ULN - 3.0 x ULN”.</td>
+</tr>
+<tr class="even">
+<td><strong>GRADE_2</strong></td>
+<td>Grade 2 criteria for lab test, normally straight from source
+document.</td>
+<td>Character</td>
+<td>“&gt;3.0 - 5.0 x ULN”.</td>
+</tr>
+<tr class="odd">
+<td><strong>GRADE_3</strong></td>
+<td>Grade 3 criteria for lab test, normally straight from source
+document.</td>
+<td>Character</td>
+<td>“&gt;5.0 - 20.0 x ULN”.</td>
+</tr>
+<tr class="even">
+<td><strong>GRADE_4</strong></td>
+<td>Grade 4 criteria for lab test, normally straight from source
+document.</td>
+<td>Character</td>
+<td>“&gt;20.0 x ULN”.</td>
+</tr>
+<tr class="odd">
+<td><strong>DEFINITION</strong></td>
+<td>Definition of abnormality, normally from source document.</td>
+<td>Character</td>
+<td>“A finding based on laboratory test results that indicate an
+increase in the level of alanine aminotransferase (ALT or SGPT) in the
+blood specimen.”.</td>
+</tr>
+<tr class="even">
+<td><strong>COMMENT</strong></td>
+<td>Description of any decisions made by <code>{admiral}</code> to
+implement grading criteria, where grading criteria alone was
+ambiguous.</td>
+<td>Character</td>
+<td>“Take worst case and assume on anticoagulation”.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="handling-floating-points-when-comparing-numeric-values" class="section level1">
+<h1>Handling floating points when comparing numeric values</h1>
+<p>When comparing numeric values, for example
+<code>AVAL &gt; 1.1*ANRHI</code>, unexpected results can occur due to
+floating point issues. To solve this issue {admiral} used the
+<code>signif()</code> function on both side of the equation, the number
+of significant digits used to compare is passed into the function
+<code>derive_var_atoxgr_dir()</code> via the argument
+<code>signif_dig</code>. Please see documentation of the function for
+more details and the blog post <a href="https://pharmaverse.github.io/blog/posts/2023-10-30_floating_point/floating_point.html">How
+admiral handles floating points</a> for more context.</p>
+</div>
+<div id="creating-the-lab-grade" class="section level1">
+<h1>Creating the Lab Grade</h1>
+<div id="mapping-adlb-to-the-term-variable-in-the-admiral-metadata-data-set" class="section level2">
+<h2>Mapping <code>ADLB</code> to the <code>TERM</code> variable in the
+<code>{admiral}</code> metadata data set</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>lb <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>lb</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> admiral<span class="sc">::</span>admiral_adsl</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>lb <span class="ot">&lt;-</span> <span class="fu">convert_blanks_to_na</span>(lb)</span></code></pre></div>
+<p><br> Each company needs to map their lab test to a term that
+describes the criteria being applied. The list of terms defined in the
+<code>{admiral}</code> metadata to implement NCI-CTCAEv4 is below:
+<br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Anemia</td>
+</tr>
+<tr class="even">
+<td align="left">Leukocytosis</td>
+</tr>
+<tr class="odd">
+<td align="left">Activated partial thromboplastin time prolonged</td>
+</tr>
+<tr class="even">
+<td align="left">Alanine aminotransferase increased</td>
+</tr>
+<tr class="odd">
+<td align="left">Alkaline phosphatase increased</td>
+</tr>
+<tr class="even">
+<td align="left">Aspartate aminotransferase increased</td>
+</tr>
+<tr class="odd">
+<td align="left">Blood bilirubin increased</td>
+</tr>
+<tr class="even">
+<td align="left">CD4 lymphocytes decreased</td>
+</tr>
+<tr class="odd">
+<td align="left">Cholesterol high</td>
+</tr>
+<tr class="even">
+<td align="left">CPK increased</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><br> Likewise, the list of terms defined in the
+<code>{admiral}</code> metadata to implement NCI-CTCAEv5 is below:
+(Terms identical to NCI-CTCAEv4, except <code>Hyperglycemia</code>,
+<code>Hyperglycemia (Fasting)</code> and <code>Hypophosphatemia</code>)
+which are not present in NCI-CTCAEv5. <br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Anemia</td>
+</tr>
+<tr class="even">
+<td align="left">Leukocytosis</td>
+</tr>
+<tr class="odd">
+<td align="left">Activated partial thromboplastin time prolonged</td>
+</tr>
+<tr class="even">
+<td align="left">Alanine aminotransferase increased</td>
+</tr>
+<tr class="odd">
+<td align="left">Alkaline phosphatase increased</td>
+</tr>
+<tr class="even">
+<td align="left">Aspartate aminotransferase increased</td>
+</tr>
+<tr class="odd">
+<td align="left">Blood bilirubin increased</td>
+</tr>
+<tr class="even">
+<td align="left">CD4 lymphocytes decreased</td>
+</tr>
+<tr class="odd">
+<td align="left">Cholesterol high</td>
+</tr>
+<tr class="even">
+<td align="left">CPK increased</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><br> Finally, the list of terms defined in the <code>{admiral}</code>
+metadata to implement DAIDS is below: <br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Acidosis</td>
+</tr>
+<tr class="even">
+<td align="left">Albumin, Low</td>
+</tr>
+<tr class="odd">
+<td align="left">Alkaline Phosphatase, High</td>
+</tr>
+<tr class="even">
+<td align="left">Alkalosis</td>
+</tr>
+<tr class="odd">
+<td align="left">ALT, High</td>
+</tr>
+<tr class="even">
+<td align="left">Amylase, High</td>
+</tr>
+<tr class="odd">
+<td align="left">AST, High</td>
+</tr>
+<tr class="even">
+<td align="left">Bicarbonate, Low</td>
+</tr>
+<tr class="odd">
+<td align="left">Direct Bilirubin, High</td>
+</tr>
+<tr class="even">
+<td align="left">Total Bilirubin, High</td>
+</tr>
+</tbody>
+</table>
+<p><br> Using CDISC data these lab tests can be mapped to the correct
+terms, firstly create <code>PARAMCD</code>, <code>PARAM</code>,
+<code>AVAL</code>, <code>ANRLO</code> and <code>ANRHI</code>, also some
+lab grading criteria require <code>BASE</code> and <code>PCHG</code>, so
+these would also need to be created before running
+<code>derive_var_atoxgr_dir()</code> function. <br></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Look-up tables ----</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># Assign PARAMCD, PARAM, and PARAMN</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>param_lookup <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="sc">~</span>LBTESTCD, <span class="sc">~</span>PARAMCD,  <span class="sc">~</span>PARAM,                                             <span class="sc">~</span>PARAMN,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="st">&quot;ALB&quot;</span>,     <span class="st">&quot;ALB&quot;</span>,     <span class="st">&quot;Albumin (g/L)&quot;</span>,                                    <span class="dv">1</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="st">&quot;ALP&quot;</span>,     <span class="st">&quot;ALKPH&quot;</span>,   <span class="st">&quot;Alkaline Phosphatase (U/L)&quot;</span>,                       <span class="dv">2</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="st">&quot;ALT&quot;</span>,     <span class="st">&quot;ALT&quot;</span>,     <span class="st">&quot;Alanine Aminotransferase (U/L)&quot;</span>,                   <span class="dv">3</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="st">&quot;ANISO&quot;</span>,   <span class="st">&quot;ANISO&quot;</span>,   <span class="st">&quot;Anisocytes&quot;</span>,                                       <span class="dv">4</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="st">&quot;AST&quot;</span>,     <span class="st">&quot;AST&quot;</span>,     <span class="st">&quot;Aspartate Aminotransferase (U/L)&quot;</span>,                 <span class="dv">5</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="st">&quot;BASO&quot;</span>,    <span class="st">&quot;BASO&quot;</span>,    <span class="st">&quot;Basophils (10^9/L)&quot;</span>,                               <span class="dv">6</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  <span class="st">&quot;BASOLE&quot;</span>,  <span class="st">&quot;BASOLE&quot;</span>,  <span class="st">&quot;Basophils/Leukocytes (FRACTION)&quot;</span>,                  <span class="dv">7</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="st">&quot;BILI&quot;</span>,    <span class="st">&quot;BILI&quot;</span>,    <span class="st">&quot;Bilirubin (umol/L)&quot;</span>,                               <span class="dv">8</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  <span class="st">&quot;BUN&quot;</span>,     <span class="st">&quot;BUN&quot;</span>,     <span class="st">&quot;Blood Urea Nitrogen (mmol/L)&quot;</span>,                     <span class="dv">9</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="st">&quot;CA&quot;</span>,      <span class="st">&quot;CA&quot;</span>,      <span class="st">&quot;Calcium (mmol/L)&quot;</span>,                                 <span class="dv">10</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="st">&quot;CHOL&quot;</span>,    <span class="st">&quot;CHOLES&quot;</span>,  <span class="st">&quot;Cholesterol (mmol/L)&quot;</span>,                             <span class="dv">11</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="st">&quot;CK&quot;</span>,      <span class="st">&quot;CK&quot;</span>,      <span class="st">&quot;Creatinine Kinase (U/L)&quot;</span>,                          <span class="dv">12</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>  <span class="st">&quot;CL&quot;</span>,      <span class="st">&quot;CL&quot;</span>,      <span class="st">&quot;Chloride (mmol/L)&quot;</span>,                                <span class="dv">13</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>  <span class="st">&quot;COLOR&quot;</span>,   <span class="st">&quot;COLOR&quot;</span>,   <span class="st">&quot;Color&quot;</span>,                                            <span class="dv">14</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  <span class="st">&quot;CREAT&quot;</span>,   <span class="st">&quot;CREAT&quot;</span>,   <span class="st">&quot;Creatinine (umol/L)&quot;</span>,                              <span class="dv">15</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="st">&quot;EOS&quot;</span>,     <span class="st">&quot;EOS&quot;</span>,     <span class="st">&quot;Eosinophils (10^9/L)&quot;</span>,                             <span class="dv">16</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  <span class="st">&quot;EOSLE&quot;</span>,   <span class="st">&quot;EOSLE&quot;</span>,   <span class="st">&quot;Eosinophils/Leukocytes (FRACTION)&quot;</span>,                <span class="dv">17</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>  <span class="st">&quot;GGT&quot;</span>,     <span class="st">&quot;GGT&quot;</span>,     <span class="st">&quot;Gamma Glutamyl Transferase (U/L)&quot;</span>,                 <span class="dv">18</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  <span class="st">&quot;GLUC&quot;</span>,    <span class="st">&quot;GLUC&quot;</span>,    <span class="st">&quot;Glucose (mmol/L)&quot;</span>,                                 <span class="dv">19</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>  <span class="st">&quot;HBA1C&quot;</span>,   <span class="st">&quot;HBA1C&quot;</span>,   <span class="st">&quot;Hemoglobin A1C (1)&quot;</span>,                               <span class="dv">20</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>  <span class="st">&quot;HCT&quot;</span>,     <span class="st">&quot;HCT&quot;</span>,     <span class="st">&quot;Hematocrit (1)&quot;</span>,                                   <span class="dv">21</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>  <span class="st">&quot;HGB&quot;</span>,     <span class="st">&quot;HGB&quot;</span>,     <span class="st">&quot;Hemoglobin (mmol/L)&quot;</span>,                              <span class="dv">22</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>  <span class="st">&quot;K&quot;</span>,       <span class="st">&quot;POTAS&quot;</span>,   <span class="st">&quot;Potassium (mmol/L)&quot;</span>,                               <span class="dv">23</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>  <span class="st">&quot;KETONES&quot;</span>, <span class="st">&quot;KETON&quot;</span>,   <span class="st">&quot;Ketones&quot;</span>,                                          <span class="dv">24</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>  <span class="st">&quot;LYM&quot;</span>,     <span class="st">&quot;LYMPH&quot;</span>,   <span class="st">&quot;Lymphocytes (10^9/L)&quot;</span>,                             <span class="dv">25</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>  <span class="st">&quot;LYMLE&quot;</span>,   <span class="st">&quot;LYMPHLE&quot;</span>, <span class="st">&quot;Lymphocytes/Leukocytes (FRACTION)&quot;</span>,                <span class="dv">26</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>  <span class="st">&quot;MACROCY&quot;</span>, <span class="st">&quot;MACROC&quot;</span>,  <span class="st">&quot;Macrocytes&quot;</span>,                                       <span class="dv">27</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>  <span class="st">&quot;MCH&quot;</span>,     <span class="st">&quot;MCH&quot;</span>,     <span class="st">&quot;Ery. Mean Corpuscular Hemoglobin (fmol(Fe))&quot;</span>,      <span class="dv">28</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>  <span class="st">&quot;MCHC&quot;</span>,    <span class="st">&quot;MCHC&quot;</span>,    <span class="st">&quot;Ery. Mean Corpuscular HGB Concentration (mmol/L)&quot;</span>, <span class="dv">29</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>  <span class="st">&quot;MCV&quot;</span>,     <span class="st">&quot;MCV&quot;</span>,     <span class="st">&quot;Ery. Mean Corpuscular Volume (f/L)&quot;</span>,               <span class="dv">30</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>  <span class="st">&quot;MICROCY&quot;</span>, <span class="st">&quot;MICROC&quot;</span>,  <span class="st">&quot;Microcytes&quot;</span>,                                       <span class="dv">31</span>,</span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a>  <span class="st">&quot;MONO&quot;</span>,    <span class="st">&quot;MONO&quot;</span>,    <span class="st">&quot;Monocytes (10^9/L)&quot;</span>,                               <span class="dv">32</span>,</span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a>  <span class="st">&quot;MONOLE&quot;</span>,  <span class="st">&quot;MONOLE&quot;</span>,  <span class="st">&quot;Monocytes/Leukocytes (FRACTION)&quot;</span>,                  <span class="dv">33</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>  <span class="st">&quot;PH&quot;</span>,      <span class="st">&quot;PH&quot;</span>,      <span class="st">&quot;pH&quot;</span>,                                               <span class="dv">34</span>,</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>  <span class="st">&quot;PHOS&quot;</span>,    <span class="st">&quot;PHOS&quot;</span>,    <span class="st">&quot;Phosphate (mmol/L)&quot;</span>,                               <span class="dv">35</span>,</span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>  <span class="st">&quot;PLAT&quot;</span>,    <span class="st">&quot;PLAT&quot;</span>,    <span class="st">&quot;Platelet (10^9/L)&quot;</span>,                                <span class="dv">36</span>,</span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a>  <span class="st">&quot;POIKILO&quot;</span>, <span class="st">&quot;POIKIL&quot;</span>,  <span class="st">&quot;Poikilocytes&quot;</span>,                                     <span class="dv">37</span>,</span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>  <span class="st">&quot;POLYCHR&quot;</span>, <span class="st">&quot;POLYCH&quot;</span>,  <span class="st">&quot;Polychromasia&quot;</span>,                                    <span class="dv">38</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>  <span class="st">&quot;PROT&quot;</span>,    <span class="st">&quot;PROT&quot;</span>,    <span class="st">&quot;Protein (g/L)&quot;</span>,                                    <span class="dv">39</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>  <span class="st">&quot;RBC&quot;</span>,     <span class="st">&quot;RBC&quot;</span>,     <span class="st">&quot;Erythrocytes (TI/L)&quot;</span>,                              <span class="dv">40</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a>  <span class="st">&quot;SODIUM&quot;</span>,  <span class="st">&quot;SODIUM&quot;</span>,  <span class="st">&quot;Sodium (mmol/L)&quot;</span>,                                  <span class="dv">41</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>  <span class="st">&quot;SPGRAV&quot;</span>,  <span class="st">&quot;SPGRAV&quot;</span>,  <span class="st">&quot;Specific Gravity&quot;</span>,                                 <span class="dv">42</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a>  <span class="st">&quot;TSH&quot;</span>,     <span class="st">&quot;TSH&quot;</span>,     <span class="st">&quot;Thyrotropin (mU/L)&quot;</span>,                               <span class="dv">43</span>,</span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a>  <span class="st">&quot;URATE&quot;</span>,   <span class="st">&quot;URATE&quot;</span>,   <span class="st">&quot;Urate (umol/L)&quot;</span>,                                   <span class="dv">44</span>,</span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a>  <span class="st">&quot;UROBIL&quot;</span>,  <span class="st">&quot;UROBIL&quot;</span>,  <span class="st">&quot;Urobilinogen&quot;</span>,                                     <span class="dv">45</span>,</span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a>  <span class="st">&quot;VITB12&quot;</span>,  <span class="st">&quot;VITB12&quot;</span>,  <span class="st">&quot;Vitamin B12 (pmol/L)&quot;</span>,                             <span class="dv">46</span>,</span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a>  <span class="st">&quot;WBC&quot;</span>,     <span class="st">&quot;WBC&quot;</span>,     <span class="st">&quot;Leukocytes (10^9/L)&quot;</span>,                              <span class="dv">47</span></span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a>)</span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a>adlb <span class="ot">&lt;-</span> lb <span class="sc">%&gt;%</span></span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a>  <span class="do">## Add PARAMCD PARAM and PARAMN - from LOOK-UP table</span></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a>  <span class="fu">derive_vars_merged_lookup</span>(</span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a>    <span class="at">dataset_add =</span> param_lookup,</span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(PARAMCD, PARAM, PARAMN),</span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(LBTESTCD)</span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>  <span class="do">## Calculate PARCAT1 AVAL AVALC ANRLO ANRHI</span></span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a>  <span class="do">## Dummy the values for BASE</span></span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a>    <span class="at">PARCAT1 =</span> LBCAT,</span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a>    <span class="at">AVAL =</span> LBSTRESN,</span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a>    <span class="at">AVALC =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a>      <span class="fu">is.na</span>(LBSTRESN) <span class="sc">|</span> <span class="fu">as.character</span>(LBSTRESN) <span class="sc">!=</span> LBSTRESC,</span>
+<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a>      LBSTRESC,</span>
+<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a>      <span class="cn">NA</span></span>
+<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a>    ),</span>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>    <span class="at">ANRLO =</span> LBSTNRLO,</span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>    <span class="at">ANRHI =</span> LBSTNRHI,</span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>    <span class="at">BASE =</span> AVAL <span class="sc">-</span> <span class="dv">10</span></span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>  )</span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a><span class="co">#&gt; All `LBTESTCD` are mapped.</span></span></code></pre></div>
+<p>Another look-up table is used to add on <code>ATOXDSCL</code> and
+<code>ATOXDSCH</code> using <code>PARAMCD</code>. <code>ATOXDSCL</code>
+holds the terms for grading low lab values, and <code>ATOXDSCH</code>
+holds the terms for grading high lab values. The names of these
+variables can be user-defined. <code>ATOXDSCL</code> and
+<code>ATOXDSCH</code> are the link from ADLB data to the
+<code>{admiral}</code> metadata that holds the grading criteria.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Assign ATOXDSCL and ATOXDSCH to hold lab grading terms</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># ATOXDSCL and ATOXDSCH hold terms defined by NCI-CTCAEv4.</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>grade_lookup <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="sc">~</span>PARAMCD, <span class="sc">~</span>ATOXDSCL,                    <span class="sc">~</span>ATOXDSCH,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="st">&quot;ALB&quot;</span>,    <span class="st">&quot;Hypoalbuminemia&quot;</span>,            <span class="cn">NA_character_</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="st">&quot;ALKPH&quot;</span>,  <span class="cn">NA_character_</span>,                <span class="st">&quot;Alkaline phosphatase increased&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="st">&quot;ALT&quot;</span>,    <span class="cn">NA_character_</span>,                <span class="st">&quot;Alanine aminotransferase increased&quot;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="st">&quot;AST&quot;</span>,    <span class="cn">NA_character_</span>,                <span class="st">&quot;Aspartate aminotransferase increased&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="st">&quot;BILI&quot;</span>,   <span class="cn">NA_character_</span>,                <span class="st">&quot;Blood bilirubin increased&quot;</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="st">&quot;CA&quot;</span>,     <span class="st">&quot;Hypocalcemia&quot;</span>,               <span class="st">&quot;Hypercalcemia&quot;</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="st">&quot;CHOLES&quot;</span>, <span class="cn">NA_character_</span>,                <span class="st">&quot;Cholesterol high&quot;</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="st">&quot;CK&quot;</span>,     <span class="cn">NA_character_</span>,                <span class="st">&quot;CPK increased&quot;</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="st">&quot;CREAT&quot;</span>,  <span class="cn">NA_character_</span>,                <span class="st">&quot;Creatinine increased&quot;</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="st">&quot;GGT&quot;</span>,    <span class="cn">NA_character_</span>,                <span class="st">&quot;GGT increased&quot;</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>  <span class="st">&quot;GLUC&quot;</span>,   <span class="st">&quot;Hypoglycemia&quot;</span>,               <span class="st">&quot;Hyperglycemia&quot;</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>  <span class="st">&quot;HGB&quot;</span>,    <span class="st">&quot;Anemia&quot;</span>,                     <span class="st">&quot;Hemoglobin increased&quot;</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>  <span class="st">&quot;POTAS&quot;</span>,  <span class="st">&quot;Hypokalemia&quot;</span>,                <span class="st">&quot;Hyperkalemia&quot;</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  <span class="st">&quot;LYMPH&quot;</span>,  <span class="st">&quot;CD4 lymphocytes decreased&quot;</span>,  <span class="cn">NA_character_</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>  <span class="st">&quot;PHOS&quot;</span>,   <span class="st">&quot;Hypophosphatemia&quot;</span>,           <span class="cn">NA_character_</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>  <span class="st">&quot;PLAT&quot;</span>,   <span class="st">&quot;Platelet count decreased&quot;</span>,   <span class="cn">NA_character_</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>  <span class="st">&quot;SODIUM&quot;</span>, <span class="st">&quot;Hyponatremia&quot;</span>,               <span class="st">&quot;Hypernatremia&quot;</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>  <span class="st">&quot;WBC&quot;</span>,    <span class="st">&quot;White blood cell decreased&quot;</span>, <span class="st">&quot;Leukocytosis&quot;</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>)</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>adlb <span class="ot">&lt;-</span> adlb <span class="sc">%&gt;%</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>    <span class="at">dataset_add =</span> grade_lookup,</span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(PARAMCD),</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>  )</span></code></pre></div>
+<p>It is now straightforward to create the grade, for low lab values the
+grade will be held in <code>ATOXGRL</code> and for high lab values the
+grade will be held in <code>ATOXGRH</code>.</p>
+<p>Note: for NCICTCAEv5 grading, you would update
+<code>meta_criteria</code> parameter to
+<code>atoxgr_criteria_ctcv5</code> and for DAIDS grading you would
+update <code>meta_criteria</code> parameter to
+<code>atoxgr_criteria_daids</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>adlb <span class="ot">&lt;-</span> adlb <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">derive_var_atoxgr_dir</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">new_var =</span> ATOXGRL,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">tox_description_var =</span> ATOXDSCL,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">meta_criteria =</span> atoxgr_criteria_ctcv4,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="at">criteria_direction =</span> <span class="st">&quot;L&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">get_unit_expr =</span> <span class="fu">extract_unit</span>(PARAM)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">derive_var_atoxgr_dir</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    <span class="at">new_var =</span> ATOXGRH,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    <span class="at">tox_description_var =</span> ATOXDSCH,</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    <span class="at">meta_criteria =</span> atoxgr_criteria_ctcv4,</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="at">criteria_direction =</span> <span class="st">&quot;H&quot;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    <span class="at">get_unit_expr =</span> <span class="fu">extract_unit</span>(PARAM)</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Note: <code>{admiral}</code> does not grade ‘Anemia’ or ‘Hemoglobin
+Increased’ because the metadata is based on the SI unit of ‘g/L’,
+however the CDISC data has SI unit of ‘mmol/L’. Please see
+<code>UNIT_CHECK</code> variable in <code>{admiral}</code> metadata
+<code>atoxgr_criteria_ctcv4()</code> or
+<code>atoxgr_criteria_ctcv5()</code> or
+<code>atoxgr_criteria_daids()</code>, the metadata is in the data folder
+of <code>{admiral}</code>. <br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">UNIT_CHECK</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Anemia</td>
+<td align="left">g/L</td>
+</tr>
+<tr class="even">
+<td align="left">Leukocytosis</td>
+<td align="left">10^9/L</td>
+</tr>
+<tr class="odd">
+<td align="left">CD4 lymphocytes decreased</td>
+<td align="left">10^9/L</td>
+</tr>
+<tr class="even">
+<td align="left">Cholesterol high</td>
+<td align="left">mmol/L</td>
+</tr>
+<tr class="odd">
+<td align="left">Fibrinogen decreased</td>
+<td align="left">g/L</td>
+</tr>
+<tr class="even">
+<td align="left">Hemoglobin increased</td>
+<td align="left">g/L</td>
+</tr>
+<tr class="odd">
+<td align="left">Lymphocyte count decreased</td>
+<td align="left">10^9/L</td>
+</tr>
+<tr class="even">
+<td align="left">Lymphocyte count increased</td>
+<td align="left">10^9/L</td>
+</tr>
+<tr class="odd">
+<td align="left">Neutrophil count decreased</td>
+<td align="left">10^9/L</td>
+</tr>
+<tr class="even">
+<td align="left">Platelet count decreased</td>
+<td align="left">10^9/L</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><code>{admiral}</code> also gives the option to combine
+<code>ATOXGRL</code> and <code>ATOXGRH</code> into one variable, namely
+<code>ATOXGR</code>. Grades held in <code>ATOXGRL</code> will be given a
+negative value in <code>ATOXGR</code> to distinguish between low and
+high values.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>adlb <span class="ot">&lt;-</span> adlb <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">derive_var_atoxgr</span>()</span></code></pre></div>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ATOXDSCL</th>
+<th align="left">ATOXDSCH</th>
+<th align="left">ATOXGRL</th>
+<th align="left">ATOXGRH</th>
+<th align="left">ATOXGR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">CD4 lymphocytes decreased</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td align="left">Hypoalbuminemia</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="implement_ctcv4" class="section level1">
+<h1>NCI-CTCAEV4 implementation</h1>
+<div id="terms-graded" class="section level2">
+<h2>Terms graded</h2>
+<p>Grading is implemented for those lab tests where a lab value is
+included in the grading definition, <code>{admiral}</code> does NOT try
+to read any other data to determine the grade, and only the
+<code>ADLB</code> dataset is used. The following CTCAE v4.0 SOC values
+were identified for grading, these are “Investigations”, “Metabolism and
+nutrition disorders” and “Blood and lymphatic system disorders”.</p>
+<p>From these SOC values the following terms criteria is implemented in
+<code>{admiral}</code></p>
+<p>From SOC = “Investigations” there are 21 CTCAE v4.0 Terms:</p>
+<ul>
+<li>Activated partial thromboplastin time prolonged</li>
+<li>Alanine aminotransferase increased</li>
+<li>Alkaline phosphatase increased</li>
+<li>Aspartate aminotransferase increased</li>
+<li>Blood bilirubin increased</li>
+<li>CD4 lymphocytes decreased</li>
+<li>Cholesterol high</li>
+<li>CPK increased</li>
+<li>Creatinine increased</li>
+<li>Fibrinogen decreased</li>
+<li>GGT increased</li>
+<li>Haptoglobin decreased</li>
+<li>Hemoglobin increased</li>
+<li>INR increased</li>
+<li>Lipase increased</li>
+<li>Lymphocyte count decreased</li>
+<li>Lymphocyte count increased</li>
+<li>Neutrophil count decreased</li>
+<li>Platelet count decreased</li>
+<li>Serum amylase increased</li>
+<li>White blood cell decreased</li>
+</ul>
+<p>From the SOC = “Metabolism and nutrition disorders” there are 16
+CTCAE v4.0 Terms:</p>
+<ul>
+<li>Acidosis</li>
+<li>Alkalosis</li>
+<li>Hypercalcemia</li>
+<li>Hyperglycemia</li>
+<li>Hyperkalemia</li>
+<li>Hypermagnesemia</li>
+<li>Hypernatremia</li>
+<li>Hypertriglyceridemia</li>
+<li>Hyperuricemia</li>
+<li>Hypoalbuminemia</li>
+<li>Hypocalcemia</li>
+<li>Hypoglycemia</li>
+<li>Hypokalemia</li>
+<li>Hypomagnesemia</li>
+<li>Hyponatremia</li>
+<li>Hypophosphatemia</li>
+</ul>
+<p>From the SOC = “Blood and lymphatic system disorders” there are 2
+CTCAE v4.0 Terms:</p>
+<ul>
+<li>Anemia</li>
+<li>Leukocytosis</li>
+</ul>
+</div>
+<div id="updates-made-to-term" class="section level2">
+<h2>Updates made to TERM</h2>
+<p>For terms “Hypocalcemia” and “Hypercalcemia” the criteria is provided
+for Calcium and Ionized Calcium, therefore <code>{admiral}</code>
+created a row for each in the metadata, this is noted in the COMMENT
+variable of the metadata: <br></p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hypercalcemia</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+<tr class="even">
+<td align="left">Hypercalcemia (Ionized)</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypocalcemia</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+<tr class="even">
+<td align="left">Hypocalcemia (Ionized)</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Similarly, there is criteria applicable to Fasting Glucose as well as
+non-Fasting Glucose for “Hyperglycemia” so again this was split into 2
+rows, and noted in the COMMENT variable. Note “Hypoglycemia” does not
+require to be split into 2 rows:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hyperglycemia (Fasting)</td>
+<td align="left">Split Fasting Glucose and Glucose into 2 separate
+terms.</td>
+</tr>
+<tr class="even">
+<td align="left">Hyperglycemia</td>
+<td align="left">Split Fasting Glucose and Glucose into 2 separate
+terms.</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypoglycemia</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="assumptions-made-when-grading" class="section level2">
+<h2>Assumptions made when grading</h2>
+<p>For term “INR Increased” there is the following criteria:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR increased</td>
+<td align="left">&gt;1 - 1.5 x ULN; &gt;1 - 1.5 times above baseline if
+on anticoagulation</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><code>{admiral}</code> assumed worst case and used both parts of the
+criteria for grading, so comparing lab value against ULN and also BASE.
+The decision made was put in the <code>COMMENT</code> field.</p>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR increased</td>
+<td align="left">Take worst case and assume “on anticoagulation”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>For TERM “Hyperuricemia”, the criteria for Grade 1 and Grade 3 is the
+same with respect to the lab value, so worse case is assumed as grade 3.
+The decision made was put in the <code>COMMENT</code> field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="32%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+<th align="left">Grade_3</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hyperuricemia</td>
+<td align="left">&gt;ULN - 10 mg/dL (0.59 mmol/L) without physiologic
+consequences</td>
+<td align="left">&gt;ULN - 10 mg/dL (0.59 mmol/L) with physiologic
+consequences</td>
+<td align="left">Take worst case and assume “with physiologic
+consequences”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>A similar approach was taken for TERM “Hypokalemia” where Grade 1 and
+Grade 2 criteria is the same with respect to the lab value, so worse
+case is assumed as grade 2. The decision made was put in the
+<code>COMMENT</code> field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="11%" />
+<col width="36%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+<th align="left">Grade_2</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hypokalemia</td>
+<td align="left">&lt;LLN - 3.0 mmol/L</td>
+<td align="left">&lt;LLN - 3.0 mmol/L; symptomatic; intervention
+indicated</td>
+<td align="left">Take worst case and assume “symptomatic OR intervention
+indicated”</td>
+</tr>
+</tbody>
+</table>
+<p><br> Here is a complete list of all assumptions in the metadata for
+NCI-CTCAE-v4 <br></p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="20%" />
+<col width="21%" />
+<col width="17%" />
+<col width="16%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+<th align="left">Grade_2</th>
+<th align="left">Grade_3</th>
+<th align="left">Grade_4</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR increased</td>
+<td align="left">&gt;1 - 1.5 x ULN; &gt;1 - 1.5 times above baseline if
+on anticoagulation</td>
+<td align="left">&gt;1.5 - 2.5 x ULN; &gt;1.5 - 2.5 times above baseline
+if on anticoagulation</td>
+<td align="left">&gt;2.5 x ULN; &gt;2.5 times above baseline if on
+anticoagulation</td>
+<td align="left">-</td>
+<td align="left">Take worst case and assume “on anticoagulation”</td>
+</tr>
+<tr class="even">
+<td align="left">Hyperuricemia</td>
+<td align="left">&gt;ULN - 10 mg/dL (0.59 mmol/L) without physiologic
+consequences</td>
+<td align="left">-</td>
+<td align="left">&gt;ULN - 10 mg/dL (0.59 mmol/L) with physiologic
+consequences</td>
+<td align="left">&gt;10 mg/dL; &gt;0.59 mmol/L; life-threatening
+consequences</td>
+<td align="left">Take worst case and assume “with physiologic
+consequences”</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypokalemia</td>
+<td align="left">&lt;LLN - 3.0 mmol/L</td>
+<td align="left">&lt;LLN - 3.0 mmol/L; symptomatic; intervention
+indicated</td>
+<td align="left">&lt;3.0 - 2.5 mmol/L; hospitalization indicated</td>
+<td align="left">&lt;2.5 mmol/L; life-threatening consequences</td>
+<td align="left">Take worst case and assume “symptomatic OR intervention
+indicated”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+</div>
+<div id="implement_ctcv5" class="section level1">
+<h1>NCI-CTCAEV5 implementation</h1>
+<div id="terms-graded-1" class="section level2">
+<h2>Terms graded</h2>
+<p>Grading is implemented for those lab tests where a lab value is
+included in the grading definition, <code>{admiral}</code> does NOT try
+to read any other data to determine the grade, and only the
+<code>ADLB</code> dataset is used. The following CTCAE v5.0 SOC values
+were identified for grading, these are “Investigations”, “Metabolism and
+nutrition disorders” and “Blood and lymphatic system disorders”.</p>
+<p>From these SOC values the following terms criteria is implemented in
+<code>{admiral}</code></p>
+<p>From SOC = “Investigations” there are 21 CTCAE v5.0 Terms:</p>
+<ul>
+<li>Activated partial thromboplastin time prolonged</li>
+<li>Alanine aminotransferase increased</li>
+<li>Alkaline phosphatase increased</li>
+<li>Aspartate aminotransferase increased</li>
+<li>Blood bilirubin increased</li>
+<li>CD4 lymphocytes decreased</li>
+<li>Cholesterol high</li>
+<li>CPK increased</li>
+<li>Creatinine increased</li>
+<li>Fibrinogen decreased</li>
+<li>GGT increased</li>
+<li>Haptoglobin decreased</li>
+<li>Hemoglobin increased</li>
+<li>INR increased</li>
+<li>Lipase increased</li>
+<li>Lymphocyte count decreased</li>
+<li>Lymphocyte count increased</li>
+<li>Neutrophil count decreased</li>
+<li>Platelet count decreased</li>
+<li>Serum amylase increased</li>
+<li>White blood cell decreased</li>
+</ul>
+<p>Note: These are the same terms identified for NCI-CTCAEv4.</p>
+<p>From the SOC = “Metabolism and nutrition disorders” there are 14
+CTCAE v5.0 Terms:</p>
+<ul>
+<li>Acidosis</li>
+<li>Alkalosis</li>
+<li>Hypercalcemia</li>
+<li>Hyperkalemia</li>
+<li>Hypermagnesemia</li>
+<li>Hypernatremia</li>
+<li>Hypertriglyceridemia</li>
+<li>Hyperuricemia</li>
+<li>Hypoalbuminemia</li>
+<li>Hypocalcemia</li>
+<li>Hypoglycemia</li>
+<li>Hypokalemia</li>
+<li>Hypomagnesemia</li>
+<li>Hyponatremia</li>
+</ul>
+<p>Note: These are the same terms identified for NCI-CTCAEv4, except
+“Hypophosphatemia” and “Hyperglycemia” which are not gradable by
+quantitative lab values in NCICTCAEv5 grading criteria.</p>
+<p>From the SOC = “Blood and lymphatic system disorders” there are 2
+CTCAE v5.0 Terms:</p>
+<ul>
+<li>Anemia</li>
+<li>Leukocytosis</li>
+</ul>
+<p>Note: These are the same terms identified for NCI-CTCAEv4.</p>
+</div>
+<div id="updates-made-to-term-1" class="section level2">
+<h2>Updates made to TERM</h2>
+<p>For terms “Hypocalcemia” and “Hypercalcemia” the criteria is provided
+for Calcium and Ionized Calcium, therefore <code>{admiral}</code>
+created a row for each in the metadata, this is noted in the COMMENT
+variable of the metadata: <br></p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hypercalcemia</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+<tr class="even">
+<td align="left">Hypercalcemia (Ionized)</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypocalcemia</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+<tr class="even">
+<td align="left">Hypocalcemia (Ionized)</td>
+<td align="left">Split Corrected Calcium and Ionized Calcium into 2
+separate terms.</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="criteria-dependent-on-the-baseline-value" class="section level2">
+<h2>Criteria dependent on the Baseline Value</h2>
+<p>For terms “Alanine aminotransferase increased”, “Alkaline phosphatase
+increased”, “Aspartate aminotransferase increased”, “Blood bilirubin
+increased” and “GGT increased” the criteria is dependent on the Baseline
+Value being normal or abnormal. We use the variable <code>BNRIND</code>
+to determine this, and users can pass in the value(s) of
+<code>BNRIND</code> that indicate the baseline is abnormal via the
+argument <code>abnormal_indicator</code> in the function
+<code>derive_var_atoxgr_dir()</code>. For example, setting
+<code>abnormal_indicator = &quot;HIGH&quot;</code> would mean any observations
+with <code>BNRIND = &quot;HIGH&quot;</code> would be deemed to have an abnormal
+Baseline Value. Note: you can pass in multiple values,
+<code>abnormal_indicator = c(&quot;H&quot;, &quot;HIGH&quot;)</code></p>
+<p>For these 5 terms, this means if <code>BNRIND</code> is abnormal then
+the grade is always zero for the baseline observation. This is the
+conservative approach, to ensure you don’t see big changes in grade for
+a patient after they take treatment. Some companies may not want the
+baseline observation graded at all, so would post-process, if
+necessary.</p>
+</div>
+<div id="assumptions-made-when-grading-1" class="section level2">
+<h2>Assumptions made when grading</h2>
+<p>For term “INR Increased” there is the following criteria:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR increased</td>
+<td align="left">&gt;1.2 - 1.5; &gt;1 - 1.5 x baseline if on
+anticoagulation; monitoring only indicated</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><code>{admiral}</code> assumed worst case and used both parts of the
+criteria for grading, so comparing lab value against ULN and also BASE.
+The decision made was put in the <code>COMMENT</code> field.</p>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR increased</td>
+<td align="left">Take worst case and assume “on anticoagulation”</td>
+</tr>
+</tbody>
+</table>
+<p><br> Similarly, for terms “Lipase Increased” and “Serum amylase
+increased” there is the following criteria:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="28%" />
+<col width="37%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_2</th>
+<th align="left">Grade_3</th>
+<th align="left">Grade_4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lipase increased</td>
+<td align="left">&gt;1.5 - 2.0 x ULN; &gt;2.0 - 5.0 x ULN and
+asymptomatic</td>
+<td align="left">&gt;2.0 - 5.0 x ULN with signs or symptoms; &gt;5.0 x
+ULN and asymptomatic</td>
+<td align="left">&gt;5.0 x ULN and with signs or symptoms</td>
+</tr>
+<tr class="even">
+<td align="left">Serum amylase increased</td>
+<td align="left">&gt;1.5 - 2.0 x ULN; &gt;2.0 - 5.0 x ULN and
+asymptomatic</td>
+<td align="left">&gt;2.0 - 5.0 x ULN with signs or symptoms; &gt;5.0 x
+ULN and asymptomatic</td>
+<td align="left">&gt;5.0 x ULN and with signs or symptoms</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><code>{admiral}</code> assumed worst case and implemented highest
+grade possible. The decision made was put in the <code>COMMENT</code>
+field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="66%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lipase increased</td>
+<td align="left">Take worst case and assume “signs and symptoms”</td>
+</tr>
+<tr class="even">
+<td align="left">Serum amylase increased</td>
+<td align="left">Take worst case and assume “signs and symptoms”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>For TERM “Hyperuricemia”, the criteria for Grade 1 and Grade 3 is the
+same with respect to the lab value, so worse case is assumed as grade 3.
+The decision made was put in the <code>COMMENT</code> field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="26%" />
+<col width="23%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+<th align="left">Grade_3</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hyperuricemia</td>
+<td align="left">&gt;ULN without physiologic consequences</td>
+<td align="left">&gt;ULN with physiologic consequences</td>
+<td align="left">Take worst case and assume “with physiologic
+consequences”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>A similar approach was taken for TERM “Hypokalemia” and
+“Hyponatremia”. For “Hypokalemia”, where Grade 1 and Grade 2 criteria is
+the same with respect to the lab value, then worse case is assumed as
+grade 2. For “Hyponatremia”, where Grade 2 and Grade 3 criteria is the
+same with respect to the lab value, then worse case is assumed as grade
+3. The decision made was put in the <code>COMMENT</code> field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="9%" />
+<col width="29%" />
+<col width="33%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+<th align="left">Grade_2</th>
+<th align="left">Grade_3</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hypokalemia</td>
+<td align="left">&lt;LLN - 3.0 mmol/L</td>
+<td align="left">Symptomatic with &lt;LLN - 3.0 mmol/L; intervention
+indicated</td>
+<td align="left">&lt;3.0 - 2.5 mmol/L; hospitalization indicated</td>
+<td align="left">Take worst case and assume “symptomatic”</td>
+</tr>
+<tr class="even">
+<td align="left">Hyponatremia</td>
+<td align="left">&lt;LLN - 130 mmol/L</td>
+<td align="left">125-129 mmol/L and asymptomatic</td>
+<td align="left">125-129 mmol/L symptomatic; 120-124 mmol/L regardless
+of symptoms</td>
+<td align="left">Take worst case and assume “symptomatic”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Here is a complete list of all assumptions in the metadata for
+NCI-CTCAE-v5 <br></p>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="22%" />
+<col width="23%" />
+<col width="19%" />
+<col width="11%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+<th align="left">Grade_2</th>
+<th align="left">Grade_3</th>
+<th align="left">Grade_4</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR increased</td>
+<td align="left">&gt;1.2 - 1.5; &gt;1 - 1.5 x baseline if on
+anticoagulation; monitoring only indicated</td>
+<td align="left">&gt;1.5 - 2.5; &gt;1.5 - 2.5 x baseline if on
+anticoagulation; dose adjustment indicated</td>
+<td align="left">&gt;2.5; &gt;2.5 times above baseline if on
+anticoagulation</td>
+<td align="left">-</td>
+<td align="left">Take worst case and assume “on anticoagulation”</td>
+</tr>
+<tr class="even">
+<td align="left">Lipase increased</td>
+<td align="left">&gt;ULN - 1.5 x ULN</td>
+<td align="left">&gt;1.5 - 2.0 x ULN; &gt;2.0 - 5.0 x ULN and
+asymptomatic</td>
+<td align="left">&gt;2.0 - 5.0 x ULN with signs or symptoms; &gt;5.0 x
+ULN and asymptomatic</td>
+<td align="left">&gt;5.0 x ULN and with signs or symptoms</td>
+<td align="left">Take worst case and assume “signs and symptoms”</td>
+</tr>
+<tr class="odd">
+<td align="left">Serum amylase increased</td>
+<td align="left">&gt;ULN - 1.5 x ULN</td>
+<td align="left">&gt;1.5 - 2.0 x ULN; &gt;2.0 - 5.0 x ULN and
+asymptomatic</td>
+<td align="left">&gt;2.0 - 5.0 x ULN with signs or symptoms; &gt;5.0 x
+ULN and asymptomatic</td>
+<td align="left">&gt;5.0 x ULN and with signs or symptoms</td>
+<td align="left">Take worst case and assume “signs and symptoms”</td>
+</tr>
+<tr class="even">
+<td align="left">Hyperuricemia</td>
+<td align="left">&gt;ULN without physiologic consequences</td>
+<td align="left">-</td>
+<td align="left">&gt;ULN with physiologic consequences</td>
+<td align="left">Life-threatening consequences</td>
+<td align="left">Take worst case and assume “with physiologic
+consequences”</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypokalemia</td>
+<td align="left">&lt;LLN - 3.0 mmol/L</td>
+<td align="left">Symptomatic with &lt;LLN - 3.0 mmol/L; intervention
+indicated</td>
+<td align="left">&lt;3.0 - 2.5 mmol/L; hospitalization indicated</td>
+<td align="left">&lt;2.5 mmol/L; life-threatening consequences</td>
+<td align="left">Take worst case and assume “symptomatic”</td>
+</tr>
+<tr class="even">
+<td align="left">Hyponatremia</td>
+<td align="left">&lt;LLN - 130 mmol/L</td>
+<td align="left">125-129 mmol/L and asymptomatic</td>
+<td align="left">125-129 mmol/L symptomatic; 120-124 mmol/L regardless
+of symptoms</td>
+<td align="left">&lt;120 mmol/L; life-threatening consequences</td>
+<td align="left">Take worst case and assume “symptomatic”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+</div>
+<div id="implement_daids" class="section level1">
+<h1>DAIDS implementation</h1>
+<div id="terms-graded-2" class="section level2">
+<h2>Terms graded</h2>
+<p>Grading is implemented for those lab tests where a lab value is
+included in the grading definition, <code>{admiral}</code> does NOT try
+to read any other data to determine the grade, and only the
+<code>ADLB</code> dataset is used. The following DAIDS SOC values were
+identified for grading, these are “Chemistries” and “Hematology”.</p>
+<p>From these SOC values the following terms criteria is implemented in
+<code>{admiral}</code></p>
+<p>From SOC = “Chemistries” there are 31 DAIDS Terms:</p>
+<ul>
+<li>Acidosis</li>
+<li>Albumin, Low</li>
+<li>Alkaline Phosphatase, High</li>
+<li>Alkalosis</li>
+<li>ALT, High</li>
+<li>Amylase, High</li>
+<li>AST, High</li>
+<li>Bicarbonate, Low</li>
+<li>Direct Bilirubin, High</li>
+<li>Total Bilirubin, High</li>
+<li>Calcium, High</li>
+<li>Calcium (Ionized), High</li>
+<li>Calcium, Low</li>
+<li>Calcium (Ionized), Low</li>
+<li>Creatine Kinase, High</li>
+<li>Creatinine, High</li>
+<li>Glucose Fasting, High</li>
+<li>Glucose Nonfasting, High</li>
+<li>Glucose, Low</li>
+<li>Lactate, High</li>
+<li>Lipase, High</li>
+<li>Cholesterol, Fasting, High</li>
+<li>LDL, Fasting, High</li>
+<li>Triglycerides, Fasting, High</li>
+<li>Magnesium, Low</li>
+<li>Phosphate, Low</li>
+<li>Potassium, High</li>
+<li>Potassium, Low</li>
+<li>Sodium, High</li>
+<li>Sodium, Low</li>
+<li>Uric Acid, High</li>
+</ul>
+<p>Note: {admiral} does not grade for TERM = “Total Bilirubin, High”
+when AGE &lt;= 28 days, these criteria are in Appendix of <a href="https://rsc.niaid.nih.gov/sites/default/files/daidsgradingcorrectedv21.pdf"><strong>DAIDS
+Table for Grading the Severity of Adult and Pediatric Adverse Events
+Corrected Version 2.1</strong></a>.</p>
+<p>From the SOC = “Hematology” there are 11 DAIDS Terms:</p>
+<ul>
+<li>Absolute CD4+ Count, Low</li>
+<li>Absolute Lymphocyte Count, Low</li>
+<li>Absolute Neutrophil Count (ANC), Low</li>
+<li>Fibrinogen Decreased</li>
+<li>Hemoglobin, Low</li>
+<li>INR, High</li>
+<li>Methemoglobin</li>
+<li>PTT, High</li>
+<li>Platelets, Decreased</li>
+<li>PT, High</li>
+<li>WBC, Decreased</li>
+</ul>
+</div>
+<div id="terms-with-age-or-sex-dependent-grading-criteria" class="section level2">
+<h2>Terms with age or sex dependent grading criteria</h2>
+<p>Some terms defined in DAIDS have age or sex dependent grading
+criteria, {admiral} handles this in variable <code>FILTER</code> in the
+metadata. We use {admiral} function <code>compute_duration</code> to
+calculate age, see TERM = “Cholesterol, Fasting, High”: <br></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="86%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">FILTER</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cholesterol, Fasting, High</td>
+<td align="left">compute_duration(start_date = BRTHDT, end_date = LBDT,
+trunc_out = TRUE, out_unit = “years”, add_one = FALSE, type =
+“interval”) &gt;= 18 | is.na(BRTHDT) | is.na(LBDT)</td>
+</tr>
+<tr class="even">
+<td align="left">Cholesterol, Fasting, High</td>
+<td align="left">compute_duration(start_date = BRTHDT, end_date = LBDT,
+trunc_out = TRUE, out_unit = “years”, add_one = FALSE, type =
+“interval”) &lt; 18 | is.na(BRTHDT) | is.na(LBDT)</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Note: All possible values must be covered for each TERM defined, for
+TERM = “Absolute Lymphocyte Count, Low” and “Absolute CD4+ Count, Low”
+there is only grading criteria defined for age &gt; 5 years. Therefore,
+we add another row with age &lt;= 5 years and set grade to missing.
+Similarly, for TERM = “LDL, Fasting, High” there is only grading
+criteria defined for age &gt; 2 years. Therefore, we add another row
+with age &lt;= 2 years and set grade to missing.</p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="77%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">FILTER</th>
+<th align="left">GRADE_CRITERIA_CODE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LDL, Fasting, High</td>
+<td align="left">compute_duration(start_date = BRTHDT, end_date = LBDT,
+trunc_out = TRUE, out_unit = “years”, add_one = FALSE, type =
+“interval”) &lt;= 2 | is.na(BRTHDT) | is.na(LBDT)</td>
+<td align="left">NA_character_</td>
+</tr>
+<tr class="even">
+<td align="left">Absolute CD4+ Count, Low</td>
+<td align="left">compute_duration(start_date = BRTHDT, end_date = LBDT,
+trunc_out = TRUE, out_unit = “years”, add_one = FALSE, type =
+“interval”) &lt;= 5 | is.na(BRTHDT) | is.na(LBDT)</td>
+<td align="left">NA_character_</td>
+</tr>
+<tr class="odd">
+<td align="left">Absolute Lymphocyte Count, Low</td>
+<td align="left">compute_duration(start_date = BRTHDT, end_date = LBDT,
+trunc_out = TRUE, out_unit = “years”, add_one = FALSE, type =
+“interval”) &lt;= 5 | is.na(BRTHDT) | is.na(LBDT)</td>
+<td align="left">NA_character_</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="assumptions-made-when-grading-2" class="section level2">
+<h2>Assumptions made when grading</h2>
+<p>For terms “INR, High”, “PT, High” and “PTT, High”, the criteria is
+based on subjects “not on anticoagulation therapy”, this is captured in
+COMMENT field.</p>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INR, High</td>
+<td align="left">Assume “not on anticoagulation”</td>
+</tr>
+<tr class="even">
+<td align="left">PTT, High</td>
+<td align="left">Assume “not on anticoagulation”</td>
+</tr>
+<tr class="odd">
+<td align="left">PT, High</td>
+<td align="left">Assume “not on anticoagulation”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Similarly, for terms “Absolute CD4+ Count, Low” and “Absolute
+Lymphocyte Count, Low”, the criteria is based on subjects “not HIV
+infected”, this is captured in COMMENT field.</p>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Absolute CD4+ Count, Low</td>
+<td align="left">Assume “not HIV infected”</td>
+</tr>
+<tr class="even">
+<td align="left">Absolute Lymphocyte Count, Low</td>
+<td align="left">Assume “not HIV infected”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>For term “Acidosis”, “Alkalosis” and “Direct Bilirubin, High (&gt; 28
+days of age)”, {admiral} grades as high as possible, so assumes worst
+case and subject has “life-threatening consequences”. This is captured
+in COMMENT field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Acidosis</td>
+<td align="left">Assume “with lifethreatening consequences”</td>
+</tr>
+<tr class="even">
+<td align="left">Alkalosis</td>
+<td align="left">Assume “with lifethreatening consequences”</td>
+</tr>
+<tr class="odd">
+<td align="left">Direct Bilirubin, High</td>
+<td align="left">Assume worst case of “lifethreatening consequences
+(e.g., signs and symptoms of liver failure)”</td>
+</tr>
+</tbody>
+</table>
+<p><br> Similarly, for term “Lactate, High”, {admiral} only grade 1 and
+2, and there is the following criteria:</p>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">Grade_1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lactate, High</td>
+<td align="left">ULN to &lt; 2.0 x ULN without acidosis</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><code>{admiral}</code> assumed worst case and assume “without
+acidosis”. The decision made was put in the <code>COMMENT</code>
+field.</p>
+<p><br></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lactate, High</td>
+<td align="left">Assume “without acidosis” (only grade 1 and 2)</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>For TERM “Direct Bilirubin, High (&lt;= 28 days of age)” and “Uric
+Acid, High” the criteria is not given in SI unit. The conversion to SI
+unit is in the comment field.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Direct Bilirubin, High</td>
+<td align="left">17.1 used as conversion from “mg/dL” to “umol/L”</td>
+</tr>
+<tr class="even">
+<td align="left">Uric Acid, High</td>
+<td align="left">To convert “mmol/L” to “umol/L” multiply by 1000</td>
+</tr>
+</tbody>
+</table>
+<p><br> Here is a complete list of all assumptions in the metadata for
+DAIDs <br></p>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TERM</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Absolute CD4+ Count, Low</td>
+<td align="left">Assume “not HIV infected”</td>
+</tr>
+<tr class="even">
+<td align="left">Absolute Lymphocyte Count, Low</td>
+<td align="left">Assume “not HIV infected”</td>
+</tr>
+<tr class="odd">
+<td align="left">Acidosis</td>
+<td align="left">Assume “with lifethreatening consequences”</td>
+</tr>
+<tr class="even">
+<td align="left">Alkalosis</td>
+<td align="left">Assume “with lifethreatening consequences”</td>
+</tr>
+<tr class="odd">
+<td align="left">Direct Bilirubin, High</td>
+<td align="left">Assume worst case of “lifethreatening consequences
+(e.g., signs and symptoms of liver failure)”</td>
+</tr>
+<tr class="even">
+<td align="left">Direct Bilirubin, High</td>
+<td align="left">17.1 used as conversion from “mg/dL” to “umol/L”</td>
+</tr>
+<tr class="odd">
+<td align="left">INR, High</td>
+<td align="left">Assume “not on anticoagulation”</td>
+</tr>
+<tr class="even">
+<td align="left">Lactate, High</td>
+<td align="left">Assume “without acidosis” (only grade 1 and 2)</td>
+</tr>
+<tr class="odd">
+<td align="left">Methemoglobin</td>
+<td align="left">% hemoglobin</td>
+</tr>
+<tr class="even">
+<td align="left">PT, High</td>
+<td align="left">Assume “not on anticoagulation”</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+</div>
+<div id="us-conventional-unit-implementation" class="section level1">
+<h1>US (Conventional) unit implementation</h1>
+<p>The metadata for the US (Conventional) units is the same as the
+metadata for SI units except when checking for units, when the criteria
+is based on numeric values. The <code>UNIT_CHECK</code> variable will
+then contain the US (Conventional) unit, and if the unit is not a
+synonym for the SI unit then the grading criteria is updated
+accordingly. There were some lab tests where it made sense to have 2
+sets of US (Conventional) units, these were lab tests related to
+<code>&quot;WBC&quot;</code>, <code>&quot;Lymphocytes&quot;</code>,
+<code>&quot;Neutrophils&quot;</code> and <code>&quot;Platelets&quot;</code>. We have the US
+unit <code>&quot;10^3/uL&quot;</code> which is a synonym of the SI unit
+<code>&quot;10^9/L&quot;</code>, and also the US unit <code>&quot;10^3/ml&quot;</code> which
+is a synonym for <code>&quot;/mm3&quot;</code> which is included in the grading
+criteria documentation. If companies have lab tests that have units that
+don’t exactly match what is in the <code>UNIT_CHECK</code> variable, but
+the unit is a one-to-one mapping, then the <code>UNIT_CHECK</code>
+variable can be updated with company-specific code to reflect this.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>With NCI-CTCAEv4, NCI-CTCAEv5 and DAIDS grading now implemented,
+{admiral} may look to implement other industry standard grading
+criteria. Providing tools for users to easily interact with the metadata
+to update criteria, based on their companies needs will also be looked
+at. Ideally, users should be able to create their own metadata for
+company specific grading schemes.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

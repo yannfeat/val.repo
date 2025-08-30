@@ -1,0 +1,5 @@
+exportPattern("^[^\\.]") 
+importFrom("graphics", "legend", "lines", "title")
+importFrom("stats", "median", "quantile", "rnorm", "runif", "sd")
+importFrom("ROI", "F_objective", "V_bound", "OP", "ROI_solve")
+import("ROI.plugin.optimx")

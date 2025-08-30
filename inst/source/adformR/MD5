@@ -1,0 +1,15 @@
+d71982af7169325feefe73dcc7a3a429 *DESCRIPTION
+2795646d2dc28d3354e627224b0d21d1 *NAMESPACE
+e758b42789d4b50ce32b9fa06740df36 *NEWS.md
+3b8ceb4af720557dc4798ec401ea0431 *R/fetch_adform.R
+1c7d5987f19bceffb991955143869bbf *R/my_adform_data.R
+c7a68d3e497a5a99cf5804a876829dc0 *README.md
+faa7af1f7e33a44b658b735e629d90e6 *build/vignette.rds
+c432604aa4aeecbd89f6501048ad338e *data/my_adform_data.RData
+cb1c8086b76bad1ac0922e5124f942fe *inst/doc/tutorial.R
+6cf7e5322e26a33e8a7e0dc4ff0d81e9 *inst/doc/tutorial.Rmd
+3d56d9ab9ae61ba38eec12d8f80d1d28 *inst/doc/tutorial.html
+5e58dae105fa93301395226d8448ff8b *man/fetch_adform.Rd
+d243406542fc1513931ac32d29927d73 *man/my_adform_data.Rd
+c432604aa4aeecbd89f6501048ad338e *vignettes/my_adform_data.RData
+6cf7e5322e26a33e8a7e0dc4ff0d81e9 *vignettes/tutorial.Rmd

@@ -1,0 +1,3334 @@
+2023-01-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-22 ----------
+
+2023-01-29  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* src/testsCpp.cpp: remove useless declarations of spl1 lists array remove useless declarations of spl1 lists array
+
+2023-01-27  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-21 ----------
+
+2023-01-27  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-21 ----------
+
+2023-01-27  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : Reduce pnm size to lighten the package
+
+2023-01-25  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml: Delete the workflow
+	to build binaries under mac-arm64 configuration not yet available with github actions:
+	https://github.com/actions/runner-images/issues/2187
+
+2023-01-25  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml: Update
+	build-bin-macOS-arm64.yaml
+
+2023-01-24  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml: Update
+	build-bin-macOS-arm64.yaml: try another label for arm64
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml,
+	.github/workflows/build-bin-macOS.yaml,
+	.github/workflows/build-bin-windows.yaml: Update workflows to build
+	binaries for maOS and windows: correct misprints
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml: Update
+	build-bin-macOS-arm64.yaml
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml: Update
+	build-bin-macOS-arm64
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS-arm64.yaml,
+	.github/workflows/build-bin-macOS.yaml: Separate the workflow script
+	to handle two architectures for mac (intel and arm)
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS.yaml: Update build-bin-macOS:
+	try to also build the package with an 'arm' configuration for macOS
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-windows.yaml: Add
+	build-bin-windows.yaml
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS.yaml: Correct a misprint in
+	build-bin-macOS.yaml
+
+2023-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/build-bin-macOS.yaml: Add the workflow
+	build-bin-macOS.yaml
+
+2023-01-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check-rcpp.yaml: Delete
+	R-CMD-check-rcpp.yaml after merging the ade4-rcpp branch
+
+2023-01-17  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : commit e484cff4deb9bd91f7e09e39ce11f0170454616f Author: Aurélie
+	Siberchicot <aurelie.siberchicot@univ-lyon1.fr> Date:   Mon Jan 16
+	15:37:38 2023 +0100
+
+2023-01-16  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check-rcpp.yaml: Update
+	R-CMD-check-rcpp.yaml: add libraries for macOS
+
+2023-01-16  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check.yaml: Update R-CMD-check.yaml: add
+	libraries for macOS
+
+2023-01-13  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/randtest.between.R: Update randtest.between.R put back the definition of X.lw
+
+2023-01-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check.yaml: Update R-CMD-check.yaml: add
+	xquartz for macOS
+
+2023-01-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check-rcpp.yaml: Correct indentation in
+	R-CMD-check-rcpp
+
+2023-01-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check-rcpp.yaml: Add a copy of
+	R-CMD-check-rcpp.yaml in the ade4-Rcpp branch
+
+2023-01-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .Rbuildignore: A minor commit to in the ade4-Rcpp branch to
+	trigger R-CMD-check-rcpp
+
+2023-01-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check.yaml: Correct a misprint in
+	R-CMD-check.yaml
+
+2023-01-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check.yaml: Update R-CMD-check.yaml:
+	install udunits for macOS
+
+2023-01-11  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check.yaml: Update R-CMD-check.yaml: a lot
+	of tags are deprecated
+
+2023-01-11  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .github/workflows/R-CMD-check-rcpp.yaml,
+	.github/workflows/R-CMD-check.yaml: Add a workflow to check the
+	ade4-Rcpp branch
+
+2023-01-11  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* README.md: Update README
+
+2023-01-11  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Correct a bug in the function 'ldist.ktab' for
+	fuzzy data
+
+2023-01-04  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/mantel.randtest.R, R/randtest.between.R: Cleaning R code Cleaning R code for unused variables after moving from C to C++
+	calls
+
+2023-01-03  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : commit 3b3c2d79a1587998868e8599849dfec84afa3ece Author: Aurélie
+	Siberchicot <aurelie.siberchicot@univ-lyon1.fr> Date:   Tue Jan 3
+	15:59:01 2023 +0100
+
+2023-01-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Just indent
+
+2022-11-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/presid2002.Rd: Update URL in presid2002
+
+2022-11-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-20 ----------
+
+2022-11-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-20 ----------
+
+2022-11-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/area.plot.R, R/kdisteuclid.R, R/s.label.R, R/s.logo.R,
+	R/s.value.R, R/supdist.R: Correct if() conditions comparing class()
+	to string, now use inherits() as required by R CMD check
+
+2022-11-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/atlas.Rd, man/atya.Rd, man/avijons.Rd, man/bca.Rd,
+	man/bca.coinertia.Rd, man/buech.Rd, man/butterfly.Rd,
+	man/bwca.dpcoa.Rd, man/capitales.Rd, man/elec88.Rd,
+	man/ggtortoises.Rd, man/irishdata.Rd, man/julliot.Rd, man/jv73.Rd,
+	man/kcponds.Rd, man/mafragh.Rd, man/pcw.Rd, man/sarcelles.Rd,
+	man/supdist.Rd, man/suprow.pta.Rd, man/t3012.Rd, man/tintoodiel.Rd,
+	man/vegtf.Rd, man/wca.Rd, man/wca.coinertia.Rd, man/zealand.Rd: Add
+	a newline at the end of several Rd files
+
+2022-10-28  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* src/fourthcorner.c: Correct a bug to deal with non-integers values
+	in table L Homogenity/correlation ratio measures require to have at least 23
+	individuals per class to be computed (computing a variance requires
+	at leats 2 indiciduals). When dealing with non-integres values in L
+	(e.g. cover, proportion), we must count the number of non-null cells
+	(correpondence) but not the total abundance (which can be less than
+	1 and thus induces a bug in the if condition)
+
+2022-10-20  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* src/divsub.c, src/phylog.c, src/testamova.c: Change encoding from
+	ISO-8859 to UTF-8 Modify the encoding to properly manage accented characters in
+	comments. It induced a WARNING on Rdevel (mail by K Hornick)
+
+2022-10-20  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* man/chickenk.Rd, man/multispati.Rd, man/randboot.Rd: Remove LateX
+	special characters Remove symbols that returns a NOTE in Rdevel
+
+2022-06-29  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/randtest.Rd: added links to other methods & functions for
+	permutation tests
+
+2022-05-05  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/procuste.R, R/procuste.randtest.R: Update of procuste analysis
+	permutation test Functions ade4:::randtest.procuste and procuste.randtest now call
+	the R function procuste.rtest instead of calling the C function
+	testprocuste
+
+2022-05-05  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* : Update mafragh.rda version = 2 for compat with R 2.5
+
+2022-05-05  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* : Update mafragh.rda set class of mafragh$spenames$scientific and mafragh$spenames$code
+	to character
+
+2022-04-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-19 ----------
+
+2022-04-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-19 ----------
+
+2022-04-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/pcw.Rd: Update a help file: a 'url' tag becomes a 'doi' tag
+
+2022-03-07  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* README.md: Add a badge for the licence required to apply for BlueHats Semester of Code
+
+2022-01-04  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* src/testdim.c: Specify string lengths to BLAS/LAPACK routines to
+	allow compilation using new compilers The solution is to pass the unit string lengths explicitly using
+	   FCONE defined in Rconfig.h if USE_FC_LEN_T is defined. See
+
+	http://developer.r-project.org/blosxom.cgi/R-devel/2019/08/29#n2019-08-29. Update required by B. Ripley by email (18/09/2021) for compatibility for next R versions
+
+2021-12-30  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/loocv.R: Update loocv.R modifications for the case p = 1 (only one variable): need to avoid
+	type coercition from dataframe to vector. And also, no need to check
+	axis direction.
+
+2021-12-14  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/supdist.Rd: Update supdist.Rd Supplementary distances plotted in red in supdist example
+
+2021-10-08  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/houmousr.Rd: Added the houmousr data set House Mouse morphometric data set, used in: Thioulouse, J., Renaud,
+	S., Dufour, AB. et al. Overcoming the Spurious Groups Problem in
+	Between-Group PCA. Evol Biol (2021).
+	https://doi.org/10.1007/s11692-021-09550-0
+
+2021-09-29  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/pcw.Rd: Update URL
+
+2021-09-16  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-18 ----------
+	
+2021-09-16  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-18 ----------
+
+2021-09-16  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/loocv.bca.Rd: Update the help file of 'loocv.bca': the 'url'
+	tag becomes 'doi' for the references
+
+2021-09-15  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/loocv.bca.Rd: Update loocv.bca.Rd
+
+2021-09-14  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/pcw.Rd: Update URL
+
+2021-07-07  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* NAMESPACE, R/loocv.R, man/loocv.bca.Rd, man/loocv.discrimin.Rd: 
+	updates to print and plot functions for loocv objects updates to print and plot functions for bca and discrimin loocv
+	objects
+
+2021-07-06  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* NAMESPACE, R/loocv.R, man/loocv.bca.Rd, man/loocv.discrimin.Rd,
+	src/init.c: added print and plot functions for loocv Added print and (dummy) plot functions for loocv objects (bca +
+	discrimin). Added two classes for the corresponding objects:
+	bcaloocv and discloocv. Added the attributes and matched calls to
+	these objects in the loocv functions. Plot functions are really
+	implemented only in adegraphics.
+
+2021-06-17  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-17 ----------
+
+2021-06-17  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-17 ----------
+
+2021-06-17  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .Rbuildignore, .gitignore: Update the files .Rbuildignore and
+	.gitignore
+
+2021-06-17  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/loocv.R, man/loocv.bca.Rd, man/loocv.discrimin.Rd: Remove sPRESS
+	which is not included in Thioulouse et al submitted paper
+
+2021-05-25  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : commit 3d4d3529323ddefb6ff3fe4df067c2a11e5bd8fc Author: Aurélie
+	Siberchicot <aurelie.siberchicot@univ-lyon1.fr> Date:   Tue May 25
+	10:22:11 2021 +0200
+
+2021-05-21  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/loocv.R, man/loocv.bca.Rd, man/loocv.discrimin.Rd: added
+	DeltaOij in loocv ouputs added DeltaOij in loocv ouputs
+
+2021-05-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/bwca.dpcoa.Rd: Update the link to the soilmicrob dataset: it
+	is now a symbolic https link
+
+2021-04-27  Jean <jean@thioulouse.fr>
+
+	* man/loocv.bca.Rd, man/loocv.discrimin.Rd: update loocv docs update to loocv.between and loocv.discrimin Rd doc files
+
+2021-04-26  Jean <jean@thioulouse.fr>
+
+	* DESCRIPTION, NAMESPACE, R/loocv.R: remove  progress + parallel
+	packages from Imports move  progress + parallel packages from Imports to Suggests. Changes
+	to DESCRIPTION, NAMESPACE and loocv.R
+
+2021-04-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/mbpcaiv.Rd, man/mbpls.Rd, man/multiblock.Rd,
+	man/randboot.multiblock.Rd, man/supdist.Rd,
+	man/testdim.multiblock.Rd: Update help files: \href becomes \doi for
+	doi references
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.bca.Rd, man/loocv.discrimin.Rd: typos in loocv docs
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* man/loocv.bca.Rd, man/loocv.discrimin.Rd, man/loocv.dudi.Rd: typos
+	in loocv functions doc
+
+2021-04-16  Jean <jean@thioulouse.fr>
+
+	* R/loocv.R: added overlap index in loocv.discrimin
+
+2021-04-15  Jean <jean@thioulouse.fr>
+
+	* : commit 133407fe79f38836b762100049ab6418bf315013 Author: Jean
+	<jean@thioulouse.fr> Date:   Thu Apr 15 15:28:22 2021 +0200
+
+2021-03-24  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/mcoa.R: Update mcoa.R Problem in function summary.mcoa, sumry[, 6] object$cov2[i, ] should
+	be a 1 column df (or a vector)
+
+2021-02-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .Rbuildignore, .travis.yml, README.md, appveyor.yml: Delete files
+	and code about travis and appveyor
+
+2021-02-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .Rbuildignore, .github/.gitignore,
+	.github/workflows/R-CMD-check.yaml, README.md: Add a github workflow
+	to check the package
+
+2021-01-07  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/fourthcorner.R, R/fourthcorner2.R, man/fourthcorner.Rd: Correct
+	a bug: add a stop message in functions fourthcorner and
+	fourthcorner2 when the R or Q matrix don't contain numeric values or
+	factors.
+
+2020-11-02  Jean Thioulouse <jean@thioulouse.eu>
+
+	* man/loocv.dudi.Rd: added details
+
+2020-10-30  Jean <jean@thioulouse.fr>
+
+	* man/loocv.bca.Rd, man/loocv.dudi.Rd: added links in loocv docs added links in loocv.bca.Rd and loocv.dudi.Rd
+
+2020-10-29  Jean <jean@thioulouse.fr>
+
+	* man/loocv.dudi.Rd: Update loocv.dudi.Rd updated loocv.dudi.Rd (doc was based on a previous version of the
+	function)
+
+2020-10-28  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-16 ----------
+	
+2020-10-28  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-16 ----------
+
+2020-10-28  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/loocv.bca.Rd: Correct typo
+
+2020-10-27  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/loocv.bca.Rd, man/loocv.discrimin.Rd, man/loocv.dudi.Rd,
+	man/pcw.Rd, man/varipart.Rd: Correct typos
+
+2020-10-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION, man/arrival.Rd, man/casitas.Rd, man/kcponds.Rd,
+	man/mbpcaiv.Rd, man/mbpls.Rd, man/multiblock.Rd, man/pcw.Rd,
+	man/presid2002.Rd, man/randboot.multiblock.Rd,
+	man/testdim.multiblock.Rd: Update some URL in rd files
+
+2020-10-19  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/loocv.discrimin.Rd: Update loocv.discrimin.Rd use generic loocv instead of loocv.discrimin in first exemple
+	(skulls)
+
+2020-10-19  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION, NAMESPACE, R/loocv.R, man/loocv.bca.Rd,
+	man/loocv.discrimin.Rd, man/loocv.dudi.Rd: Add a new generic method
+	"loocv" These new functions allows to perform leave one-out cross-validation
+	for several simple dudi, between and discrimin classes
+
+2020-09-28  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/suprow.R: Update a warning in 'suprow.dudi'
+
+2020-06-24  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* inst/CITATION: Update the CITATION file
+
+2020-06-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: Remove date
+
+2020-06-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/apis108.Rd: Update URL
+
+2020-04-23  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 9991a008cd8276469ed5987dfebc7bab48241ac1 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Thu Apr 23
+	17:21:53 2020 +0200
+	
+2020-02-13  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-15 ----------
+
+2020-02-13  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-15 ----------
+
+2020-02-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION, man/cailliez.Rd, man/kdisteuclid.Rd, man/oribatid.Rd: 
+	Remove some broken URL
+
+2020-02-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-14 ----------
+
+2020-02-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION: Packages sp and pixmap are now in 'Imports'as they
+	defined S4 classes used in some data sets. Mail by B. Ripley
+
+2019-10-14  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/suprowpta.R, man/suprowpta.Rd: New function
+	'suprowpta'
+
+2019-09-24  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/randtest.Rd: Trunk a line in a help file
+
+2019-09-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/krandtest.R, man/krandtest.Rd, man/randtest.Rd: Udpate and
+	uniformize the help pages of 'krandtest' and 'randtest'
+
+2019-09-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/krandtest.R, man/krandtest.Rd: Add [ and [[ methods
+	for krandtest
+
+2019-08-07  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dist.binary.R, R/dist.ktab.R, man/kdist.Rd: Correct a typo:
+	"Sockal" is now "Sokal" (Comment by P. Legendre)
+
+2019-05-17  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/apis108.Rd, man/casitas.Rd, man/chevaine.Rd, man/hdpg.Rd: 
+	Simplify the examples of the datasets 'apis108', 'casitas',
+	'chevaine' and 'hdpg' (no longer use deprecated genetic functions)
+
+2019-05-17  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/s.kde2d.Rd: Update the example used with 's.kde2d'
+
+2019-04-11  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/ade4-deprecated.R, R/dist.genet.R, R/fuzzygenet.R,
+	R/genet.R, man/ade4-deprecated.Rd, man/dist.genet.Rd,
+	man/fuzzygenet.Rd, man/genet.Rd: The functions 'dist.genet',
+	'fuzzygenet', 'char2genet', 'count2genet' and 'freq2genet' are
+	removed
+
+2019-04-10  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/EH.R, R/ade4-deprecated.R, R/optimEH.R,
+	R/orisaved.R, R/randEH.R, man/EH.Rd, man/ade4-deprecated.Rd,
+	man/optimEH.Rd, man/orisaved.Rd, man/randEH.Rd: The functions 'EH',
+	'randEH', 'optimEH' and 'orisaved' are removed
+
+2019-04-10  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/multispati.R, man/multispati.Rd: The 'print.multispati',
+	'plot.multispati' and 'summary.multispati' methods are now
+	deprecated
+
+2018-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Correct a bug in 'dist.ktab', 'ldist.ktab' and
+	'kdist.cor'
+
+
+2018-09-03  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/bacteria.Rd: Add url in the help page of 'bacteria' data
+
+2018-08-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-13 ----------
+
+2018-08-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* inst/CITATION, man/bacteria.Rd: Correct invalid URL
+
+2018-08-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-12 ----------
+
+2018-08-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-12 ----------
+
+2018-08-29  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION, inst/CITATION, man/ade4.package.Rd, man/mbpcaiv.Rd,
+	man/mbpls.Rd, man/multiblock.Rd, man/randboot.multiblock.Rd,
+	man/testdim.multiblock.Rd: Update citation and add reference to the
+	new JSS paper
+
+2018-08-20  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/varipart.R: Clean the code
+
+2018-08-06  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/varipart.R: Start a new and faster implementation to deal with
+	unweighted models
+
+2018-08-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/varipart.R, man/varipart.Rd: The function 'varipart' now accepts
+	a matrix, vector or data.frame as response table
+
+2018-08-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/varipart.R, man/varipart.Rd: Improve varipart to
+	compute adjusted fractions when no covaribales are considered and
+	add a new method 'print.varipart'
+
+2018-08-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* man/dist.ktab.Rd: Correct a link to a function in the doc
+
+2018-07-06  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/rlq.R: Correct a typo in the summary.rlq function (mail by
+	Manfred Jensen, 29/06/2018)
+
+2018-06-22  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/maples.Rd: Correct a bibliographic reference
+
+2018-06-20  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dpcoa.R: correct a small bug in summary.dpcoa
+
+2018-05-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/inertia.dudi.R: Update output names in inertia.dudi
+
+2018-05-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/inertia.dudi.Rd: Update the help file of 'inertia.dudi'
+
+2018-05-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/inertia.dudi.Rd: Update the help file of 'inertia.dudi'
+
+2018-05-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/inertia.dudi.R: Update 'inertia.dudi' and 'summary.inertia'
+
+2018-05-14  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/orthobasis.R: Correct the output for orthobasis that contains
+	only one column (and transformed to vector by default, i.e. when
+	drop = TRUE)
+
+2018-04-25  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/foucart.R: issue raised by Didier Plat https://github.com/sdray/ade4/issues/13
+
+2018-04-05  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-11 ----------
+
+2018-04-05  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-11 ----------
+
+2018-04-04  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/randtest.pcaiv.R: Error in dimnames() vs names() in formula fmla L. 14 : dimnames(df)[[2]] was replaced by names(df)[[2]], which is
+	not good. Replaced by names(df).
+
+2018-03-29  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/coinertia.R: Misprint in print.coinertia
+
+2018-03-16  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dudi.mix.R: Correct the extracting in tab (now by drop = FALSE)
+	to deal with cases with only two levels (bug identified by Ceres
+	Barros on GitHub, issue 10)
+
+2018-03-14  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/suprow.R, man/suprow.Rd: Add new method "suprow.fca"
+	(proposition by Martial Ferreol on Github)
+
+2018-03-14  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dudi.coa.R: Correct a bug to deal with large numbers in integer
+	matrix (bug found by Angela Fuentes Pardo, email 10/02/2018)
+
+2018-01-16  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .travis.yml: Remove last commit (was an error)
+
+2018-01-16  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .travis.yml: Add 'RANN' to allow building vignette
+
+2018-01-03  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .travis.yml: Update .travis.yml Remove the '--run-dontrun'  argument in the 'r_check_args' tag
+
+2018-01-03  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .travis.yml: Update .travis.yml Remove the 'travis_wait' use
+
+2018-01-03  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .travis.yml: Update .travis.yml Add a tag to extend the time the command has to finish.
+
+2018-01-03  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .travis.yml: Update .travis.yml Add 'r_check_args' and 'r_packages' tags
+
+2017-12-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-10 ----------
+
+2017-12-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-10 ----------
+
+2017-12-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: Correct misprint in the title in the DESCRIPTION file
+
+2017-12-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-9 ----------
+
+2017-12-06  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/mantel.randtest.R, R/mantel.rtest.R: Returned objects now belong
+	to subclass "mantelrtest" (to implement a 'msr.mantelrtest' in
+	adespatial).
+
+2017-12-06  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/randtest.R, man/randtest.Rd: Add a new argument to function
+	as.randtest to specify subclasses for the returned object (by
+	default NULL)
+
+2017-12-05  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/coinertia.R, R/dudi.R, R/dudi.pco.R, R/mbpcaiv.R, R/mbpls.R,
+	R/mcoa.R, R/statis.R, R/utilities.R: Add a message containing the
+	function called for the 'dudi' creation, after user selects nf
+	(Feature request by Zhian N. Kamvar, on Github, 2017-11-07)
+
+2017-12-04  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/dudi.R: Add a message containing the complete call when users
+	interactively choose the number of axes in an analysis
+
+2017-11-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .travis.yml: Remove addons packages as 'rgdal' is no longer
+	required
+
+2017-11-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION, man/area.plot.Rd, man/atya.Rd, man/avijons.Rd,
+	man/kcponds.Rd, man/mafragh.Rd, man/multispati.Rd,
+	man/multispati.randtest.Rd, man/multispati.rtest.Rd, man/neig.Rd,
+	man/tintoodiel.Rd: Remove dependencies to maptools and spData
+	(examples with columbus data set are removed)
+
+2017-11-03  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 0d0c2004ce328889b7644f0f86bfc74bc6e552b5 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Fri Nov 3
+	11:27:42 2017 +0100
+
+2017-11-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/dist.genet.R, R/fuzzygenet.R, R/genet.R, man/dist.genet.Rd,
+	man/fuzzygenet.Rd, man/genet.Rd: The functions 'char2genet',
+	'count2genet', 'freq2genet', 'dist.genet' and 'fuzzygenet' are
+	deprecated and are now in the 'adegenet' package
+
+2017-11-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/EH.R, R/ade4-deprecated.R, R/multispati.R, R/optimEH.R,
+	R/orisaved.R, R/randEH.R: Correct a misprint
+
+2017-11-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/optimEH.Rd, man/orisaved.Rd, man/randEH.Rd: Correct typo in
+	the help files of the 'optimEH', 'orisaved' and 'randEH' deprecated
+	functions
+
+2017-11-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/multispati.R, man/multispati.Rd: The 'multispati' function is
+	now deprecated
+
+2017-11-01  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION, NAMESPACE, R/mbpcaiv.R, R/mbpls.R, R/s.kde2d.R,
+	man/score.coa.Rd: Add dagnelie.test package MASS in Imports and
+	update calls to MASS functions/Data
+
+2017-11-01  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dagnelie.test.R, man/dagnelie.test.Rd: Adds Dagnelie's test for
+	multivariate normality
+
+2017-10-31  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: Specify the required version for the spData package
+
+2017-10-31  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/nipals.R: Correct a bug in the computation of biased sd from
+	unbiased estimator. Thanks to Kevin Wright  that identified the
+	problem.
+
+2017-10-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION, man/area.plot.Rd, man/neig.Rd: Correct import the
+	'columbus' data from the spData package that was moved from the
+	spdep package
+
+2017-10-30  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : Merge pull request #7 from zkamvar/patch-1 Reset par in kde2d
+
+2017-10-30  Zhian N. Kamvar <zkamvar@gmail.com>
+
+	* R/s.kde2d.R: reset par in kde2d
+
+2017-10-25  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/atya.Rd, man/avijons.Rd, man/buech.Rd, man/butterfly.Rd,
+	man/capitales.Rd, man/elec88.Rd, man/ggtortoises.Rd,
+	man/irishdata.Rd, man/julliot.Rd, man/jv73.Rd, man/kcponds.Rd,
+	man/mafragh.Rd, man/sarcelles.Rd, man/t3012.Rd, man/tintoodiel.Rd,
+	man/vegtf.Rd, man/zealand.Rd: Update help files for data
+
+2017-10-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/EH.R, R/optimEH.R, R/orisaved.R, R/randEH.R, man/EH.Rd,
+	man/optimEH.Rd, man/orisaved.Rd, man/randEH.Rd: The 'EH', 'optimEH',
+	'orisaved' and 'randEH' functions are now deprecated
+
+2017-10-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/ade4-deprecated.Rd: Update the 'ade4-deprecated' file: a
+	precision is added and the formatting is updated
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/carni70.Rd, man/julliot.Rd, man/mjrochet.Rd, man/palm.Rd,
+	man/ungulates.Rd, man/variance.phylog.Rd: Update examples that call
+	the 'orthogram' function
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/gridrowcol.Rd, man/mld.Rd, man/orthobasis.Rd: Update
+	cross-references for 'othogram'
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/orthogram.Rd: Remove the help page of 'orthogram' because it
+	is deprecated
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/ade4-deprecated.R, R/orthogram.R: The R code of the 'orthogram'
+	function is pasted in the 'ade4-deprecated.R' file and the
+	'orthogram.R' file is removed
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE: The 'orthogram' function is no longer exported because
+	it is deprecated
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/bca.coinertia.Rd, man/wca.coinertia.Rd, man/withinpca.Rd: 
+	Update cross-references for 'between' and 'within' functions
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/ade4-deprecated.R, R/bca.R, R/bca.coinertia.R, R/wca.R,
+	R/wca.coinertia.R: Move the 'between', 'betweencoinertia', 'within'
+	and 'withincoinertia' R functions in the 'ade4-deprecated' file
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/ade4-deprecated.R: Add an 'ade4-deprecated' file to store the R
+	code for deprecated functions
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/ade4-deprecated.Rd: Update the 'ade4-deprecated' help file:
+	the 'between',  'betweencoinertia', 'within' and 'withincoinertia'
+	functions are added as deprecated
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/bca.R, R/bca.coinertia.R, R/between.R, R/betweencoinertia.R,
+	R/wca.R, R/wca.coinertia.R, R/within.R, R/withincoinertia.R: Rename
+	R files for the 'bca', 'bca.coinertia', 'wca' and 'wca.coinertia'
+	functions
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/bca.Rd, man/bca.coinertia.Rd, man/between.Rd,
+	man/betweencoinertia.Rd, man/wca.Rd, man/wca.coinertia.Rd,
+	man/within.Rd, man/withincoinertia.Rd: Rename help files for the
+	'bca', 'bca.coinertia', 'wca' and 'bca.coinertia' functions
+
+2017-10-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/between.Rd, man/betweencoinertia.Rd, man/within.Rd,
+	man/withincoinertia.Rd: Update the help file because the 'between',
+	'betweencoinertia', 'within' and 'withincoinertia' are deprecated
+
+2017-10-09  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/between.R, R/betweencoinertia.R, R/orthogram.R, R/within.R,
+	R/withincoinertia.R: Update the call to the '.Deprecated' function
+
+2017-10-09  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/multiblock.R: Remove an unrequired space
+
+2017-09-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : commit 7b6de30d8740e9df053e0caa76d5c22cbd939dba Author: Aurélie
+	Siberchicot <aurelie.siberchicot@univ-lyon1.fr> Date:   Mon Sep 18
+	15:03:04 2017 +0200
+
+2017-08-21  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 5fc0e8ce3d26264fb2a7cf6b16672bcd236dd5d9 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Mon Aug 21
+	14:02:01 2017 +0200
+
+2017-08-09  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-8 ----------
+
+2017-08-09  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: Correct misprints in the DESCRIPTION file
+
+2017-08-09  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-8 ----------
+	
+2017-08-09  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-8 ----------
+	
+2017-08-09  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/divcmax.Rd: Update the example in 'divcmax' with correction
+	sent by Sandrine Pavoine
+
+2017-08-09  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION: Extend the 'Description' field as requested by Uwe
+	Ligges
+
+2017-07-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-7 ----------
+	
+2017-07-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-7 ----------
+
+2017-07-19  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/varipart.R, man/varipart.Rd: Implement a very simple
+	version of variation partitioning (useful for msr method in
+	adespatial)
+
+2017-07-11  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/randtest.pcaiv.R, R/randtest.pcaivortho.R: Solve a bug to deal
+	properly with 'strange' variables names (environmental variables in
+	mafragh)
+
+2017-07-04  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/supdist.R: Add 'drop' argrument to deal with cases where only
+	one supplementary individual is considered.
+
+2017-06-29  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/multiblock.R: The '...' argument is now passed to the
+	as.krandboot function
+
+2017-06-29  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/statico.krandtest.Rd: species data must be in the second ktab
+
+2017-06-29  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/statico.R: species data should not be restandardized in each
+	table
+
+2017-06-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/atlas.Rd, man/elec88.Rd, man/irishdata.Rd: Update the help
+	files of 'atlas', 'elec88' and 'irishdata'
+
+2017-06-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/mafragh.Rd: Update the mafragh data set: spenames is now a
+	data frame with short names and a new Spatial.contour object is
+	added.
+
+2017-06-23  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* README.md: Update README.md
+
+2017-06-23  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* README.md: Update README.md
+
+2017-06-20  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* README.md: Update README.md
+
+2017-06-20  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* README.md: Update README.md
+
+2017-06-19  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/supdist.Rd: Clean the 'supdist' help file
+
+2017-06-18  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* NAMESPACE: added function supdist to project additional items in a
+	PCO analysis
+
+2017-06-18  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* man/supdist.Rd: Projection of additional items in a PCO analysis
+
+2017-06-18  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/supdist.R: Projection of additional items in a PCO analysis
+
+2017-06-15  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/mafragh.Rd: Correct the mafragh bibliography
+
+2017-06-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/mafragh.Rd: Update the 'mafragh' data set
+
+2017-05-12  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/krandtest.R, R/randtest.R: Update as.randtest/as.krandtest
+	functions to deal with cases with 0 repetitions (useful for
+	msr.4thcorner method implemented in adespatial)
+
+2017-04-21  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/ade4toR.R, man/ade4toR.Rd: The 'ade4toR' and
+	'Rtoade4' unused functions are removed.
+
+2017-04-21  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/cca.R, R/randtest.cca.R: The 'cca' function is
+	removed.
+
+2017-04-21  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, R/cca.R, R/pcaiv.R, R/randtest.cca.R,
+	R/randtest.pcaiv.R, man/arrival.Rd, man/cca.Rd, man/pcaiv.Rd,
+	man/randtest.pcaiv.Rd, man/rpjdl.Rd: The 'cca' function is no longer
+	used.
+
+2017-04-11  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/s.logo.Rd: Update the example of the 's.logo' function
+
+2017-04-07  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/between.R: Correct a small bug to deal with weights in wca plots
+
+2017-03-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-6 ----------
+	
+2017-03-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-6 ----------
+
+2017-03-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE: Fix an error with C routines in a Linux configuration
+
+2017-03-22  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, src/init.c: Fix an error with C routines in a Windows
+	configuration (32bit)
+
+2017-03-22  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/divcmax.Rd: Example in divcmax becomes 'dontrun', pending
+	correction
+
+2017-03-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* NAMESPACE, src/init.c: Register native routines (new
+	recommendations in R-3.4.0)
+
+2017-02-24  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Remove some useless checks
+
+2017-02-16  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/casitas.Rd: Update an invalid URL
+
+2017-02-14  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Revert commit
+	0894456972fea6668635069832ef6a7739c1f150 (bug was not fixed by the
+	previous corrections).
+
+2017-02-14  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/RV.rtest.R, R/RVdist.randtest.R, R/betwitdpcoa.R,
+	R/combine.4thcorner.R, R/corkdist.R, R/costatis.R,
+	R/fourthcorner.R, R/fourthcorner.rlq.R, R/fourthcorner2.R,
+	R/gearymoran.R, R/krandtest.R, R/mantel.randtest.R,
+	R/mantel.rtest.R, R/multispati.randtest.R, R/multispati.rtest.R,
+	R/niche.R, R/orthogram.R, R/plot.4thcorner.R, R/procuste.R,
+	R/procuste.randtest.R, R/procuste.rtest.R, R/randtest.R,
+	R/randtest.amova.R, R/randtest.between.R, R/randtest.cca.R,
+	R/randtest.coinertia.R, R/randtest.discrimin.R, R/randtest.dpcoa.R,
+	R/randtest.pcaiv.R, R/randtest.pcaivortho.R, R/randtest.rlq.R,
+	R/rtest.R, R/rtest.between.R, R/rtest.discrimin.R, R/statico.R,
+	R/testdim.R, man/RV.rtest.Rd, man/RVdist.randtest.Rd,
+	man/combine.4thcorner.Rd, man/corkdist.Rd,
+	man/costatis.randtest.Rd, man/fourthcorner.Rd, man/krandtest.Rd,
+	man/mantel.randtest.Rd, man/mantel.rtest.Rd,
+	man/multispati.randtest.Rd, man/multispati.rtest.Rd,
+	man/orthogram.Rd, man/procuste.randtest.Rd, man/procuste.rtest.Rd,
+	man/randtest.Rd, man/rtest.Rd, man/statico.krandtest.Rd: Modify the
+	structures of classes (randtest and rtest) to store outputs of
+	randomization procedures
+
+2017-02-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Correct a bug in the management of fuzzy data.
+	Message of Jean-Yves BARNAGAUD on adelist (08/02/2017).
+
+2017-02-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dist.ktab.R: Reindent lines
+
+2017-02-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/divc.Rd, man/divcmax.Rd, man/lizards.Rd, man/newick.eg.Rd,
+	man/randboot.Rd, man/randxval.Rd: Correct some typo
+
+2017-01-31  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/bwca.dpcoa.Rd, man/fourthcorner.Rd, man/mafragh.Rd,
+	man/phylog.Rd: Update bibliographic references (in press)
+
+2017-01-23  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/bwca.dpcoa.Rd, man/julliot.Rd, man/mafragh.Rd,
+	man/multispati.Rd, man/nipals.Rd, man/olympic.Rd, man/pcw.Rd,
+	man/sarcelles.Rd: Solve errors in examples not runned
+
+2017-01-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/area.plot.Rd, man/atya.Rd, man/avijons.Rd, man/julliot.Rd: 
+	Correct the import of functions of the suggested packages used in
+	some examples.
+
+2017-01-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/acacia.Rd, man/area.plot.Rd, man/avijons.Rd, man/between.Rd,
+	man/butterfly.Rd, man/capitales.Rd, man/cca.Rd, man/corvus.Rd,
+	man/doubs.Rd, man/dudi.fca.Rd, man/euro123.Rd, man/gearymoran.Rd,
+	man/ggtortoises.Rd, man/gridrowcol.Rd, man/julliot.Rd,
+	man/kcponds.Rd, man/lascaux.Rd, man/mafragh.Rd, man/meau.Rd,
+	man/multispati.Rd, man/nipals.Rd, man/olympic.Rd,
+	man/orthobasis.Rd, man/pcaivortho.Rd, man/pcw.Rd,
+	man/plot.between.Rd, man/plot.within.Rd, man/presid2002.Rd,
+	man/procuste.Rd, man/randEH.Rd, man/santacatalina.Rd,
+	man/scatter.coa.Rd, man/t3012.Rd, man/trichometeo.Rd,
+	man/westafrica.Rd, man/witwit.coa.Rd, man/zealand.Rd: Complete some
+	T/F in TRUE/FALSE
+
+2017-01-18  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION, man/area.plot.Rd, man/atlas.Rd, man/atya.Rd,
+	man/avijons.Rd, man/buech.Rd, man/butterfly.Rd, man/capitales.Rd,
+	man/elec88.Rd, man/ggtortoises.Rd, man/irishdata.Rd,
+	man/julliot.Rd, man/jv73.Rd, man/kcponds.Rd, man/mafragh.Rd,
+	man/maples.Rd, man/mdpcoa.Rd, man/multispati.Rd,
+	man/multispati.randtest.Rd, man/multispati.rtest.Rd, man/neig.Rd,
+	man/nipals.Rd, man/olympic.Rd, man/oribatid.Rd, man/phylog.Rd,
+	man/rhizobium.Rd, man/s.image.Rd, man/s.kde2d.Rd, man/s.logo.Rd,
+	man/t3012.Rd, man/tintoodiel.Rd, man/vegtf.Rd, man/westafrica.Rd: 
+	'quiet' parameter becomes 'quietly' in the 'requireNamespace'
+	function. Add 'adephylo' in the suggested packages. Correct the
+	import of functions of the suggested packages used in examples.
+
+2017-01-13  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/between.R: use weights to properly darw ellipses when
+	non-uniform row weights are used.
+
+2017-01-13  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/within.R: Correct a small bug in plot of wca. Use weights to
+	plot ellipses (this allow that ellipses are centred on 0 when coa is
+	used). Thanks to Sylvain Dolédec.
+
+2017-01-12  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/chats.Rd: Correct typos in a help file
+
+2016-12-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/rpjdl.Rd: Correct the species number in the help file of rpjdl
+
+2016-12-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-5 ----------
+
+2016-12-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-5 ----------
+
+2016-12-13  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* README.md: Add badge
+
+2016-11-28  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/PI2newick.Rd, man/ade4.package.Rd, man/adegraphicsLoaded.Rd,
+	man/aminoacyl.Rd, man/apqe.Rd, man/ardeche.Rd, man/as.taxo.Rd,
+	man/atlas.Rd, man/atya.Rd, man/avijons.Rd, man/aviurba.Rd,
+	man/banque.Rd, man/baran95.Rd, man/bca.rlq.Rd, man/between.Rd,
+	man/betweencoinertia.Rd, man/buech.Rd, man/bwca.dpcoa.Rd,
+	man/cailliez.Rd, man/carni70.Rd, man/carniherbi49.Rd,
+	man/casitas.Rd, man/cca.Rd, man/chatcat.Rd, man/chats.Rd,
+	man/clementines.Rd, man/coinertia.Rd, man/combine.4thcorner.Rd,
+	man/corkdist.Rd, man/costatis.Rd, man/costatis.randtest.Rd,
+	man/discrimin.Rd, man/discrimin.coa.Rd, man/dist.binary.Rd,
+	man/dist.dudi.Rd, man/dist.genet.Rd, man/dist.ktab.Rd,
+	man/dist.neig.Rd, man/dist.prop.Rd, man/dist.quant.Rd,
+	man/divcmax.Rd, man/dotchart.phylog.Rd, man/doubs.Rd, man/dpcoa.Rd,
+	man/dudi.Rd, man/dudi.acm.Rd, man/dudi.coa.Rd, man/dudi.dec.Rd,
+	man/dudi.fca.Rd, man/dudi.hillsmith.Rd, man/dudi.mix.Rd,
+	man/dudi.nsc.Rd, man/dudi.pca.Rd, man/dudi.pco.Rd, man/escopage.Rd,
+	man/euro123.Rd, man/foucart.Rd, man/fourthcorner.Rd, man/fruits.Rd,
+	man/gearymoran.Rd, man/granulo.Rd, man/gridrowcol.Rd,
+	man/ichtyo.Rd, man/inertia.dudi.Rd, man/is.euclid.Rd,
+	man/julliot.Rd, man/jv73.Rd, man/kdist.Rd, man/kdist2ktab.Rd,
+	man/kdisteuclid.Rd, man/krandtest.Rd, man/ktab.Rd,
+	man/ktab.data.frame.Rd, man/ktab.list.df.Rd, man/ktab.list.dudi.Rd,
+	man/ktab.match2ktabs.Rd, man/ktab.within.Rd, man/lascaux.Rd,
+	man/lingoes.Rd, man/macon.Rd, man/macroloire.Rd,
+	man/mantel.rtest.Rd, man/mariages.Rd, man/mbpcaiv.Rd, man/mbpls.Rd,
+	man/mcoa.Rd, man/mdpcoa.Rd, man/meau.Rd, man/meaudret.Rd,
+	man/mfa.Rd, man/microsatt.Rd, man/mjrochet.Rd, man/mld.Rd,
+	man/mollusc.Rd, man/monde84.Rd, man/morphosport.Rd,
+	man/multiblock.Rd, man/multispati.randtest.Rd,
+	man/multispati.rtest.Rd, man/newick.eg.Rd, man/newick2phylog.Rd,
+	man/niche.Rd, man/nipals.Rd, man/njplot.Rd, man/originality.Rd,
+	man/orthobasis.Rd, man/orthogram.Rd, man/ours.Rd, man/palm.Rd,
+	man/pcaiv.Rd, man/pcaivortho.Rd, man/phylog.Rd,
+	man/plot.between.Rd, man/plot.phylog.Rd, man/plot.within.Rd,
+	man/procuste.Rd, man/procuste.rtest.Rd, man/pta.Rd,
+	man/quasieuclid.Rd, man/randboot.multiblock.Rd,
+	man/randtest.coinertia.Rd, man/randtest.pcaiv.Rd, man/reconst.Rd,
+	man/rhone.Rd, man/rlq.Rd, man/rpjdl.Rd, man/s.match.class.Rd,
+	man/sarcelles.Rd, man/scalewt.Rd, man/scatter.Rd,
+	man/scatter.fca.Rd, man/scatterutil.Rd, man/sco.class.Rd,
+	man/sco.gauss.Rd, man/sco.label.Rd, man/sco.match.Rd,
+	man/statico.Rd, man/statico.krandtest.Rd, man/steppe.Rd,
+	man/supcol.Rd, man/suprow.Rd, man/symbols.phylog.Rd,
+	man/syndicats.Rd, man/t3012.Rd, man/table.phylog.Rd,
+	man/tarentaise.Rd, man/testdim.Rd, man/testdim.multiblock.Rd,
+	man/trichometeo.Rd, man/ungulates.Rd, man/variance.phylog.Rd,
+	man/veuvage.Rd, man/wca.rlq.Rd, man/westafrica.Rd, man/within.Rd,
+	man/withincoinertia.Rd, man/withinpca.Rd, man/witwit.coa.Rd,
+	man/woangers.Rd, man/worksurv.Rd, src/adesub.c: Correct encoding of
+	Rd files
+
+2016-11-25  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* man/gearymoran.Rd, man/mafragh.Rd, man/multispati.Rd,
+	man/multispati.randtest.Rd, man/multispati.rtest.Rd: Update and
+	clean 'mafragh' data
+
+2016-11-21  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : Merge pull request #4 from zkamvar/zkamvar-patch-1 Fix bug in randtest.amova
+
+2016-11-20  Zhian N. Kamvar <kamvarz@science.oregonstate.edu>
+
+	* R/randtest.amova.R: fix bug in randtest.amova This bug came up in
+	https://groups.google.com/forum/#!topic/poppr/D1gpqgQM2F0 There is no issue when comparing three hierarchical levels, but when
+	there are four or more, the alternate hypothesis for every fourth
+	level is incorrect due to the recycling of c("less", "greater",
+	"greater").
+
+2016-10-18  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/nipals.R: Correct a small bug identified by Denis Clot in the
+	rescaling of sd
+
+2016-09-27  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/orthobasis.R: Correct a minor bug in the print method of
+	orthobasis objects
+
+2016-09-12  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* README.md: Update homepage
+
+2016-07-22  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* man/dist.ktab.Rd: Update the doc to indicate that ordered
+	variables are not yet considered.
+
+2016-06-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 7a4a263d8ac2822ee89f1cf167e4e118c03b4023 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Fri Jun 10
+	15:50:04 2016 +0200
+
+2016-05-20  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .Rbuildignore, man/pcw.Rd: Update Rbuildignore
+
+2016-05-13  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/scatterutil.R: Correct a bug when covariance is null (ellipses
+	were reversed)
+
+2016-05-13  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dudi.pco.R: Correct a bug in the scaling of normed components
+	with non-uniform weights
+
+2016-05-02  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/inertia.dudi.R, man/inertia.dudi.Rd: The function
+	'inertia.dudi' now becomes a method. It returns object of class
+	'inertia' with 'print' and 'summary' methods
+
+2016-03-21  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* man/elec88.Rd: Update the doc and add informations on nb, Spatial
+	and Spatialcontour
+
+2016-03-04  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/suprow.R, man/suprow.Rd: New methods suprow.acm,
+	suprow.mix and predict.dudi
+
+2016-03-04  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dudi.hillsmith.R: Function dudi.hillsmith now returns vectors
+	center and norm (useful for the suprow.mix function)
+
+2016-03-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* : DESCRIPTION: ---------- release of ade4 1.7-4 ----------
+
+2016-02-24  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : Merge pull request #3 from Rekyt/patch-1 Correct Reference with DOI
+
+2016-02-22  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* .gitignore: Add a configure file to ignore some files in the Git
+	repository
+
+2016-02-21  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 93fe29b91eb21adeb4f08e07b432b3b61d54e07a Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Sun Feb 21
+	14:33:14 2016 +0100
+
+2016-01-22  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/mfa.R: print.mfa print mfa object class
+
+2015-12-16  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit e983689cedf4c297aae70ee4dcce8cecca1a6b54 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Wed Dec 16
+	10:45:46 2015 +0100
+
+2015-11-26  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* README.md: Add references to the binary packages
+
+2015-11-24  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dpcoa.R: Update the plot function to represent species (and
+	sites or their diversity according to RaoDecomp argument)
+
+2015-11-24  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dpcoa.R: Correct a small bug in the handling of species names
+
+2015-11-24  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 4691e39258ac4c2f743d97f94cbc2b6d94d53ec1 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Tue Nov 24
+	13:58:43 2015 +0100
+
+2015-11-24  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/randtest.dpcoa.R, man/randtest.dpcoa.Rd: Add new function
+	randtest.dpcoa
+
+2015-11-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION: Add BugReports field
+
+2015-11-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* ChangeLog: ---------- release of ade4 1.7-3 ----------
+
+2015-11-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : commit 13ff73165e429972dbfaa2d44f8eaef4ca826324 Author:
+	Stéphane Dray <stephane.dray@univ-lyon1.fr> Date:   Tue Nov 10
+	10:04:42 2015 +0100
+	
+2015-11-10  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* DESCRIPTION: ---------- release of ade4 1.7-3 ----------
+
+2015-10-19  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/ktab.R: Change ktab.util.names to allow for ktabs with varying
+	numbers of rows (columns)
+
+2015-10-14  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION: Suggest the 'CircStats' package which is used in Rd
+	cross-references
+
+2015-09-21  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/randtest-internal.R, R/randtest.discrimin.R,
+	src/fourthcorner.c, src/tests.c: Remove some unused variables in C
+	code
+
+2015-09-18  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* README.md: Add badges and informations for Mac and Windows users
+
+2015-09-18  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .travis.yml: Change setting for travis(error was produced due to
+	unchanged dates and version numbers)
+
+2015-09-18  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .Rbuildignore, appveyor.yml: Add windows check (via appveyor)
+
+2015-09-18  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/mbpcaiv.R, R/mbpls.R, R/multiblock.R: Udate multiblock methods
+	to deal with non-centred data
+
+2015-09-18  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .Rbuildignore: Add README.md to .Rbuildignore
+
+2015-09-15  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/scalewt.R, man/scalewt.Rd: Correct a bug to allow scaling
+	without centring
+
+2015-09-09  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : Reorder the levels of season (spring as first)
+
+2015-09-09  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/randtest.rlq.R: Correct a bug to deal with a single trait and/or
+	environmental variable (email by C. ter Braak 28/08/2015)
+
+2015-09-09  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* .Rbuildignore, .travis.yml, README.md: Add travis support and
+	README
+
+2015-08-27  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* R/dudi.R: Use make.unique instead of make.names to produce
+	row.names for outputs. The second is devoted to names (e.g., by
+	avoiding integer which are authorized as row.names)
+
+2015-08-26  Jean Thioulouse <jean.thioulouse@univ-lyon1.fr>
+
+	* R/pta.R: Modify the levels names of supTI
+
+2015-07-15  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* : Reorder the levels of the 'design' factor (use temporal instead
+	of alphabetic order)
+
+2015-07-02  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION, NAMESPACE: The default packages other than 'base' are
+	now imported (new item for r-devel)
+
+2015-06-12  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* R/dudi.fca.R, R/utilities.R: Modify the '$call' in 'dudi.fpca'
+
+2015-06-08  Stéphane Dray <stephane.dray@univ-lyon1.fr>
+
+	* NAMESPACE, R/cca.R, man/cca.Rd: New summary method for 'cca'
+	objects
+
+2015-06-01  Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+
+	* DESCRIPTION, man/add.scatter.Rd: Update an exemple which uses the
+	new function 'plotEig' of 'adegraphics'
+
+2015-04-14 07:38  aursiber
+
+	* DESCRIPTION: ---------- release of ade4 1.7-2 ----------
+
+2015-04-08 13:27  aursiber
+
+	* DESCRIPTION: ---------- release of ade4 1.7-1 ----------
+
+2015-04-08 09:25  sdray
+
+	* DESCRIPTION, NAMESPACE, R/orthobasis.R, man/orthobasis.Rd: Add
+	  new functions to handle orthobasis objects. The orthobasis.listw
+	  function is removed and will be available in the forthcoming
+	  adespatial
+
+2015-04-03 16:28  aursiber
+
+	* man/kplot.sepan.Rd: The 'kplot.sepan.coa' function becomes
+	  'kplotsepan.coa' in 'adegraphics' also
+
+2015-04-03 14:30  aursiber
+
+	* NAMESPACE, R/kplot.sepan.R, man/kplot.sepan.Rd: The
+	  'kplot.sepan.coa' function becomes 'kplotsepan.coa'
+
+2015-04-03 14:04  aursiber
+
+	* DESCRIPTION, man/abouheif.eg.Rd, man/avijons.Rd, man/baran95.Rd,
+	  man/bsetal97.Rd, man/capitales.Rd, man/chevaine.Rd,
+	  man/cnc2003.Rd, man/doubs.Rd, man/ecomor.Rd, man/euro123.Rd,
+	  man/ggtortoises.Rd, man/hdpg.Rd, man/jv73.Rd, man/lascaux.Rd,
+	  man/lizards.Rd, man/mafragh.Rd, man/maples.Rd, man/microsatt.Rd,
+	  man/mjrochet.Rd, man/newick.eg.Rd, man/oribatid.Rd, man/pap.Rd,
+	  man/presid2002.Rd, man/procella.Rd, man/rpjdl.Rd,
+	  man/tarentaise.Rd, man/trichometeo.Rd: Remove invalid url in man
+	  files
+
+2015-03-29 11:59  sdray
+
+	* R/combine.4thcorner.R, R/plot.4thcorner.R: Update the outputs of
+	  the combine.4thcorner functions to avoid bugs when the 'D' stat
+	  can not be computed (factor with only one level)
+
+2015-03-23 15:40  aursiber
+
+	* DESCRIPTION: ---------- release of ade4 1.7-0 ----------
+
+2015-03-23 10:52  sdray
+
+	* DESCRIPTION: Aurelie is the new official maintainer
+
+2015-03-23 08:45  sdray
+
+	* R/coinertia.R, R/rlq.R: Improve the outputs of the RLQ/coinertia
+	  analysis
+
+2015-03-20 09:13  aursiber
+
+	* DESCRIPTION, R/mbpcaiv.R, R/mbpls.R, R/multispati.R,
+	  R/orthobasis.R, R/s.image.R, R/s.kde2d.R, R/s.logo.R,
+	  man/area.plot.Rd, man/atlas.Rd, man/atya.Rd, man/avijons.Rd,
+	  man/buech.Rd, man/butterfly.Rd, man/capitales.Rd, man/ecg.Rd,
+	  man/elec88.Rd, man/ggtortoises.Rd, man/irishdata.Rd,
+	  man/julliot.Rd, man/jv73.Rd, man/kcponds.Rd, man/mafragh.Rd,
+	  man/maples.Rd, man/mdpcoa.Rd, man/multispati.Rd,
+	  man/multispati.randtest.Rd, man/multispati.rtest.Rd, man/neig.Rd,
+	  man/nipals.Rd, man/olympic.Rd, man/oribatid.Rd, man/pcw.Rd,
+	  man/phylog.Rd, man/rhizobium.Rd, man/s.image.Rd, man/s.kde2d.Rd,
+	  man/s.logo.Rd, man/sarcelles.Rd, man/score.coa.Rd, man/t3012.Rd,
+	  man/tintoodiel.Rd, man/vegtf.Rd, man/westafrica.Rd: Update the
+	  use of packages listed in 'Suggests' according with R-3.1.3
+
+2015-03-18 14:07  sdray
+
+	* R/between.R: Correct a bug in 1D plot of plot.between (message of
+	  Matthieu Salpeteur 18/03/2015 on adelist)
+
+2015-02-19 19:03  sdray
+
+	* R/dist.dudi.R: Correct a bug to deal with null distances (message
+	  of Robin Cura on adelist 16/02/2015
+
+2015-02-18 15:03  sdray
+
+	* R/krandboot.R, R/krandxval.R, R/mbpcaiv.R, R/mbpls.R,
+	  R/multiblock.R, R/randxval.R, man/mbpcaiv.Rd, man/mbpls.Rd,
+	  man/multiblock.Rd, man/randboot.multiblock.Rd,
+	  man/testdim.multiblock.Rd: Update some functions related to
+	  multiblock methods. Use 'ginv' to deal with matrices are not of
+	  full rank.
+
+2015-01-15 11:50  sdray
+
+	* NAMESPACE, R/betwitdpcoa.R, man/bwca.dpcoa.Rd: Add new functions
+	  to perform between- within dpcoa (Dray et al. 2015, MER)
+
+2015-01-09 12:35  sdray
+
+	* src/adesub.c: remove the unused variable 'seed'
+
+2015-01-08 16:47  aursiber
+
+	* man/add.scatter.Rd, man/area.plot.Rd, man/atlas.Rd,
+	  man/capitales.Rd, man/chats.Rd, man/corvus.Rd, man/divcmax.Rd,
+	  man/gridrowcol.Rd, man/irishdata.Rd, man/mstree.Rd,
+	  man/orthobasis.Rd, man/pcw.Rd, man/randxval.Rd, man/rtest.Rd,
+	  man/s.class.Rd, man/s.corcircle.Rd, man/s.distri.Rd,
+	  man/s.image.Rd, man/s.label.Rd, man/s.logo.Rd, man/s.match.Rd,
+	  man/s.traject.Rd, man/s.value.Rd, man/santacatalina.Rd,
+	  man/scatterutil.Rd, man/score.Rd, man/table.value.Rd,
+	  man/toxicity.Rd, man/triangle.class.Rd, man/westafrica.Rd,
+	  man/worksurv.Rd: Modify examples due to modifications in
+	  adegraphics
+
+2015-01-08 16:36  sdray
+
+	* src/adesub.c, src/adesub.h: Remove calls to C random number
+	  generators (now use R RNG)
+
+2015-01-08 13:59  thioulouse
+
+	* NAMESPACE, R/costatis.R, R/ktab.R, R/pta.R, R/statico.R,
+	  man/costatis.Rd, man/costatis.randtest.Rd, man/statico.Rd,
+	  man/statico.krandtest.Rd: Added statico.krandtest and
+	  costatis.randtest funtions for permutation tests
+
+2014-12-08 14:33  sdray
+
+	* R/fourthcorner.R, R/fourthcorner.rlq.R, R/print.4thcorner.R:
+	  Correct a bug to display properly the outputs in the case of 1
+	  trait x 1 env variable
+
+2014-11-28 09:38  aursiber
+
+	* man/scatter.coa.Rd: Correct the documentation of the used method
+	  in 'scatter.coa'
+
+2014-11-14 08:42  sdray
+
+	* R/mdpcoa.R: correct the call to dist.dna of the ape package
+
+2014-11-14 08:41  sdray
+
+	* NAMESPACE, R/dpcoa.R, R/mdpcoa.R, man/dpcoa.Rd, man/humDNAm.Rd:
+	  Update the dpcoa function: names of outputs are modified and the
+	  df argument shoul be a site-by-species nor a species-by-sites
+	  matrix. This allows to be more coherent with other methods
+
+2014-11-05 15:32  sdray
+
+	* man/atlas.Rd, man/butterfly.Rd, man/chats.Rd, man/dpcoa.Rd,
+	  man/gearymoran.Rd, man/gridrowcol.Rd, man/orthobasis.Rd: Modify
+	  examples due to modifications in adegraphics
+
+2014-10-30 15:04  sdray
+
+	* data/capitales.rda, man/capitales.Rd: Transform the Spatial
+	  component from SpatialPolygonsDataFrame to SpatialPolygons
+
+2014-09-11 14:50  sdray
+
+	* NAMESPACE, R/procuste.R, man/macaca.Rd, man/procuste.Rd: Change
+	  names of arguments and outputs of 'procuste' function and add a
+	  method 'randtest' for procuste class
+
+2014-09-02 12:04  sdray
+
+	* data/pcw.rda, man/pcw.Rd: Add new dataset (distribution of trees
+	  in forest plots along the panama canal)
+
+2014-07-23 14:09  sdray
+
+	* R/fourthcorner.rlq.R: Correct a small bug (used names instead of
+	  colnames on a matrix)
+
+2014-06-18 15:26  aursiber
+
+	* DESCRIPTION, NAMESPACE, man/acacia.Rd, man/add.scatter.Rd,
+	  man/aravo.Rd, man/ardeche.Rd, man/area.plot.Rd, man/atlas.Rd,
+	  man/atya.Rd, man/avijons.Rd, man/avimedi.Rd, man/bacteria.Rd,
+	  man/banque.Rd, man/baran95.Rd, man/between.Rd,
+	  man/betweencoinertia.Rd, man/bf88.Rd, man/buech.Rd,
+	  man/butterfly.Rd, man/capitales.Rd, man/carni70.Rd, man/cca.Rd,
+	  man/chats.Rd, man/chazeb.Rd, man/chevaine.Rd, man/clementines.Rd,
+	  man/coinertia.Rd, man/coleo.Rd, man/corkdist.Rd, man/corvus.Rd,
+	  man/deug.Rd, man/discrimin.Rd, man/dist.prop.Rd,
+	  man/dist.quant.Rd, man/doubs.Rd, man/dpcoa.Rd, man/dudi.acm.Rd,
+	  man/dudi.coa.Rd, man/dudi.fca.Rd, man/dudi.hillsmith.Rd,
+	  man/dudi.mix.Rd, man/dudi.nsc.Rd, man/dudi.pca.Rd, man/ecomor.Rd,
+	  man/elec88.Rd, man/euro123.Rd, man/foucart.Rd, man/friday87.Rd,
+	  man/fruits.Rd, man/gearymoran.Rd, man/ggtortoises.Rd,
+	  man/granulo.Rd, man/gridrowcol.Rd, man/hdpg.Rd,
+	  man/housetasks.Rd, man/humDNAm.Rd, man/irishdata.Rd,
+	  man/julliot.Rd, man/jv73.Rd, man/kcponds.Rd, man/kdist2ktab.Rd,
+	  man/kdisteuclid.Rd, man/kplot.foucart.Rd, man/kplot.mcoa.Rd,
+	  man/kplot.mfa.Rd, man/kplot.pta.Rd, man/kplot.sepan.Rd,
+	  man/kplot.statis.Rd, man/ktab.Rd, man/ktab.list.df.Rd,
+	  man/ktab.list.dudi.Rd, man/lascaux.Rd, man/macaca.Rd,
+	  man/macroloire.Rd, man/mafragh.Rd, man/mariages.Rd, man/meau.Rd,
+	  man/meaudret.Rd, man/microsatt.Rd, man/mollusc.Rd, man/mstree.Rd,
+	  man/multiblock.Rd, man/multispati.Rd, man/neig.Rd, man/niche.Rd,
+	  man/nipals.Rd, man/olympic.Rd, man/oribatid.Rd,
+	  man/orthobasis.Rd, man/ours.Rd, man/pcaivortho.Rd,
+	  man/plot.between.Rd, man/plot.within.Rd, man/presid2002.Rd,
+	  man/procuste.Rd, man/pta.Rd, man/rankrock.Rd, man/rpjdl.Rd,
+	  man/s.chull.Rd, man/s.image.Rd, man/s.kde2d.Rd,
+	  man/s.match.class.Rd, man/santacatalina.Rd, man/sarcelles.Rd,
+	  man/scatter.acm.Rd, man/scatter.coa.Rd, man/scatter.dudi.Rd,
+	  man/scatter.fca.Rd, man/sco.distri.Rd, man/score.acm.Rd,
+	  man/score.pca.Rd, man/seconde.Rd, man/skulls.Rd, man/statis.Rd,
+	  man/supcol.Rd, man/suprow.Rd, man/t3012.Rd, man/table.paint.Rd,
+	  man/tintoodiel.Rd, man/tortues.Rd, man/toxicity.Rd,
+	  man/triangle.plot.Rd, man/trichometeo.Rd, man/vegtf.Rd,
+	  man/wca.rlq.Rd, man/westafrica.Rd, man/within.Rd,
+	  man/withincoinertia.Rd, man/withinpca.Rd, man/witwit.coa.Rd,
+	  man/worksurv.Rd, man/zealand.Rd: Update the examples to become
+	  effective when 'adegraphics' is loaded
+
+2014-05-20 13:30  sdray
+
+	* R/add.scatter.R, man/EH.Rd, man/PI2newick.Rd, man/add.scatter.Rd,
+	  man/aminoacyl.Rd, man/amova.Rd, man/as.taxo.Rd, man/bacteria.Rd,
+	  man/between.Rd, man/betweencoinertia.Rd, man/cailliez.Rd,
+	  man/cca.Rd, man/coinertia.Rd, man/corkdist.Rd, man/disc.Rd,
+	  man/discrimin.Rd, man/discrimin.coa.Rd, man/dist.binary.Rd,
+	  man/dist.dudi.Rd, man/dist.genet.Rd, man/dist.neig.Rd,
+	  man/dist.prop.Rd, man/dist.quant.Rd, man/divc.Rd, man/divcmax.Rd,
+	  man/dotchart.phylog.Rd, man/dpcoa.Rd, man/dudi.Rd,
+	  man/dudi.acm.Rd, man/dudi.coa.Rd, man/dudi.dec.Rd,
+	  man/dudi.fca.Rd, man/dudi.hillsmith.Rd, man/dudi.mix.Rd,
+	  man/dudi.nsc.Rd, man/dudi.pca.Rd, man/dudi.pco.Rd,
+	  man/foucart.Rd, man/gearymoran.Rd, man/gridrowcol.Rd,
+	  man/inertia.dudi.Rd, man/is.euclid.Rd, man/kdist.Rd,
+	  man/kdist2ktab.Rd, man/kdisteuclid.Rd, man/krandtest.Rd,
+	  man/ktab.Rd, man/ktab.data.frame.Rd, man/ktab.list.df.Rd,
+	  man/ktab.list.dudi.Rd, man/ktab.within.Rd, man/lingoes.Rd,
+	  man/mantel.randtest.Rd, man/mantel.rtest.Rd, man/mcoa.Rd,
+	  man/mfa.Rd, man/mld.Rd, man/multispati.Rd,
+	  man/multispati.randtest.Rd, man/multispati.rtest.Rd,
+	  man/newick.eg.Rd, man/newick2phylog.Rd, man/niche.Rd,
+	  man/nipals.Rd, man/njplot.Rd, man/optimEH.Rd, man/originality.Rd,
+	  man/orisaved.Rd, man/orthobasis.Rd, man/orthogram.Rd,
+	  man/palm.Rd, man/pcaiv.Rd, man/pcaivortho.Rd, man/phylog.Rd,
+	  man/plot.between.Rd, man/plot.phylog.Rd, man/plot.within.Rd,
+	  man/procuste.Rd, man/procuste.randtest.Rd, man/procuste.rtest.Rd,
+	  man/pta.Rd, man/quasieuclid.Rd, man/randEH.Rd,
+	  man/randtest.amova.Rd, man/randtest.between.Rd,
+	  man/randtest.coinertia.Rd, man/randtest.discrimin.Rd,
+	  man/randtest.pcaiv.Rd, man/reconst.Rd, man/rlq.Rd, man/s.logo.Rd,
+	  man/s.match.class.Rd, man/scatterutil.Rd, man/sco.class.Rd,
+	  man/sco.gauss.Rd, man/sco.label.Rd, man/sco.match.Rd,
+	  man/supcol.Rd, man/suprow.Rd, man/symbols.phylog.Rd,
+	  man/table.phylog.Rd, man/testdim.Rd, man/variance.phylog.Rd,
+	  man/westafrica.Rd, man/within.Rd, man/withincoinertia.Rd,
+	  man/withinpca.Rd, man/witwit.coa.Rd: Update email addresses
+
+2014-05-16 15:38  sdray
+
+	* NAMESPACE, R/between.R, R/within.R, man/plot.between.Rd,
+	  man/plot.within.Rd: New summary method for within and between
+	  classes
+
+2014-05-16 15:19  sdray
+
+	* R/randtest.between.R: Clean the code
+
+2014-04-18 15:50  aursiber
+
+	* R/scatterutil.R, man/area.plot.Rd, man/carni70.Rd,
+	  man/divcmax.Rd, man/dudi.acm.Rd, man/ecomor.Rd, man/julliot.Rd,
+	  man/microsatt.Rd, man/newick2phylog.Rd, man/orthogram.Rd,
+	  man/presid2002.Rd, man/score.Rd: Correct the examples which are
+	  not run
+
+2014-04-17 15:44  sdray
+
+	* NAMESPACE, R/krandboot.R, R/krandxval.R, R/mbpcaiv.R, R/mbpls.R,
+	  R/multiblock.R, R/randboot.R, R/randxval.R, man/mbpcaiv.Rd,
+	  man/mbpls.Rd, man/multiblock.Rd, man/randboot.Rd,
+	  man/randboot.multiblock.Rd, man/randxval.Rd,
+	  man/testdim.multiblock.Rd: Add new functions for multiblock
+	  analysis (coll. with S. Bougeard): multiblock pcaiv and
+	  multiblock pls. Add new functions and classes to manage results
+	  of two-fold cross-validation and bootstrap
+
+2014-04-17 15:39  sdray
+
+	* data/chickenk.rda, man/chickenk.Rd: New data set chickenk
+
+2014-04-17 15:24  sdray
+
+	* R/testdim.R, man/testdim.Rd: Change argument name for testdim
+	  method
+
+2014-04-17 15:22  sdray
+
+	* NAMESPACE, man/bacteria.Rd, man/dudi.acm.Rd,
+	  man/dudi.hillsmith.Rd, man/dudi.mix.Rd, man/santacatalina.Rd,
+	  man/scatter.coa.Rd: Unexport methods for generic functions
+	  scatter and score
+
+2014-04-17 15:19  sdray
+
+	* NAMESPACE, man/adegraphicsLoaded.Rd: Export the function
+	  adegraphicsLoaded
+
+2014-04-17 08:19  sdray
+
+	* R/utilities.R: New function 'adegraphicsLoaded' to test if
+	  adegraphics is loaded
+
+2014-04-15 08:41  sdray
+
+	* NAMESPACE, R/dudi.R, R/ktab.R, man/dudi.Rd, man/ktab.Rd: Improve
+	  '[.ktab' and add '[.dudi': extraction methods allow to select
+	  rows and/or columns of dudi and ktab objects
+
+2014-04-15 07:44  sdray
+
+	* ., NAMESPACE, R/ktab.R, R/ktab.data.frame.R, R/ktab.list.df.R,
+	  R/ktab.list.dudi.R, R/ktab.match2ktabs.R, R/ktab.within.R,
+	  man/ktab.Rd: Clean the building of TL, TC, T4 (they contain names
+	  and not numbers) and remove two bugs (building of TC and in
+	  [.ktab)
+
+2014-04-11 07:45  sdray
+
+	* R/fourthcorner.rlq.R: Correct a typo
+
+2014-03-13 17:36  sdray
+
+	* R/randtest.rlq.R, src/fourthcorner.c, src/tests.c: Correct some
+	  minor bugs and typos
+
+2014-01-14 15:27  thioulouse
+
+	* R/foucart.R, R/kplot.foucart.R, R/kplot.mcoa.R, R/kplot.mfa.R,
+	  R/kplot.pta.R, R/kplot.sepan.R, R/kplot.statis.R, R/ktab.R,
+	  R/ktab.data.frame.R, R/ktab.list.df.R, R/ktab.list.dudi.R,
+	  R/ktab.match2ktabs.R, R/ktab.within.R, R/mcoa.R, R/mdpcoa.R,
+	  R/mfa.R, R/pta.R, R/sepan.R, R/statis.R: Global update of TL TC
+	  and T4 ktab elements
+
+2014-01-07 15:16  thioulouse
+
+	* R/ktab.R, R/pta.R: row names correction of supIX and supIY in a
+	  kcoinertia pta
+
+2013-12-03 13:22  sdray
+
+	* data/mafragh.rda: Modify the order of the sites in the
+	  'SpatialPoints' object to be coherent with the 'nb' object
+
+2013-11-19 15:58  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.6-2 ----------
+
+2013-11-19 15:56  sdray
+
+	* NAMESPACE: Re-export some internal/utility functions that are
+	  used by other packages
+
+2013-11-19 15:55  sdray
+
+	* TITLE: Remove the TITLE file which is no more used
+
+2013-11-15 22:41  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.6-1 ----------
+
+2013-11-15 22:43  sdray
+
+	* man/add.scatter.Rd, man/capitales.Rd, man/dist.ktab.Rd,
+	  man/dotchart.phylog.Rd, man/fourthcorner.Rd, man/nipals.Rd,
+	  man/s.match.class.Rd, man/scatter.Rd: Reduce line widths
+
+2013-11-14 12:47  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.6-0 ----------
+
+2013-10-30 12:23  sdray
+
+	* NAMESPACE, man/acacia.Rd, man/add.scatter.Rd, man/ade4toR.Rd,
+	  man/as.taxo.Rd, man/avimedi.Rd, man/baran95.Rd,
+	  man/combine.4thcorner.Rd, man/costatis.Rd, man/fourthcorner.Rd,
+	  man/granulo.Rd, man/kplot.pta.Rd, man/kplot.sepan.Rd,
+	  man/kplot.statis.Rd, man/ktab.match2ktabs.Rd, man/ktab.within.Rd,
+	  man/meau.Rd, man/meaudret.Rd, man/pcaivortho.Rd, man/phylog.Rd,
+	  man/plot.phylog.Rd, man/randtest.amova.Rd, man/reconst.Rd,
+	  man/rhone.Rd, man/rlq.Rd, man/rtest.between.Rd,
+	  man/scatterutil.Rd, man/statico.Rd, man/statis.Rd, man/supcol.Rd,
+	  man/suprow.Rd, man/taxo.eg.Rd, man/ungulates.Rd: The NAMESPACE
+	  file (which exported all functions) has be completely rewritten.
+	  Utilities and deprecated functions are not exported. S3 methods
+	  are declared. Several help pages have been modified to manage
+	  these changes.
+
+2013-10-30 12:20  sdray
+
+	* R/rtest.between.R: Now the rtest.between can handle objects
+	  created with between and bca functions
+
+2013-10-30 12:19  sdray
+
+	* R/supcol.R, R/suprow.R: suprow.default and supcol.default become
+	  suprow.dudi and supcol.dudi
+
+2013-10-28 13:55  sdray
+
+	* R/statis.R: Improve the speed of statis function. Thanks to
+	  Benoit Thieurmel (email sent 11/01/2013)
+
+2013-10-28 12:53  sdray
+
+	* R/mcoa.R: Correct a bug in the scaling of Tl1. Thanks to P. Bady,
+	  adelist 3/10/2013
+
+2013-10-03 11:26  sdray
+
+	* R/ktab.within.R: Correct a bug in ktab.within: column names were
+	  not handle correctly in some cases (Thanks to Pierre Bady,
+	  message on adelist 3/10/2013). Moreover, the order of bloc is
+	  given by levels and nor unique
+
+2013-09-19 15:58  sdray
+
+	* data/atlas.rda, data/atya.rda, data/avijons.rda, data/buech.rda,
+	  data/butterfly.rda, data/capitales.rda, data/elec88.rda,
+	  data/ggtortoises.rda, data/irishdata.rda, data/julliot.rda,
+	  data/jv73.rda, data/kcponds.rda, data/mafragh.rda,
+	  data/sarcelles.rda, data/t3012.rda, data/tintoodiel.rda,
+	  data/vegtf.rda, data/zealand.rda, man/cailliez.Rd,
+	  man/capitales.Rd, man/lingoes.Rd, man/s.logo.Rd: Correct a small
+	  bug in data files and update the help files to pass R CMD check
+
+2013-09-19 11:39  sdray
+
+	* data/atlas.rda, data/atya.rda, data/avijons.rda, data/buech.rda,
+	  data/butterfly.rda, data/capitales.rda, data/elec88.rda,
+	  data/ggtortoises.rda, data/irishdata.rda, data/julliot.rda,
+	  data/jv73.rda, data/kcponds.rda, data/mafragh.rda,
+	  data/sarcelles.rda, data/t3012.rda, data/tintoodiel.rda,
+	  data/vegtf.rda, data/zealand.rda: Add Spatial/nb objects in data
+	  files to prepare the future deprecation of area/neig/contour
+	  objects. Moreover, spatial information in data sets 't3012',
+	  'elec88' and 'capitales' has been updated (coordinate system,
+	  city names, etc).
+
+2013-09-17 15:08  sdray
+
+	* R/scalewt.R: Correct a small bug in scalewt
+
+2013-07-23 22:24  sdray
+
+	* R/plot.4thcorner.R, man/fourthcorner.Rd: Add colors in
+	  fourthcorner plots
+
+2013-05-28 08:10  sdray
+
+	* R/scalewt.R: correct a small bug in scalewt when scale = FALSE
+
+2013-05-07 21:45  sdray
+
+	* R/combine.4thcorner.R, R/fourthcorner.R, R/fourthcorner.rlq.R,
+	  R/fourthcorner2.R, R/p.adjust.4thcorner.R, R/plot.4thcorner.R,
+	  R/print.4thcorner.R, R/summary.4thcorner.R, R/table.value.R,
+	  man/combine.4thcorner.Rd, man/fourthcorner.Rd, man/rlq.Rd,
+	  src/fourthcorner.c: Complete reimplementation of the outputs of
+	  fourthcorner functions. Now they return krandtest/randtest
+	  objects and adjustments for multiple tests can be used.
+	  Experimental fourthcorner.rlq
+
+2013-05-07 19:51  sdray
+
+	* data/aravo.rda, man/aravo.Rd: New dataset: aravo
+
+2013-05-03 16:01  sdray
+
+	* R/scatterutil.R: New argument 'bg' for scatterutil.base function
+
+2013-04-30 21:07  sdray
+
+	* R/randtest-internal.R, R/randtest.coinertia.R, R/randtest.rlq.R,
+	  R/rlq.R, man/rlq.Rd, src/adesub.c, src/adesub.h, src/testrlq.c,
+	  src/tests.c: Use the new 'dudi.type' function. New 'modeltype'
+	  argument for randtest.rlq. New function 'combine.randtest.rlq'.
+
+2013-04-29 15:55  sdray
+
+	* R/krandtest.R, man/krandtest.Rd: Update the doc of krandtest
+
+2013-04-29 15:29  sdray
+
+	* R/dudi.acm.R: Use the new fac2disj utility function
+
+2013-04-29 15:28  sdray
+
+	* R/dudi.acm.R, R/dudi.hillsmith.R, R/dudi.mix.R, R/fourthcorner.R,
+	  R/fourthcorner2.R, R/rlq.R, R/s.class.R, R/s.match.class.R,
+	  R/triangle.class.R, man/ade4-internal.Rd: Use the new fac2disj
+	  utility function
+
+2013-04-29 13:14  sdray
+
+	* R/krandtest.R: krandtest can now handle adjustments for multiple
+	  testing
+
+2013-04-26 15:31  sdray
+
+	* R/coinertia.R: Correct a small bug in the choice of the number of
+	  kept axes
+
+2013-04-26 15:26  sdray
+
+	* R/dudi.acm.R, R/utilities.R, man/ade4-internal.Rd,
+	  man/randtest-internal.Rd: New utilities functions
+
+2013-04-26 15:03  sdray
+
+	* R/scalewt.R, man/scalewt.Rd: New functions to compute weighted
+	  mean/var/cov for the levels of a factor
+
+2013-04-26 11:38  sdray
+
+	* R/dpcoa.R: dpcoa now returns
+
+2013-04-05 12:31  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.5-2 ----------
+
+2013-01-09 14:42  sdray
+
+	* R/procuste.R, man/procuste.Rd: value 'nfact' is renamed 'nf'
+
+2012-10-18 10:27  thioulouse
+
+	* man/coinertia.Rd: Small typo fix
+
+2012-10-18 10:26  thioulouse
+
+	* R/betweencoinertia.R: Fixed a bug introduced in print.betcoi
+	  function
+
+2012-10-17 16:29  sdray
+
+	* src/tests.c: Correct a small bug in loops for the acm case
+
+2012-10-17 15:49  sdray
+
+	* R/randtest-internal.R, src/testrlq.c, src/tests.c: Clean the C
+	  code and correct a small bug (R strings were transformed in
+	  integers in C) that provokes problems on Mac OS X (thanks to
+	  Vincent Miele for his help)
+
+2012-10-17 15:47  sdray
+
+	* R/rlq.R: Correct the number of repetitions in randtest.rlq (was
+	  nrepet+1 instead of nrepet)
+
+2012-10-16 13:32  thioulouse
+
+	* R/betweencoinertia.R, R/coinertia.R, man/coinertia.Rd: Edited
+	  print functions for coinertia and betweencoinertia analyses
+
+2012-10-16 13:30  thioulouse
+
+	* R/scatter.fca.R: Bug correction in the call to s.distri: needed
+	  to be pass the xax and yax params
+
+2012-09-21 16:02  sdray
+
+	* R/sco.gauss.R: Correct a bug: dnorm has 'sd' as arguments and not
+	  'var' (Thanks to Alice Julien-Laferriere)
+
+2012-09-14 11:21  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.5-1 ----------
+
+2012-09-14 11:19  sdray
+
+	* R/randtest.cca.R, R/randtest.pcaiv.R, R/randtest.pcaivortho.R:
+	  Calls to Fortran routine 'dqrls' are replaced by public 'lm.wfit'
+
+2012-07-27 14:49  sdray
+
+	* R/bca.rlq.R, R/between.R, R/betweencoinertia.R, R/coinertia.R,
+	  R/corkdist.R, R/discrimin.R, R/dpcoa.R, R/dudi.R, R/dudi.acm.R,
+	  R/kplot.sepan.R, R/mcoa.R, R/multispati.R, R/niche.R,
+	  R/randtest.coinertia.R, R/randtest.discrimin.R, R/rlq.R,
+	  R/rtest.between.R, R/rtest.discrimin.R, R/scatter.acm.R,
+	  R/scatter.fca.R, R/score.acm.R, R/score.coa.R, R/score.mix.R,
+	  R/score.pca.R, R/testdim.R, R/wca.rlq.R, R/withincoinertia.R,
+	  R/witwit.R, R/witwitsepan.R: Use eval.parent(..) instead of
+	  eval(.., sys.frame(0)) to allow the call of ade4 functions inside
+	  other functions
+
+2012-07-25 13:30  sdray
+
+	* R/coinertia.R: Update the summary.coinertia function that now
+	  returns invisible results
+
+2012-07-25 13:28  sdray
+
+	* R/dudi.R: To avoid confusion, the term 'Explained' is replaced by
+	  'Projected' in the summary.dudi function
+
+2012-07-25 12:47  sdray
+
+	* R/pcaiv.R, R/pcaivortho.R, man/pcaiv.Rd, man/pcaivortho.Rd: New
+	  functions 'summary.pcaiv' and 'summary.pcaivortho'
+
+2012-07-25 12:46  sdray
+
+	* R/dudi.R, man/dudi.Rd: New function 'summary.dudi'
+
+2012-07-25 10:53  sdray
+
+	* R/variance.phylog.R, man/variance.phylog.Rd: Returned is now an
+	  'anova' object (was 'table')
+
+2012-07-25 09:23  sdray
+
+	* R/bca.rlq.R, R/between.R, R/betweencoinertia.R, R/coinertia.R,
+	  R/discrimin.R, R/dpcoa.R, R/dudi.R, R/foucart.R, R/ktab.R,
+	  R/mcoa.R, R/mfa.R, R/multispati.R, R/niche.R, R/nipals.R,
+	  R/pcaiv.R, R/pcaivortho.R, R/pta.R, R/rlq.R, R/sepan.R,
+	  R/statis.R, R/variance.phylog.R, R/wca.rlq.R, R/within.R,
+	  R/withincoinertia.R, R/witwit.R: Outputs produced by print.*
+	  functions are now matrices (were table)
+
+2012-07-10 12:03  thioulouse
+
+	* R/coinertia.R: Fix the problem of complex eigenvalues sometimes
+	  returned by eigen in the case n < (p, q)
+
+2012-06-01 07:23  jombart
+
+	* R/orthogram.R, man/ade4-deprecated.Rd, man/orthogram.Rd:
+	  Orthogram function is now deprecated.
+
+2012-04-23 12:29  sdray
+
+	* src/testdim.c: Correct a small bug (void function cannot return
+	  values)
+
+2012-04-23 07:59  sdray
+
+	* man/neig.Rd: Modify an example due to a change in the deldir
+	  package
+
+2012-04-19 11:11  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.5-0 ----------
+
+2012-04-17 15:23  sdray
+
+	* R/bca.rlq.R, R/wca.rlq.R, data/piosphere.rda, man/bca.rlq.Rd,
+	  man/piosphere.Rd, man/wca.rlq.Rd: Add functions/data for partial
+	  RLQ analysis proposed by Wesuls et al (2012)
+
+2012-04-16 13:06  sdray
+
+	* R/ade4toR.R, R/amova.R, R/area.plot.R, R/between.R,
+	  R/betweencoinertia.R, R/cailliez.R, R/coinertia.R, R/corkdist.R,
+	  R/costatis.R, R/discrimin.R, R/dist.quant.R, R/dotcircle.R,
+	  R/dpcoa.R, R/dudi.acm.R, R/dudi.hillsmith.R, R/dudi.pco.R,
+	  R/foucart.R, R/gearymoran.R, R/is.euclid.R, R/kdisteuclid.R,
+	  R/kplot.foucart.R, R/kplot.mcoa.R, R/kplot.mfa.R, R/kplot.pta.R,
+	  R/kplot.sepan.R, R/kplot.statis.R, R/lingoes.R, R/mcoa.R,
+	  R/mdpcoa.R, R/mfa.R, R/multispati.R, R/neig.R, R/newick2phylog.R,
+	  R/niche.R, R/nipals.R, R/orthobasis.R, R/orthogram.R, R/pcaiv.R,
+	  R/pcaivortho.R, R/plot.phylog.R, R/procuste.R, R/pta.R,
+	  R/quasieuclid.R, R/rlq.R, R/s.arrow.R, R/s.corcircle.R,
+	  R/s.hist.R, R/s.kde2d.R, R/s.match.R, R/s.multinom.R,
+	  R/s.traject.R, R/s.value.R, R/scatter.acm.R, R/scatter.coa.R,
+	  R/scatter.dudi.R, R/scatter.fca.R, R/scatterutil.R,
+	  R/sco.quant.R, R/score.acm.R, R/score.mix.R, R/sepan.R,
+	  R/statis.R, R/symbols.phylog.R, R/table.cont.R, R/table.dist.R,
+	  R/table.paint.R, R/table.phylog.R, R/table.value.R,
+	  R/triangle.plot.R, R/within.R, R/withincoinertia.R, R/witwit.R,
+	  R/witwitsepan.R: Use full argument names to avoid partial
+	  matching
+
+2012-04-07 21:29  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-18 ----------
+
+2012-04-07 21:16  sdray
+
+	* R/testdim.R, src/testdim.c: Modify testdim functions to avoid
+	  calls to 'exit' in C code
+
+2012-04-07 21:13  sdray
+
+	* NAMESPACE, R/ade4.R: Remove .FirstLib and use NAMESPACE
+	  (UseDynLib) to load DLL
+
+2012-04-02 16:23  sdray
+
+	* data/bacteria.rda, data/capitales.rda, data/elec88.rda,
+	  data/hdpg.rda, data/irishdata.rda, data/lascaux.rda,
+	  data/mafragh.rda, data/perthi02.rda, data/tarentaise.rda,
+	  data/vegtf.rda: resave some data files to improve file
+	  compression
+
+2012-03-16 05:55  sdray
+
+	* DESCRIPTION: Update email addresses
+
+2012-01-20 12:45  jombart
+
+	* DESCRIPTION, NAMESPACE: Added a namespace (the default one
+	  generated by R 2.14.1) to ensure compatibility with older R
+	  release. Now stating the dependency on R >= 2.10 in DESCRIPTION.
+
+2011-11-07 15:21  sdray
+
+	* R/mantel.rtest.R: Improve the performance (speed) of the
+	  permutation procedure (suggestion by Josh Wiley jwiley.psych at
+	  gmail.com)
+
+2011-05-11 11:31  sdray
+
+	* INDEX: Delete INDEX file so that it would be generated and
+	  updated automatically
+
+2011-04-22 11:13  sdray
+
+	* R/randtest.between.R, man/randtest.between.Rd: Update the
+	  function to deal with objects created by the new bca function
+
+2011-04-11 14:23  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-17 ----------
+
+2011-04-07 12:00  sdray
+
+	* R/pcaiv.R: Correct a bug: intercept is not included in 'cor' 
+	  to avoid a warning produced by scalewt
+
+2011-04-07 11:32  sdray
+
+	* R/mfa.R, man/mfa.Rd, man/statis.Rd: Correct the documentation
+	  (suggestion by D. Laloe) and improve the code of mfa (use of
+	  match.arg to consider the argument 'option'
+
+2011-04-07 11:10  sdray
+
+	* R/withinpca.R, man/withinpca.Rd: Improve the documentation
+	  (suggestion by L. Dubroca on adelist 01/03/2011) and the code
+	  (suggestion by D. Laloe)
+
+2011-04-07 07:45  sdray
+
+	* R/between.R, R/betweencoinertia.R, R/within.R,
+	  R/withincoinertia.R, man/between.Rd, man/betweencoinertia.Rd,
+	  man/plot.between.Rd, man/plot.within.Rd, man/within.Rd,
+	  man/withincoinertia.Rd: Functions within, withincoinertia,
+	  betwee, betweencoinertia are now deprecated to avoid a conflict
+	  names with the base:::within. New generic bca, wca with methods
+	  bca.dudi, bca.coinertia, wca.dudi and wca.coinertia should be
+	  used instead.
+
+2011-04-06 16:06  sdray
+
+	* man/scatter.Rd: Correct a typo
+
+2011-04-06 16:06  sdray
+
+	* man/scatter.Rd: Add the doc for the 'main' argument
+
+2011-04-06 14:33  sdray
+
+	* R/dudi.R, man/scatter.Rd: New generic functions 'biplot' and
+	  'screeplot' to plot the outputs of an analysis (class dudi)
+
+2011-02-24 14:11  sdray
+
+	* data/macroloire.rda, data/rhizobium.rda, data/woangers.rda:
+	  Compress some ASCII data files
+
+2011-02-24 14:00  sdray
+
+	* R/quasieuclid.R: Attributes of the original dist object are
+	  preserved
+
+2011-02-24 13:55  sdray
+
+	* R/cailliez.R, R/lingoes.R, man/cailliez.Rd, man/lingoes.Rd: Add
+	  an argument to correct (or not) null distances
+
+2011-02-24 13:47  sdray
+
+	* R/is.euclid.R: Add a warning for null distances
+
+2010-09-27 14:42  sdray
+
+	* man/corvus.Rd: Correct a typo concerning the units of two
+	  variables (cm -> mm). Thanks to Peter Saly
+
+2010-08-18 15:25  sdray
+
+	* ChangeLog: ---------- release of ade4 1.4-16 ----------
+
+2010-08-18 15:10  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-16 ----------
+
+2010-05-08 05:41  thioulouse
+
+	* data/meaudret.rda: Updated meaudret environmental dataframe names
+
+2010-05-06 16:16  sdray
+
+	* man/triangle.class.Rd: Remove auto-generated content in the
+	  documentation
+
+2010-04-29 14:49  sdray
+
+	* R/s.class.R: argument 'pch' is now recycled so that one symbol
+	  could be assigned to each point. Thanks to Vincent Le Garrec for
+	  his question.
+
+2010-04-12 08:10  sdray
+
+	* man/dist.binary.Rd: Correct some bibliographic references. Thanks
+	  to Pierre Legendre.
+
+2010-03-19 13:19  sdray
+
+	* R/dist.ktab.R: Correct a small bug in the ldist.ktab function
+
+2010-03-10 09:13  thioulouse
+
+	* man/ktab.match2ktabs.Rd: removed deprecated email address in
+	  ktab.match2ktabs documentation file
+
+2010-03-05 15:06  jombart
+
+	* R/scalewt.R: Fixed a bug in the scaling of multivariate data
+	  using scalewt: when units of the variable were too heterogeneous,
+	  variables with the smallest variances were not scaled. This did
+	  not affect dudi.pca, but other functions such as discrimin.
+
+2010-02-10 12:12  sdray
+
+	* man/rlq.Rd: Correct a typo in the description
+
+2010-02-10 12:00  sdray
+
+	* man/rlq.Rd: Correct a typo in the description
+
+2009-12-18 08:46  sdray
+
+	* man/fourthcorner.Rd: Add information on the outputs of the print
+	  and summary functions
+
+2009-12-09 14:49  sdray
+
+	* man/banque.Rd, man/dudi.fca.Rd, man/fruits.Rd, man/meau.Rd,
+	  man/meaudret.Rd, man/monde84.Rd, man/ours.Rd, man/rhizobium.Rd,
+	  man/woangers.Rd, man/worksurv.Rd: Correct the use of the command
+	  '\item' in '\enumerate' environment
+
+2009-12-04 13:33  sdray
+
+	* R/plot.4thcorner.R, man/fourthcorner.Rd, src/fourthcorner.c: The
+	  argument 'type' in plot.4thcorner can now takes the value D2 to
+	  plot correlation instead of homogeneity statistics in the case of
+	  qualitative / quantitative association
+
+2009-12-04 13:28  sdray
+
+	* man/dist.ktab.Rd, man/woangers.Rd: Put some examples in
+	  '\dontrun' to speed up the checking of example
+
+2009-12-03 13:27  sdray
+
+	* ChangeLog: ---------- release of ade4 1.4-14 ----------
+
+2009-12-03 13:22  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-14 ----------
+
+2009-12-01 10:01  sdray
+
+	* DESCRIPTION, man/area.plot.Rd, man/neig.Rd, man/oribatid.Rd: Use
+	  the package 'deldir' instead of 'tripack' which has serious
+	  license issues. Correct the use of the class polylist which is
+	  not exported in the new version of maptools (0.7-27)
+
+2009-11-12 12:08  thioulouse
+
+	* R/costatis.R: changes to the costatis function to remove cat
+	  outputs in non-interactive mode (i.e., when scannf = FALSE)
+
+2009-11-12 08:40  sdray
+
+	* R/s.match.class.R, man/s.match.class.Rd: Add new function
+	  's.match.class' to represent two systems of coordinates and a
+	  partitioning
+
+2009-11-12 08:38  sdray
+
+	* R/betweencoinertia.R, R/withincoinertia.R, man/betweencoinertia.Rd,
+	  man/withincoinertia.Rd: Add new functions
+	  'betweencoinertia' and 'withincoinertia' for between- and
+	  within-coinertia analysis
+
+2009-11-09 12:06  thioulouse
+
+	* R/costatis.R, R/statico.R, man/costatis.Rd, man/statico.Rd,
+	  man/wgcoia.Rd: New functions to perform STATICO and CO-STATIS
+
+2009-10-30 08:49  sdray
+
+	* R/kdisteuclid.R: Use 'match.arg' to evaluate the value of the
+	  'method' argument
+
+2009-10-29 08:56  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-13 ----------
+
+2009-10-28 15:29  abdufour
+
+	* data/meaudret.rda: addition of the species names in the dataset
+
+2009-10-28 15:08  abdufour
+
+	* man/meau.Rd, man/meaudret.Rd: information about the link between
+	  the two datasets meau and meaudret has been added
+
+2009-10-28 14:13  sdray
+
+	* R/phylog.R, R/plot.phylog.R: Correct bug in the use of basic
+	  regular expressions (argument 'extended' is deprecated R 2.11.0)
+
+2009-10-27 14:50  spavoine
+
+	* R/originality.R, man/originality.Rd: new methods have been added
+	  in the originality function
+
+2009-10-27 14:08  spavoine
+
+	* data/woangers.rda, man/woangers.Rd, man/rhizobium.Rd, data/rhizobium.rda,
+	  data/macroloire.rda, man/macroloire.Rd: three new data sets added
+
+2009-10-27 14:05  spavoine
+
+	* R/dist.ktab.R, man/dist.ktab.Rd: new functions of distance for
+	  multiple types of variables
+
+2009-10-27 14:01  spavoine
+
+	* R/apqe.R, man/apqe.Rd: new functions for diversity partitioning
+
+2009-10-27 13:59  spavoine
+
+	* R/mdpcoa.R, man/mdpcoa.Rd: new functions for multiple dpcoa
+
+2009-10-23 12:21  sdray
+
+	* ChangeLog: ---------- release of ade4 1.4-12 ----------
+
+2009-10-23 12:19  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-12 ----------
+
+2009-10-21 14:18  sdray
+
+	* data/toxicity.rda, man/toxicity.Rd: Correct species names and
+	  table dimensions (thanks to Jean Lobry)
+
+2009-10-21 13:34  thioulouse
+
+	* R/dudi.R: bug on row.names in as.dudi (thanks to Jean Lobry)
+
+2009-10-20 14:18  sdray
+
+	* R/newick2phylog.R: Correct bug in the use of basic regular
+	  expressions
+
+2009-10-20 14:15  sdray
+
+	* man/multispati.Rd, man/multispati.randtest.Rd,
+	  man/multispati.rtest.Rd: update links to spdep functions in the
+	  documentation
+
+2009-10-02 09:07  simonpenel
+
+	* R/newick2phylog.R, man/s.value.Rd, man/variance.phylog.Rd: Minor
+	  bugs have been fixes. Replace extended = FALSE by fixed = TRUE
+
+2009-09-22 08:10  thioulouse
+
+	* man/scatter.dudi.Rd: added some precision about biplots in
+	  scatter.dudi.Rd
+
+2009-07-24 14:53  thioulouse
+
+	* R/pta.R: corrected a small bug in row names of supIX and supIY df
+
+2009-05-11 09:19  sdray
+
+	* R/dist.binary.R, man/dist.binary.Rd: Numeric matrix can be used
+	  for the 'df' argument (request of E. Paradis)
+
+2009-04-20 15:53  sdray
+
+	* R/area.plot.R: argument nclasslegend is now active. bug
+	  identified by C. Calenge
+
+2009-04-01 11:11  sdray
+
+	* ChangeLog: ---------- release of ade4 1.4-11 ----------
+
+2009-04-01 11:07  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-11 ----------
+
+2009-03-26 14:14  sdray
+
+	* man/buech.Rd, man/corvus.Rd, man/dist.binary.Rd,
+	  man/dist.prop.Rd, man/dist.quant.Rd, man/kplot.mcoa.Rd,
+	  man/kplot.pta.Rd, man/ktab.Rd, man/maples.Rd, man/mcoa.Rd,
+	  man/mfa.Rd, man/njplot.Rd, man/orthogram.Rd, man/phylog.Rd,
+	  man/randtest.coinertia.Rd, man/scatter.fca.Rd,
+	  man/scatterutil.Rd, man/supcol.Rd, man/withinpca.Rd: Make Rd
+	  files pass R-2.9.0 (devel) parser 2 checks
+
+2009-02-03 12:39  abdufour
+
+	* man/randEH.Rd: replace PD in EH
+
+2009-02-03 12:32  abdufour
+
+	* man/optimEH.Rd: replace PD in EH
+
+2008-12-12 14:04  sdray
+
+	* ChangeLog: ---------- release of ade4 1.4-10 ----------
+
+2008-12-12 14:03  sdray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-10 ----------
+
+2008-12-11 14:45  sdray
+
+	* R/combine.4thcorner.R, R/fourthcorner.R, R/fourthcorner2.R,
+	  R/plot.4thcorner.R, R/print.4thcorner.R, R/summary.4thcorner.R,
+	  man/fourthcorner.Rd, src/fourthcorner.c: new functions
+	  implementing the fourthcorner method and extensions presented in
+	  Dray and Legendre (2008)
+
+2008-12-11 13:23  sdray
+
+	* src/adesub.c, src/adesub.h, src/testdim.c: new functions to
+	  permute matrices used in testdim and fourthcorner are now in
+	  adesub
+
+2008-12-11 13:14  sdray
+
+	* man/RVdist.randtest.Rd, man/randtest-internal.Rd,
+	  man/scatterutil.Rd: remove empty sections
+
+2008-12-11 13:05  sdray
+
+	* man/dudi.fca.Rd: add a second argument to the \item macro
+
+2008-12-11 13:04  sdray
+
+	* man/witwit.coa.Rd: remove invalid whitespaces
+
+2008-12-01 15:34  jombart
+
+	* R/gearymoran.R: small typo repared
+
+2008-12-01 15:19  jombart
+
+	* R/gearymoran.R: Added a match.arg to gearymoran (in multivariate
+	  case, was messed up.
+
+2008-06-30 10:55  sdray
+
+	* R/niche.R: Add a global test of the average marginality for all
+	  species
+
+2008-06-13 10:33  jombart
+
+	* R/dudi.acm.R, R/dudi.coa.R, R/dudi.dec.R, R/dudi.fca.R,
+	  R/dudi.hillsmith.R, R/dudi.mix.R, R/dudi.nsc.R, R/dudi.pca.R:
+	  Added a as.data.frame(df) to dudi methods.
+
+2008-06-11 11:04  sdray
+
+	* data/abouheif.eg.rda: new data files
+
+2008-06-11 10:59  sdray
+
+	* data/acacia.rda, data/aminoacyl.rda, data/apis108.rda,
+	  data/ardeche.rda, data/arrival.rda, data/atlas.rda,
+	  data/atya.rda, data/avijons.rda, data/avimedi.rda,
+	  data/aviurba.rda, data/bacteria.rda, data/banque.rda,
+	  data/baran95.rda, data/bf88.rda, data/bordeaux.rda,
+	  data/bsetal97.rda, data/buech.rda, data/butterfly.rda,
+	  data/capitales.rda, data/carni19.rda, data/carni70.rda,
+	  data/carniherbi49.rda, data/casitas.rda, data/chatcat.rda,
+	  data/chats.rda, data/chazeb.rda, data/chevaine.rda,
+	  data/clementines.rda, data/cnc2003.rda, data/coleo.rda,
+	  data/corvus.rda, data/deug.rda, data/doubs.rda,
+	  data/dunedata.rda, data/ecg.rda, data/ecomor.rda,
+	  data/elec88.rda, data/escopage.rda, data/euro123.rda,
+	  data/fission.rda, data/friday87.rda, data/fruits.rda,
+	  data/ggtortoises.rda, data/granulo.rda, data/hdpg.rda,
+	  data/housetasks.rda, data/humDNAm.rda, data/ichtyo.rda,
+	  data/irishdata.rda, data/julliot.rda, data/jv73.rda,
+	  data/kcponds.rda, data/lascaux.rda, data/lizards.rda,
+	  data/macaca.rda, data/macon.rda, data/mafragh.rda,
+	  data/maples.rda, data/mariages.rda, data/meau.rda,
+	  data/meaudret.rda, data/microsatt.rda, data/mjrochet.rda,
+	  data/mollusc.rda, data/monde84.rda, data/morphosport.rda,
+	  data/newick.eg.rda, data/njplot.rda, data/olympic.rda,
+	  data/oribatid.rda, data/ours.rda, data/palm.rda, data/pap.rda,
+	  data/perthi02.rda, data/presid2002.rda, data/procella.rda,
+	  data/rankrock.rda, data/rhone.rda, data/rpjdl.rda,
+	  data/santacatalina.rda, data/sarcelles.rda, data/seconde.rda,
+	  data/skulls.rda, data/steppe.rda, data/syndicats.rda,
+	  data/t3012.rda, data/tarentaise.rda, data/taxo.eg.rda,
+	  data/tintoodiel.rda, data/tithonia.rda, data/tortues.rda,
+	  data/toxicity.rda, data/trichometeo.rda, data/ungulates.rda,
+	  data/vegtf.rda, data/veuvage.rda, data/westafrica.rda,
+	  data/worksurv.rda, data/yanomama.rda, data/zealand.rda: new data
+	  files
+
+2008-06-11 10:58  sdray
+
+	* data/abouheif.eg.rda, data/acacia.rda, data/aminoacyl.rda,
+	  data/apis108.rda, data/ardeche.rda, data/arrival.rda,
+	  data/atlas.rda, data/atya.rda, data/avijons.rda,
+	  data/avimedi.rda, data/aviurba.rda, data/bacteria.rda,
+	  data/banque.rda, data/baran95.rda, data/bf88.rda,
+	  data/bordeaux.rda, data/bsetal97.rda, data/buech.rda,
+	  data/butterfly.rda, data/capitales.rda, data/carni19.rda,
+	  data/carni70.rda, data/carniherbi49.rda, data/casitas.rda,
+	  data/chatcat.rda, data/chats.rda, data/chazeb.rda,
+	  data/chevaine.rda, data/clementines.rda, data/cnc2003.rda,
+	  data/coleo.rda, data/corvus.rda, data/deug.rda, data/doubs.rda,
+	  data/dunedata.rda, data/ecg.rda, data/ecomor.rda,
+	  data/elec88.rda, data/escopage.rda, data/euro123.rda,
+	  data/fission.rda, data/friday87.rda, data/fruits.rda,
+	  data/ggtortoises.rda, data/granulo.rda, data/hdpg.rda,
+	  data/housetasks.rda, data/humDNAm.rda, data/ichtyo.rda,
+	  data/irishdata.rda, data/julliot.rda, data/jv73.rda,
+	  data/kcponds.rda, data/lascaux.rda, data/lizards.rda,
+	  data/macaca.rda, data/macon.rda, data/mafragh.rda,
+	  data/maples.rda, data/mariages.rda, data/meau.rda,
+	  data/meaudret.rda, data/microsatt.rda, data/mjrochet.rda,
+	  data/mollusc.rda, data/monde84.rda, data/morphosport.rda,
+	  data/newick.eg.rda, data/njplot.rda, data/olympic.rda,
+	  data/oribatid.rda, data/ours.rda, data/palm.rda, data/pap.rda,
+	  data/perthi02.rda, data/presid2002.rda, data/procella.rda,
+	  data/rankrock.rda, data/rhone.rda, data/rpjdl.rda,
+	  data/santacatalina.rda, data/sarcelles.rda, data/seconde.rda,
+	  data/skulls.rda, data/steppe.rda, data/syndicats.rda,
+	  data/t3012.rda, data/tarentaise.rda, data/taxo.eg.rda,
+	  data/tintoodiel.rda, data/tithonia.rda, data/tortues.rda,
+	  data/toxicity.rda, data/trichometeo.rda, data/ungulates.rda,
+	  data/vegtf.rda, data/veuvage.rda, data/westafrica.rda,
+	  data/worksurv.rda, data/yanomama.rda, data/zealand.rda: remove
+	  corrupted data files
+
+2008-06-10 14:12  sdray
+
+	* ChangeLog, DESCRIPTION, INDEX, R, TITLE, data, inst, man, src:
+	  move from trunk to pkg after initial import using cvs2svn
+
+2008-06-10 14:01  sdray
+
+	* man: remove man folder
+
+2008-06-10 14:01  sdray
+
+	* R: remove R folder
+
+2008-06-10 14:12  sdray
+
+	* ChangeLog, DESCRIPTION, INDEX, R, TITLE, data, inst, man, src:
+	  move from trunk to pkg after initial import using cvs2svn
+
+2008-05-23 14:12  dray
+
+	* ChangeLog, DESCRIPTION: ---------- release of ade4 1.4-9
+	  ----------
+
+2008-05-23 12:12  dray
+
+	* R/niche.R: Correct a syntax error
+
+2008-05-23 12:00  dray
+
+	* R/mantel.randtest.R, R/procuste.randtest.R: Correct a bug. The
+	  number of repetitions was not correct ((nrepet + 1) instead of
+	  nrepet)
+
+2008-05-23 11:53  dray
+
+	* R/niche.R, R/randtest.between.R, R/randtest.coinertia.R,
+	  R/randtest.discrimin.R: Correct a bug. The number of repetitions
+	  was not correct ((nrepet + 1) instead of nrepet)
+
+2008-05-23 11:46  dray
+
+	* R/krandtest.R, R/randtest.amova.R, man/krandtest.Rd: the class
+	  krandtest now accepts a vector of alternative hypotheses instead
+	  of a common alternative hypothesis for the k tests (email of Kim
+	  Milferstedt on RHelp)
+
+2008-05-16 13:54  dray
+
+	* ChangeLog, DESCRIPTION: ---------- release of ade4 1.4-8
+	  ----------
+
+2008-05-07 11:29  jthioulo
+
+	* R/dudi.acm.R: bug correction (mail of JR Lobry on adelist):
+	  (any(row.w) < 0) vs. (any(row.w < 0))
+
+2008-05-07 11:27  jthioulo
+
+	* R/dudi.R: bug correction (mail of JR Lobry on adelist):
+	  any(col.w) < 0 vs. any(col.w < 0)
+
+2008-04-18 14:37  penel
+
+	* data/ggtortoises.rda: pixmap S3 objects transformed into S4 class
+
+2008-04-18 13:33  dray
+
+	* ChangeLog, DESCRIPTION: ---------- release of ade4 1.4-7
+	  ----------
+
+2008-04-18 13:31  dray
+
+	* data/capitales.rda: pixmap S3 objects transformed into S4 class
+
+2008-04-17 11:05  dray
+
+	* ChangeLog, DESCRIPTION: ---------- release of ade4 1.4-6
+	  ----------
+
+2008-04-16 17:02  dray
+
+	* R/phylog.R: Correct a bug in phylog.extract (mail of S. Ollier)
+
+2008-04-16 16:36  dray
+
+	* src/adesub.c, src/adesub.h, src/testrlq.c: matcentragehi in now
+	  in adesub
+
+2008-04-16 16:33  dray
+
+	* R/nipals.R, man/nipals.Rd: New function for NIPALS algorithm,
+	  i.e. PCA with (or without) NA
+
+2008-04-16 16:31  dray
+
+	* man/randtest.Rd: add some words about the computation of pvalues
+	  for two-sided test
+
+2008-04-16 13:18  dufour
+
+	* man/ade4.package.Rd: *** empty log message ***
+
+2008-04-16 10:12  dufour
+
+	* man/pcaiv.Rd: *** empty log message ***
+
+2008-04-14 12:41  penel
+
+	* man/table.phylog.Rd: Example table.phylog set to dontrun
+
+2008-04-02 11:16  dray
+
+	* man/multispati.Rd, man/vegtf.Rd: Update the source reference:
+	  Dray et al. (2008)
+
+2008-03-27 14:28  dufour
+
+	* man/dudi.pca.Rd: Modifications : explanations about values (cent
+	  and norm) ; it{} into emph{}.
+
+2008-03-27 13:47  dufour
+
+	* man/dudi.pca.Rd: Modification of explanations ($cent and $norm)
+
+2008-03-26 10:29  dray
+
+	* R/sco.distri.R: correct a bug (identified by S. Pavoine): default
+	  label argument was badly considered when one column contains only
+	  O's
+
+2008-03-20 15:10  dray
+
+	* R/scatter.R, R/scatterutil.R, man/scatter.Rd, man/scatterutil.Rd:
+	  New utility function scatterutil.sco and scatterutil.convrot90
+	  for 1D graphical representation
+
+2008-03-20 15:06  dray
+
+	* R/sco.gauss.R, man/sco.gauss.Rd: New function sco.gauss for 1D
+	  graphical representation
+
+2008-03-20 15:05  dray
+
+	* R/sco.match.R, man/sco.match.Rd: New function sco.match for 1D
+	  graphical representation
+
+2008-03-20 15:05  dray
+
+	* R/sco.class.R, man/sco.class.Rd: New function sco.class for 1D
+	  graphical representation
+
+2008-03-20 15:05  dray
+
+	* R/sco.label.R, man/sco.label.Rd: New function sco.label for 1D
+	  graphical representation
+
+2008-03-19 16:00  dray
+
+	* R/sco.qual.R: Functions of this file are now in sco.label.R and
+	  sco.gauss.R
+
+2008-03-18 14:18  dray
+
+	* inst/CITATION: Add two new references to the CITATION file
+
+2008-03-17 15:47  dray
+
+	* R/randtest.cca.R, R/randtest.pcaiv.R, R/randtest.pcaivortho.R,
+	  man/randtest.pcaiv.Rd: News functions for permutation tests in
+	  constrained analysis
+
+2008-02-05 13:26  dray
+
+	* src/testdim.c: Correct a bug in memory allocation of the function
+	  svdd
+
+2008-01-29 15:07  jthioulo
+
+	* man/sco.label.Rd: added function: Draws evenly spaced labels,
+	  each label linked to the corresponding value of a numeric score
+
+2008-01-29 15:07  jthioulo
+
+	* man/sco.gauss.Rd: added function: Draws Gauss curves with the
+	  same mean and variance as the scores of indivivuals belonging to
+	  categories of several factors
+
+2008-01-29 15:04  jthioulo
+
+	* man/veuvage.Rd: Correstion of illegal accented character in
+	  exemple code
+
+2008-01-29 15:04  jthioulo
+
+	* R/sco.qual.R: adds two functions: sco.gauss and sco.label (draw
+	  Gauss curves on a score by categories of several factors)
+
+2007-11-09 17:19  dray
+
+	* R/newick2phylog.R: Correct a bug. In newick2phylog.addtools,
+	  eigen does not return an orthogonal basis when there are null
+	  eigenvalues (Wscores). Vectors are now orthogonalized using qr
+
+2007-10-16 14:41  penel
+
+	* DESCRIPTION: Change License to GPL (>=2)
+
+2007-10-16 14:35  penel
+
+	* ChangeLog: *** empty log message ***
+
+2007-10-12 11:37  penel
+
+	* ChangeLog, DESCRIPTION: ---------- release of ade4 1.4-5
+	  ----------
+
+2007-10-11 15:50  penel
+
+	* man/dunedata.Rd, man/steppe.Rd: Replace non_function by Doctype
+
+2007-10-09 10:54  penel
+
+	* src/testdim.c, src/tests.c: Correction of a bug in the
+	  declaration of variables
+
+2007-09-25 11:16  dray
+
+	* ChangeLog: ---------- release of ade4 1.4-4 ----------
+
+2007-09-25 11:10  dray
+
+	* DESCRIPTION: ---------- release of ade4 1.4-4 ----------
+
+2007-09-20 15:48  dray
+
+	* R/coinertia.R, R/dudi.R, R/dudi.pco.R: Modification of the call
+	  of the imported function chooseaxes for the use of the ade4TkGUI
+	  package
+
+2007-09-17 16:23  dray
+
+	* R/within.pca.R, R/withinpca.R, man/ktab.Rd,
+	  man/ktab.match2ktabs.Rd, man/pta.Rd, man/statis.Rd,
+	  man/within.pca.Rd, man/withinpca.Rd: The function within.pca is
+	  renamed withinpca
+
+2007-09-17 15:12  dray
+
+	* R/ktab.R, man/ktab.Rd: Change the names of the arguments of the
+	  function '[.ktab'
+
+2007-09-17 13:05  dray
+
+	* man/amova.Rd, man/between.Rd, man/coinertia.Rd, man/corkdist.Rd,
+	  man/discrimin.Rd, man/dpcoa.Rd, man/dudi.Rd, man/dudi.acm.Rd,
+	  man/dudi.pco.Rd, man/foucart.Rd, man/is.euclid.Rd,
+	  man/kplot.foucart.Rd, man/kplot.mcoa.Rd, man/kplot.mfa.Rd,
+	  man/kplot.pta.Rd, man/kplot.sepan.Rd, man/kplot.statis.Rd,
+	  man/krandtest.Rd, man/ktab.Rd, man/mcoa.Rd, man/mfa.Rd,
+	  man/multispati.Rd, man/neig.Rd, man/niche.Rd, man/orthobasis.Rd,
+	  man/pcaiv.Rd, man/phylog.Rd, man/plot.phylog.Rd, man/procuste.Rd,
+	  man/pta.Rd, man/randtest.Rd, man/randtest.amova.Rd,
+	  man/randtest.between.Rd, man/randtest.coinertia.Rd,
+	  man/randtest.discrimin.Rd, man/reconst.Rd, man/rlq.Rd,
+	  man/rtest.Rd, man/rtest.between.Rd, man/rtest.discrimin.Rd,
+	  man/scatter.acm.Rd, man/scatter.coa.Rd, man/scatter.dudi.Rd,
+	  man/scatter.fca.Rd, man/score.acm.Rd, man/score.coa.Rd,
+	  man/score.mix.Rd, man/score.pca.Rd, man/sepan.Rd, man/statis.Rd,
+	  man/supcol.Rd, man/suprow.Rd, man/testdim.Rd, man/within.Rd,
+	  man/witwit.coa.Rd: Correct usage entries for S3 methods
+
+2007-09-14 11:58  jthioulo
+
+	* DESCRIPTION: suggests ade4TkGUI
+
+2007-09-14 09:15  jthioulo
+
+	* R/randtest.between.R: modif eval pour ne pas chercher dans
+	  l'environnement global directement
+
+2007-09-13 11:57  dray
+
+	* src/Makevars: replace CRLF (DOS) by LF (Unix)
+
+2007-09-13 11:18  jthioulo
+
+	* R/coinertia.R, R/dudi.R, R/dudi.pco.R: modif pour variable
+	  globale ade4TkGUIFlag
+
+2007-09-06 17:08  dray
+
+	* man/PI2newick.Rd, man/RV.rtest.Rd, man/RVdist.randtest.Rd,
+	  man/aminoacyl.Rd, man/ardeche.Rd, man/area.plot.Rd,
+	  man/as.taxo.Rd, man/atlas.Rd, man/atya.Rd, man/avijons.Rd,
+	  man/aviurba.Rd, man/baran95.Rd, man/between.Rd,
+	  man/bicenter.wt.Rd, man/buech.Rd, man/cailliez.Rd,
+	  man/carni70.Rd, man/casitas.Rd, man/cca.Rd, man/chatcat.Rd,
+	  man/chats.Rd, man/clementines.Rd, man/coinertia.Rd,
+	  man/corkdist.Rd, man/discrimin.Rd, man/discrimin.coa.Rd,
+	  man/dist.binary.Rd, man/dist.dudi.Rd, man/dist.genet.Rd,
+	  man/dist.neig.Rd, man/dist.prop.Rd, man/dist.quant.Rd,
+	  man/divcmax.Rd, man/dotchart.phylog.Rd, man/dotcircle.Rd,
+	  man/doubs.Rd, man/dpcoa.Rd, man/dudi.Rd, man/dudi.acm.Rd,
+	  man/dudi.coa.Rd, man/dudi.dec.Rd, man/dudi.fca.Rd,
+	  man/dudi.mix.Rd, man/dudi.nsc.Rd, man/dudi.pca.Rd,
+	  man/dudi.pco.Rd, man/escopage.Rd, man/euro123.Rd, man/fruits.Rd,
+	  man/fuzzygenet.Rd, man/gearymoran.Rd, man/genet.Rd,
+	  man/granulo.Rd, man/gridrowcol.Rd, man/ichtyo.Rd,
+	  man/inertia.dudi.Rd, man/is.euclid.Rd, man/julliot.Rd,
+	  man/jv73.Rd, man/kdist.Rd, man/kdist2ktab.Rd, man/kdisteuclid.Rd,
+	  man/kplot.foucart.Rd, man/kplot.mcoa.Rd, man/kplot.mfa.Rd,
+	  man/kplot.pta.Rd, man/kplot.sepan.Rd, man/kplot.statis.Rd,
+	  man/ktab.Rd, man/ktab.data.frame.Rd, man/ktab.list.df.Rd,
+	  man/ktab.list.dudi.Rd, man/ktab.match2ktabs.Rd,
+	  man/ktab.within.Rd, man/lascaux.Rd, man/lingoes.Rd, man/macon.Rd,
+	  man/mafragh.Rd, man/mantel.rtest.Rd, man/mariages.Rd,
+	  man/mcoa.Rd, man/meau.Rd, man/meaudret.Rd, man/mfa.Rd,
+	  man/microsatt.Rd, man/mjrochet.Rd, man/mld.Rd, man/mollusc.Rd,
+	  man/monde84.Rd, man/morphosport.Rd, man/mstree.Rd,
+	  man/multispati.Rd, man/multispati.randtest.Rd,
+	  man/multispati.rtest.Rd, man/neig.Rd, man/newick.eg.Rd,
+	  man/newick2phylog.Rd, man/niche.Rd, man/njplot.Rd,
+	  man/orthobasis.Rd, man/orthogram.Rd, man/ours.Rd, man/palm.Rd,
+	  man/pcaiv.Rd, man/pcaivortho.Rd, man/pcoscaled.Rd, man/phylog.Rd,
+	  man/plot.phylog.Rd, man/procuste.Rd, man/procuste.rtest.Rd,
+	  man/pta.Rd, man/quasieuclid.Rd, man/reconst.Rd, man/rhone.Rd,
+	  man/rpjdl.Rd, man/rtest.Rd, man/rtest.between.Rd,
+	  man/rtest.discrimin.Rd, man/s.arrow.Rd, man/s.chull.Rd,
+	  man/s.class.Rd, man/s.corcircle.Rd, man/s.distri.Rd,
+	  man/s.hist.Rd, man/s.image.Rd, man/s.kde2d.Rd, man/s.label.Rd,
+	  man/s.logo.Rd, man/s.match.Rd, man/s.multinom.Rd,
+	  man/s.traject.Rd, man/s.value.Rd, man/sarcelles.Rd,
+	  man/scalewt.Rd, man/scatter.Rd, man/scatter.acm.Rd,
+	  man/scatter.coa.Rd, man/scatter.dudi.Rd, man/scatter.fca.Rd,
+	  man/sco.boxplot.Rd, man/sco.distri.Rd, man/sco.quant.Rd,
+	  man/score.Rd, man/score.acm.Rd, man/score.coa.Rd,
+	  man/score.mix.Rd, man/score.pca.Rd, man/sepan.Rd, man/statis.Rd,
+	  man/steppe.Rd, man/supcol.Rd, man/suprow.Rd,
+	  man/symbols.phylog.Rd, man/t3012.Rd, man/table.cont.Rd,
+	  man/table.dist.Rd, man/table.paint.Rd, man/table.phylog.Rd,
+	  man/table.value.Rd, man/tarentaise.Rd, man/triangle.class.Rd,
+	  man/triangle.plot.Rd, man/trichometeo.Rd, man/ungulates.Rd,
+	  man/uniquewt.df.Rd, man/variance.phylog.Rd, man/veuvage.Rd,
+	  man/westafrica.Rd, man/within.Rd, man/within.pca.Rd,
+	  man/witwit.coa.Rd, man/worksurv.Rd: Added the encoding of Rd
+	  files and remove the email of Daniel Chessel (he is retired)
+
+2007-09-06 15:11  dray
+
+	* R/scatter.acm.R: Clean R files: replace T by TRUE.
+
+2007-09-06 15:03  dray
+
+	* R/newick2phylog.R: Clean R files: remove multiple function
+	  definitions (floc1(s) becomes floc1,floc2,floc3. Thanks to
+	  UsagePackageCheck of codetools
+
+2007-09-06 14:55  dray
+
+	* R/multispati.R, R/multispati.randtest.R, R/multispati.rtest.R,
+	  R/neig.R, R/orthobasis.R, R/s.image.R, R/s.kde2d.R, R/s.logo.R:
+	  Clean R files: correct imported function definition. Thanks to
+	  UsagePackageCheck of codetools
+
+2007-09-06 13:53  dray
+
+	* R/orthogram.R: Correct a bug: test for the choice between
+	  orthobas, neig or phylog
+
+2007-09-06 12:21  dray
+
+	* R/scatter.acm.R: Correct a bug: replace score. by score.acm
+
+2007-09-06 12:19  dray
+
+	* R/kplot.foucart.R, R/kplot.mfa.R, R/mcoa.R, R/rlq.R,
+	  R/score.coa.R, R/sepan.R, R/variance.phylog.R: Clean R files:
+	  remove local variables assigned but not used. Thanks to
+	  checkUsagePackage of codetools
+
+2007-09-06 11:58  dray
+
+	* R/PI2newick.R, R/RV.rtest.R, R/RVdist.randtest.R, R/amova.R,
+	  R/area.plot.R, R/as.taxo.R, R/between.R, R/coinertia.R,
+	  R/corkdist.R, R/disc.R, R/discrimin.R, R/discrimin.coa.R,
+	  R/dist.dudi.R, R/dist.genet.R, R/dotcircle.R, R/dudi.coa.R,
+	  R/dudi.dec.R, R/dudi.nsc.R, R/foucart.R, R/fuzzygenet.R,
+	  R/genet.R, R/gridrowcol.R, R/kplot.foucart.R, R/kplot.mfa.R,
+	  R/kplot.statis.R, R/ktab.R, R/ktab.list.dudi.R,
+	  R/ktab.match2ktabs.R, R/ktab.within.R, R/lingoes.R, R/mcoa.R,
+	  R/mld.R, R/multispati.R, R/newick2phylog.R, R/niche.R,
+	  R/optimEH.R, R/orthobasis.R, R/orthogram.R, R/pcaiv.R,
+	  R/phylog.R, R/plot.phylog.R, R/procuste.R, R/rlq.R,
+	  R/rtest.between.R, R/s.corcircle.R, R/s.hist.R, R/s.image.R,
+	  R/scatter.R, R/sco.distri.R, R/score.acm.R, R/score.coa.R,
+	  R/score.mix.R, R/sepan.R, R/statis.R, R/symbols.phylog.R,
+	  R/table.cont.R, R/table.phylog.R, R/uniquewt.df.R,
+	  R/variance.phylog.R, R/within.R, R/within.pca.R: Clean R files:
+	  remove local variables assigned but not used. Thanks to
+	  checkUsagePackage of codetools
+
+2007-09-06 08:08  dray
+
+	* man/bordeaux.Rd, man/cca.Rd, man/dudi.hillsmith.Rd,
+	  man/elec88.Rd, man/seconde.Rd: Clean Rd files: remove unmatched
+	  right brace
+
+2007-09-04 16:12  dray
+
+	* R/testdim.R, man/testdim.Rd, src/Makevars, src/testdim.c: New
+	  function testdim to estimate the number of axes in multivariate
+	  analysis
+
+2007-09-04 15:07  dray
+
+	* R/gearymoran.R, R/krandtest.R, R/niche.R, R/orthogram.R,
+	  R/randtest.amova.R, man/gearymoran.Rd, man/krandtest.Rd,
+	  man/niche.Rd, man/orthogram.Rd: reimplementation of the class
+	  krandtest and new function as.krandtest
+
+2007-09-04 14:50  dray
+
+	* man/vegtf.Rd: correction of a bug in the example section
+
+2007-09-03 16:53  dray
+
+	* R/score.coa.R, man/score.coa.Rd: new function reciprocal.coa (see
+	  http://listes.univ-lyon1.fr/wws/arc/adelist/2007-07/msg00007.html)
+
+2007-09-03 16:26  dray
+
+	* R/sco.distri.R, man/sco.distri.Rd: sco.distri returns a
+	  data.frame with means and variances (see
+	  http://listes.univ-lyon1.fr/wws/arc/adelist/2007-06/msg00018.html)
+
+2007-09-03 15:24  dray
+
+	* R/scatter.R, R/sepan.R, R/witwitsepan.R: Add yaxt argument to
+	  scatterutil.eigen (see
+	  http://listes.univ-lyon1.fr/wws/arc/adelist/2007-07/msg00022.html)
+
+2007-09-03 15:04  dray
+
+	* R/multispati.R: Correct legend in plot.multispati
+
+2007-09-03 14:58  dray
+
+	* data/vegtf.rda, man/vegtf.Rd: New vegetation data set to
+	  illustrate multispati analysis
+
+2007-09-03 14:51  dray
+
+	* R/niche.R, man/niche.Rd: New functions niche.param and
+	  rtest.niche
+
+2007-08-29 16:20  dray
+
+	* R/area.plot.R: the function area2poly is modified to export the
+	  bbox attribute for each polygon
+
+2007-08-29 16:00  dray
+
+	* R/s.corcircle.R: correct bug of the grid argument. see
+	  http://listes.univ-lyon1.fr/wws/arc/adelist/2007-07/msg00001.html
+
+2007-08-29 15:47  dray
+
+	* R/randtest-internal.R, R/rlq.R: correct bugs in memory allocation
+	  (C interface). These bugs have been identified using valgrind by
+	  B. Ripley (12/06/2007)
+
+2007-06-15 07:49  dray
+
+	* man/dunedata.Rd: correct the number of rows and columns in the
+	  help file
+
+2007-04-16 12:56  dray
+
+	* ChangeLog, DESCRIPTION: ---------- release of ade4 1.4-3
+	  ----------
+
+2007-04-12 13:39  dray
+
+	* man/suprow.Rd: correct the example section
+
+2007-04-12 13:08  dray
+
+	* ChangeLog: New ChangeLog
+
+2007-04-12 12:58  dray
+
+	* data/atlas.rda, data/avijons.rda, data/aviurba.rda,
+	  data/baran95.rda, data/bf88.rda, data/chevaine.rda,
+	  data/cnc2003.rda, data/elec88.rda, data/monde84.rda,
+	  data/rankrock.rda, data/rpjdl.rda, data/sarcelles.rda,
+	  data/steppe.rda, data/t3012.rda, data/tarentaise.rda,
+	  data/veuvage.rda, data/westafrica.rda: remove non ASCII
+	  characters in data
+
+2007-03-26 16:47  jombart
+
+	* ChangeLog, R/dudi.pco.R: reviewed by: <delete if not using a
+	  buddy>
+	  * R/dudi.pco.R: sub and csub arguments are now actually passed to
+	  s.label
+
+2007-03-12 14:34  jombart
+
+	* ChangeLog, R/add.scatter.R, man/add.scatter.Rd, man/scatter.Rd: *
+	  R/scatter.R: removed add.scatter.eig
+	  * man/scatter.Rd: removed add.scatter.eig
+	  * R/add.scatter.R: new functions add.scatter and add.scatter.eig
+	  * man/add.scatter.Rd: doc for add.scatter and add.scatter.eig
+
+2007-03-12 14:27  jombart
+
+	* R/scatter.add.R, man/scatter.add.Rd: *** empty log message ***
+
+2007-03-12 14:06  jombart
+
+	* ChangeLog, R/add.graph.R: reviewed by: <delete if not using a
+	  buddy>
+	  * R/add.graph.R:
+	  * R/dpcoa.R:
+	  * R/dudi.pco.R:
+	  * R/kplot.sepan.R:
+	  * R/mfa.R:
+	  * R/pta.R:
+	  * R/scatter.R:
+	  * R/scatter.add.R:
+	  * R/scatter.coa.R:
+	  * R/scatter.dudi.R:
+	  * R/statis.R:
+	  * man/scatter.Rd:
+	  * man/scatter.add.Rd:
+
+2007-03-12 14:04  jombart
+
+	* ChangeLog, R/dpcoa.R, R/dudi.pco.R, R/kplot.sepan.R, R/mfa.R,
+	  R/pta.R, R/scatter.R, R/scatter.add.R, R/scatter.coa.R,
+	  R/scatter.dudi.R, R/statis.R, man/add.graph.Rd, man/scatter.Rd,
+	  man/scatter.add.Rd: reviewed by: <delete if not using a buddy>
+	  * R/dpcoa.R:
+	  * R/dudi.pco.R:
+	  * R/kplot.sepan.R:
+	  * R/mfa.R:
+	  * R/pta.R:
+	  * R/scatter.R:
+	  * R/scatter.add.R:
+	  * R/scatter.coa.R:
+	  * R/scatter.dudi.R:
+	  * R/statis.R:
+	  * man/add.graph.Rd:
+	  * man/scatter.Rd:
+	  * man/scatter.add.Rd:
+
+2007-03-10 10:38  jombart
+
+	* ChangeLog, R/add.graph.R, R/dpcoa.R, R/dudi.pco.R,
+	  R/kplot.sepan.R, R/mfa.R, R/pta.R, R/scatter.R, R/scatter.coa.R,
+	  R/scatter.dudi.R, R/statis.R, man/add.graph.Rd, man/dudi.pca.Rd,
+	  man/scatter.Rd, man/scatter.dudi.Rd: reviewed by: <delete if not
+	  using a buddy>
+	  * R/add.graph.R: ajout de la fonction (contient add.graph et la
+	  nouvelle version de add.scatter.eig)
+	  * man/add.graph.Rd: ajout de la doc (add.graph et
+	  add.scatter.eig)
+	  * R/dpcoa.R: appel de add.scatter.eig: nf supprime
+	  * R/dudi.pco.R: appel de add.scatter.eig: nf supprime
+	  * R/kplot.sepan.R: appel de add.scatter.eig: nf supprime
+	  * R/mfa.R: appel de add.scatter.eig: nf supprime
+	  * R/pta.R: appel de add.scatter.eig: nf supprime
+	  * R/scatter.R: add.scatter.eig supprime (migre vers add.graph.R)
+	  * R/scatter.coa.R: appel de add.scatter.eig: nf supprime
+	  * R/scatter.dudi.R: appel de add.scatter.eig: nf supprime
+	  * R/statis.R: appel de add.scatter.eig: nf supprime
+	  * man/dudi.pca.Rd: modifications faites par Anne
+	  * man/scatter.Rd: enleve add.scatter.eig de la doc (migre vers
+	  add.graph.Rd)
+	  * man/scatter.dudi.Rd: appel de add.scatter.eig: nf supprime
+
+2007-03-07 18:46  jombart
+
+	* ChangeLog, data/rpjdl.rda: reviewed by: <delete if not using a
+	  buddy>
+	  * data/rpjdl.rda: removed accents
+
+2007-02-19 09:53  jthioulo
+
+	* ChangeLog, R/s.arrow.R, man/s.arrow.Rd: * R/s.arrow.R: added the
+	  "boxes" argument
+	  * man/s.arrow.Rd: added the "boxes" argument
+
+2007-02-16 09:13  dray
+
+	* ChangeLog, man/orthogram.Rd: * man/orthogram.Rd: update the
+	  reference to Ollier et al.
+

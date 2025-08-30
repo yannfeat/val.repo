@@ -1,0 +1,129 @@
+---
+title: "Other functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Other functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+actxps:::set_actxps_plot_theme()
+```
+
+
+This vignette features functions that are not covered in other vignettes.
+
+```{r packages, warning=FALSE, message=FALSE}
+library(actxps)
+library(clock)
+```
+
+## Working with aggregate experience data
+
+Seriatim-level policy experience data is often not available for analysis. This is almost always the case with industry studies that contain experience data submitted by multiple parties. In these cases, experience is grouped by a several common policy attributes and aggregated accordingly.
+
+The typical workflow in actxps of `expose() |> exp_stats()` for termination studies or `expose() |> add_transactions() |> trx_stats()` for transaction studies doesn't apply if the starting data is aggregated. That is because another party has already gone through the steps of creating exposure records and performing an initial level of aggregation.
+
+Actxps provides two functions designed to work with aggregate experience data.
+
+- For termination studies, `as_exp_df()` converts a data frame of aggregate experience into an `exp_df` object, which is the class returned by `exp_stats()`
+= For transaction studies, `as_trx_df()` converts a data frame of aggregate experience into a `trx_df` object, which is the class returned by `trx_stats()`
+
+Both object classes have a `summary()` method which summarizes experience across any grouping variables passed to the function. The output of `summary()` will always be another `exp_df` (or `trx_df`) object, and will look just like the results of `exp_stats()` (or `trx_stats()`). For downstream reporting, summary results can be passed to the visualization functions `autoplot()` and `autotable()`.
+
+The `agg_sim_dat` data set contains aggregate experience on a theoretical block of deferred annuity contracts. Below, `as_exp_df()` is used to convert the data to an `exp_df`, and `summary()` is called using multiple grouping variables.
+
+```{r agg-exp-1}
+agg_sim_exp_df <- agg_sim_dat |> 
+  as_exp_df(col_exposure = "exposure_n", col_claims = "claims_n",
+            conf_int = TRUE,
+            start_date = 2005, end_date = 2019, target_status = "Surrender")
+```
+
+Results summarized by policy year
+
+```{r agg-exp-2}
+summary(agg_sim_exp_df, pol_yr)
+```
+
+Results summarized by income guarantee presence and product
+
+```{r agg-exp-3}
+summary(agg_sim_exp_df, inc_guar, product)
+```
+
+`as_exp_df()` and `as_trx_df()` contain several arguments for optional calculations like confidence intervals, expected values, weighting variables, and more. These arguments mirror the functionality in `exp_stats()` and `trx_stats()`. Both functions also contain multiple arguments for specifying column names associated with required values like exposures and claims.
+
+## Policy duration functions
+
+The `pol_()` family of functions calculates policy years, months, quarters, or weeks. Each function accepts a vector of dates and a vector of issue dates.
+
+**Example**: assume a policy was issued on 2022-05-10 and we are interested in calculating various policy duration values at the end of calendar years 2022-2032.
+
+```{r pol-dur1}
+dates <- date_build(2022 + 0:10, 12, 31)
+
+# policy years
+pol_yr(dates, "2022-05-10")
+
+# policy quarters
+pol_qtr(dates, "2022-05-10")
+
+# policy months
+pol_mth(dates, "2022-05-10")
+
+# policy weeks
+pol_wk(dates, "2022-05-10")
+
+```
+
+## Predictive modeling support functions
+
+The `add_predictions()` function attaches predictions from any model with a `predict()` method.
+
+Below, a very simple logistic regression model is fit to surrender experience in the first ten policy years. Predictions from this model are then added to exposure records using `add_predictions()`. This function only requires a data frame of exposure records and a model with a `predict()` method. Often, it is necessary to specify additional model-specific arguments like `type` to ensure `predict()` returns the desired output. In the example below, `type` is set to "response" to return probabilities instead of the default predictions on the log-odds scale.
+
+The `col_expected` argument is used to rename the column(s) containing predicted values. If no names are specified, the default name is "expected".
+
+```{r add-preds, fig.height=4, fig.width=5}
+# create exposure records
+exposed_data <- expose(census_dat, end_date = "2019-12-31",
+                       target_status = "Surrender") |> 
+  filter(pol_yr <= 10) |> 
+  # add a response column for surrenders
+  mutate(surrendered = status == "Surrender")
+
+# create a simple logistic model
+mod <- glm(surrendered ~ pol_yr, data = exposed_data, 
+           family = "binomial", weights = exposure)
+
+exp_res <- exposed_data |> 
+  # attach predictions
+  add_predictions(mod, type = "response", col_expected = "logistic") |> 
+  # summarize results
+  group_by(pol_yr) |> 
+  exp_stats(expected = "logistic")
+ 
+# create a plot
+plot_termination_rates(exp_res)
+
+```
+
+
+
+In addition, for users of the tidymodels framework, the actxps package includes a recipe step function, `step_expose()`, that can apply the `expose()` function during data preprocessing.
+
+```{r recipe, warning=FALSE}
+library(recipes)
+
+recipe(~ ., data = census_dat) |> 
+  step_expose(end_date = "2019-12-31", target_status = "Surrender")
+
+```
+

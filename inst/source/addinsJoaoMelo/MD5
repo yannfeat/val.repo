@@ -1,0 +1,9 @@
+aa401f4cbf3c02759a11d87dfb38a0e4 *DESCRIPTION
+11071e436c4b04e0b8f03f83858d3945 *NAMESPACE
+217dacd687952d301f5c59e66e486873 *R/combine_text.R
+50b038462bf799a72a1e08ff60baf472 *R/insert_compound_assignment_pipe.R
+ef565c4b68923b084c15a9c57eaf7b2f *R/insert_equal.R
+1c2ca1708486a25195e6af606ede3576 *inst/rstudio/addins.dcf
+f698b3130d94fb118d3586be96e17b4c *man/bare_combine.Rd
+707c786c7c93440ea16d917bdd23c19c *man/insert_compound_assignment_pipe.Rd
+e0f3697ec140c3bc816b021bc74f8345 *man/insert_equal.Rd
