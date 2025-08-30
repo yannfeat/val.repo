@@ -1,0 +1,16 @@
+citHeader("To cite the package 'adana' in publications use:")
+citEntry(entry = "book",
+ title = "R ile Genetik Algoritmalar ve Optimizasyon Uygulamalari [Genetic Algorithms and Optimization Applications with R]",
+ author = c(person("Zeynel", "Cebeci")),
+ textVersion = paste("Cebeci, Z. (2021),",
+   "R ile Genetik Algoritmalar ve Optimizasyon Uygulamalari", 
+   "[Genetic Algorithms and Optimization Applications with R].",
+   "Ankara: Nobel Academic Publishing, 535 p.",
+   "isbn: 9786254397448"),
+ publisher = "Nobel Academic Publishing",
+ year = "2021",
+ pages= "535",
+ isbn = "9786254397448")
+
+
+

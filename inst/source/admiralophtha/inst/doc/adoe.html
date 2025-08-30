@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Creating ADOE</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Creating ADOE</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This article describes creating an ADOE ADaM with Ophthalmology Exam
+Analysis data for ophthalmology endpoints. It is to be used in
+conjunction with the article on <a href="https://pharmaverse.github.io/admiral/articles/bds_finding.html">creating
+a BDS dataset from SDTM</a>. As such, derivations and processes that are
+not specific to ADOE are absent, and the user is invited to consult the
+aforementioned article for guidance.</p>
+<p><strong>Note</strong>: <em>All examples assume CDISC SDTM and/or ADaM
+format as input unless otherwise specified.</em></p>
+<div id="dataset-contents" class="section level2">
+<h2>Dataset Contents</h2>
+<p><code>{admiralophtha}</code> suggests to populate ADOE with general
+miscellaneous ophthalmology parameters. Any efficacy endpoint-related
+parameters (eg. BCVA tests) should be placed in separate datasets (eg.
+ADBCVA).</p>
+</div>
+<div id="required-packages" class="section level2">
+<h2>Required Packages</h2>
+<p>The examples of this vignette require the following packages.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(admiraldev)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(admiralophtha)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div>
+</div>
+</div>
+<div id="programming-workflow" class="section level1">
+<h1>Programming Workflow</h1>
+<ul>
+<li><a href="#setup">Initial Set Up of ADOE</a></li>
+<li><a href="#further">Further Derivations of Standard BDS
+Variables</a></li>
+<li><a href="#example">Example Script</a></li>
+</ul>
+<div id="setup" class="section level2">
+<h2>Initial set up of ADOE</h2>
+<p>As with all BDS ADaM datasets, one should start from the OE SDTM,
+where only the general ophthalmology records are of interest. For the
+purposes of the next two sections, we shall be using the
+<code>{admiral}</code> OE and ADSL test data. We will also require a
+lookup table for the mapping of parameter codes.</p>
+<p><strong>Note</strong>: to simulate an ophthalmology study, we add a
+randomly generated <code>STUDYEYE</code> variable to ADSL, but in
+practice <code>STUDYEYE</code> will already have been derived using
+<code>derive_var_studyeye()</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;oe_ophtha&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;admiral_adsl&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Add STUDYEYE to ADSL to simulate an ophtha dataset</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> admiral_adsl <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">STUDYEYE =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;LEFT&quot;</span>, <span class="st">&quot;RIGHT&quot;</span>), <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="fu">convert_blanks_to_na</span>()</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>oe <span class="ot">&lt;-</span> <span class="fu">convert_blanks_to_na</span>(oe_ophtha)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co"># Lookup table</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co"># nolint start</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>param_lookup <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="sc">~</span>OETESTCD, <span class="sc">~</span>OECAT, <span class="sc">~</span>OESCAT, <span class="sc">~</span>AFEYE, <span class="sc">~</span>PARAMCD, <span class="sc">~</span>PARAM, <span class="sc">~</span>PARAMN,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="st">&quot;CSUBTH&quot;</span>, <span class="st">&quot;OPHTHALMIC ASSESSMENTS&quot;</span>, <span class="st">&quot;SD-OCT CST SINGLE FORM&quot;</span>, <span class="st">&quot;Study Eye&quot;</span>, <span class="st">&quot;SCSUBTH&quot;</span>, <span class="st">&quot;Study Eye Center Subfield Thickness (um)&quot;</span>, <span class="dv">1</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>  <span class="st">&quot;CSUBTH&quot;</span>, <span class="st">&quot;OPHTHALMIC ASSESSMENTS&quot;</span>, <span class="st">&quot;SD-OCT CST SINGLE FORM&quot;</span>, <span class="st">&quot;Fellow Eye&quot;</span>, <span class="st">&quot;FCSUBTH&quot;</span>, <span class="st">&quot;Fellow Eye Center Subfield Thickness (um)&quot;</span>, <span class="dv">2</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>  <span class="st">&quot;DRSSR&quot;</span>, <span class="st">&quot;OPHTHALMIC ASSESSMENTS&quot;</span>, <span class="st">&quot;SD-OCT CST SINGLE FORM&quot;</span>, <span class="st">&quot;Study Eye&quot;</span>, <span class="st">&quot;SDRSSR&quot;</span>, <span class="st">&quot;Study Eye Diabetic Retinopathy Severity&quot;</span>, <span class="dv">3</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  <span class="st">&quot;DRSSR&quot;</span>, <span class="st">&quot;OPHTHALMIC ASSESSMENTS&quot;</span>, <span class="st">&quot;SD-OCT CST SINGLE FORM&quot;</span>, <span class="st">&quot;Fellow Eye&quot;</span>, <span class="st">&quot;FDRSSR&quot;</span>, <span class="st">&quot;Fellow Eye Diabetic Retinopathy Severity&quot;</span>, <span class="dv">4</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="st">&quot;IOP&quot;</span>, <span class="st">&quot;INTRAOCULAR PRESSURE&quot;</span>, <span class="cn">NA_character_</span>, <span class="st">&quot;Study Eye&quot;</span>, <span class="st">&quot;SIOP&quot;</span>, <span class="st">&quot;Study Eye IOP (mmHg)&quot;</span>, <span class="dv">5</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  <span class="st">&quot;IOP&quot;</span>, <span class="st">&quot;INTRAOCULAR PRESSURE&quot;</span>, <span class="cn">NA_character_</span>, <span class="st">&quot;Fellow Eye&quot;</span>, <span class="st">&quot;FIOP&quot;</span>, <span class="st">&quot;Fellow Eye IOP (mmHg)&quot;</span>, <span class="dv">6</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>)</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co"># nolint end</span></span></code></pre></div>
+<p>Following this setup, the programmer can start constructing ADOE. The
+first step is to subset OE to only general ophthalmology parameters.
+Then, one can merge the resulting dataset with ADSL. This is required
+for two reasons: firstly, <code>STUDYEYE</code> is crucial in the
+mapping of <code>AFEYE</code> and <code>PARAMCD</code>’s. Secondly, the
+treatment start date (<code>TRTSDT</code>) is also a prerequisite for
+the derivation of variables such as Analysis Day (<code>ADY</code>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>adsl_vars <span class="ot">&lt;-</span> <span class="fu">exprs</span>(TRTSDT, TRTEDT, TRT01A, TRT01P, STUDYEYE)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>adoe <span class="ot">&lt;-</span> oe <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    OETESTCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;CSUBTH&quot;</span>, <span class="st">&quot;DRSSR&quot;</span>, <span class="st">&quot;IOP&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">dataset_add =</span> adsl,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">new_vars =</span> adsl_vars,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">get_admiral_option</span>(<span class="st">&quot;subject_keys&quot;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The next item of business is to derive <code>AVAL</code>,
+<code>AVALU</code>, and <code>DTYPE</code>. In this example, due to the
+small number of parameters their derivation is trivial.
+<code>AFEYE</code> is also created in this step using the function
+<code>derive_var_afeye()</code>. To determine the affected eye, this
+function compares <code>OELAT</code> to the <code>STUDYEYE</code>
+variable created from the previous step.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>adoe <span class="ot">&lt;-</span> adoe <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="co"># Calculate AVAL, AVALC, AVALU and DTYPE</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">AVAL =</span> OESTRESN,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">AVALC =</span> OESTRESC,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="at">AVALU =</span> OESTRESU,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">DTYPE =</span> <span class="cn">NA_character_</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="co"># Derive AFEYE needed for PARAMCD derivation</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">derive_var_afeye</span>(<span class="at">loc_var =</span> OELOC, <span class="at">lat_var =</span> OELAT, <span class="at">loc_vals =</span> <span class="fu">c</span>(<span class="st">&quot;EYE&quot;</span>, <span class="st">&quot;RETINA&quot;</span>))</span></code></pre></div>
+</div>
+<div id="param_avisit" class="section level2">
+<h2>Assigning <code>PARAM</code>/<code>PARAMCD</code> and
+<code>AVISIT/AVISITN</code></h2>
+<p>Moving forwards, <code>PARAM</code> and <code>PARAMCD</code> can be
+assigned using <code>derive_vars_merged()</code> from
+<code>{admiral}</code> and the lookup table <code>param_lookup</code>
+generated above. <code>AVISIT</code>, <code>AVISITN</code> and related
+timepoint variables can also be derived soon after, though their
+derivation is generally study-specific. A simple option is included
+below; please consult the <code>{admiral}</code> <a href="https://pharmaverse.github.io/admiral/articles/bds_finding.html#timing">BDS
+findings vignette</a> for a more detailed discussion.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>adoe <span class="ot">&lt;-</span> adoe <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="co"># Add PARAM, PARAMCD from lookup table</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">dataset_add =</span> param_lookup,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(PARAM, PARAMCD),</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(OETESTCD, AFEYE)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="co"># Derive visit, baseline flag info and BASETYPE</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>    <span class="at">ATPTN =</span> OETPTNUM,</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    <span class="at">ATPT =</span> OETPT,</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>    <span class="at">AVISIT =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>      <span class="fu">str_detect</span>(VISIT, <span class="st">&quot;SCREEN&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Screening&quot;</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(VISIT) <span class="sc">~</span> <span class="fu">str_to_title</span>(VISIT),</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>    ),</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>    <span class="at">AVISITN =</span> <span class="fu">round</span>(VISITNUM, <span class="dv">0</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>    <span class="at">ABLFL =</span> <span class="fu">if_else</span>(AVISIT <span class="sc">==</span> <span class="st">&quot;Baseline&quot;</span>, <span class="st">&quot;Y&quot;</span>, <span class="cn">NA_character_</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>    <span class="co"># In actual studies, ABLFL derivation will likely be more nuanced</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>    <span class="co"># and leverage derive_var_extreme_flag()</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="params" class="section level2">
+<h2>Creating IOP pre to post-dose difference derived parameter</h2>
+<p>Two derived parameters of interest are the difference between pre and
+post-dose IOP in each eye at each visit. These records can be added with
+two calls to <code>derive_param_computed()</code>. Since the calls are
+very similar, they can be executed in one code block using
+<code>call_derivation()</code> - please see the <a href="https://pharmaverse.github.io/admiral/articles/higher_order.html">Higher
+Order Functions vignette</a> for more details.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>adoe <span class="ot">&lt;-</span> adoe <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="co"># Add derived parameter for difference between pre and post dose IOP</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">call_derivation</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">derivation =</span> derive_param_computed,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">c</span>(<span class="fu">get_admiral_option</span>(<span class="st">&quot;subject_keys&quot;</span>), <span class="sc">!!</span>adsl_vars, <span class="fu">exprs</span>(AVISIT, AVISITN)),</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">variable_params =</span> <span class="fu">list</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>      <span class="co"># Study eye</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>      <span class="fu">params</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>        <span class="at">parameters =</span> <span class="fu">exprs</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>          <span class="at">SIOPPRE =</span> PARAMCD <span class="sc">==</span> <span class="st">&quot;SIOP&quot;</span> <span class="sc">&amp;</span> ATPT <span class="sc">==</span> <span class="st">&quot;PRE-DOSE&quot;</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>          <span class="at">SIOPPOST =</span> PARAMCD <span class="sc">==</span> <span class="st">&quot;SIOP&quot;</span> <span class="sc">&amp;</span> ATPT <span class="sc">==</span> <span class="st">&quot;POST-DOSE&quot;</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>        ),</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>        <span class="at">set_values_to =</span> <span class="fu">exprs</span>(</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>          <span class="at">PARAMCD =</span> <span class="st">&quot;SIOPCHG&quot;</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>          <span class="at">PARAM =</span> <span class="st">&quot;Study Eye IOP Pre to Post Dose Diff (mmHg)&quot;</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>          <span class="at">PARAMN =</span> <span class="dv">9</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>          <span class="at">AVAL =</span> AVAL.SIOPPOST <span class="sc">-</span> AVAL.SIOPPRE,</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>          <span class="at">AVALC =</span> <span class="fu">as.character</span>(AVAL)</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>        )</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>      ),</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>      <span class="co"># Fellow eye</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>      <span class="fu">params</span>(</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>        <span class="at">parameters =</span> <span class="fu">exprs</span>(</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>          <span class="at">FIOPPRE =</span> PARAMCD <span class="sc">==</span> <span class="st">&quot;FIOP&quot;</span> <span class="sc">&amp;</span> ATPT <span class="sc">==</span> <span class="st">&quot;PRE-DOSE&quot;</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>          <span class="at">FIOPPOST =</span> PARAMCD <span class="sc">==</span> <span class="st">&quot;FIOP&quot;</span> <span class="sc">&amp;</span> ATPT <span class="sc">==</span> <span class="st">&quot;POST-DOSE&quot;</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>        ),</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>        <span class="at">set_values_to =</span> <span class="fu">exprs</span>(</span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>          <span class="at">PARAMCD =</span> <span class="st">&quot;FIOPCHG&quot;</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>          <span class="at">PARAM =</span> <span class="st">&quot;Fellow Eye IOP Pre to Post Dose Diff (mmHg)&quot;</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>          <span class="at">PARAMN =</span> <span class="dv">10</span>,</span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>          <span class="at">AVAL =</span> AVAL.FIOPPOST <span class="sc">-</span> AVAL.FIOPPRE,</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>          <span class="at">AVALC =</span> <span class="fu">as.character</span>(AVAL)</span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>        )</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>      )</span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>    )</span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">PARAMCD</th>
+<th align="left">AVISIT</th>
+<th align="right">AVAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1028</td>
+<td align="left">FIOP</td>
+<td align="left">Baseline</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1028</td>
+<td align="left">SIOP</td>
+<td align="left">Baseline</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1028</td>
+<td align="left">FIOP</td>
+<td align="left">Baseline</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1028</td>
+<td align="left">SIOP</td>
+<td align="left">Baseline</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1028</td>
+<td align="left">SIOPCHG</td>
+<td align="left">Baseline</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1028</td>
+<td align="left">FIOPCHG</td>
+<td align="left">Baseline</td>
+<td align="right">-18</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1028</td>
+<td align="left">FIOP</td>
+<td align="left">Week 4</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1028</td>
+<td align="left">SIOP</td>
+<td align="left">Week 4</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1028</td>
+<td align="left">FIOP</td>
+<td align="left">Week 4</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1028</td>
+<td align="left">SIOP</td>
+<td align="left">Week 4</td>
+<td align="right">26</td>
+</tr>
+</tbody>
+</table>
+<p>Note that within the call to <code>derive_param_computed()</code>,
+the <code>parameters</code> argument has been used to pass an expression
+that uniquely identifies which records are the pre-dose IOP and which
+are the post-dose IOP using the timepoint variable <code>OETPT</code>,
+because all IOP records are mapped to <code>PARAMCD = &quot;SIOP&quot;</code> or
+<code>PARAMCD = &quot;FIOP&quot;</code>. Users may need to update this expression
+if their study-specific collection or mapping differs from this
+standard.</p>
+<p>Additionally, it should be noted that for the <code>SIOPCHG</code>
+and <code>FIOPCHG</code> derived parameters, it is generally recommended
+not to populate <code>BASE</code>, <code>CHG</code> and
+<code>PCHG</code> as they are difficult/confusing to interpret. This can
+be simply achieved in one step, as the derivation of
+<code>derive_var_base()</code> can be placed inside of
+<code>restrict_derivation()</code> with a filter added to exclude these
+parameters. Then, <code>BASE</code> will be set to <code>NA</code> for
+<code>SIOPCHG</code> and <code>FIOPCHG</code>, so later calls to
+<code>derive_var_chg()</code> and <code>derive_var_pchg()</code> do not
+need any changes.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>adoe <span class="ot">&lt;-</span> adoe <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="co"># Calculate BASE (do not derive for IOP change params)</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">restrict_derivation</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">derivation =</span> derive_var_base,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">params</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>      <span class="at">by_vars =</span> <span class="fu">c</span>(<span class="fu">get_admiral_option</span>(<span class="st">&quot;subject_keys&quot;</span>), <span class="fu">exprs</span>(PARAMCD, ATPT)),</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>      <span class="at">source_var =</span> AVAL,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>      <span class="at">new_var =</span> BASE</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    ),</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    <span class="at">filter =</span> <span class="sc">!</span>PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SIOPCHG&quot;</span>, <span class="st">&quot;FIOPCHG&quot;</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="further" class="section level2">
+<h2>Further Derivations of Standard BDS Variables</h2>
+<p>The user is invited to consult the article on <a href="https://pharmaverse.github.io/admiral/articles/bds_finding.html">creating
+a BDS dataset from SDTM</a> to learn how to add standard BDS variables
+to ADOE.</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example Script</h2>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="77%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ADaM</th>
+<th>Sample Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADOE</td>
+<td><a href="https://github.com/pharmaverse/admiralophtha/blob/main/inst/templates/ad_adoe.R">ad_adoe.R</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

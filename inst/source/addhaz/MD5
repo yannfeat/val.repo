@@ -1,0 +1,10 @@
+1385a973bf946c867464ab5c7aac8e9c *DESCRIPTION
+9bf6144187c5e8cced2534ccc8bd74ac *NAMESPACE
+3a4377a420bef6c27baefb12c192b125 *R/BinAddHaz.R
+45ce4d5b87f8c1e7cb6a8af2c1c33796 *R/LRTest.R
+031b1bc330d1e2e57bf03cb78d76d32e *R/MultAddHaz.R
+869cc6e70b9a907a3a9f63fd87cca73f *data/disabData.rda
+5ab3678ab2d3fca4ee9f62cfb320a973 *man/BinAddHaz.Rd
+0b5c254d07c3f6a2c26dd45d5bf8b1fb *man/LRTest.Rd
+b20f815b65449bbc7e9d532b09e5228f *man/MultAddHaz.Rd
+411508e31781887c372f62f0b6980a21 *man/disabData.Rd

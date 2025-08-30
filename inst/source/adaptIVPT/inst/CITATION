@@ -1,0 +1,25 @@
+citHeader("To cite adaptIVPT in publications use:")
+
+bibentry(
+  bibtype = "Article",
+  title    = "Adaptive designs for IVPT data with mixed scaled average bioequivalence",
+  author   = c(
+        person("Daeyoung", "Lim"),
+        person("Elena", "Rantou"),
+        person("Jessica", "Kim"),
+        person("Sungwoo", "Choi"),
+        person("Nam Hee", "Choi"),
+        person("Stella", "Grosser")
+    ),
+  journal  = "Pharmaceutical Statistics",
+  year     = "2023",
+  volume   = "22",
+  number   = "6",
+  pages    = "1116-1134",
+  url      = "https://doi.org/10.1002/pst.2333",
+  textVersion = 
+  paste("Daeyoung Lim, Elena Rantou, Jessica Kim, Sungwoo Choi, Nam Hee Choi, Stella Grosser",
+    "Adaptive designs for IVPT data with mixed scaled average bioequivalence (2023)",
+    "https://github.com/daeyounglim/adaptIVPT"
+  )
+)

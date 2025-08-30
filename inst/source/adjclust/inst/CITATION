@@ -1,0 +1,25 @@
+bibentry(
+  bibtype = "Article",
+  textVersion = "Christophe Ambroise, Alia Dehman, Pierre Neuvial, Guillem Rigaill, and Nathalie Vialaneix (2019) Adjacency-constrained hierarchical clustering of a band similarity matrix with application to genomics. Algorithms for Molecular Biology, 14(22), 363–389.",
+  header = "To cite adjclust in publications, please use",
+  author = "Christophe Ambroise, Alia Dehman, Pierre Neuvial, Guillem Rigaill, and Nathalie Vialaneix",
+  title = "Adjacency-constrained hierarchical clustering of a band similarity matrix with application to genomics",
+  journal = "Algorithms for Molecular Biology",
+  year = "2019",
+  volume = "14",
+  issue = "22", 
+  pages = "363–389",
+  doi = "10.1186/s13015-019-0157-4"
+)
+
+bibentry(
+  bibtype = "Article",
+  title = "Applicability and interpretability of Ward’s hierarchical agglomerative clustering with or without contiguity constraints",
+  author = "Nathanael Randriamihamison, Nathalie Vialaneix, and Pierre Neuvial",
+  journal = "Journal of Classification",
+  year = "2020",
+  volume = "38",
+  issue = "2",
+  pages = "363–389",
+  doi = "10.1007/s00357-020-09377-y"
+)

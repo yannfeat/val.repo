@@ -1,0 +1,43 @@
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("AdMit")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("version", meta$Version)
+
+citHeader("To cite 'AdMit' in publications use:")
+
+citEntry(entry = "article",
+	 title = "Adaptive mixture of Student-$t$ distributions as a flexible candidate distribution for
+         efficient simulation: The {R} package {AdMit}",
+	 author = personList(person("David","Ardia"),
+                             person("Lennart","Hoogerheide"),
+                             person("Herman","van Dijk")),
+         journal = "Journal of Statistical Software",
+         year = "2009",
+         volume = "29",
+         number = "3",
+	 pages = "1-32",
+         doi = "10.18637/jss.v029.i03",
+	 textVersion =
+         paste("David Ardia, Lennart Hoogerheide, Herman van Dijk (2009).",
+               "Adaptive mixture of Student-t distribution as a flexible candidate distribution for 
+                efficient simulation: The 'R' package 'AdMit'.",
+               "Journal of Statistical Software 29(3).",
+               "doi:10.18637/jss.v029.i03")
+)
+
+citEntry(entry = "article",
+	 title = "{AdMit}: Adaptive mixture of Student-$t$ distributions",
+	 author = personList(person("David","Ardia"),
+                             person("Lennart","Hoogerheide"),
+                             person("Herman","van Dijk")),
+         journal = "R Journal",
+         year = "2009",
+         volume = "1",
+         number = "1",
+	       pages = "25-30",
+         doi = "10.32614/RJ-2009-003",
+         textVersion = 
+         paste("David Ardia, Lennart Hoogerheide, Herman van Dijk (2009).",
+               "'AdMit': Adaptive Mixture of Student-t Distribution.",
+               "R Journal 1(1).",
+               "doi:10.32614/RJ-2009-003")
+)

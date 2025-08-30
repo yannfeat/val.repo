@@ -1,0 +1,14 @@
+Name: Insert compound assignment pipe
+Description: Insert compound assignment pipe in line of code.
+Binding:insert_compound_assignment_pipe
+Interactive: false
+
+Name: Insert equal operator
+Description: Insert equal operator in line of code
+Binding:insert_equal
+Interactive: false
+
+Name: Bare Combine
+Description: Transforming texts in vectors for R
+Binding:bare_combine
+Interactive: false

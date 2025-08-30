@@ -1,0 +1,16 @@
+91aca28cb3246f8b0b4844e267d91992 *DESCRIPTION
+f1823d9aa66d04170bd063e086d2ab10 *NAMESPACE
+132c488afccfa05aed10280af7fd67cc *R/RcppExports.R
+00a90fa228c4b40150f45f0ba285ecc7 *R/crrscCOX.R
+3449b1ddf1380ce455ada2d674bc2695 *R/crrscKM.R
+4f71404624c171558040376497686547 *R/simulate_CR_data.R
+e37bfa156dbc384f256a21f24807a6d9 *R/simulate_surv_data.R
+632f74110ff9ab0e0c7467d368620ba3 *R/survCOX.R
+d9d7235ab3ca4e0aadc246281788028b *man/crrscCOX.Rd
+b152ea7123496fe7321074f5a993f164 *man/crrscKM.Rd
+961bd8ac1a4afe4e843b3e7dbaba59fe *man/simulate_CR_data.Rd
+0193ee8e578221a20657221ae88383a3 *man/simulate_surv_data.Rd
+8a16722613d72fba23897a682cba892e *man/survCOX.Rd
+2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars.win
+099a8c6b0c5db1ddb95a57db7fb137b4 *src/RcppExports.cpp
+e2fe685b99e4edb977e0e62a5fcfa19f *src/allCPP.cpp

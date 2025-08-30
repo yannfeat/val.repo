@@ -1,0 +1,31 @@
+## We need to export all functions the user is allowed to call,
+## including generics that are defined in our package.
+
+#importFrom(lattice,cloud)
+#importFrom(lattice,wireframe)
+
+## Hint: Using only one function or class per line allows easy sorting
+## in most editors, and you can comment out single functions, e.g.,
+## for debugging
+import(lattice)
+import(graphics)
+import(stats)
+export(
+  eq,
+  ne,
+  lt,
+  gt,
+  le,
+  ge,
+  parconv,
+  getpar,
+  tsT,
+  a1Table,
+  CEF,
+  plotBounds,
+  ovP,
+  plotCEF,
+  pathCEF
+)
+
+

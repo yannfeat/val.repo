@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Creating ADBCVA</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Creating ADBCVA</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This article describes creating an ADBCVA ADaM with Best-Corrected
+Visual Acuity (BCVA) data for ophthalmology endpoints. It is to be used
+in conjunction with the article on <a href="https://pharmaverse.github.io/admiral/articles/bds_finding.html">creating
+a BDS dataset from SDTM</a>. As such, derivations and processes that are
+not specific to ADBCVA are absent, and the user is invited to consult
+the aforementioned article for guidance.</p>
+<p><strong>Note</strong>: <em>All examples assume CDISC SDTM and/or ADaM
+format as input unless otherwise specified.</em></p>
+<div id="dataset-contents" class="section level2">
+<h2>Dataset Contents</h2>
+<p>As the name ADBCVA implies, <code>{admiralophtha}</code> suggests to
+populate ADBCVA solely with BCVA records from the OE SDTM.</p>
+</div>
+<div id="required-packages" class="section level2">
+<h2>Required Packages</h2>
+<p>The examples of this vignette require the following packages.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(admiraldev)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(admiralophtha)</span></code></pre></div>
+</div>
+</div>
+<div id="programming-workflow" class="section level1">
+<h1>Programming Workflow</h1>
+<ul>
+<li><a href="#setup">Initial Set Up of ADBCVA</a></li>
+<li><a href="#logmar">Deriving LogMAR Score Parameters</a></li>
+<li><a href="#further">Further Derivations of Standard BDS
+Variables</a></li>
+<li><a href="#avalcats">Deriving Analysis Value Categories for Snellen
+Scores</a></li>
+<li><a href="#critflags">Deriving Criterion Flags for BCVA
+Change</a></li>
+<li><a href="#notes">Additional Notes</a></li>
+<li><a href="#example">Example Script</a></li>
+</ul>
+<div id="setup" class="section level2">
+<h2>Initial set up of ADBCVA</h2>
+<p>As with all BDS ADaM datasets, one should start from the OE SDTM,
+where only the BCVA records are of interest. For the purposes of the
+next two sections, we shall be using the <code>{admiral}</code> OE and
+ADSL test data. We will also require a lookup table for the mapping of
+parameter codes. An SBCVA and FBCVA definition expression is created
+first - this expression can also be stored within another (sourced)
+program.</p>
+<p><strong>Note</strong>: to simulate an ophthalmology study, we add a
+randomly generated <code>STUDYEYE</code> variable to ADSL, but in
+practice <code>STUDYEYE</code> will already have been derived using
+<code>derive_var_studyeye()</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;oe_ophtha&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;admiral_adsl&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Add STUDYEYE to ADSL to simulate an ophtha dataset</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> admiral_adsl <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">STUDYEYE =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;LEFT&quot;</span>, <span class="st">&quot;RIGHT&quot;</span>), <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="fu">convert_blanks_to_na</span>()</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>oe <span class="ot">&lt;-</span> <span class="fu">convert_blanks_to_na</span>(oe_ophtha) <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co"># Lookup table</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>param_lookup <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="sc">~</span>OETESTCD, <span class="sc">~</span>OECAT, <span class="sc">~</span>OESCAT, <span class="sc">~</span>AFEYE, <span class="sc">~</span>PARAMCD, <span class="sc">~</span>PARAM, <span class="sc">~</span>PARAMN,</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="st">&quot;VACSCORE&quot;</span>, <span class="st">&quot;BEST CORRECTED VISUAL ACUITY&quot;</span>, <span class="st">&quot;OVERALL EVALUATION&quot;</span>, <span class="st">&quot;Study Eye&quot;</span>, <span class="st">&quot;SBCVA&quot;</span>, <span class="st">&quot;Study Eye Visual Acuity Score (letters)&quot;</span>, <span class="dv">1</span>, <span class="co"># nolint</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="st">&quot;VACSCORE&quot;</span>, <span class="st">&quot;BEST CORRECTED VISUAL ACUITY&quot;</span>, <span class="st">&quot;OVERALL EVALUATION&quot;</span>, <span class="st">&quot;Fellow Eye&quot;</span>, <span class="st">&quot;FBCVA&quot;</span>, <span class="st">&quot;Fellow Eye Visual Acuity Score (letters)&quot;</span>, <span class="dv">2</span>, <span class="co"># nolint</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co"># SBCVA and FBCVA definition list</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>definition_bcva <span class="ot">&lt;-</span> <span class="fu">exprs</span>(</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  <span class="sc">~</span>PARAMCD, <span class="sc">~</span>condition, <span class="sc">~</span>AVALCA1N, <span class="sc">~</span>AVALCAT1,</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">3</span>, <span class="dv">1000</span>, <span class="st">&quot;&lt; 20/800&quot;</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">3</span>, <span class="dv">1000</span>, <span class="st">&quot;&lt; 20/800&quot;</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">8</span>, <span class="dv">800</span>, <span class="st">&quot;20/800&quot;</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">8</span>, <span class="dv">800</span>, <span class="st">&quot;20/800&quot;</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">9</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">13</span>, <span class="dv">640</span>, <span class="st">&quot;20/640&quot;</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">9</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">13</span>, <span class="dv">640</span>, <span class="st">&quot;20/640&quot;</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">14</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">18</span>, <span class="dv">500</span>, <span class="st">&quot;20/500&quot;</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">14</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">18</span>, <span class="dv">500</span>, <span class="st">&quot;20/500&quot;</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">19</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">23</span>, <span class="dv">400</span>, <span class="st">&quot;20/400&quot;</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">19</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">23</span>, <span class="dv">400</span>, <span class="st">&quot;20/400&quot;</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">24</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">28</span>, <span class="dv">320</span>, <span class="st">&quot;20/320&quot;</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">24</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">28</span>, <span class="dv">320</span>, <span class="st">&quot;20/320&quot;</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">29</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">33</span>, <span class="dv">250</span>, <span class="st">&quot;20/250&quot;</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">29</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">33</span>, <span class="dv">250</span>, <span class="st">&quot;20/250&quot;</span>,</span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">34</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">38</span>, <span class="dv">200</span>, <span class="st">&quot;20/200&quot;</span>,</span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">34</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">38</span>, <span class="dv">200</span>, <span class="st">&quot;20/200&quot;</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">39</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">43</span>, <span class="dv">160</span>, <span class="st">&quot;20/160&quot;</span>,</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">39</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">43</span>, <span class="dv">160</span>, <span class="st">&quot;20/160&quot;</span>,</span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">44</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">48</span>, <span class="dv">125</span>, <span class="st">&quot;20/125&quot;</span>,</span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">44</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">48</span>, <span class="dv">125</span>, <span class="st">&quot;20/125&quot;</span>,</span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">49</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">53</span>, <span class="dv">100</span>, <span class="st">&quot;20/100&quot;</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">49</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">53</span>, <span class="dv">100</span>, <span class="st">&quot;20/100&quot;</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">54</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">58</span>, <span class="dv">80</span>, <span class="st">&quot;20/80&quot;</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">54</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">58</span>, <span class="dv">80</span>, <span class="st">&quot;20/80&quot;</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">59</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">63</span>, <span class="dv">63</span>, <span class="st">&quot;20/63&quot;</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">59</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">63</span>, <span class="dv">63</span>, <span class="st">&quot;20/63&quot;</span>,</span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">64</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">68</span>, <span class="dv">50</span>, <span class="st">&quot;20/50&quot;</span>,</span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">64</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">68</span>, <span class="dv">50</span>, <span class="st">&quot;20/50&quot;</span>,</span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">69</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">73</span>, <span class="dv">40</span>, <span class="st">&quot;20/40&quot;</span>,</span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">69</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">73</span>, <span class="dv">40</span>, <span class="st">&quot;20/40&quot;</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">74</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">78</span>, <span class="dv">32</span>, <span class="st">&quot;20/32&quot;</span>,</span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">74</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">78</span>, <span class="dv">32</span>, <span class="st">&quot;20/32&quot;</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">79</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">83</span>, <span class="dv">25</span>, <span class="st">&quot;20/25&quot;</span>,</span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">79</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">83</span>, <span class="dv">25</span>, <span class="st">&quot;20/25&quot;</span>,</span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">84</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">88</span>, <span class="dv">20</span>, <span class="st">&quot;20/20&quot;</span>,</span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">84</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">88</span>, <span class="dv">20</span>, <span class="st">&quot;20/20&quot;</span>,</span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">89</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">93</span>, <span class="dv">16</span>, <span class="st">&quot;20/16&quot;</span>,</span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">89</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">93</span>, <span class="dv">16</span>, <span class="st">&quot;20/16&quot;</span>,</span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">94</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">97</span>, <span class="dv">12</span>, <span class="st">&quot;20/12&quot;</span>,</span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">94</span> <span class="sc">&amp;</span> AVAL <span class="sc">&lt;=</span> <span class="dv">97</span>, <span class="dv">12</span>, <span class="st">&quot;20/12&quot;</span>,</span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a>  <span class="st">&quot;SBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">98</span>, <span class="dv">1</span>, <span class="st">&quot;&gt; 20/12&quot;</span>,</span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>  <span class="st">&quot;FBCVA&quot;</span>, AVAL <span class="sc">&gt;=</span> <span class="dv">98</span>, <span class="dv">1</span>, <span class="st">&quot;&gt; 20/12&quot;</span></span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a>)</span></code></pre></div>
+<p>Following this setup, the programmer can start constructing ADBCVA.
+The first step is to subset OE to only BCVA parameters and merge with
+ADSL. This is required for two reasons: firstly, <code>STUDYEYE</code>
+is crucial in the mapping of <code>AFEYE</code> and
+<code>PARAMCD</code>’s. Secondly, the treatment start date
+(<code>TRTSDT</code>) is also a prerequisite for the derivation of
+variables such as Analysis Day (<code>ADY</code>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>adsl_vars <span class="ot">&lt;-</span> <span class="fu">exprs</span>(TRTSDT, TRTEDT, TRT01A, TRT01P, STUDYEYE)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> oe <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    OETESTCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VACSCORE&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">dataset_add =</span> adsl,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">new_vars =</span> adsl_vars,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">get_admiral_option</span>(<span class="st">&quot;subject_keys&quot;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The next item of business is to derive <code>AVAL</code>,
+<code>AVALU</code>, and <code>DTYPE</code>. In this example, due to the
+small number of parameters their derivation is trivial.
+<code>AFEYE</code> is also created in this step using the function
+<code>derive_var_afeye()</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">AVAL =</span> OESTRESN,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">AVALU =</span> <span class="st">&quot;letters&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">DTYPE =</span> <span class="cn">NA_character_</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">derive_var_afeye</span>(<span class="at">loc_var =</span> OELOC, <span class="at">lat_var =</span> OELAT)</span></code></pre></div>
+<p>Moving forwards, <code>PARAM</code> and <code>PARAMCD</code> can be
+assigned using <code>derive_vars_merged()</code> from
+<code>{admiral}</code> and the lookup table <code>param_lookup</code>
+generated above.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    <span class="at">dataset_add =</span> param_lookup,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(PARAM, PARAMCD),</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(OETESTCD, AFEYE),</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">filter_add =</span> PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SBCVA&quot;</span>, <span class="st">&quot;FBCVA&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="logmar" class="section level2">
+<h2>Deriving LogMAR Score Parameters</h2>
+<p>Often ADBCVA datasets contain derived records for BCVA in LogMAR
+units. This can easily be achieved as follows using
+<code>derive_param_computed()</code>. The conversion of units is done
+using <code>convert_etdrs_to_logmar()</code>. Two separate calls are
+required due to the parameters being split by study and fellow eye. Once
+these extra parameters are added, all the records that will be in the
+end dataset are now present, so <code>AVALC</code> and day/date
+variables such as <code>ADY</code> and <code>ADT</code> can be
+derived.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">derive_param_computed</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">c</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>      <span class="fu">get_admiral_option</span>(<span class="st">&quot;subject_keys&quot;</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>      <span class="fu">exprs</span>(VISIT, VISITNUM, OEDY, OEDTC, AFEYE, <span class="sc">!!!</span>adsl_vars)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    ),</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="at">parameters =</span> <span class="fu">c</span>(<span class="st">&quot;SBCVA&quot;</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="at">set_values_to =</span> <span class="fu">exprs</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>      <span class="at">AVAL =</span> <span class="fu">convert_etdrs_to_logmar</span>(AVAL.SBCVA),</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>      <span class="at">PARAMCD =</span> <span class="st">&quot;SBCVALOG&quot;</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>      <span class="at">PARAM =</span> <span class="st">&quot;Study Eye Visual Acuity LogMAR Score&quot;</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>      <span class="at">DTYPE =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>      <span class="at">AVALU =</span> <span class="st">&quot;LogMAR&quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>    )</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>  <span class="fu">derive_param_computed</span>(</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">c</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>      <span class="fu">get_admiral_option</span>(<span class="st">&quot;subject_keys&quot;</span>),</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>      <span class="fu">exprs</span>(VISIT, VISITNUM, OEDY, OEDTC, AFEYE, <span class="sc">!!!</span>adsl_vars)</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>    ),</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>    <span class="at">parameters =</span> <span class="fu">c</span>(<span class="st">&quot;FBCVA&quot;</span>),</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>    <span class="at">set_values_to =</span> <span class="fu">exprs</span>(</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>      <span class="at">AVAL =</span> <span class="fu">convert_etdrs_to_logmar</span>(AVAL.FBCVA),</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>      <span class="at">PARAMCD =</span> <span class="st">&quot;FBCVALOG&quot;</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>      <span class="at">PARAM =</span> <span class="st">&quot;Fellow Eye Visual Acuity LogMAR Score&quot;</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>      <span class="at">DTYPE =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>      <span class="at">AVALU =</span> <span class="st">&quot;LogMAR&quot;</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>    )</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AVALC =</span> <span class="fu">as.character</span>(AVAL)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>  <span class="fu">derive_vars_dt</span>(</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>    <span class="at">new_vars_prefix =</span> <span class="st">&quot;A&quot;</span>,</span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>    <span class="at">dtc =</span> OEDTC,</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>    <span class="at">flag_imputation =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>  <span class="fu">derive_vars_dy</span>(<span class="at">reference_date =</span> TRTSDT, <span class="at">source_vars =</span> <span class="fu">exprs</span>(ADT))</span></code></pre></div>
+<p>Importantly, the above calls to <code>derive_param_computed()</code>
+list the SDTM variables <code>VISIT</code>, <code>VISITNUM</code>,
+<code>OEDY</code> and <code>OEDTC</code> as <code>by_vars</code> for the
+function. This is because they will be necessary to derive ADaM
+variables such as <code>AVISIT</code> and <code>ADY</code> in successive
+steps. Once all the ADaM variables which require them are derived, the
+SDTM variables should be set to missing for the derived records, as per
+ADaM standards:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">VISIT =</span> <span class="fu">ifelse</span>(PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SBCVALOG&quot;</span>, <span class="st">&quot;FBCVALOG&quot;</span>), <span class="cn">NA_character_</span>, VISIT),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">VISITNUM =</span> <span class="fu">ifelse</span>(PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SBCVALOG&quot;</span>, <span class="st">&quot;FBCVALOG&quot;</span>), <span class="cn">NA</span>, VISITNUM),</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">OEDY =</span> <span class="fu">ifelse</span>(PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SBCVALOG&quot;</span>, <span class="st">&quot;FBCVALOG&quot;</span>), <span class="cn">NA</span>, OEDY),</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">OEDTC =</span> <span class="fu">ifelse</span>(PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SBCVALOG&quot;</span>, <span class="st">&quot;FBCVALOG&quot;</span>), <span class="cn">NA_character_</span>, OEDTC)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="further" class="section level2">
+<h2>Further Derivations of Standard BDS Variables</h2>
+<p>The user is invited to consult the article on <a href="https://pharmaverse.github.io/admiral/articles/bds_finding.html">creating
+a BDS dataset from SDTM</a> to learn how to add standard BDS variables
+to ADBCVA. Henceforth, for the purposes of this article, the following
+sections use the ADBCVA dataset generated by the corresponding
+<code>{admiralophtha}</code> template program as a starting point.</p>
+<p><strong>Note</strong>: This dataset already comes with some criterion
+flags and analysis value categorisation variables, so for illustration
+purposes these are removed.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;admiralophtha_adbcva&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> admiralophtha_adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">&quot;CRIT&quot;</span>), <span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">&quot;AVALCA&quot;</span>))</span></code></pre></div>
+</div>
+<div id="avalcats" class="section level2">
+<h2>Deriving Analysis Value Categories for Snellen Scores</h2>
+<p>Some ophthalmology studies may desire to subdivide BCVA records
+according to which Snellen category they fall into (eg, 20/320, 20/100,
+20/20 etc). The <code>{admiral}</code> AVALCAT derivation function
+<code>derive_vars_cat()</code> can be used to derive
+<code>AVALCA1N</code> and <code>AVALCAT1</code> based on
+<code>PARAMCD</code> and <code>condition</code> in the SBCVA and FBCVA
+definition expression.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">derive_vars_cat</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">definition =</span> definition_bcva,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(PARAMCD)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The resulting output is shown below (limited to the first patient
+only):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">PARAMCD</th>
+<th align="right">AVAL</th>
+<th align="left">AVALCAT1</th>
+<th align="right">AVALCA1N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">82</td>
+<td align="left">20/25</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">77</td>
+<td align="left">20/32</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">77</td>
+<td align="left">20/32</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">64</td>
+<td align="left">20/50</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">92</td>
+<td align="left">20/16</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">41</td>
+<td align="left">20/160</td>
+<td align="right">160</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">52</td>
+<td align="left">20/100</td>
+<td align="right">100</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">2</td>
+<td align="left">&lt; 20/800</td>
+<td align="right">1000</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">44</td>
+<td align="left">20/125</td>
+<td align="right">125</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">SBCVA</td>
+<td align="right">97</td>
+<td align="left">20/12</td>
+<td align="right">12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="critflags" class="section level2">
+<h2>Deriving Criterion Flags for BCVA Change</h2>
+<p><code>{admiralophtha}</code> suggests the use of criterion flag
+variable pairs (<code>CRITx</code>/<code>CRITxFL</code>) to program BCVA
+endpoints such as <em>Avoiding a loss of x letters</em> or <em>Gain of y
+letters</em> or <em>Gain of between x and y letters</em> (relative to
+baseline or other basetypes). The <code>{admiral}</code> function
+<code>derive_vars_crit_flag()</code> can be used to derive all these
+criterion pairs by listing the criterion number, condition such as:</p>
+<ul>
+<li><code>CHG</code> value lying inside a range,
+<code>CHG &gt;= a &amp; CHG &lt;= b</code></li>
+<li><code>CHG</code> value below an upper limit,
+<code>CHG &lt;= a</code></li>
+<li><code>CHG</code> value above a lower limit,
+<code>CHG =&gt; b</code></li>
+</ul>
+<p>and their corresponding description of the criterion. If
+<code>values_yn</code> is set to TRUE, the <code>CRITxFL</code> variable
+is assigned “Y” when the condition is true, “N” when the condition is
+false, and NA when the condition is NA. If not set to TRUE,
+<code>CRITxFL</code> is assigned “Y” when the condition is true and NA
+otherwise.</p>
+<p>and their corresponding description of the criterion. If
+<code>values_yn</code> is set to <code>TRUE</code>, the
+<code>CRITxFL</code> variable is assigned <code>&quot;Y&quot;</code> when the
+condition is satisfied, <code>&quot;N&quot;</code> when the condition is not
+satisfied, and <code>NA</code> when there is not enough information to
+determine whether the condition is satisfied. If <code>values_yn</code>
+is not set to <code>TRUE</code>, <code>CRITxFL</code> is assigned
+<code>&quot;Y&quot;</code> when the condition is satisfied and <code>NA</code>
+otherwise.</p>
+<p>For illustrative purposes, let’s suppose that the endpoints of
+interest are:</p>
+<ul>
+<li><em>Gain of between 5 and 10 letters relative to baseline</em>
+(<code>5 &lt;= CHG &lt;= 10</code>)</li>
+<li><em>Gain of 25 letters or fewer relative to baseline</em>
+(<code>CHG &lt;= 25</code>)</li>
+<li><em>Loss of 5 letters or more relative to baseline</em>
+(<code>CHG &lt;= -5</code>)</li>
+<li><em>Gain of 15 letters or more relative to baseline</em>
+(<code>CHG &gt;= 15</code>)</li>
+<li><em>Loss of 10 letters or fewer relative to baseline</em>
+(<code>CHG &gt;= -10</code>).</li>
+</ul>
+<p>Then, the following call will implement criterion variable/flag pairs
+for the endpoints above. The base function we are using is
+<code>derive_vars_crit_flag()</code>. We wrap this function inside of
+<code>call_derivation()</code> so as to derive all the criterion
+variable/flag pairs in one call. Additionally, we also wrap everything
+inside of <code>restrict_derivation()</code> to ensure the criterion
+flags are only derived for the right <code>PARAMCD</code> values
+(<code>&quot;SBCVA&quot;</code> and <code>&quot;FBCVA&quot;</code>).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>adbcva <span class="ot">&lt;-</span> adbcva <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">restrict_derivation</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="at">derivation =</span> call_derivation,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">filter =</span> PARAMCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;SBCVA&quot;</span>, <span class="st">&quot;FBCVA&quot;</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">params</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>      <span class="at">derivation =</span> derive_vars_crit_flag,</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>      <span class="at">variable_params =</span> <span class="fu">list</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">1</span>, <span class="at">condition =</span> CHG <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> CHG <span class="sc">&lt;=</span> <span class="dv">5</span>, <span class="at">description =</span> <span class="st">&quot;0 &lt;= CHG &lt;= 5&quot;</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">2</span>, <span class="at">condition =</span> CHG <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">5</span> <span class="sc">&amp;</span> CHG <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">description =</span> <span class="st">&quot;-5 &lt;= CHG &lt;= -1&quot;</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">3</span>, <span class="at">condition =</span> CHG <span class="sc">&gt;=</span> <span class="dv">10</span> <span class="sc">&amp;</span> CHG <span class="sc">&lt;=</span> <span class="dv">15</span>, <span class="at">description =</span> <span class="st">&quot;10 &lt;= CHG &lt;= 15&quot;</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">4</span>, <span class="at">condition =</span> CHG <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">20</span>, <span class="at">description =</span> <span class="st">&quot;CHG &lt;= -20&quot;</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">5</span>, <span class="at">condition =</span> CHG <span class="sc">&lt;=</span> <span class="dv">5</span>, <span class="at">description =</span> <span class="st">&quot;CHG &lt;= 5&quot;</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">6</span>, <span class="at">condition =</span> CHG <span class="sc">&lt;=</span> <span class="dv">10</span>, <span class="at">description =</span> <span class="st">&quot;CHG &lt;= 10&quot;</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">7</span>, <span class="at">condition =</span> CHG <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">15</span>, <span class="at">description =</span> <span class="st">&quot;CHG &gt;= -15&quot;</span>),</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>        <span class="fu">params</span>(<span class="at">crit_nr =</span> <span class="dv">8</span>, <span class="at">condition =</span> CHG <span class="sc">&gt;=</span> <span class="dv">15</span>, <span class="at">description =</span> <span class="st">&quot;CHG &gt;= 15&quot;</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>      ),</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>      <span class="at">values_yn =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>    )</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>  <span class="fu">arrange</span>(USUBJID, DOMAIN, PARAMCD)</span></code></pre></div>
+<p>The resulting output is shown below (limited to the first patient
+only):</p>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="4%" />
+<col width="2%" />
+<col width="2%" />
+<col width="4%" />
+<col width="7%" />
+<col width="4%" />
+<col width="8%" />
+<col width="4%" />
+<col width="8%" />
+<col width="4%" />
+<col width="5%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="5%" />
+<col width="4%" />
+<col width="5%" />
+<col width="4%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">USUBJID</th>
+<th align="left">PARAMCD</th>
+<th align="right">AVAL</th>
+<th align="right">CHG</th>
+<th align="left">CRIT1FL</th>
+<th align="left">CRIT1</th>
+<th align="left">CRIT2FL</th>
+<th align="left">CRIT2</th>
+<th align="left">CRIT3FL</th>
+<th align="left">CRIT3</th>
+<th align="left">CRIT4FL</th>
+<th align="left">CRIT4</th>
+<th align="left">CRIT5FL</th>
+<th align="left">CRIT5</th>
+<th align="left">CRIT6FL</th>
+<th align="left">CRIT6</th>
+<th align="left">CRIT7FL</th>
+<th align="left">CRIT7</th>
+<th align="left">CRIT8FL</th>
+<th align="left">CRIT8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">82</td>
+<td align="right">5</td>
+<td align="left">Y</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">77</td>
+<td align="right">0</td>
+<td align="left">Y</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">77</td>
+<td align="right">0</td>
+<td align="left">Y</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">64</td>
+<td align="right">-13</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">92</td>
+<td align="right">15</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">Y</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">41</td>
+<td align="right">-36</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">52</td>
+<td align="right">-25</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">2</td>
+<td align="right">-75</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="odd">
+<td align="left">01-701-1015</td>
+<td align="left">FBCVA</td>
+<td align="right">44</td>
+<td align="right">-33</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">Y</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">N</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+<tr class="even">
+<td align="left">01-701-1015</td>
+<td align="left">SBCVA</td>
+<td align="right">97</td>
+<td align="right">62</td>
+<td align="left">N</td>
+<td align="left">0 &lt;= CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">-5 &lt;= CHG &lt;= -1</td>
+<td align="left">N</td>
+<td align="left">10 &lt;= CHG &lt;= 15</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= -20</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= 5</td>
+<td align="left">N</td>
+<td align="left">CHG &lt;= 10</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= -15</td>
+<td align="left">Y</td>
+<td align="left">CHG &gt;= 15</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="additional-notes" class="section level2">
+<h2>Additional Notes</h2>
+<ul>
+<li><p>When interpreting endpoints such as <em>Loss of 5 letters or
+fewer relative to baseline</em>, it is implicitly assumed in this
+article that this also includes the case where letters are
+<em>gained</em>, so that the inequality reads <code>CHG &gt;= -5</code>.
+If this is not the case, i.e. one wishes to exclude cases of letter
+gains, then the inequality of interest would instead be
+<code>-5 &lt;= CHG &lt;= -1</code>.</p></li>
+<li><p>This vignette extensively showcases the use of
+<code>derive_vars_crit_flag()</code> to derive criterion variable/flag
+pairs applied to the variable <code>CHG</code> with the associated
+argument <code>condition</code> for the criterion. The function can also
+be used to create criterion flag relative to other variables
+(e.g. <code>condition = exprs(AVAL &gt; 10)</code> for
+<code>AVAL</code>).</p></li>
+</ul>
+</div>
+<div id="example" class="section level2">
+<h2>Example Script</h2>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="77%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ADaM</th>
+<th>Sample Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADBCVA</td>
+<td><a href="https://github.com/pharmaverse/admiralophtha/blob/main/inst/templates/ad_adbcva.R">ad_adbcva.R</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
