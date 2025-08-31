@@ -1,0 +1,598 @@
+---
+title: "adventr: multilevel models"
+author: "Andy Field"
+output:
+  learnr::tutorial:
+    progressive: false
+runtime: shiny_prerendered
+bibliography: adventr_bib.bib
+---
+
+```{r setup, include=FALSE}
+library(forcats)
+library(learnr)
+library(tidyverse)
+
+library(nlme)
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+tutorial_options(exercise.cap = "Exercise")
+
+hint_text <- function(text, text_color = "#E69F00"){
+  hint <- paste("<font color='", text_color, "'>", text, "</font>", sep = "")
+  return(hint)
+}
+
+#Read dat files needed for the tutorial
+
+rehab_tib <- adventr::rehab_dat
+
+#setup objects for code blocks
+
+
+```
+
+# An Adventure in R: Multilevel models
+
+## Overview
+
+This tutorial is one of a series that accompanies [An Adventure in Statistics](https://www.discoveringstatistics.com/books/an-adventure-in-statistics/) [@RN10163] by me, [Andy Field](https://en.wikipedia.org/wiki/Andy_Field_(academic)). These tutorials contain abridged sections from the book so there are some copyright considerations but I offer them under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/), ^[Basically you can use this tutorial for teaching and non-profit activities but do not meddle with it or claim it as your own work.]
+
+* Who is the tutorial aimed at?
+    - Anyone teaching from or reading [An Adventure in Statistics](https://www.discoveringstatistics.com/books/an-adventure-in-statistics/)  may find them useful.
+* What is covered?
+    - This tutorial looks at how to fit a linear model for hierarchical data structures. In other words, we look at multilevel models. This tutorial goes beyond the material covered in [An Adventure in Statistics](https://www.discoveringstatistics.com/books/an-adventure-in-statistics/) but using an example based on the narrative of the story.
+    - This tutorial *does not* teach the background theory: it is assumed you have either attended my lecture or read the relevant chapter in the aforementioned books (or someone else's)
+    - The aim of this tutorial is to augment the theory that you already know by guiding you through fitting linear models using **R** and **RStudio** and asking you questions to test your knowledge along the way.
+    
+
+## Story précis
+
+### Why a précis?
+
+Because these tutorials accompany my book *An adventure in statistics*, which uses a fictional narrative to teach the statistics, some of the examples might not make sense unless you know something about the story. For those of you who don't have the book I begin each tutorial with a précis of the story. If you're not interested then fair enough - click past this section.
+
+### General context for the story
+
+It is the future. Zach, a rock musician and Alice, a geneticist, who have been together since high school live together in Elpis, the ‘City of Hope’.
+
+Zach and Alice were born in the wake of the Reality Revolution which occurred after a Professor Milton Gray invented the Reality Prism – a transparent pyramid worn on the head – that brought honesty to the world. Propaganda and media spin became unsustainable, religions collapsed, advertising failed. Society could no longer be lied to. Everyone could know the truth about anything that they could look at. A gift, some said, to a previously self-interested, self-obsessed society in which the collective good had been eroded. 
+
+But also a curse. For, it soon became apparent that through this Reality Prism, people could no longer kid themselves about their own puffed-up selves as they could see what they were really like – by and large, pretty ordinary. And this caused mass depression. People lost faith in themselves. Artists abandoned their pursuits, believing they were untalented and worthless. 
+
+Zach and Alice have never worn a Reality Prism and have no concept of their limitations. They were born after the World Governance Agency (WGA) destroyed all Reality Prisms, along with many other pre-revolution technologies, with the aim of restoring community and well-being. However, this has not been straightforward and in this post-Prism world, society has split into pretty much two factions
+
+* The Chippers who have had WiFi-enabled chips implanted into their brains, enabling them to record and broadcast what they see and think in real time; upload memories for future generations into a newly-created memoryBank and live-stream music and films directly into their brains. 
+* The Clocktarians, followers of the old pre-Prism ways who use steam punk style technologies, who have elected not to have chips in their brains, regarded by the Chippers as backward-looking stuck in a ‘clockwork, Victorian society’. 
+
+Everyone has a star, a limitless space on which to store their digital world.
+
+Zach and Alice are Clocktarians. Their technology consists mainly of:
+
+* A Proteus, a device made from programmable matter that can transform shape and function simply by the owners’ wishes. Zach calls his a diePad, in the shape of a tombstone in an ironic reference to an over-reliance on technology at the expense of memory. 
+* A Reality Checker, a clockwork mechanism that, at the point of critical velocity, projects an opaque human head that is linked to everything and can tell you anything. Every head has a personality and Zach’s is a handsome, laid back ‘dude’ who is like an electronic friend, who answers questions if he feels like it and often winds Zach up by giving him false information. And he often flirts with Alice.
+
+### Main Protagonists
+
+* Zach
+    - Rock musician in band called The Reality Enigma.
+    - Spellbinding performer, has huge fan-base.
+    - Only people living in Elpis get to see The Reality Enigma in the flesh. Otherwise all performances are done via an oculus riff, a multisensory headset for experiencing virtual gigs.
+    - Zach’s music has influenced and changed thousands of lives. 
+    - Wishes he had lived pre-Revolutionary times, the turn of the 21st Century, a golden age for music when bands performed in reality at festivals.
+    - Kind, gentle and self-doubting.
+    - Believes science and maths are dull and uninspiring. Creates a problem between him and Alice as she thinks that because he isn’t interested in science, he isn’t interested in her. Leads to lots of misunderstandings between them. 
+* Alice
+    - Shy, lonely, academically-gifted – estranged from the social world until she met Zach in the college library. 
+    - Serious scientist, works at the Beimeni Centre of Genetics. 
+    - At 21, won the World Science Federation’s Einstein Medal for her genetics research
+    - Desperately wants Zach to get over his fear of science so he can open his mind to the beauty of it.
+
+### How Zach's adventure begins
+
+Alice has been acting strangely, on edge for weeks, disconnected and uncommunicative, as if she is hiding something and Zach can’t get through to her. Arriving home from band practice, unusually, she already home and listening to an old album that the two of them enjoyed together, back in a simpler, less complicated time in their relationship. During an increasingly testy evening, that involves a discussion with the Head about whether or not a Proteus causes brain cancer, Alice is interrupted by an urgent call which she takes in private. She returns looking worried and is once again, distracted. She tells Zach that she has ‘a big decision to make’. Before going to bed, Zach asks her if he can help with the decision but she says he ‘already has’, thanking him for making ‘everything easier.’ He has no idea what she means and goes to sleep, uneasy.
+
+On waking, Zach senses that something is wrong. And he is right. Alice has disappeared. Her clothes, her possessions and every photo of them together have gone. He can’t get hold of any of her family or friends as their contact information is stored on her Proteus, not on his diePad. He manages to contact the Beimeni Centre but is told that no one by the name of Alice Nightingale has ever worked there. He logs into their constellation but her star has gone.  He calls her but finds that her number never existed. She has, thinks Zach, been ‘wiped from the planet.’ He summons The Head but he can’t find her either. He tells Zach that there are three possibilities: Alice has doesn’t want to be found, someone else doesn’t want her to be found or she never existed. 
+
+Zach calls his friend Nick, fellow band member and fan of the WGA-installed Repositories, vast underground repositories of actual film, books, art and music. Nick is a Chipper – solely for the purpose of promoting the band using memoryBank – and he puts the word out to their fans about Alice missing. 
+
+Thinking as hard as he can, Zach recalls the lyrics of the song she’d been playing the previous evening. Maybe they are significant? It may well be a farewell message and the Head is right. In searching for clues, he comes across a ‘memory stone’ which tells him to read what’s on there. File 1 is a research paper that Zach can’t fathom. It’s written in the ‘language of science’ and the Head offers to help Zach translate it and tells him that it looks like the results of her current work were ‘gonna blow the world’. Zach resolves to do ‘something sensible’ with the report.  
+
+Zach doesn’t want to believe that Alice has simply just left him. Rather, that someone has taken her and tried to erase her from the world. He decides to find her therapist, Dr Murali Genari and get Alice’s file. As he breaks into his office, Dr Genari comes up behind him and demands to know what he is doing. He is shaking but not with rage – with fear of Zach. Dr Genari turns out to be friendly and invites Zach to talk to him. Together they explore the possibilities of where Alice might have gone and the likelihood, rating her relationship satisfaction, that she has left him. During their discussion Zach is interrupted by a message on his diePad from someone called Milton. Zach is baffled as to who he is and how he knows that he is currently discussing reverse scoring. Out of the corner of his eye, he spots a ginger cat jumping down from the window ledge outside. The counsellor has to go but suggests that Zach and ‘his new friend Milton’ could try and work things out.
+
+## Packages and data
+### Packages
+
+This tutorial uses the following packages:
+
+* `nlme` [@RN5102] to estimate the multilevel models
+* `forcats` [@RN11418] for processing categorical variables
+* `Hmisc` [@RN11417] to compute confidence intervals
+* `tidyverse` [@RN11407] for general data processing
+
+These packages are automatically loaded within this tutorial. If you are working outside of this tutorial (i.e. in **RStudio**) then you need to make sure that the package has been installed by executing `install.packages("package_name")`, where *package_name* is the name of the package. If the package is already installed, then you need to reference it in your current session by executing `library(package_name)`, where *package_name* is the name of the package.
+
+### Data
+
+This tutorial has the data files pre-loaded so you shouldn't need to do anything to access the data from within the tutorial. However, if you want to play around with what you have learnt in this tutorial outside of the tutorial environment (i.e. in a stand-alone **RStudio** session) you will need to download the data files and then read them into your **R** session. This tutorial uses the following file:
+
+* [ais_zombie_rehab.csv](http://www.discoveringstatistics.com/repository/ais_data/ais_zombie_rehab.csv)
+
+You can load the file in several ways:
+
+* Assuming that you follow the workflow recommended in the tutorial **adventr_02** (see also this [online tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-working-in-rstudio)), you can load the data into an object called `rehab_tib` by executing:
+    - `rehab_tib <- readr::read_csv("../data/ais_zombie_rehab.csv")`
+    - If you don't follow my suggested workflow, you will adjust the file location in the above command.
+* Alternatively, if you have an internet connection (and my server has not exploded!) load the file direct from the URL by executing:
+    - `rehab_tib <- readr::read_csv("http://www.discoveringstatistics.com/repository/ais_data/ais_zombie_rehab.csv")`
+
+### Categorical variables
+
+When working within the tutorial the data are already prepared for you. However, if you are trying to replicate the tutorial within R or R Studio then you need to explicitly convert categorical predictors to factor. The data file, which you have loaded into `rehab_tib`, has three categorical variables (**intervention** and **gep_level**, and **id_clin**), which will be read in from the csv file as character variables. To convert these variables to factors we can use the `as_factor()` function from the `forcats` package. There are several ways to do this, but the most tidyverse way is to use `mutate()` from `tidyverse`, which is a way of adding variables to a tibble or overwriting existing variables. We could execute:
+
+```{r, echo = TRUE, eval = FALSE}
+library(tidyverse)
+rehab_tib <- rehab_tib %>% 
+  dplyr::mutate(
+    intervention = forcats::as_factor(intervention),
+    gep_level = forcats::as_factor(gep_level),
+    id_clin = forcats::as_factor(id_clin)
+  )
+```
+
+This code recreates the `rehab_tib` tibble from itself then uses mutate to recreate the variables **intervention** and **gep_level**, and **id_clin** from themselves by placing each one in turn within the `as_factor()` function.
+
+
+## The model
+
+At the end of the story it is revealed that Alice used her C-gene therapy to restore the code 1318 workers to a human state. This dataset relates to her first attempt. It contains data from 190 code 1318 workers treated at 10 different clinics. Workers were randomly assigned to two arms of the trial (wait list vs. C-gene therapy) and the outcome was how much they resembled their pre-zombie state (as a percentage). The zombification occurred as a result of these workers entering JIG:SAWs genetic enhancement programme (GEP), and additional variables quantify how long it has been since they entered this programme (i.e., how long have they been a zombie) and whether they were originally exposed to the low- or high-intensity GEP. The data are in the tibble `rehab_tib`, which has six variables:
+
+* **id**: Participant ID
+* **id_clin**: Factor that codes which of 10 clinics the participant attended
+* **intervention**: Factor that codes which arm of the trial the participant was randomized to (0 = wait list, 1 = gene therapy)
+* **resemblance**: How closely their face resembled their pre-zombified state (100\% = the participants face is exactly like their original face, 0\% the person bears no resemblance to their pre-zombified face)
+* **gep_level**: Factor that codes whether the participant was originally exposed to the low- (0) or high-intensity (1) genetic enhancement program at JIG\:SAW
+* **tse_months**: How many months since the participant completed the genetic enhancement program that resulted in their zombification
+
+Use the code box to inspect the tibble.
+
+```{r dat_view, exercise = TRUE}
+     
+```
+
+```{r dat_view-solution}
+rehab_tib   
+```
+
+The data has a hierarchical structure because workers were treated in one of 10 clinics (Figure 1). We might, therefore, want to model the possibility of the success of the intervention varying across these clinics/contexts. We'll build up the model in steps.
+
+![Figure 1: The structure of the rehabilitation data](./images/ais_rehab_data_hierarchy_small.png)
+
+### Fixed intercepts and slopes
+
+If we focussed purely on the effect of the intervention, and ignored the contexts in which the intervention took place we'd fit this model:
+
+$$
+\begin{aligned}
+Y_i & = b_0 + b_1X_i+ ε_i\\
+\text{resemblance}_i & = b_0 + b_1\text{intervention}_i + ε_i
+\end{aligned}
+$$
+
+The variable **intervention** is made up of 0s and 1s that code whether a zombie was in the wait list or treatment arm of the trial.
+
+### Random intercepts, fixed slopes
+
+If we want to factor in the possibility that resemblance scores in the control group (the group coded as 0) vary across the 10 clinics, we would fit this model:
+
+$$
+\begin{aligned}
+\text{resemblance}_{ij} & = b_{0j} + b_1\text{intervention}_{ij} + ε_{ij}\\
+b_{0j} &= b_0 + u_{0j}
+\end{aligned}
+$$
+In this model resemblance scores, intervention group membership, and the model errors all vary by both zombie (*i*) and clinic (*j*). The intercept ($b_{0j}$) is made up of the overall intercept ($b_0$) and a term that represents the difference between the intercept for clinic *j* and that overall value ($u_{0j}$).
+
+### Random intercepts and slopes
+
+If we want to factor in the possibility that the effect of the intervention on resemblance scores vary across the 10 clinics, we would fit this model:
+
+$$
+\begin{aligned}
+\text{resemblance}_{ij} & = b_{0j} + b_{1j}\text{intervention}_{ij} + ε_{ij}\\
+b_{0j} &= b_0 + u_{0j} \\
+b_{1j} &= b_1 + u_{1j}
+\end{aligned}
+$$
+This model is the same as the previous one except that the effect of the intervention ($b_{1j}$) is made up of the overall effect ($b_1$) and a term that represents the difference between the effect in clinic *j* and that overall value ($u_{1j}$).
+
+### Adding other fixed effects
+
+We can add both **gep_level** and **tse_months** into the model as fixed effects (that is, we assume their effects are constant across contexts):
+
+$$
+\begin{aligned}
+\text{resemblance}_{ij} & = b_{0j} + b_{1j}\text{intervention}_{ij} + b_2\text{gep_level}_{ij} + b_3\text{tse_months}_{ij} + ε_{ij}\\
+b_{0j} &= b_0 + u_{0j} \\
+b_{1j} &= b_1 + u_{1j}
+\end{aligned}
+$$
+Note that although these additional predictors vary by zombie (*i*) and clinic (*j*), their parameter estimates don't (their *b* values do not have a subscript *j*).
+
+## Preparing categorical variables
+
+In these tutorials I tend to be kind to you and set up categorical predictors in the datasets in a way that categories are coded conveniently for the hypotheses being tested. In real life, with your own data, that won't always be the case: when importing categorical variables **R** will generate levels of those variables alphabetically (if you use `read.csv()`), or if you use a tidyverse function (like `read_csv()`) it will code categorical variables in the order that categories appear in the data. In both cases, you might end up with codes that make interpretation awkward.
+For this reason it is always a good idea to check how categorical variables have been coded so that you know how to interpret their parameters. You can check the levels of a categorical variable using the `levels()` function, which returns the levels of the variable entered into it. We have three categorical variables: **intervention**, **id_clin** and **gep_level**. We can check the levels of these factors by executing the code in the box below:
+
+```{r fct_levels, exercise = TRUE}
+levels(rehab_tib$intervention)
+levels(rehab_tib$id_clin)
+levels(rehab_tib$gep_level)
+```
+
+You should see that for **intervention**, the first level is wait list and the second gene therapy (which is what we want because the *b* for this effect will represent the difference in the mean resemblance in the therapy group relative to the control); for **id_clin** the levels are ordered nicely from clinic 1 to 10; for **gep_level** the first level is low intensity and the second level high (which again is convenient because *b* will represent the shift in the mean resemblance scores due to being in the high intensity genetic enhancement program compared to the low intensity one).
+
+Let's try importing the data using the `read.csv()` function (note this function is different to the tidyverse function `read_csv()`). This function constructs factor levels *alphabetically*. Execute the code below. The first line re-imports the data into a data frame called `rehab_alt_tib` from my webpage by using the `read.csv()` function. The next three lines use `levels()` to display the levels of the three categorical predictors (just as we did above).
+
+```{r get_external_data, exercise = TRUE}
+rehab_alt_tib <- read.csv("http://www.discoveringstatistics.com/repository/ais_data/ais_zombie_rehab.csv")
+
+levels(rehab_alt_tib$intervention)
+levels(rehab_alt_tib$id_clin)
+levels(rehab_alt_tib$gep_level)
+```
+
+Note that the levels are now constructed alphabetically. For **intervention**, the first level is gene therapy and the second wait list (which means that we would have to interpret the resulting *b* as the effect of the wait list relative to gene therapy - in other words the direction of the expected effect is reversed); for **id_clin** the levels are ordered "clinic_1"  "clinic_10" "clinic_2"  "clinic_3" ... so clinic 10 appears between clinic 1 and 2, which (if you're as anal retentive as I am) will be really annoying if we plot this variable because the sequence of clinics won't be pleasing! For **gep_level** the first level is high intensity and the second level low (which again means that the  *b* will represent the reverse effect of what we might intuitively prefer: it will show the effect of low intensity relative to high).
+
+At some point in your relationship with **R** you will face this kind of situation, so we'll have a look at how to get the levels of categorical variables in the order that you want using the `fct_relevel()` function from the `forcats` package. The function takes this general form:
+
+`fct_relevel(factor, levels_to_move, after = "")`
+
+So you place the name of the factor that you want to relevel, then list any levels you want to move (or simply list the levels in the order you want them), and then use `after = ""` to say which level you want them placed after. Let's look at **rehab_alt_tib$id_clin**. The current level order is: "clinic_1", "clinic_10", "clinic_2", "clinic_3", "clinic_4", "clinic_5", "clinic_6", "clinic_7", "clinic_8", "clinic_9". We'd prefer "clinic_10" to be at the end. We can achieve this in one of three ways, in each case we recreate each categorical variable from itself but with re-ordered levels):
+
+```{r echo = T, eval = F}
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    id_clin = forcats::fct_relevel(id_clin, "clinic_1", "clinic_2", "clinic_3", "clinic_4", "clinic_5", "clinic_6", "clinic_7", "clinic_8", "clinic_9", "clinic_10")
+  )
+
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    id_clin = forcats::fct_relevel(id_clin, "clinic_10", after = 9)
+  )
+
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    id_clin = forcats::fct_relevel(id_clin, "clinic_10", after = Inf)
+  )
+```
+
+In the first pipe we achieve what we want by simply listing the factor levels in the order we want them. This method is inefficient for the current example because we only want to move one level, so it's annoying to have to list all 10 levels. The second pipe achieves the same goal but by asking for "clinic_10" to be moved to after level 9. This code, therefore, will move "clinic_10" to level 10. The third line uses `Inf` (short for infinite) to move "clinic_10" to the final level (whatever that may be). This final method is particularly useful when you want to move a level to the end but you don't know how many levels there are off the top of your head.
+
+`r hint_text("Tip: When you specify levels of a factor the text must exactly match that of the variable level. In the example above if you type \"Clinic_10\" or \"clinic 10\" the command will fail because neither exactly match the factopr level of \"clinic_10\". Check that upper and lower case letters match with the factor level and so on.")`
+
+We could re-order the levels of **intervention** (to make the wait list first) in a similar way using any of these 4 ways:
+
+```{r echo = T, eval = F}
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    intervention = forcats::fct_relevel(intervention, "Wait list", "Gene therapy")
+  )
+
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    intervention = forcats::fct_relevel(intervention, "Gene therapy", after = 1)
+  )
+
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    intervention = forcats::fct_relevel(intervention, "Gene therapy", after = Inf)
+  )
+
+rehab_alt_tib <- rehab_alt_tib %>%
+  dplyr::mutate(
+    intervention = forcats::fct_relevel(intervention,  "Wait list", after = 0)
+  )
+```
+
+Again, the first pipe re-orders the levels using a list of the levels in the order we want them. The second pipe places "Gene therapy" after level 1 (and, therefore, as level 2), the third moves "Gene therapy" to be the final level (i.e., level 2), and the fourth moves "Wait list" to after level 0 (in other words it places it as the first level). Use the code box to re-create **intervention**, **id_clin** and **gep_level** from `rehab_alt_tib` but with re-ordered levels that match the corresponding variables in `rehab_tib`. Remember to use `levels()` to check your handywork!
+
+```{r relevel_fcts-setup}
+rehab_alt_tib <- read.csv("http://www.discoveringstatistics.com/repository/ais_data/ais_zombie_rehab.csv")
+```
+
+```{r relevel_fcts, exercise = TRUE, exercise.lines = 7}
+
+```
+
+```{r relevel_fcts-solution}
+#There are various ways (see text for details) but this will work
+
+rehab_alt_tib <- rehab_alt_tib %>% 
+  dplyr::mutate(
+    id_clin = forcats::fct_relevel(id_clin, "clinic_10", after = Inf),
+    intervention = forcats::fct_relevel(intervention, "Gene therapy", after = 1),
+    gep_level = forcats::fct_relevel(gep_level, "High intensity", after = 1),
+  )
+
+
+levels(rehab_alt_tib$intervention)
+levels(rehab_alt_tib$id_clin)
+levels(rehab_alt_tib$gep_level)
+```
+
+That was just a little detour to show you how to check the levels of any categorical predictors and make sure that categories are in the order you want them. From now on we'll return to using the tibble called `rehab_tib` that has the categorical variables set up as we want them.
+
+## Exploring data
+### Descriptive statistics
+
+Using what you've learnt in previous tutorials, create a tibble called `rehab_summary` containing the group means of the variables **resemblance** and **tse_months** and their confidence intervals split by **id_clin** and **intervention** (in that order).
+
+`r hint_text("Tip: to group means by three variables you can use group_by(x, y, z). If you're doing this outside of the tutorial remember to load the packages tidyverse and Hmisc")`
+
+```{r desc, exercise = TRUE, exercise.lines = 6}
+             
+```
+
+```{r desc-solution}
+rehab_summary <- rehab_tib %>%
+  dplyr::group_by(id_clin, intervention) %>%
+  dplyr::summarize(
+    mean_resemblance = mean(resemblance),
+    ci_low_resemblance = ggplot2::mean_cl_normal(resemblance)$ymin,
+    ci_upp_resemblance = ggplot2::mean_cl_normal(resemblance)$ymax,
+    mean_tse = mean(tse_months),
+    ci_low_tse = ggplot2::mean_cl_normal(tse_months)$ymin,
+    ci_upp_tse = ggplot2::mean_cl_normal(tse_months)$ymax
+)
+rehab_summary              
+```
+
+It would be useful to get some means for the main effects of **intervention** and **gep_level**, so create two objects `intervention_main` and `gep_main` that contain means and confidence intervals when the data are split by only **intervention** (for `intervention_main`) and **gep_level** (for `gep_main`). Remember to execute `intervention_main` and `gep_main` to see the fruits of your labour.
+
+```{r me, exercise = TRUE, exercise.lines = 14}
+             
+```
+
+```{r me-solution}
+intervention_main <- rehab_tib %>%
+  dplyr::group_by(intervention) %>%
+  dplyr::summarize(
+    mean = mean(resemblance),
+    ci_low = ggplot2::mean_cl_normal(resemblance)$ymin,
+    ci_upp = ggplot2::mean_cl_normal(resemblance)$ymax
+)
+
+gep_main <- rehab_tib %>%
+  dplyr::group_by(gep_level) %>%
+  dplyr::summarize(
+    mean = mean(resemblance),
+    ci_low = ggplot2::mean_cl_normal(resemblance)$ymin,
+    ci_upp = ggplot2::mean_cl_normal(resemblance)$ymax
+)
+
+intervention_main  
+gep_main
+```
+
+
+### Plotting the data
+
+Let's plot the data by recreating the image from my lecture slides. I will explain each command line by line. Then try creating the plot in the code box below. Then try removing lines to see what effect it has on the plot.
+
+The code is:
+
+```{r echo = T, eval = F}
+rehab_plot <- ggplot2::ggplot(rehab_tib, aes(intervention, resemblance, colour = id_clin))
+rehab_plot +
+  geom_point(size = 1, position = position_dodge(width = 0.1), alpha = 0.6) + 
+  stat_summary(fun = mean, geom="line", aes(group = id_clin)) +
+  scale_y_continuous(breaks = seq(0, 100, 10)) +
+  labs(x = "Intervention", y = "Resemblance (%)", colour = "Clinic") +
+  theme_bw()
+```
+
+* The first line is a standard `ggplot()` command. We create an object called `rehab_plot` by defining the tibble as `rehab_tib` and then within `aes()` plotting **intervention** on the *x*-axis, **resemblance** on the*y*-axis and varying the colour by the clinic.
+* The second line takes the object created in the first line and starts to add things to it
+* The third line adds the raw data as points (of size 1 and transparency 0.6). `position_dodge()` is used to force data points to shift horizontally (but not vertically) to avoid clashing with each other.
+* The fourth line plots a line between the means of the wait list and therapy groups. It uses `aes(group = id_clin)` to plot different lines for each of the 10 clinics.
+* The remaining lines should be familiar to you: they determine the tick intervals on the *y*-axis, the labels on both axes and the legend, and apply a black and white theme.
+
+
+```{r plot, exercise = TRUE, exercise.lines = 8}
+     
+               
+```
+
+```{r plot-solution}
+rehab_plot <- ggplot2::ggplot(rehab_tib, aes(intervention, resemblance, colour = id_clin))
+rehab_plot +
+  geom_point(size = 1, position = position_dodge(width = 0.1), alpha = 0.6) + 
+  stat_summary(fun = mean, geom="line", aes(group = id_clin)) +
+  scale_y_continuous(breaks = seq(0, 100, 10)) +
+  labs(x = "Intervention", y = "Resemblance (%)", colour = "Clinic") +
+  theme_bw()
+```
+
+## Fitting multilevel models
+### Assessing the need for a multilevel model 
+
+To ascertain whether there is variation in the outcome (**resemblance**) over contexts (clinics) we need to fit a baseline model in which we include only the intercept; next, we fit a model that allows intercepts to vary over contexts; finally we compare these models to see whether the fit has improved as a result of allowing intercepts to vary. We fit a baseline model that includes only the intercept using the `gls()` (generalized least squares) function from the `nlme` package. The format of the `gls()` function is very much like the `lm()` function that we have encountered before. For example, we could execute:
+
+`rehab_base <- nlme::gls(resemblance ~ 1, data = rehab_tib, method = "ML")`
+
+to create an object called `rehab_base` that contains a model that predicts resemblance scores from the intercept (`resemblance ~ 1`) using the rehab data (`data = rehab_tib`) and based on maximum likelihood estimation (`method = "ML"`). If we had missing data we could also include `na.action = na.exclude`.
+
+The estimation method is important (note we are *not* using least squares estimation). We have to over-ride the default method of REML (restricted maximum likelihood) because models are only comparable if we use maximum likelihood estimation. Having fit the model we don't particularly need to inspect. In itself it isn;t that interesting, but it acts as a baseline against which to compare a model in which intercepts vary across contexts. We do this using the `lme()` function from the `nlme` package. The format of this function is much the same as `lm()` and `gls()`; the only difference is that we need to specify the random part of the model using the option `random = x|y`, in which *x* is an equation specifying the random parts of the model and *y* is the contextual variable or variables across which we want to model variance. In the current example, we are trying to model intercepts that vary across clinics; therefore, we could add the instruction `random = ~1|id_clin`. Remember that we use `1` to denote the intercept, and that `id_clin` is the variable that contains information about the clinic that a given zombie attended. To create the model and store it in an object called `rehab_ri` we'd execute:
+
+`rehab_ri <- nlme::lme(resemblance ~ 1, random = ~ 1|id_clin, data = rehab_tib, method = "ML")`
+
+To compare this model to the baseline one we must use maximum likelihood estimation (`method = "ML"`). To see whether allowing the intercepts to vary improves the model we can use the `anova()` function, which will produce useful statistics such as the AIC, BIC and log-likelihood. To compare models they must be nested (that is, models higher up the chain need to contain all of the effects that were in models earlier in the chain). We can use this function as follows to compare our two models:
+
+`anova(rehab_base, rehab_ri)`
+
+Note that we have simply put the names of the two models we created into the function separated by a comma. Use the code box below to create the baseline and random intercept model and compare them.
+
+```{r base_ri, exercise = TRUE}
+     
+             
+```
+
+```{r base_ri-solution}
+rehab_base <- nlme::gls(resemblance ~ 1, data = rehab_tib, method = "ML")
+rehab_ri <- nlme::lme(resemblance ~ 1, random = ~ 1|id_clin, data = rehab_tib, method = "ML")
+anova(rehab_base, rehab_ri)
+```
+
+First, we can compare the fit of the model using indices such as AIC and BIC. In the output from the `anova()` function you’ll see that the BIC when only the intercept was included is 1731.247 but decreases to 1725.239 when intercepts are allowed to vary. Remember that smaller values of BIC indicate a better fit of the data, so this gives us an indication that by allowing intercepts to vary the model fit has improved (BIC has decreased). The AIC (which also decreases) can be interpreted in a similar way. Most important is the *L. Ratio* which is the log-likelihood ratio (the change in the −2LL between the models), it has a *p*-value, which is highly significant suggesting that it is important that we model the variability in intercepts (because doing so significantly improves the fit of our model). The change in the −2LL has a chi-square distribution, so we can report this statistic as $\chi^2(1) = 11.25, p < 0.001$. We can conclude then that overall levels of resemblance (the intercept) vary significantly across the clinics. Multilevel madness must ensue.
+
+### Adding in fixed effects 
+
+We have seen that intercepts vary significantly across clinics. Now that we have a baseline model with random intercepts we can start to add predictors. Let’s first add our main predictor of **interventon**,  which defines whether a person had gene therapy or was on the waiting list. To add this predictor we  create a new object (which we might call **rehab_int**, short for rehabilitation intervention) using the `lme()` function. We would use the same command as before except replacing `resemblance ~ 1` with `resemblance ~ intervention`:
+
+`rehab_int <- nlme::lme(resemblance ~ intervention, random = ~ 1|id_clin, data = rehab_tib, method = "ML")`
+
+All we're doing is changing the model so that rather than resemblance scores being predicted from the intercept (`resemblance ~ 1`) they are predicted from the intercept *and* main effect of **intervention** (`resemblance ~ intervention`). You might think that the intercept has disappeared because we don't specify it explicitly in the model, but it hasn't: it is implied when any predictor is added to the model so when we write 'as `resemblance ~ intervention` we are, in effect, specifying as `resemblance ~ 1 + intervention`.
+
+A quicker way to add (or subtract) things to a model is to use the `update()` function. This takes any existing model placed within it and updates it according to any changes you specify. For example, we could add **intervention** to the model by updating the previous model (`rehab_ri`) as follows:
+
+`rehab_int <- update(rehab_ri, .~. + intervention)`
+
+The first argument within the `update()` function tells it the model that you want to update. The `.~.` tells it to retain the existing outcome and predictors (incidentally `.~` would tell it to retain only the outcome variable and to drop any predictors), and `+ name_of_predictor` adds a predictor to the existing ones. So, `+ intervention` tells the function to add **intervention** to the existing predictors (incidentally, you can remove predictors using `- name_of_predictor`).
+
+We can then use the `anova()` function to compare the three models we have created:
+
+`anova(rehab_base, rehab_ri, rehab_int)`.
+
+Use the code box to create the model `rehab_int` and compare it to the previous two using the `anova()` function.
+
+```{r rehab_int-setup}
+rehab_base <- nlme::gls(resemblance ~ 1, data = rehab_tib, method = "ML")
+rehab_ri <- nlme::lme(resemblance ~ 1, random = ~ 1|id_clin, data = rehab_tib, method = "ML")
+```
+
+```{r rehab_int, exercise = TRUE}
+     
+             
+```
+
+```{r rehab_int-solution}
+rehab_int <- update(rehab_ri, .~. + intervention)
+anova(rehab_base, rehab_ri, rehab_int)
+```
+
+The AIC and BIC are reduced by including **intervention** as a predictor, which indicates a better-fitting model. The *L. Ratio* (the change in the −2LL between the models), suggests that including **intervention** significantly improves the fit of our model, $\chi^2(1) = 7.12, p = 0.0076$.
+
+### Adding random slopes for the effect of the intervention
+
+We might now want to allow the effect of the intervention to vary across clinics to acknowledge that treatment effects might vary across clinics. In doing so we'll add a random slope to the effect of **intervention**. Again we can do this either by re-specifying the entire model, or by using the `update()` function to update the previous model (`rehab_int`). In either case, the crucial change will be to change the specification of the random intercept (`random = ~ 1|id_clin`) to be a random slope (`random = ~ intervention|id_clin`). The `intervention|id_clin` means 'the effect of **intervention** varies within the variable **id_clinic**. In other words the 'slope' for **intervention** is random (across clinics). Again, the intercept is implied, so this model includes both a random slope and a random intercept. Let's call the resulting model `rehab_rs` (the *rs* meaning *random slope*). If we specify the model in full we would execute:
+
+`rehab_rs <- nlme::lme(resemblance ~ intervention, random = ~ intervention|id_clin, data = rehab_tib, method = "ML")`
+
+If we use update, we'd execute:
+
+`rehab_rs <- update(rehab_int, random = ~ intervention|id_clin)`
+
+Note that in the `update()` function we don't need to include `.~.` because we're not changing any predictors, we simply specify the model we want to update and then re-define the argument specifying the random effects within the model.
+
+Use the code box to create the model `rehab_rs` and compare it to the previous three using the `anova()` function.
+
+```{r rehab_rs-setup}
+rehab_base <- nlme::gls(resemblance ~ 1, data = rehab_tib, method = "ML")
+rehab_ri <- nlme::lme(resemblance ~ 1, random = ~ 1|id_clin, data = rehab_tib, method = "ML")
+rehab_int <- update(rehab_ri, .~. + intervention)
+```
+
+```{r rehab_rs, exercise = TRUE}
+     
+             
+```
+
+```{r rehab_rs-solution}
+rehab_rs <- update(rehab_int, random = ~ intervention|id_clin)
+anova(rehab_base, rehab_ri, rehab_int, rehab_rs)
+```
+
+The AIC and BIC are reduced by including a random slope for **intervention** indicating a better-fitting model. The *L. Ratio* (the change in the −2LL between the models), suggests that including this random slope significantly improves the fit of our model, $\chi^2(2) = 12.27, p = 0.0022$. Another way to think of this is that there is significant variability in treatment effects across clinics.
+
+### Adding the final fixed effects
+
+Finally, we want to add fixed effects for **gep_level** and **tse_months**. We can again add these predictors most efficiently by using the update function. (Although by all means have a go specifying the full model). For example, we might create a model called `rehab_gep` that updates the model `rehab_rs` by including **gep_level** by executing:
+
+`rehab_gep <- update(rehab_rs, .~. + gep_level)`
+
+we might in turn update this model to create one called `rehab_tse` that also includes **tse_months** by executing:
+
+`rehab_tse <- update(rehab_gep, .~. + tse_months)`
+
+We could then compare all of the models we have created by executing:
+
+`anova(rehab_base, rehab_ri, rehab_int, rehab_rs, rehab_gep, rehab_tse)`
+
+Try this in the code box:
+
+```{r rehab_tse-setup}
+rehab_base <- nlme::gls(resemblance ~ 1, data = rehab_tib, method = "ML")
+rehab_ri <- nlme::lme(resemblance ~ 1, random = ~ 1|id_clin, data = rehab_tib, method = "ML")
+rehab_int <- update(rehab_ri, .~. + intervention)
+rehab_rs <- update(rehab_int, random = ~ intervention|id_clin)
+```
+
+```{r rehab_tse, exercise = TRUE}
+     
+```
+
+```{r rehab_tse-solution}
+rehab_gep <- update(rehab_rs, .~. + gep_level)
+rehab_tse <- update(rehab_gep, .~. + tse_months)
+anova(rehab_base, rehab_ri, rehab_int, rehab_rs, rehab_gep, rehab_tse)
+```
+
+### Viewing the model parameters
+
+We can look at *F*-statistics for the model by using the `anova()` function. To view the parameters of any one of our models use `summary()` and to get confidence intervals for the parameters use the `intervals()` function. For example, to inspect the final model we could execute:
+
+```{r echo = T, eval = F}
+anova(rehab_tse)
+summary(rehab_tse)
+intervals(rehab_tse, 0.95)
+```
+
+In the `intervals()` it isn't necessary to include 0.95 if you want 95% confidence intervals, I merely included it to make clear that you could change this to get other intervals (for example, 0.9 for 90% confidence intervals or 0.99 for 99% confidence intervals). Execute these commands in the code box.
+
+```{r sum_tse-setup}
+rehab_tse <- nlme::lme(resemblance ~ intervention + gep_level + tse_months, random = ~ intervention|id_clin, data = rehab_tib, method = "ML")
+```
+
+```{r sum_tse, exercise = TRUE}
+     
+```
+
+```{r sum_tse-solution}
+anova(rehab_tse)
+summary(rehab_tse)
+intervals(rehab_tse, 0.95)
+```
+
+The results of the `anova()` command, show significant effect of **intervention**, *F*(1, 177) = 5.49, *p* = 0.020, **gep_level**, *F*(1, 177) = 37.98, *p* < 0.0001, and **tse_months**, *F*(1, 177) = 4848.83, *p* < 0.0001.
+
+The final model shows that gene therapy (compared to a wait list control) significantly predicted resemblance scores, *b* = 6.79 [1.51, 12.08], *t*(177) = 2.51, p = 0.0129. Both the initial intensity of the genetic enhancement programme, *b* = -4.30 [-5.37, -3.23], *t*(177) = -7.84, p < 0.001, and the time since the enhancement took place, *b* = -1.98 [-2.03, -1.92], *t*(177) = 69.63, p < 0.001, significantly reduced resemblance scores.
+
+## Other resources
+
+### Statistics
+
+* The tutorials typically follow examples described in detail in @RN10163, so for most of them there's a thorough account in there. You might also find @RN4832 useful for the **R** stuff.
+* There are free lectures and screen casts on my [YouTube channel](https://www.youtube.com/user/ProfAndyField/)
+* There are free statistical resources on my website [www.discoveringstatistics.com](http://www.discoveringstatistics.com)
+
+### R
+
+* Information on using [ggplot2](http://ggplot2.tidyverse.org/) 
+* [R for data science](http://r4ds.had.co.nz/index.html) is the open-access version of the book by tidyverse creator Hadley Wickham [@RN11404]. It covers the *tidyverse* and data management.
+* [ModernDive](http://moderndive.com/index.html) is an open-access textbook on **R** and **RStudio**
+* [RStudio cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
+* [RStudio list of online resources](https://www.rstudio.com/online-learning/)
+* [SwirlStats](http://swirlstats.com/students.html) is a package for *R* that launches a bunch of interactive tutorials.
+
+## References

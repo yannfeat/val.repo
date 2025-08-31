@@ -1,0 +1,20 @@
+Change log:
+
+Version 0.1.1, Nov 18, 2020
+----------------------------
+Bug fix such that Aggregate works when the table only contains numerics or dates. 
+Bug fix with the 'by' parameter.
+
+Version 0.1.0, Nov 17, 2020
+----------------------------
+Re-written the code in data.table for computational speed. 
+Added efficient dummy-coding also written in data.table.
+Allowed the functionality to output a tibble. 
+
+Version 0.0.2, Nov 20, 2015
+----------------------------
+Added the functionality to compute recency and duration of Date variables by an ID
+
+Version 0.0.1, Sep 30, 2015
+----------------------------
+Submitted package to cran with one function: Aggregate

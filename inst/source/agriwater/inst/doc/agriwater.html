@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Cesar de Oliveira Ferreira Silva, Antonio Heriberto de Castro Teixeira, Rodrigo Lilla Manzione" />
+
+<meta name="date" content="2023-06-08" />
+
+<title>agriwater</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">agriwater</h1>
+<h4 class="author">Cesar de Oliveira Ferreira Silva, Antonio Heriberto
+de Castro Teixeira, Rodrigo Lilla Manzione</h4>
+<h4 class="date">2023-06-08</h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>“The Simple Algorithm for Evapotranspiration Retrieving” (SAFER) aims
+to model the <span class="math inline">\(\frac{ET_a}{ET_0}\)</span>
+ratio. This ratio is calculated according to:</p>
+<p><span class="math display">\[\frac{ET_a}{ET_0} = exp \left[ a+b
+\left( \frac{T_0}{\alpha_0 NDVI} \right) \right]\]</span></p>
+<p>Where <span class="math inline">\(\alpha_0\)</span> is the surface
+albedo, <span class="math inline">\(T_0\)</span> is the surface
+temperature and <span class="math inline">\(NDVI\)</span> is the
+normalized difference vegetation index.</p>
+<p>The surface albedo (<span class="math inline">\(\alpha_0\)</span>,
+dimensionless) is obtained from the reflectivity for each band (<span class="math inline">\(\alpha_{pb}\)</span>). For Landsat images was
+necessary to obtain the planetary albedo (<span class="math inline">\(\alpha_{pb}\)</span>) applying this equation for
+each band:</p>
+<p><span class="math display">\[\alpha_{pb} = \frac{L_b \pi d^2}{R cos
+\phi}\]</span></p>
+<p>Where <span class="math inline">\(L_b\)</span> (<span class="math inline">\(W \ m^{-2} \ sr^{-1} \ \mu m^{-1}\)</span>) is the
+spectral radiance for the wavelenghts of the band (<span class="math inline">\(b\)</span> from 1 to 7), <span class="math inline">\(d\)</span> (<span class="math inline">\(m\)</span>) is the relative earth-sun distance,
+<span class="math inline">\(R\)</span> (<span class="math inline">\(W \
+m^{-2} \ \mu m^{-1}\)</span>) is the mean solar irradiance at the top of
+the atmosphere for each band and <span class="math inline">\(\phi\)</span> the solar zenith angle.</p>
+<p>The broadband <span class="math inline">\(\alpha_p\)</span> is
+calculated as the total sum of the differenct reflectivities <span class="math inline">\(\alpha_{pb}\)</span> values according to the
+weights for each band (<span class="math inline">\(w_p\)</span>):</p>
+<p><span class="math display">\[\alpha_p = \sum w_p
+\alpha_{pb}\]</span></p>
+<p>The data of <span class="math inline">\(\alpha_p\)</span>
+(dimensionless) is atmospherically corrected to obtain the value of
+surface albedo (<span class="math inline">\(\alpha_0\)</span>):</p>
+<p><span class="math display">\[\alpha_0 = c \times \alpha_p +
+d\]</span></p>
+<p>where <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> are regression coefficients which are
+specific for each satellite.</p>
+<p>The normalized difference vegetation index (NDVI, dimensionless) is
+calculated through the ratio of the difference between the planetary
+reflectivities of the near infrared (<span class="math inline">\(\rho_{nir}\)</span>) and red (<span class="math inline">\(\rho_{red}\)</span>) and their sum.</p>
+<p>Surface Temperature (<span class="math inline">\(T_0, K\)</span>) is
+derived from the Stefan-Boltzmann Equation according to equation
+below:</p>
+<p><span class="math display">\[ T_0 =  \sqrt[4] \frac{ \epsilon_A
+\sigma T_A + a_L \tau_W }{ \epsilon_S \sigma } \]</span></p>
+<p>Where <span class="math inline">\(\epsilon_A\)</span> and <span class="math inline">\(\epsilon_S\)</span> are the atmospheric and
+surface emissivities, <span class="math inline">\(\sigma\)</span> is the
+Stefan-Boltzmann constant, <span class="math inline">\(T_A\)</span> is
+the average air temperature, <span class="math inline">\(\tau_W\)</span>
+is the shortwave atmosphere transmissivity and <span class="math inline">\(a_L\)</span> is the regression coefficient.</p>
+<p>Finally, actual evapotranspiration (<span class="math inline">\(ET_a,
+mm \ day^{-1}\)</span>) was obtained according to:</p>
+<p><span class="math display">\[ET_a = ET_0 \left( \frac{ET_a}{ET_0}
+\right)\]</span></p>
+<p>For radiation balance assessment the following equation is used:</p>
+<p><span class="math display">\[R_N = H + LE + G \]</span></p>
+<p>where <span class="math inline">\(G\)</span> is the heat flux in the
+soil, <span class="math inline">\(R_N\)</span> is the net radiation,
+<span class="math inline">\(LE\)</span> is the latent heat flux and
+<span class="math inline">\(H\)</span> the sensible heat flux.</p>
+<p>Net radiation (<span class="math inline">\(R_N, W \ m^{-2} \ sr^{-1}
+\ \mu \ m^{-1}\)</span>) was obtained by the Slob’s equation:</p>
+<p><span class="math display">\[R_N = (1 - \alpha_0) R_G - \alpha_L
+\tau_{sw}\]</span></p>
+<p>Latent heat flux (<span class="math inline">\(LE, MJ \
+day^{-1}\)</span>) was obtained by:</p>
+<p><span class="math display">\[LE = ET_a \times 2.45 \]</span></p>
+<p>Heat flux in the soil (<span class="math inline">\(G, MJ \
+day^{-1}\)</span>) was estimated through its realtionship with the net
+radiation:</p>
+<p><span class="math display">\[ G = R_N(3.98 \ exp(-31.89
+\alpha_0))\]</span></p>
+<p>Sensible heat flux (<span class="math inline">\(H, MJ \
+day^{-1}\)</span>) was obtained as a residue of the energy balance:</p>
+<p><span class="math display">\[H = R_N - LE - G \]</span></p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Teixeira (2010) <a href="https://doi.org/10.3390/rs0251287" class="uri">https://doi.org/10.3390/rs0251287</a></p>
+<p>Teixeira et al. (2015) <a href="https://dx.doi.org/10.3390/rs71114597" class="uri">https://dx.doi.org/10.3390/rs71114597</a></p>
+<p>Silva et al. (2018) <a href="https://doi.org/10.3390/horticulturae4040044" class="uri">https://doi.org/10.3390/horticulturae4040044</a></p>
+<p>Silva et al. (2019) <a href="http://dx.doi.org/10.1016/j.envsoft.2019.104497" class="uri">http://dx.doi.org/10.1016/j.envsoft.2019.104497</a></p>
+<p>Teixeira et al. (2021) <a href="http://dx.doi.org/10.1016/j.rsase.2021.100514" class="uri">http://dx.doi.org/10.1016/j.rsase.2021.100514</a></p>
+<div id="loading-package-agriwater-and-dependencies" class="section level2">
+<h2>Loading package “agriwater” and dependencies</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agriwater)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code></pre></div>
+</div>
+</div>
+<div id="sentinel-2" class="section level1">
+<h1>Sentinel-2</h1>
+<div id="data-base-preparation-using-a-single-agrometeorological-station" class="section level2">
+<h2>Data base preparation using a single agrometeorological station</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B2.tif” - Blue - with wavelength between 0.439 - 0.535
+micrometers - 10 m of resolution</p></li>
+<li><p>“B3.tif” - Green - with wavelength between 0.537 - 0.582
+micrometers - 10 m of resolution</p></li>
+<li><p>“B4.tif” - Red - with wavelength between 0.646 - 0.685
+micrometers - 10 m of resolution</p></li>
+<li><p>“B8.tif” - Near Infrared (NIR) - with wavelength between 0.767 -
+0.908 micrometers - 10 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="data-base-preparation-using-a-grid-of-agrometeorological-data" class="section level2">
+<h2>Data base preparation using a grid of agrometeorological data</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B2.tif” - Blue - with wavelength between 0.439 - 0.535
+micrometers - 10 m of resolution</p></li>
+<li><p>“B3.tif” - Green - with wavelength between 0.537 - 0.582
+micrometers - 10 m of resolution</p></li>
+<li><p>“B4.tif” - Red - with wavelength between 0.646 - 0.685
+micrometers - 10 m of resolution</p></li>
+<li><p>“B8.tif” - Near Infrared (NIR) - with wavelength between 0.767 -
+0.908 micrometers - 10 m of resolution</p></li>
+<li><p>“ET0.tif” - Reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“RG.tif” - Solar radiation incident (<span class="math inline">\(MJ \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“Ta.tif” - Average air temperature (Celsius degrees) spatially
+interpolated by the user’s preferred method.</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="modeling-with-a-single-agrometeorological-station" class="section level2">
+<h2>Modeling with a single agrometeorological station</h2>
+<div id="surface-albedo-retrivieng-at-10-m-resolution" class="section level3">
+<h3>Surface Albedo retrivieng at 10 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace, run:</p>
+<pre><code>albedo_s2()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-10-m-resolution" class="section level3">
+<h3>Crop coefficient retrivieng at 10 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace, run:</p>
+<pre><code>kc_s2(doy, RG, Ta, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-10-m-resolution" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 10 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace, run:</p>
+<pre><code>evapo_s2(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-10-m-resolution" class="section level3">
+<h3>Radiation and energy balance at 10 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace, run:</p>
+<pre><code>radiation_s2(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+<div id="modeling-with-a-grid-of-agrometeorological-data" class="section level2">
+<h2>Modeling with a grid of agrometeorological data</h2>
+<div id="surface-albedo-retrivieng-at-10-m-resolution-1" class="section level3">
+<h3>Surface Albedo retrivieng at 10 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace, run:</p>
+<pre><code>albedo_s2()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-10-m-resolution-1" class="section level3">
+<h3>Crop coefficient retrivieng at 10 m resolution</h3>
+<p>With Sentinel-2 bands and agrometeorological data in the workspace,
+run:</p>
+<pre><code>kc_s2_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-10-m-resolution-1" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 10 m resolution</h3>
+<p>With Sentinel-2 bands and agrometeorological data in the workspace,
+run:</p>
+<pre><code>evapo_s2_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-10-m-resolution-1" class="section level3">
+<h3>Radiation and energy balance at 10 m resolution</h3>
+<p>With Sentinel-2 bands and agrometeorological data in the workspace,
+run:</p>
+<pre><code>radiation_s2_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+</div>
+<div id="landsat-8-with-thermal-bands" class="section level1">
+<h1>Landsat-8 with thermal bands</h1>
+<div id="data-base-preparation-using-a-single-agrometeorological-station-1" class="section level2">
+<h2>Data base preparation using a single agrometeorological station</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B1.tif” - Ultra Blue (coastal/aerosol) - with wavelength between
+0.435 - 0.451 micrometers - 30 m of resolution</p></li>
+<li><p>“B2.tif” - Blue - with wavelength between 0.452 - 0.512
+micrometers micrometers - 30 m of resolution</p></li>
+<li><p>“B3.tif” - Green - with wavelength between 0.533 - 0.590
+micrometers - 30 m of resolution</p></li>
+<li><p>“B4.tif” - Red - with wavelength between 0.636 - 0.673
+micrometers - 30 m of resolution</p></li>
+<li><p>“B5.tif” - Near Infrared (NIR) - with wavelength between 0.851 -
+0.879 micrometers - 30 m of resolution</p></li>
+<li><p>“B6.tif” - Shortwave Infrared (SWIR) 1 - with wavelength between
+1.566 - 1.651 micrometers - 30 m of resolution</p></li>
+<li><p>“B7.tif” - Shortwave Infrared (SWIR) 2 - with wavelength between
+2.107 - 2.294 micrometers - 30 m of resolution</p></li>
+<li><p>“B10.tif” - Thermal Infrared (TIRS) 1 - with wavelength between
+10.60 - 11.19 micrometers - 100 m of resolution</p></li>
+<li><p>“B11.tif” - Thermal Infrared (TIRS) 2 - with wavelength between
+11.50 - 12.51 micrometers - 100 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+<li><p>“.txt” - a text file of metadata provided with Landsat-8
+images</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="data-base-preparation-using-a-grid-of-agrometeorological-data-1" class="section level2">
+<h2>Data base preparation using a grid of agrometeorological data</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B1.tif” - Ultra Blue (coastal/aerosol) - with wavelength between
+0.435 - 0.451 micrometers - 30 m of resolution</p></li>
+<li><p>“B2.tif” - Blue - with wavelength between 0.452 - 0.512
+micrometers - 30 m of resolution</p></li>
+<li><p>“B3.tif” - Green - with wavelength between 0.533 - 0.590
+micrometers - 30 m of resolution</p></li>
+<li><p>“B4.tif” - Red - with wavelength between 0.636 - 0.673
+micrometers - 30 m of resolution</p></li>
+<li><p>“B5.tif” - Near Infrared (NIR) - with wavelength between 0.851 -
+0.879 micrometers - 30 m of resolution</p></li>
+<li><p>“B6.tif” - Shortwave Infrared (SWIR) 1 - with wavelength between
+1.566 - 1.651 micrometers - 30 m of resolution</p></li>
+<li><p>“B7.tif” - Shortwave Infrared (SWIR) 2 - with wavelength between
+2.107 - 2.294 micrometers - 30 m of resolution</p></li>
+<li><p>“B10.tif” - Thermal Infrared (TIRS) 1 - with wavelength between
+10.60 - 11.19 micrometers - 100 m of resolution</p></li>
+<li><p>“B11.tif” - Thermal Infrared (TIRS) 2 - with wavelength between
+11.50 - 12.51 micrometers - 100 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+<li><p>“.txt” - a text file of metadata provided with Landsat-8
+images</p></li>
+<li><p>“ET0.tif” - Reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“RG.tif” - Solar radiation incident (<span class="math inline">\(MJ \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“Ta.tif” - Average air temperature (Celsius degrees) spatially
+interpolated by the user’s preferred method.</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="modeling-with-a-single-agrometeorological-station-1" class="section level2">
+<h2>Modeling with a single agrometeorological station</h2>
+<div id="reflectance-at-30-m-resolution" class="section level3">
+<h3>Reflectance at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>reflectance_l8()</code></pre>
+<p>Raster files named from “B1_reflectance_landsat8” to
+“B7_reflectance_landsat8” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="surface-albedo-retrivieng-at-30-m-resolution" class="section level3">
+<h3>Surface Albedo retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>albedo_l8()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-30-m-resolution" class="section level3">
+<h3>Crop coefficient retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>kc_l8t(doy, RG, Ta, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-30-m-resolution" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>evapo_l8t(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-30-m-resolution" class="section level3">
+<h3>Radiation and energy balance at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>radiation_l8t(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+<div id="modeling-with-a-grid-of-agrometeorological-data-1" class="section level2">
+<h2>Modeling with a grid of agrometeorological data</h2>
+<div id="reflectance-at-30-m-resolution-1" class="section level3">
+<h3>Reflectance at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>reflectance_l8()</code></pre>
+<p>Raster files named from “B1_reflectance_landsat8” to
+“B7_reflectance_landsat8” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="surface-albedo-retrivieng-at-30-m-resolution-1" class="section level3">
+<h3>Surface Albedo retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>albedo_l8()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-30-m-resolution-1" class="section level3">
+<h3>Crop coefficient retrivieng at 30 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace and agrometeorological data,
+run:</p>
+<pre><code>kc_l8t_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “kc.tif” will
+be generated with the same projection as the raster input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-30-m-resolution-1" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace and agrometeorological data,
+run:</p>
+<pre><code>evapo_l8t_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-30-m-resolution-1" class="section level3">
+<h3>Radiation and energy balance at 30 m resolution</h3>
+<p>With Landsat-8 bands and agrometeorological data in the workspace,
+run:</p>
+<pre><code>radiation_l8t_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+</div>
+<div id="landsat-8-without-thermal-bands" class="section level1">
+<h1>Landsat-8 without thermal bands</h1>
+<div id="data-base-preparation-using-a-single-agrometeorological-station-2" class="section level2">
+<h2>Data base preparation using a single agrometeorological station</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B1.tif” - Ultra Blue (coastal/aerosol) - with wavelength between
+0.435 - 0.451 micrometers - 30 m of resolution</p></li>
+<li><p>“B2.tif” - Blue - with wavelength between 0.452 - 0.512
+micrometers - 30 m of resolution</p></li>
+<li><p>“B3.tif” - Green - with wavelength between 0.533 - 0.590
+micrometers - 30 m of resolution</p></li>
+<li><p>“B4.tif” - Red - with wavelength between 0.636 - 0.673
+micrometers - 30 m of resolution</p></li>
+<li><p>“B5.tif” - Near Infrared (NIR) - with wavelength between 0.851 -
+0.879 micrometers - 30 m of resolution</p></li>
+<li><p>“B6.tif” - Shortwave Infrared (SWIR) 1 - with wavelength between
+1.566 - 1.651 micrometers - 30 m of resolution</p></li>
+<li><p>“B7.tif” - Shortwave Infrared (SWIR) 2 - with wavelength between
+2.107 - 2.294 micrometers - 30 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+<li><p>“.txt” - a text file of metadata provided with Landsat-8
+images</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="data-base-preparation-using-a-grid-of-agrometeorological-data-2" class="section level2">
+<h2>Data base preparation using a grid of agrometeorological data</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B1.tif” - Ultra Blue (coastal/aerosol) - with wavelength between
+0.435 - 0.451 micrometers - 30 m of resolution</p></li>
+<li><p>“B2.tif” - Blue - with wavelength between 0.452 - 0.512
+micrometers - 30 m of resolution</p></li>
+<li><p>“B3.tif” - Green - with wavelength between 0.533 - 0.590
+micrometers - 30 m of resolution</p></li>
+<li><p>“B4.tif” - Red - with wavelength between 0.636 - 0.673
+micrometers - 30 m of resolution</p></li>
+<li><p>“B5.tif” - Near Infrared (NIR) - with wavelength between 0.851 -
+0.879 micrometers - 30 m of resolution</p></li>
+<li><p>“B6.tif” - Shortwave Infrared (SWIR) 1 - with wavelength between
+1.566 - 1.651 micrometers - 30 m of resolution</p></li>
+<li><p>“B7.tif” - Shortwave Infrared (SWIR) 2 - with wavelength between
+2.107 - 2.294 micrometers - 30 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+<li><p>“.txt” - a text file of metadata provided with Landsat-8
+images</p></li>
+<li><p>“ET0.tif” - Reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“RG.tif” - Solar radiation incident (<span class="math inline">\(MJ \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“Ta.tif” - Average air temperature (Celsius degrees) spatially
+interpolated by the user’s preferred method.</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="modeling-with-a-single-agrometeorological-station-2" class="section level2">
+<h2>Modeling with a single agrometeorological station</h2>
+<div id="surface-albedo-retrivieng-at-30-m-resolution-2" class="section level3">
+<h3>Surface Albedo retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>albedo_l8()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-30-m-resolution-2" class="section level3">
+<h3>Crop coefficient retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>kc_l8(doy, RG, Ta, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-30-m-resolution-2" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>evapo_l8(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-30-m-resolution-2" class="section level3">
+<h3>Radiation and energy balance at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>radiation_l8(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+<div id="modeling-with-a-grid-of-agrometeorological-data-2" class="section level2">
+<h2>Modeling with a grid of agrometeorological data</h2>
+<div id="reflectance-at-30-m-resolution-2" class="section level3">
+<h3>Reflectance at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>reflectance_l8()</code></pre>
+<p>Raster files named from “B1_reflectance_landsat8” to
+“B7_reflectance_landsat8” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="surface-albedo-retrivieng-at-30-m-resolution-3" class="section level3">
+<h3>Surface Albedo retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace, run:</p>
+<pre><code>albedo_l8()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-30-m-resolution-3" class="section level3">
+<h3>Crop coefficient retrivieng at 30 m resolution</h3>
+<p>With Sentinel-2 bands in the workspace, run:</p>
+<pre><code>kc_l8_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-30-m-resolution-3" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 30 m resolution</h3>
+<p>With Landsat-8 bands in the workspace and agrometeorological data,
+run:</p>
+<pre><code>evapo_l8_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-30-m-resolution-3" class="section level3">
+<h3>Radiation and energy balance at 30 m resolution</h3>
+<p>With Landsat-8 bands and agrometeorological data in the workspace,
+run:</p>
+<pre><code>radiation_l8_grid(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+</div>
+<div id="modis" class="section level1">
+<h1>MODIS</h1>
+<div id="data-base-preparation-using-a-single-agrometeorological-station-3" class="section level2">
+<h2>Data base preparation using a single agrometeorological station</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B1.tif” - Red - with wavelength between 0.620 - 0.670
+micrometers - 250 m of resolution</p></li>
+<li><p>“B2.tif” - Near Infrared (NIR) - with wavelength between 0.841 -
+0.876 micrometers - 250 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="data-base-preparation-using-a-grid-of-agrometeorological-data-3" class="section level2">
+<h2>Data base preparation using a grid of agrometeorological data</h2>
+<p>The workspace must contain the following files:</p>
+<ul>
+<li><p>“B1.tif” - Red - with wavelength between 0.620 - 0.670
+micrometers - 250 m of resolution</p></li>
+<li><p>“B2.tif” - Near Infrared (NIR) - with wavelength between 0.841 -
+0.876 micrometers - 250 m of resolution</p></li>
+<li><p>“mask.shp” - Shapefile of study area to mask digital
+images</p></li>
+<li><p>“ET0.tif” - Reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“RG.tif” - Solar radiation incident (<span class="math inline">\(MJ \ day^{-1}\)</span>) spatially interpolated by
+the user’s preferred method.</p></li>
+<li><p>“Ta.tif” - Average air temperature (Celsius degrees) spatially
+interpolated by the user’s preferred method.</p></li>
+</ul>
+<p>All must have the same projection in decimal degrees
+(geographical)</p>
+</div>
+<div id="modeling-with-a-single-agrometeorological-station-3" class="section level2">
+<h2>Modeling with a single agrometeorological station</h2>
+<div id="surface-albedo-retrivieng-at-250-m-resolution" class="section level3">
+<h3>Surface Albedo retrivieng at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>albedo_modis()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-250-m-resolution" class="section level3">
+<h3>Crop coefficient retrivieng at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>kc_modis(doy, RG, Ta, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-250-m-resolution" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>evapo_modis(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-250-m-resolution" class="section level3">
+<h3>Radiation and energy balance at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>radiation_modis(doy, RG, Ta, ET0, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>RG is the global solar radiation (<span class="math inline">\(MJ \
+day^{-1}\)</span>)</li>
+<li>Ta is the average air temperature (Celsius degrees)</li>
+<li>ET0 is the reference evapotranspiration (<span class="math inline">\(mm \ day^{-1}\)</span>)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+<div id="modeling-with-a-grid-of-agrometeorological-data-3" class="section level2">
+<h2>Modeling with a grid of agrometeorological data</h2>
+<div id="surface-albedo-retrivieng-at-250-m-resolution-1" class="section level3">
+<h3>Surface Albedo retrivieng at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>albedo_modis()</code></pre>
+<p>A raster file named “Alb_24.tif” will be generated with the same
+projection as the raster input.</p>
+</div>
+<div id="crop-coefficient-retrivieng-at-250-m-resolution-1" class="section level3">
+<h3>Crop coefficient retrivieng at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>kc_modis_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ” and
+“kc.tif” will be generated with the same projection as the raster
+input.</p>
+</div>
+<div id="atual-evapotranspiration-retrivieng-at-250-m-resolution-1" class="section level3">
+<h3>Atual evapotranspiration retrivieng at 250 m resolution</h3>
+<p>With MODIS bands and agrometeorological data in the workspace,
+run:</p>
+<pre><code>evapo_modis_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” and “evapo.tif” will be generated with the same projection as
+the raster input.</p>
+</div>
+<div id="radiation-and-energy-balance-at-250-m-resolution-1" class="section level3">
+<h3>Radiation and energy balance at 250 m resolution</h3>
+<p>With MODIS bands in the workspace, run:</p>
+<pre><code>radiation_modis_grid(doy, a, b)</code></pre>
+<p>Where:</p>
+<ul>
+<li>doy is the Day of Year (DOY)</li>
+<li>a is one of the regression coefficients of SAFER algorithm</li>
+<li>b is one of the regression coefficients of SAFER algorithm</li>
+</ul>
+<p>Raster files named “Alb_24.tif”, “NDVI.tif”, “LST.tif”, “Rn_MJ”,
+“kc.tif” , “evapo.tif”, “LE_MJ.tif”, “H_MJ.tif” and “G_MJ.tif” will be
+generated with the same projection as the raster input.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

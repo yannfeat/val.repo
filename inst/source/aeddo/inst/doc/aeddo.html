@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Automated and Early Detection of Disease Outbreaks</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Automated and Early Detection of Disease
+Outbreaks</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The novel algorithm utilizes a hierarchical generalized linear model
+as a modeling framework to model the count observations <span class="math inline">\(y\)</span> and assess the unobserved random
+effects <span class="math inline">\(u\)</span>. These random effects are
+used directly in the detection algorithm to characterize an
+outbreak.</p>
+<div id="applying-the-algorithm" class="section level2">
+<h2>Applying the algorithm</h2>
+<p>To install ‘aeddo’, you can use the following command to obtain the
+development version from GitHub:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ssi-dk/aeddo&quot;</span>)</span></code></pre></div>
+<p>or from CRAN:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;aeddo&quot;</span>)</span></code></pre></div>
+<p>Now, the library is loaded, to expose the functions:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(aeddo)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; Vedhæfter pakke: &#39;ggplot2&#39;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; Det følgende objekt er maskeret fra &#39;package:aeddo&#39;:</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;     autoplot</span></span></code></pre></div>
+<p>In this vignette, the ‘aeddo’ algorithm is applied to the <em>Monthly
+Deaths from Lung Diseases in the UK</em> (source: P. J. Diggle (1990)
+<em>Time Series: A Biostatistical Introduction</em>. Oxford, table A.3).
+The data set is accessible trough the ‘MASS’ R package</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>deaths <span class="ot">&lt;-</span> MASS<span class="sc">::</span>deaths</span></code></pre></div>
+<p>To get an idea of how the monthly data looks like, it is visualized
+in the following figure</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">plot</span>(deaths)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Clearly, an annual seasonal component is seen in the data. Thus, a
+fixed-effects model incorporating seasonality using Fourier terms is
+hypothesized:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>formula <span class="ot">&lt;-</span> y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">sin</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> m <span class="sc">/</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> m <span class="sc">/</span> <span class="dv">12</span>)</span></code></pre></div>
+<p>It is time to preprocess the data. First, the ‘ts’ object is broken
+down into a time stamp and observations. This is achieved partly through
+the ‘zoo’ R package:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Extract timestamp</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>timestamp <span class="ot">&lt;-</span> zoo<span class="sc">::</span><span class="fu">as.yearmon</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  stats<span class="sc">::</span><span class="fu">time</span>(deaths)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># ... and observations</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>observations <span class="ot">&lt;-</span> <span class="fu">c</span>(deaths)</span></code></pre></div>
+<p>Then, it is needed to compute the month within a year, <span class="math inline">\(m\)</span>, which is needed for the Fourier
+terms:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">format</span>(timestamp, <span class="st">&quot;%m&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>)</span></code></pre></div>
+<p>Now, it is bundled together in a data.frame:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Bundle up in data.frame</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>processed_deaths <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">time =</span> timestamp,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">y =</span> observations,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">1</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">m =</span> m</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>)</span></code></pre></div>
+<p>As there are no information available on the population sizes at the
+given time stamps, <span class="math inline">\(n\)</span> is fixed at 1.
+For the purpose of this example, it is assumed that a rolling window of
+size 24 months is appropriate for the parameter estimation. Moreover,
+the disease threshold, <span class="math inline">\(U_{t_0}\)</span> is
+based on the 90% quantile of the second-stage random effects
+distribution:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>sig_level <span class="ot">&lt;-</span> <span class="fl">0.9</span></span></code></pre></div>
+<p>The ‘aeddo’ algorithm is applied to the data:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>aeddo_results <span class="ot">&lt;-</span> <span class="fu">aeddo</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">data =</span> processed_deaths,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">formula =</span> formula,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">k =</span> k,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="at">sig_level =</span> sig_level,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="at">exclude_past_outbreaks =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="at">init_theta =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">1e-6</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="fl">1e-6</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="fl">1e2</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">3</span>),</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="the-aeddo-package-implements-s3-methods" class="section level2">
+<h2>The aeddo package implements S3 methods</h2>
+<p>Among other things, the ‘aeddo’ R package incorporates S3 methods,
+that allow for easy visualization of the outcome of the algorithm. This
+includes an <code>autoplot()</code> function, but also a wrapper for the
+autoplot function, <code>plot()</code>. One can use either:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">autoplot</span>(aeddo_results)</span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">plot</span>(aeddo_results)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>To visualize the results. Here, the circles inside the grey area
+represent the training observations, the dim circles after the training
+period represents observations within the expected range, and the full
+opacity circles after the training period represents outbreak-related
+observations. Hence, there are found 6 outbreak-related observations in
+the data set.</p>
+</div>
+<div id="formulation-of-the-hiearchical-generalzied-linear-model" class="section level2">
+<h2>Formulation of the hiearchical generalzied linear model</h2>
+<p>The hierarchical generalized linear model used by the novel outbreak
+detection algorithm is formulated as a hierarchical Poisson Gamma model.
+This section present the derivation of the marginal distribution of
+<span class="math inline">\(Y\)</span> along with the joint likelihood
+function for the first and second stage models. For reference on
+hierarchical models, see Henrik Madsen and Poul Thyregod (2011), ISBN:
+9781420091557.</p>
+<p>In the compound Poisson Gamma model the conditional distribution of
+the count observations are assumed to be a Poisson distribution with
+intensities <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[\begin{equation}
+  f_{Y|u}(y;u,\beta)=\frac{(\lambda u)^{y}}{y!}\exp(-\lambda u)
+\end{equation}\]</span></p>
+<p>The probability density function for the random effects <span class="math inline">\(u\)</span> are assumed to follow a reparametrized
+Gamma distribution with mean <span class="math inline">\(1\)</span>,
+<span class="math inline">\(u \sim \mathrm{G}(1/\phi,\phi)\)</span> that
+is</p>
+<p><span class="math display">\[\begin{equation}
+  f_{u}(u;\phi)=\frac{1}{\phi \Gamma(1/\phi)}
+\bigg(\frac{u}{\phi}\bigg)^{1/\phi-1} \exp (-u/\phi)
+\end{equation}\]</span></p>
+<p>Subsequently, the model can be formulated as a two-level hierarchical
+model</p>
+<p></p>
+<p>The probability function for the marginal distribution of <span class="math inline">\(Y\)</span> is determined from</p>
+<p><span class="math display">\[\begin{equation}
+  \begin{aligned}
+    g_{Y}(y;\beta,\phi)&amp;=\int_{u=0}^\infty f_{Y|u}(y;u,\beta)
+f_{u}(u;\phi) \,du \\
+    &amp;=\int_{u=0}^\infty \frac{(\lambda u)^y}{y!} \exp (-\lambda u)
+\frac{1}{\phi \Gamma(1/\phi)} \bigg(\frac{u}{\phi}\bigg)^{1/\phi-1} \exp
+(-u /\phi) \,du\\
+    &amp;=\frac{\lambda^{y}}{y!\Gamma(1/\phi)\phi^{1/\phi}}
+\int_{u=0}^\infty u^{y+1/\phi-1} \exp \big(-u(\lambda \phi+1)/\phi\big)
+\,du
+  \end{aligned}
+\end{equation}\]</span></p>
+<p>It is noted that the integrand is the kernel in the probability
+density function for a Gamma distribution, <span class="math inline">\(\mathrm{G}\big(y+1/\phi,\phi/(\lambda
+\phi+1)\big)\)</span>. As the integral of the density shall equal one,
+it is found by adjusting the norming constant that</p>
+<p><span class="math display">\[\begin{equation}
+  \int_{u=0}^\infty  u^{ y+ 1/\phi-1} \exp \Big(- u/\big(\phi/( \lambda
+\phi+1)\big)\Big) \,du = \frac{\phi^{ y+ 1/\phi}\Gamma( y+ 1/\phi)}{(
+\lambda \phi + 1)^{y+1/\phi}}
+\end{equation}\]</span></p>
+<p>Therefore, it is shown that the marginal distribution of <span class="math inline">\(Y\)</span> is a Negative Binomial distribution,
+<span class="math inline">\(Y\sim\mathrm{NB}\big(1/\phi,1/(\lambda\phi+1)\big)\)</span>.
+The probability function for <span class="math inline">\(Y\)</span>
+is</p>
+<p><span class="math display">\[\begin{equation}
+  \begin{aligned}
+    P[Y=y]&amp;=g_{Y}(y; \beta, \phi) \\
+    &amp;=\frac{\lambda^{y}}{y!\Gamma(1/\phi)\phi^{1/\phi}}\frac{\phi^{y+1/\phi}\Gamma(y+1/\phi)}{(\lambda
+\phi + 1)^{y+1/\phi}} \\
+    &amp;=\frac{\Gamma(y+1/\phi)}{\Gamma(1/\phi)y!}\frac{1}{(\lambda\phi+1)^{1/\phi}}\bigg(\frac{\lambda\phi}{\lambda\phi+1}\bigg)^{y}
+\\
+    &amp;=\begin{pmatrix} y+1/\phi-1 \\ y \end{pmatrix}
+\frac{1}{(\lambda\phi+1)^{1/\phi}}\bigg(\frac{\lambda\phi}{\lambda\phi+1}\bigg)^{y}
+\ , \quad \mathrm{for} \ y = 0, 1, 2, \dots
+  \end{aligned}
+\end{equation}\]</span></p>
+<p>where the following convention is used</p>
+<p><span class="math display">\[\begin{equation}
+  \begin{pmatrix} z\\y \end{pmatrix} =
+\frac{\Gamma(z+1)}{\Gamma(z+1-y)y!}
+\end{equation}\]</span></p>
+<p>for <span class="math inline">\(z\)</span> real and <span class="math inline">\(y\)</span> integer values. Consequently, the mean
+and variance of <span class="math inline">\(Y\)</span> are given by</p>
+<p><span class="math display">\[\begin{equation}
+  \mathrm{E}[Y] = \lambda \qquad \mathrm{V}[Y] = \lambda (\lambda \phi +
+1)
+\end{equation}\]</span></p>
+<p>The joint likelihood function for estimating <span class="math inline">\((\beta,\phi)\)</span> is</p>
+<p><span class="math display">\[\begin{equation}
+  L( \beta, \phi; y_{it})=\prod_{t=1}^{T}\prod_{i=1}^{m} \begin{pmatrix}
+y_{it}+1/\phi-1 \\ y_{it} \end{pmatrix}
+\frac{1}{(\lambda_{it}\phi+1)^{1/\phi}}\bigg(\frac{\lambda_{it}\phi}{\lambda_{it}\phi+1}\bigg)^{y_{it}}
+\end{equation}\]</span></p>
+</div>
+<div id="inference-on-individual-groups" class="section level2">
+<h2>Inference on individual groups</h2>
+<p>Consider the compound Poisson Gamma model, and assume that a value
+<span class="math inline">\(Y=y\)</span> has been observed.</p>
+<p>The conditional distribution of <span class="math inline">\(u\)</span> for given <span class="math inline">\(Y=y\)</span> is found using Bayes Theorem. In
+order to simplify the notation, the subscript indicating the group and
+time are omitted. <span class="math display">\[\begin{equation}
+  \begin{aligned}
+    g_{u}(u|Y=y)&amp;=\frac{f_{y,u}(y,u)}{g_Y(y;\lambda, \phi)} \\
+    &amp;=\frac{f_{y|u}(y;u)g_{u}(u)}{g_{Y}(y;\lambda,\phi)} \\
+    &amp;=\frac{1}{g_{Y}(y;\lambda,\phi)}\Bigg(\frac{(\lambda u)^y}{y!}
+\exp (-\lambda u) \frac{1}{\phi \Gamma(1/\phi)}
+\bigg(\frac{u}{\phi}\bigg)^{1/\phi-1} \exp (-u/\phi)\Bigg) \\
+    &amp;\propto u^{y+1/\phi-1} \exp \big(- u(\lambda\phi+1)/\phi\big)
+  \end{aligned}
+\end{equation}\]</span></p>
+<p>Here, the of the probability density function is identified</p>
+<p><span class="math display">\[\begin{equation}
+  u^{y+1/\phi-1} \exp (- u(\lambda\phi+1)/\phi)
+\end{equation}\]</span></p>
+<p>as the kernel of a Gamma distribution, <span class="math inline">\(\mathrm{G}(y+1/\phi,\phi/(\lambda\phi+1))\)</span>,
+i.e. the conditional distribution of <span class="math inline">\(u\)</span> for given <span class="math inline">\(Y=y\)</span> can be written as</p>
+<p><span class="math display">\[\begin{equation}
+  u| Y=y\sim \mathrm{G}\big(y+1/\phi,\phi/(\lambda \phi+1)\big)
+\end{equation}\]</span></p>
+<p>The mean of the conditional distribution is given by:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathrm{E}[u|Y=y]=\frac{y\phi+1}{\lambda \phi+1}
+\end{equation}\]</span></p>
+<p>And the variance of the conditional distribution is:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathrm{V}[u|Y=y]=\frac{( \phi^2+\phi)}{(\lambda \phi + 1)^2}
+\end{equation}\]</span></p>
+<p>These formulas provide the mean and variance of the conditional
+distribution of <span class="math inline">\(u\)</span> given the
+observed value <span class="math inline">\(Y=y\)</span>.</p>
+</div>
+<div id="the-rationale-for-employing-the-gamma-distribution-as-a-second-stage-model" class="section level2">
+<h2>The rationale for employing the Gamma distribution as a second stage
+model</h2>
+<p>The choice of the Gamma distribution for modeling the random effects
+has been motivated by several reasons. Firstly, the support of the Gamma
+distribution, which ranges from 0 to infinity, aligns with the
+mean-value space, denoted as <span class="math inline">\(\mathcal{M}\)</span>, for the Poisson
+distribution. This ensures that the random effects are constrained
+within a meaningful range for the underlying Poisson process.</p>
+<p>Secondly, the two-parameter family of Gamma distributions offers
+considerable flexibility, encompassing a wide range of shapes and
+distributions that can span from exponential-like distributions to
+fairly symmetrical distributions on the positive real line. This
+flexibility allows the model to capture various patterns and
+characteristics observed in the data.</p>
+<p>Additionally, the choice of the Gamma distribution has benefits in
+terms of the derivation of the marginal distribution of the response
+variable <span class="math inline">\(Y\)</span>. The kernel <span class="math inline">\(u^{\alpha-1}\exp(-u/\beta)\)</span> of the Gamma
+distribution used for modeling the random effects exhibits a similar
+structure to the kernel <span class="math inline">\(u^y\exp(-u)\)</span>
+of the likelihood function corresponding to the sampling distribution of
+<span class="math inline">\(Y\)</span>. This similarity facilitates the
+analytical computation of the integral involved in deriving the marginal
+distribution, as it can be expressed in terms of known functions.</p>
+<p>Overall, the Gamma distribution is selected due to its alignment with
+the mean-value space of the Poisson distribution, its flexibility in
+capturing diverse distributions, and its analytical convenience in
+computing the marginal distribution of the response variable.</p>
+</div>
+<div id="the-three-steps-of-the-algorithm" class="section level2">
+<h2>The three steps of the algorithm</h2>
+<p>The first step involves fitting either a Poisson Gamma model with a
+log link to the reference data. Here, it is possible to include an
+arbitrary number of covariates by supplying a model formula. In order to
+account for structural changes in the time series, e.g. an improved and
+more sensitive diagnostic method or a new screening strategy at
+hospitals, a rolling window with width <span class="math inline">\(k\)</span> is used to estimate the time-varying
+model parameters. Also, it is assumed that the count is proportional to
+the population size <span class="math inline">\(n\)</span>. Hence in
+terms of the canonical link the model for the fixed effects is</p>
+<p><span class="math display">\[\begin{equation}
+  \log(\lambda_{it}) = x_{it}\beta + \log(n_{it}), \quad i=1,\dots,m,
+\quad t=1,\dots,T
+\end{equation}\]</span></p>
+<p>Here <span class="math inline">\(x_{it}\)</span> and <span class="math inline">\(\beta\)</span> are <span class="math inline">\(p\)</span>-dimensional vectors of covariates and
+fixed effects parameters respectively, where <span class="math inline">\(p\)</span> denotes the number of covariates or
+fixed effects parameters, <span class="math inline">\(m\)</span> denotes
+the number of groups, and <span class="math inline">\(T\)</span> denotes
+the length of the period.</p>
+<p>In the second step of the algorithm, as a new observation becomes
+available, the algorithm infers the one-step ahead random effect <span class="math inline">\(u_{it_1}\)</span> for each group using the
+obtained model estimates <span class="math inline">\(\theta_{t_0}\)</span>. Here, <span class="math inline">\(t_0\)</span> represents the current time point,
+and <span class="math inline">\(t_1\)</span> represent the one-step
+ahead time points. The threshold <span class="math inline">\(U_{t_0}\)</span> for detecting outbreak signals is
+defined as a quantile of the distribution of random effects in the
+second stage model. This threshold is calculated based on a Gamma
+distribution using the plug-in estimate <span class="math inline">\(\hat{\phi}_{t_0}\)</span>.</p>
+<p>In the final step, the inferred random effect <span class="math inline">\(\hat{u}_{it_1}\)</span> is compared to the upper
+bound <span class="math inline">\(U_{t_0}\)</span>, and an alarm is
+raised if <span class="math inline">\(\hat{u}_{it_1}&gt;U_{t_0}\)</span>. If an outbreak
+is detected, the related observation <span class="math inline">\(y_{it_1}\)</span> is omitted from the parameter
+estimation in the future. Thus, resulting in a smaller sample size for
+the rolling window until that specific observation is discarded.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

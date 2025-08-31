@@ -1,0 +1,13 @@
+08c364fc84efc8db7c670e9c468c9c27 *DESCRIPTION
+01f1e44bd4eb599b096d3a11664199e8 *NAMESPACE
+5dda7fbafe42396c78faf97d0142100d *R/AEP.R
+e6805d5984b74958d2368cdde0bf888b *R/welcome.R
+caa66a47bb4e944228fb12eb816e79a4 *data/plasma.txt.gz
+6d405ef820c3a4096d20162c3953d8e0 *man/daep.Rd
+43a0be416edc7be28d6550f150d946e9 *man/fitaep.Rd
+6340997c4a31b68962d4ce20dc4a3e32 *man/paep.Rd
+ea0609525ed452c1845d6881ea3dd48b *man/plasma.Rd
+9dd64747b8c633de7b9ffc2f22751a06 *man/qaep.Rd
+21ab6f5772d8e96db7735bdcc6dd1867 *man/raep.Rd
+6471e61d514c36589f441ac39fecff54 *man/regaep.Rd
+bc7e0f21fbb9752ef209a1a8a50bfbac *man/welcome.Rd

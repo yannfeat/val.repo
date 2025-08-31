@@ -1,0 +1,31 @@
+feature/added calculated metrics management functions
+  * get_cm_functions
+  * cm_function
+  * cm_formula
+  * cm_build
+  * cm_delete
+  * cm_update
+  * cm_val
+  * cm_copy
+
+feature/added project management functions
+  * aw_get_project_config
+  * aw_get_projects
+  * proj_build
+  * proj_update
+
+feature/aw_call_api
+  * now handles `Content-type` in the head of the api call
+
+feature/added support for internal components
+  * added `internal` argument to seg_build and cm_build so that the component
+  does not show in the UI but the ID is able to be referenced in API calls
+
+bug/aw_get_calculatedmetrics
+  * function now recognizes filters due to an `includeType` argument bug fix
+
+bug/aw_get_reportsuites
+  * fixed an issue where all requests would return an error
+
+bug/seg_build
+  * fixed issue #142 related to building sequential segments

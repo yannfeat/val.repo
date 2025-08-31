@@ -1,0 +1,93 @@
+---
+title: "Ad-Plot and Ud-Plot"
+author: Uditha Amarananda Wijesuriya
+bibliography: MyBib.bib 
+link-citations: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Ad-Plot and Ud-Plot}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+Two statistical plots Ad- and Ud-plots derived from the empirical cumulative average deviation function (ecadf), $U_n(t)$, which is introduced by @Uditha will be illustrated with examples. Suppose that $X_1,X_2,...,X_n$ is a random sample from a unimodal distribution. Then for a real number $t$, the ecadf computes the sum of the deviations of the data that are less than or equal to $t$, divided by the sample size $n$. The Ad-plot detects critical properties of the distribution such as symmetry, skewness, and outliers of the data. The Ud-plot, a slight modification of the Ad-plot, is prominent on assessing normality. To create these visualizations, let _adplots_ package be installed, including _stats_ and _ggplot2_ in R. 
+
+```{r setup}
+library(adplots)
+```
+
+### Ad-Plot
+
+The first exhibit, Ad-plot consists of $n$ ordered pairs of the form $(x_i,U_n(x_i))$ for $i=1,2,...,n$. 
+
+#### Example 1
+```{r, eval=TRUE, fig.width=7.18, fig.height=4.5}
+set.seed(2025)
+X<-matrix(rnorm(100, mean = 2 , sd = 5))
+adplot(X, title = "Ad-plot", xlab = "x", lcol = "black", rcol = "grey60")
+```
+
+Figure 1. Both left and right points from the sample average in Ad-plot are evenly distributed and hence, it indicates the symmetric property of the data distribution. Further, the leftmost data point appears to be an outlier.
+
+
+#### Example 2
+```{r, eval=TRUE, fig.width=7.18, fig.height=4.5}
+set.seed(2025)
+X<-matrix(rbeta(100, shape1 = 10, shape2 = 2))
+adplot(X, title = "Ad-plot", xlab = "x", lcol = "black", rcol = "grey60")
+```
+
+Figure 2. The points below the average have a wide spread in Ad-plot. Thus, the data distribution is apparently left-skewed.
+
+#### Example 3
+```{r, eval=TRUE, fig.width=7.18, fig.height=4.5}
+set.seed(2025)
+X<-matrix(rf(100, df1 = 10, df2 = 5))
+adplot(X, title = "Ad-plot", xlab = "x", lcol = "black", rcol = "grey60")
+```
+
+Figure 3. The points situated above the average have a wide spread in Ad-plot in contrast to Figure 2. Thus, the data distribution is apparently right-skewed.
+
+
+### Ud-Plot
+
+Suppose that the random sample is from a normal distribution with mean $\mu$ and variance $\sigma^2$. Then the second illustration, Ud-plot consists of $n$ ordered pairs of the form $(x_i,U_n(x_i)/[(1-n^{-1})s^{2}])$ for $i=1,2,...,n$, where $s^2$ is the sample variance. 
+
+#### Example 4
+```{r, eval=TRUE, fig.width=7.18, fig.height=4.5}
+set.seed(2030)
+X<-matrix(rnorm(30, mean = 2, sd = 5))
+udplot(X, npdf = FALSE, lcol = "black", rcol = "grey60", pdfcol = "red")
+```
+
+Figure 4. The points in Ud-plot follow a bell-shaped curve evenly distributed about the sample average. Thus, it captures the symmetric property of the data distribution and confirms normality.
+
+#### Example 5
+```{r, eval=TRUE, fig.width=7.18, fig.height=4.5}
+set.seed(2030)
+X<-matrix(rnorm(30, mean = 2, sd = 5))
+udplot(X, npdf = TRUE, lcol = "black", rcol = "grey60", pdfcol = "red")
+```
+
+Figure 5. The points in the Ud-plot closely follow the estimated normal density curve, indicating that the data are from normal distribution with mean $\mu$ and variance $\sigma^2$ estimated by sample average $\bar{X}$ and variance $s^2$, respectively. Further, the $d$-value confirms the degree of proximity of Ud-plot to the estimated normal density curve.
+
+#### Example 6
+```{r, eval=TRUE, fig.width=7.18, fig.height=4.5}
+set.seed(2030)
+X<-matrix(rnorm(2025, mean = 2, sd = 5))
+udplot(X, npdf = TRUE, lcol = "black", rcol = "grey60", pdfcol = "red")
+```
+
+Figure 6. Ud-plot is indistinguishable from the estimated normal density curve as sample size increases with a higher degree of proximity.
+
+
+## Reference

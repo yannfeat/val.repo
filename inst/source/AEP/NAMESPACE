@@ -1,0 +1,9 @@
+exportPattern("^[[:alpha:]]+")
+#importFrom(ars,"ars")
+#import(pracma,"pracma")
+importFrom(utils, packageVersion)
+importFrom("stats", "na.omit", "cor", "var", "median", "quantile", "optim", "uniroot", "runif",
+           "rnorm", "dnorm", "pnorm", "qnorm", "dgamma", "qgamma", "pgamma", "rgamma",
+           "ks.test", "rmultinom", "rbinom", "lm", "pf", "integrate", "optimize", "kmeans", "dmultinom", "nls")
+#importFrom("graphics", "lines", "plot", "text")
+

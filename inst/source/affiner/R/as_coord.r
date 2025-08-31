@@ -1,0 +1,428 @@
+#' Cast to coord1d object
+#'
+#' `as_coord1d()` casts to a [Coord1D] class object
+#'
+#' @param x An object that can be cast to a [Coord1D] class object
+#'          such as a numeric vector of x-coordinates.
+#' @param ... Further arguments passed to or from other methods
+#' @return A [Coord1D] class object
+#' @examples
+#' as_coord1d(x = rnorm(10))
+#' @export
+as_coord1d <- function(x, ...) {
+    UseMethod("as_coord1d")
+}
+
+#' Cast to coord2d object
+#'
+#' `as_coord2d()` casts to a [Coord2D] class object
+#'
+#' @param x An object that can be cast to a [Coord2D] class object
+#'          such as a matrix or data frame of coordinates.
+#' @param ... Further arguments passed to or from other methods
+#' @return A [Coord2D] class object
+#' @examples
+#' df <- data.frame(x = sample.int(10, 3),
+#'                  y = sample.int(10, 3))
+#' as_coord2d(df)
+#' as_coord2d(complex(real = 3, imaginary = 2))
+#' as_coord2d(angle(90, "degrees"), radius = 2)
+#' as_coord2d(as_coord3d(1, 2, 2), alpha = degrees(90), scale = 0.5)
+#' @export
+as_coord2d <- function(x, ...) {
+    UseMethod("as_coord2d")
+}
+
+#' Cast to coord3d object
+#'
+#' `as_coord3d()` casts to a [Coord3D] class object
+#'
+#' @param x An object that can be cast to a [Coord3D] class object
+#'          such as a matrix or data frame of coordinates.
+#' @param ... Further arguments passed to or from other methods
+#' @return A [Coord3D] class object
+#' @examples
+#' as_coord3d(x = 1, y = 2, z = 3)
+#' df <- data.frame(x = sample.int(10, 3),
+#'                  y = sample.int(10, 3),
+#'                  z = sample.int(10, 3))
+#' as_coord3d(df)
+#' # Cylindrical coordinates
+#' as_coord3d(degrees(90), z = 1, radius = 1)
+#' # Spherical coordinates
+#' as_coord3d(degrees(90), inclination = degrees(90), radius = 1)
+#' @export
+as_coord3d <- function(x, ...) {
+    UseMethod("as_coord3d")
+}
+
+#' @rdname as_coord2d
+#' @param radius A numeric vector of radial distances.
+#' @export
+as_coord2d.angle <- function(x, radius = 1, ...) {
+    n <- max(length(x), length(radius))
+    x <- rep_len(x, n)
+    radius <- rep_len(radius, n)
+    as_coord2d(radius * cos(x), radius * sin(x))
+}
+
+#' @rdname as_coord3d
+#' @param radius A numeric vector.  If `inclination` is not `NULL` represents spherical distances
+#'               of spherical coordinates and if `z` is not `NULL` represents
+#'               radial distances of cylindrical coordinates.
+#' @param inclination Spherical coordinates inclination angle aka polar angle.
+#'                    `x` represents the azimuth aka azimuthal angle.
+#' @export
+as_coord3d.angle <- function(x, radius = 1, inclination = NULL, z = NULL, ...) {
+    stopifnot(!(is.null(inclination) && is.null(z)),
+              is.null(inclination) || is.null(z))
+    if (!is.null(inclination) && !is_angle(inclination))
+        inclination <- as_angle(inclination, ...)
+    if (!is.null(z) && !is.numeric(z))
+        z <- as.numeric(z)
+    if (is.null(inclination)) { # cylindrical coordinates
+        as_coord3d(as_coord2d(x, radius = radius), z = z)
+    } else { # spherical coordinates
+        as_coord3d(x = radius * sin(inclination) * cos(x),
+                   y = radius * sin(inclination) * sin(x),
+                   z = radius * cos(inclination))
+    }
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.character <- function(x, ...) {
+    xc <- vapply(x, as_coord1d_character_x, double(1), USE.NAMES = FALSE)
+    p <- as_coord1d(xc)
+    if (any(is.na(p) & !is.na(x)))
+        warning("NAs introduced by coercion")
+    p
+}
+
+as_coord1d_character_x <- function(x) {
+    switch(x,
+           "origin" = 0,
+           NA_real_)
+}
+
+#' @rdname as_coord2d
+#' @export
+as_coord2d.character <- function(x, ...) {
+    xc <- vapply(x, as_coord2d_character_x, double(1), USE.NAMES = FALSE)
+    yc <- vapply(x, as_coord2d_character_y, double(1), USE.NAMES = FALSE)
+    p <- as_coord2d(xc, yc)
+    if (any(is.na(p) & !is.na(x)))
+        warning("NAs introduced by coercion")
+    p
+}
+
+as_coord2d_character_x <- function(x) {
+    switch(x,
+           "origin" = 0,
+           "x-axis" = 1,
+           "y-axis" = 0,
+           NA_real_)
+}
+
+as_coord2d_character_y <- function(x) {
+    switch(x,
+           "origin" = 0,
+           "x-axis" = 0,
+           "y-axis" = 1,
+           NA_real_)
+}
+
+#' @rdname as_coord3d
+#' @export
+as_coord3d.character <- function(x, ...) {
+    xc <- vapply(x, as_coord3d_character_x, double(1), USE.NAMES = FALSE)
+    yc <- vapply(x, as_coord3d_character_y, double(1), USE.NAMES = FALSE)
+    zc <- vapply(x, as_coord3d_character_z, double(1), USE.NAMES = FALSE)
+    p <- as_coord3d(xc, yc, zc)
+    if (any(is.na(p) & !is.na(x)))
+        warning("NAs introduced by coercion")
+    p
+}
+
+as_coord3d_character_x <- function(x) {
+    switch(x,
+           "origin" = 0,
+           "x-axis" = 1,
+           "y-axis" = 0,
+           "z-axis" = 0,
+           NA_real_)
+}
+
+as_coord3d_character_y <- function(x) {
+    switch(x,
+           "origin" = 0,
+           "x-axis" = 0,
+           "y-axis" = 1,
+           "z-axis" = 0,
+           NA_real_)
+}
+
+as_coord3d_character_z <- function(x) {
+    switch(x,
+           "origin" = 0,
+           "x-axis" = 0,
+           "y-axis" = 0,
+           "z-axis" = 1,
+           NA_real_)
+}
+
+#' @rdname as_coord2d
+#' @export
+as_coord2d.complex <- function(x, ...) {
+    as_coord2d(Re(x), Im(x))
+}
+
+# #' `as_coord1d.Coord2D()` computes the 1D projection of a [Coord2D] object
+# #' onto a line.  By default will do an orthographic projection onto the x-axis
+# #' but can do oblique projections onto arbitrary lines.
+
+#' @rdname as_coord1d
+#' @inheritParams project2d
+#' @export
+as_coord1d.Coord2D <- function(x,
+                               permutation = c("xy", "yx"),
+                               ...,
+                               line = as_line2d("x-axis"),
+                               scale = 0) {
+    if (!is_line2d(line))
+        line <- as_line2d(line, ...,
+              scale == 0 || line$a == 0)
+    stopifnot(length(line) == 1)
+    permutation <- match.arg(permutation)
+    denom <- line$a^2 + line$b^2
+    closest <- as_coord2d(-line$a * line$c / denom, -line$b * line$c / denom)
+    theta <- as_angle(line)
+    xs <- x$
+        clone()$
+        permute(permutation)$
+        translate(-closest)$
+        rotate(-theta)$
+        shear(xy_shear = scale)$
+        x
+    as_coord1d.numeric(x = xs)
+}
+
+#' @rdname as_coord2d
+#' @param permutation Either "xyz" (no permutation), "xzy" (permute y and z axes),
+#'                    "yxz" (permute x and y axes), "yzx" (x becomes z, y becomes x, z becomes y),
+#'                    "zxy" (x becomes y, y becomes z, z becomes x), "zyx" (permute x and z axes).
+#'                    This permutation is applied before the (oblique) projection.
+#' @param plane A [Plane3D] class object representing the plane
+#'         you wish to project to or an object coercible to one using `as_plane3d(plane, ...)`
+#'         such as "xy-plane", "xz-plane", or "yz-plane".
+#' @param scale Oblique projection foreshortening scale factor.
+#'   A (degenerate) `0` value indicates an orthographic projection.
+#'   A value of `0.5` is used by a \dQuote{cabinet projection}
+#'   while a value of `1.0` is used by a \dQuote{cavalier projection}.
+#' @param alpha Oblique projection angle (the angle the third axis is projected going off at).
+#'              An [angle()] object or one coercible to one with `as_angle(alpha, ...)`.
+#'              Popular angles are 45 degrees, 60 degrees, and `arctangent(2)` degrees.
+#' @export
+as_coord2d.Coord3D <- function(x,
+                               permutation = c("xyz", "xzy", "yxz", "yzx", "zyx", "zxy"),
+                               ...,
+                               plane = as_plane3d("xy-plane"),
+                               scale = 0,
+                               alpha = angle(45, "degrees")) {
+    if (!is_plane3d(plane))
+        plane <- as_plane3d(plane, ...)
+    if (!is_angle(alpha)) {
+        alpha <- as_angle(alpha, ...)
+    }
+    stopifnot(length(plane) == 1,
+              scale == 0 || (plane$a == 0 && plane$b == 0),
+              length(alpha) == 1)
+    stopifnot(length(alpha) == 1)
+    permutation <- match.arg(permutation)
+
+    denom <- plane$a^2 + plane$b^2 + plane$c^2
+    closest <- as_coord3d(-plane$a * plane$d / denom, -plane$b * plane$d / denom, -plane$c * plane$d / denom)
+    azimuth <- as_angle(plane, type = "azimuth")
+    inclination <- as_angle(plane, type = "inclination")
+    z_axis <- Coord3D$new(matrix(c(0, 0, 1, 1), nrow = 1,
+                                 dimnames = list(NULL, c("x", "y", "z", "w"))))
+    y_axis <- Coord3D$new(matrix(c(0, 1, 0, 1), nrow = 1,
+                                 dimnames = list(NULL, c("x", "y", "z", "w"))))
+    p <- x$
+        clone()$
+        permute(permutation)$
+        translate(-closest)$
+        rotate(z_axis, -azimuth)$
+        rotate(y_axis, -inclination)$
+        shear(xz_shear = scale * cos(alpha),
+              yz_shear = scale * sin(alpha))
+        as_coord2d(p$x, p$y)
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.data.frame <- function(x, ...) {
+    stopifnot(hasName(x, "x"))
+    as_coord1d(x[, "x"])
+}
+
+#' @rdname as_coord2d
+#' @export
+as_coord2d.data.frame <- function(x, ...) {
+    stopifnot(all(hasName(x, c("x", "y"))))
+    Coord2D$new(as_xyw_matrix(x[, c("x", "y")], ...))
+}
+
+#' @rdname as_coord3d
+#' @export
+as_coord3d.data.frame <- function(x, ..., z = NULL) {
+    stopifnot(all(hasName(x, c("x", "y"))),
+              is.null(z) || !hasName(x, "z"))
+    if (!is.null(z))
+        x$z <- z
+    if (hasName(x, "z"))
+        nms <- c("x", "y", "z")
+    else
+        nms <- c("x", "y")
+    Coord3D$new(as_xyzw_matrix(x[, nms], ...))
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.list <- function(x, ...) {
+    as_coord1d.data.frame(as.data.frame(x, ...))
+}
+
+#' @rdname as_coord2d
+#' @export
+as_coord2d.list <- function(x, ...) {
+    as_coord2d.data.frame(as.data.frame(x, ...))
+}
+
+#' @rdname as_coord3d
+#' @export
+as_coord3d.list <- function(x, ..., z = NULL) {
+    if (is.null(z))
+        as_coord3d.data.frame(as.data.frame(x, ...))
+    else
+        as_coord3d.data.frame(as.data.frame(x, ...), z = z)
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.matrix <- function(x, ...) {
+    Coord1D$new(as_xw_matrix(x))
+}
+
+#' @rdname as_coord2d
+#' @export
+as_coord2d.matrix <- function(x, ...) {
+    Coord2D$new(as_xyw_matrix(x))
+}
+
+#' @rdname as_coord3d
+#' @export
+as_coord3d.matrix <- function(x, ...) {
+    Coord3D$new(as_xyzw_matrix(x))
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.numeric <- function(x, ...) {
+    xw <- cbind(x, rep_len(1, length(x)))
+    Coord1D$new(as_xw_matrix(xw))
+}
+
+as_xw_matrix <- function(x) {
+    if (!is.matrix(x))
+        x <- as.matrix(x)
+    stopifnot(ncol(x) == 1L || ncol(x) == 2L,
+              is.numeric(x)
+    )
+    if (ncol(x) < 2L)
+        x <- cbind(x, 1)
+    else
+        stopifnot(all(x[, 2L] == 1))
+    colnames(x) <- c("x", "w")
+    x
+}
+
+#' @rdname as_coord2d
+#' @param y Numeric vector of y-coordinates to be used.
+#' @export
+as_coord2d.numeric <- function(x, y = rep_len(0, length(x)), ...) {
+    xyw <- cbind(x, y, rep_len(1, max(length(x), length(y))))
+    Coord2D$new(as_xyw_matrix(xyw))
+}
+
+as_xyw_matrix <- function(x) {
+    if (!is.matrix(x))
+        x <- as.matrix(x)
+    stopifnot(ncol(x) == 2L || ncol(x) == 3L,
+              is.numeric(x)
+    )
+    if (ncol(x) < 3L)
+        x <- cbind(x, 1)
+    else
+        stopifnot(all(x[, 3L] == 1))
+    colnames(x) <- c("x", "y", "w")
+    x
+}
+
+#' @rdname as_coord3d
+#' @param y Numeric vector of y-coordinates to be used
+#'          if `hasName(x, "z")` is `FALSE`.
+#' @export
+as_coord3d.numeric <- function(x, y = rep_len(0, length(x)), z = rep_len(0, length(x)), ...) {
+    xyzw <- cbind(x, y, z, rep_len(1, max(length(x), length(y), length(z))))
+    Coord3D$new(as_xyzw_matrix(xyzw))
+}
+
+as_xyzw_matrix <- function(x) {
+    if (!is.matrix(x))
+        x <- as.matrix(x)
+    stopifnot(ncol(x) >= 2L,
+              ncol(x) <= 4L,
+              is.numeric(x)
+    )
+    if (ncol(x) == 2L) {
+        x <- cbind(x, 0, 1)
+    } else if (ncol(x) == 3L) {
+        x <- cbind(x, 1)
+    } else {
+        stopifnot(all(x[, 4L] == 1))
+    }
+    colnames(x) <- c("x", "y", "z", "w")
+    x
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.Coord1D <- function(x, ...) {
+    Coord1D$new(x$xw)
+}
+
+#' @rdname as_coord2d
+#' @export
+as_coord2d.Coord2D <- function(x, ...) {
+    Coord2D$new(x$xyw)
+}
+
+#' @rdname as_coord3d
+#' @export
+as_coord3d.Coord3D <- function(x, ...) {
+    Coord3D$new(x$xyzw)
+}
+
+#' @rdname as_coord3d
+#' @param z Numeric vector of z-coordinates to be used
+#' @export
+as_coord3d.Coord2D <- function(x, z = rep_len(0, length(x)), ...) {
+    as_coord3d(x = x$x, y = x$y, z = z)
+}
+
+#' @rdname as_coord1d
+#' @export
+as_coord1d.Point1D <- function(x, ...) {
+    as_coord1d(-x$b / x$a)
+}

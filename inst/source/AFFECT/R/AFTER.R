@@ -1,0 +1,18 @@
+#' @title Accelerated Functional Failure Time Model with Error-Contaminated Survival Times
+#'
+#' @description The package AFFECT, referred to Accelerated Functional Failure time model with Error-Contaminated survival Times,
+#'aims to recover the functional covariates under accelerated functional failure time models, where the data are
+#'  subject to error-prone response and misclassified censoring status. This package primarily
+#'  contains three functions. \code{data_gen} is applied to generate artificial data based on accelerated functional
+#'  failure time models, including potential covariates, error-prone response and misclassified censoring status.
+#'  \code{ME_correction} is used to do correction for error-prone response variable and misclassified censoring
+#'  status, and \code{Boosting} is used to recover the functional covariates under accelerated functional failure time models.
+#'
+#' @details This package aims to estimate functional covariates under an AFT models with error-prone response and
+#' and misclassified censoring status. The strategy is to derive an unbiased estimating function by the Buckley-James
+#' estimator with measurement error in response and misclassification in censoring status being corrected.
+#' Finally. the functional covariates as well as informative covariates under an AFT models can be derived by
+#' the boosting procedure.
+#' @return No return value, called for side effects.
+#' @export
+AFFECT <- function(){}

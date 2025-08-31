@@ -1,0 +1,8 @@
+S3method(confint, QRS)
+S3method(plot, QRS)
+S3method(summary, QRS)
+exportPattern(".")
+export(rmultreg, ices, QRS, summary.QRS, plot.QRS, confint.QRS)
+importFrom(stats, coef, cov, lm, pnorm, runif, rbinom,  rnorm, rt, qt, quantile,
+   "lowess", "model.frame", "model.matrix", "model.response", "qqline", "qqnorm", setNames)
+importFrom("graphics", "abline", "lines")

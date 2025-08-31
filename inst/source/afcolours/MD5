@@ -1,0 +1,10 @@
+b189d99d7fae494fe23bf81dcdd7f503 *DESCRIPTION
+4df2ee52bea2373a19ea6207793dba54 *LICENSE
+97b34c2140ac55e364c18d2803d58b1c *NAMESPACE
+301f81f38e1eb9796f53d02af0c05c64 *NEWS.md
+579859a3ee057f5710b5427fd331d6db *R/af_colours.R
+a392257f1b2c1d98096aa41680026582 *R/sysdata.rda
+f6be5bfacc64f1422b264053d8080024 *README.md
+81da6c9f4585857146c820cb0f38bb55 *man/af_colours.Rd
+50843c5a7b8b7d9d30fa5d0c90cf2b9f *tests/testthat.R
+1cd5f7b73fd342754686aa4af8fe18a6 *tests/testthat/test-af_colours.R
