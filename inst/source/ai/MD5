@@ -1,0 +1,16 @@
+a30205aa1de50f308bcca3ee10c68473 *DESCRIPTION
+597fb2c7dc8c0c6ff7e021c223aa386d *NAMESPACE
+28f5f83b1788872ef0ffa52653906e51 *R/config.R
+3eb78980760266e6c43af3409f8e3183 *R/model.R
+129deac429dcd0b4de001c36abdaa495 *R/prodata.R
+0009a3bdc7d7437cb81c2d503fd47f0b *R/stats.R
+1e478923267158e00fb038442b0eb513 *man/config.Rd
+0b6167add85e42c346fc8ed15bd52777 *man/model.Rd
+28e2b5c2f939aaa1b5c1ed400fe86ba7 *man/prodata.Rd
+e1dddf554f0cd244f74d205a90002e4c *man/stats.Rd
+f5ae540e8cbcb8adc25e9646c1abf61d *man/stats_compare_models.Rd
+a81b224ab34775d253081cb813af3a5c *man/stats_model.Rd
+c5996aca28bb97301dc03a1f3d12d283 *tests/testthat.R
+89eb8cc39efebd34dbc8b9be385c9fa3 *tests/testthat/test-config.R
+225e3812b897786befc574f805c96dc2 *tests/testthat/test-model.R
+11609efb0082e9d6eeeeb93304a11167 *tests/testthat/test-prodata.R

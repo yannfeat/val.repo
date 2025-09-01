@@ -1,0 +1,24 @@
+{
+   "id":8077,
+   "location":{
+      "latitude":50,
+      "longitude":19
+   },
+   "address":{
+      "country":"Poland",
+      "city":"Kraków",
+      "street":"Mikołajska",
+      "number":"4",
+      "displayAddress1":"Kraków",
+      "displayAddress2":"Mikołajska"
+   },
+   "elevation":2137,
+   "airly":true,
+   "sponsor":{
+      "id":489,
+      "name":"Chatham Financial",
+      "description":"Airly Sensor's sponsor",
+      "logo":"https://cdn.airly.eu/some.jpg",
+      "link":"https://crossweb.pl"
+   }
+}

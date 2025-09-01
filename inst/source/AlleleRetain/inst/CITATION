@@ -1,0 +1,13 @@
+citHeader("To cite package 'AlleleRetain' in publications use:")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("R package version", meta$Version)
+citEntry(entry="Manual",
+title = "AlleleRetain: a stochastic model for simulating allele retention, demography, and inbreeding accumulation in bottlenecked populations",
+author = personList(as.person("Emily L. Weiser")),
+year = year,
+note = vers,
+textVersion =
+paste("Weiser, E.L. (",
+year,
+"). A stochastic model for simulating allele retention, demography, and inbreeding accumulation in bottlenecked populations.",
+vers, ".", sep=""))

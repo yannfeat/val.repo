@@ -1,0 +1,203 @@
+---
+title: "Introduction to the AHM Package"
+author: | 
+  | Sumin Shen, Lulu Kang, and Xinwei Deng
+fontsize: 11 pt
+fig_caption: yes
+fig_height: 6
+fig_width: 6
+header-includes:
+    - \usepackage{bm}
+    - \usepackage{pdfpages}
+    -  \usepackage{amsmath,amssymb,latexsym,graphics,subfigure}
+    - \usepackage{empheq}
+    - \usepackage{booktabs}
+    - \usepackage{longtable}
+    - \usepackage{array}
+    - \usepackage{adjustbox}
+    - \usepackage{caption}
+    - \usepackage{algorithm}
+    - \usepackage{algcompatible}
+    - \usepackage{mathtools}
+    - \usepackage{multirow,ulem,bm }
+    - \usepackage[dvipdf]{epsfig}
+    - \usepackage{multirow}
+    - \usepackage[table]{xcolor}
+    - \usepackage{wrapfig}
+    - \usepackage{float}
+    - \usepackage{colortbl}
+    - \usepackage{pdflscape}
+    - \usepackage{tabu}
+    - \usepackage{threeparttable}
+    - \usepackage{graphicx}
+    - \usepackage{float}
+output: rmarkdown::html_vignette
+       
+vignette: >
+  %\VignetteIndexEntry{Introduction to the AHM package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+---
+
+# Abstract
+
+We present a short tutorial and introduction to use the package AHM, which is implemented for the additive heredity model discussed in the paper Additive Heredity Model for the Analysis of Mixture-of-Mixtures Experiments in 2019. 
+
+**Key Words**: Additive Heredity Model, Mixture-of-Mixtures Experiments; Nonnegative Garrotte Method.
+
+---
+
+# 1. Introduction
+
+The purpose of this package is to provide a solution for the mixture-of-mixtures (MoM) experiments. In the mixture-of-mixtures experiments, the mixture components are
+called the major components and can be made up of sub-components. The
+sub-components within the major components are called the minor
+components. Assume that there are \(q\) major
+components, and let \(c_k\) be the proportion of the \(k\)th major
+component. Then, \[
+\begin{aligned}
+\sum_{k =1}^{q} c_{k} = 1,  0 \le c_{k} \le 1, \quad k  =1, \ldots, q.
+\end{aligned}
+\]
+
+Moreover, each major component is composed of \(m_k\) minor components,
+whose proportions with respect to \(c_{k}\) are \(x_{kj}\), such that,
+\[
+\begin{aligned}
+\sum_{l =1}^{m_{k}} x_{kl} = 1,  0 \le x_{kl} \le 1, \quad l = 1, \ldots, m_{k}.
+\end{aligned}
+\]
+The idea is to address this problem by the additive heredity model (AHM). More details about this method is available in the paper Additive Heredity Model for the Analysis of Mixture-of-Mixtures Experiments. 
+
+In the package there are two main functions, ahm and cv.ahm. The function ahm is to fit the additive heredity model given the design points. The function cv.ahm is to find an optimized hyper parameter $h$ used in the AHM via cross validation, and gives out the model fitting results based on the optimal hyper parameter $h$. 
+
+This vignette is intended to get new users quickly on using the AHM package to fit the additive heredity model for the mixture-of-mixtures experiments. Section 2 gives short code snippets on how to use the package for cases in the paper.
+
+# 2. AHM on Real-Data Analysis
+
+```{r, echo = F, eval = TRUE, message = F, error = F}
+library(AHM)
+library(mixexp)
+if (0) {
+  library(devtools); load_all()
+} 
+```
+
+### Photoresist-Coating Experiment
+
+The objective of photoresist-coating experiment is to determine the effect of proportions of base resin in the formulation on the photoresist material's characteristic of interest (Cornell and Ramsey 1998). The major component is defined as the base resin type, and the minor component is defined as the minor resins possessing different dissolution rates (slow and fast).  There are two major components: $c_{1}$ and $c_{2}$. which are composed of two minor components: $x_{11}$, $x_{12}$, and $x_{21}$, $x_{22}$, respectively. The range of values of both major and minor components is [0, 1]. In the experiment, the two major component proportions are ($c_{1}$, $c_{2}$)=(0.75, 0.25), (0.5, 0.5), and (0.25, 0.75). The two minor component proportions are ($x_{i1}$, $x_{i2}$) = (1, 0), (0.5, 0.5), and (0, 1), where $i=1, 2$. There are in total 42 measured response at 27 design points. Measurements were replicated twice at certain design points if their minor components's multiplication, $x_{11}x_{12}$ and $x_{21}x_{22}$, are neither equal to zero. The real data are included in the R package.
+
+```{r, echo = TRUE, eval = T}
+data("coating")
+dat = coating
+h_tmp = 1.1
+
+x = dat[,c("c1","c2","x11","x12","x21","x22")]
+y = dat[,ncol(dat)]
+ptm <- proc.time()
+out = ahm (y, x, num_major = 2, dist_minor = c(2,2),
+                   type = "weak", alpha=0, lambda_seq=seq(0,5,0.01), nfold = NULL,
+               mapping_type = c("power"), powerh = h_tmp,
+                   rep_gcv=100)    
+proc.time() - ptm 
+summary(out)
+```
+
+Use the function cv.ahm to find the optimal value of the hyper parameter $h$.
+
+```{r, echo = TRUE, eval = FALSE}
+powerh_path = round(seq(0.001,2,length.out =15),3)
+
+res = cv.ahm (y, x, powerh_path=powerh_path, metric = "mse", num_major=2, dist_minor=c(2,2), type = "weak", alpha=0, lambda_seq=seq(0,5,0.01), nfolds=NULL,     mapping_type = c("power"), rep_gcv=100)
+
+object = res$metric_mse
+```
+ 
+                
+### Pringles Experiment
+
+In this section, we analyze the Pringles experiment (Kang
+et al. 2011) of which the goal is to develop a new kind of Pringles
+potato crisp such that the percentage of fat and the hardness in the
+potato crisps are optimized. There are three major
+components: \(c_{1}\), \(c_{2}\), and \(c_{3}\), among which the major components
+\(c_{1}\) and \(c_{2}\) are composed of two minor components:
+\(x_{11}\), \(x_{12}\), and \(x_{21}\), and \(x_{22}\), respectively.
+The major component \(c_{3}\) is a pure material. The constraints on the
+components are given by \[
+\begin{aligned}
+c_{1}+c_{2}+c_{3}=1, ~~& 0.601 \le c_{1} \le 0.643, \nonumber \\
+0.34 \le  c_{2} \le 0.38, ~~& 0.017 \le c_{3} \le 0.019, \nonumber \\
+x_{11}+x_{12} = 1, ~~& x_{21} + x_{22} =1,  \nonumber \\
+0.835 \le x_{11} \le 0.905, ~~& 0.095 \le x_{12} \le 0.165, \nonumber \\
+0.9 \le x_{21} \le 0.98, ~~& 0.02 \le x_{22} \le 0.1.  \nonumber
+\end{aligned}
+\]
+The design points are obtained from a major-minor crossed design. The responses are "Hardnes" and "\%Fat".
+The real data are included in the R package. 
+
+
+- The response "%Fat"
+
+```{r, echo = TRUE, eval = FALSE}
+data("pringles_fat")
+data_fat = pringles_fat
+h_tmp = 1.3
+
+x = data_fat[,c("c1","c2","c3","x11","x12","x21","x22")]
+y = data_fat[,1]
+ptm <- proc.time()
+out = ahm (y, x, num_major = 3, dist_minor = c(2,2,1),
+                   type = "weak", alpha=0, lambda_seq=seq(0,5,0.01), nfold = NULL,
+               mapping_type = c("power"), powerh = h_tmp,
+                   rep_gcv=100)    
+proc.time() - ptm 
+```
+
+The common functions such as summary, coef, and predict are available for the object.
+```{r, echo = TRUE, eval = FALSE}
+summary(out)
+
+coefficients = coef(out)
+fitted = predict(out, x)
+
+```
+
+- The response "Hardness"
+
+```{r, echo = TRUE, eval = FALSE}
+data("pringles_hardness")
+dat = pringles_hardness
+h_tmp = 1.3
+
+x = dat[,c("c1","c2","c3","x11","x12","x21","x22")]
+y = dat[,1]
+ptm <- proc.time()
+out = ahm (y, x, num_major = 3, dist_minor = c(2,2,1),
+                   type = "weak", alpha=0, lambda_seq=seq(0,5,0.01), nfold = NULL,
+               mapping_type = c("power"), powerh = h_tmp,
+                   rep_gcv=100)    
+proc.time() - ptm 
+summary(out)
+```
+
+## References
+
+<!-- \begin{description} -->
+
+\item Cornell, J.A. and Ramsey, P.J. (1998). A Generalized mixture model for
+categorized-components problems with an application to a
+photoresist-coating experiment. \emph{Technometrics}, 40(1), 48-61.
+
+\item Kang, L., Joseph, V.R. and Brenneman, W.A. (2011). Design and modeling
+strategies for mixture-of-mixtures experiments. \emph{Technometrics},
+53(2), 125--36.
+
+\item Lawson, J. and Willden, C. (2016). Mixture experiments in R using mixexp. \emph{Journal of Statistical Software}, 72(c02).
+
+\item Shen, S., Kang, L., and Deng, X. (2019). Additive Heredity Model for the Analysis of Mixture-of-Mixtures Experiments, \emph{Technometrics}, in press.
+
+<!-- \end{description} -->
+

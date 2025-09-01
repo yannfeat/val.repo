@@ -1,0 +1,9 @@
+fc52f12beabb3c24764174f26f7b1837 *DESCRIPTION
+4e56d97c24fc7817a307a555e9fe7ece *NAMESPACE
+a91e143344cd0016a5a7b30c7ca15783 *R/data.R
+d85e41efcddbbd274dd1a46f003970cf *R/dtw_r.R
+e5a2b2f219a92d82069858a8bd62f411 *data/candidate_data.rda
+d11fa345e5cfcdd2abe6fbbc0fa8b933 *data/target_data.rda
+3492fd904283b1ea156f29da6479a106 *man/candidate_data.Rd
+356319a71dd5f4c5702bea1640992452 *man/dtw_r.Rd
+b32b473e1f52ed35029b8365ad81a6a2 *man/target_data.Rd

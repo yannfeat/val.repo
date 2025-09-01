@@ -1,0 +1,32 @@
+export(kef,
+	   kern.fun,kern.fun.default,plot.kern.fun,
+           dke.fun,dke.fun.default,plot.dke.fun,
+           hbay.fun,hbay.fun.default,
+	   hcvc.fun, hcvc.fun.default,plot.hcvc.fun,
+ 	   hcvd.fun, hcvd.fun.default,
+	   hcvreg.fun,hcvreg.fun.default,
+	   reg.fun,reg.fun.default, plot.reg.fun, print.reg.fun,
+	   kpmfe.fun,kpmfe.fun.default,plot.kpmfe.fun)
+
+
+
+ 	  
+S3method(kern.fun, default)
+S3method(dke.fun, default)
+S3method(hbay.fun, default)
+S3method(hcvc.fun, default)
+S3method(hcvd.fun, default)
+S3method(hcvreg.fun, default)
+S3method(reg.fun, default)
+S3method(kpmfe.fun, default)
+
+S3method(plot,dke.fun)
+S3method(plot,reg.fun)
+S3method(plot,hcvc.fun)
+S3method(plot,kern.fun)
+S3method(plot,kpmfe.fun)
+
+S3method(print,reg.fun)
+
+importFrom("graphics", "hist", "lines", "plot.default")
+importFrom("stats", "approx", "dbinom", "dgamma", "dlnorm")

@@ -1,0 +1,56 @@
+
+
+
+#####################################
+##            S3 methods           ##
+#####################################
+S3method(as.data.frame, PrepGR)
+S3method(as.data.frame, CalGR)
+S3method(as.data.frame, SimGR)
+S3method(dyplot, PrepGR)
+S3method(dyplot, CalGR)
+S3method(dyplot, SimGR)
+S3method(plot, PrepGR)
+S3method(plot, CalGR)
+S3method(plot, SimGR)
+S3method(GetCrit, CalGR)
+S3method(GetCrit, SimGR)
+S3method(GetParam, CalGR)
+S3method(GetParam, SimGR)
+
+
+
+#####################################
+##               Export            ##
+#####################################
+export(PrepGR)
+export(CalGR)
+export(SimGR)
+export(dyplot)
+export(ShinyGR)
+# export(.CheckUrl)
+# export(.DiagramGR)
+# export(.DyShadingMulti)
+# export(.StartStop)
+# export(.TypeModelGR)
+export(GetCrit)
+export(GetParam)
+
+
+
+#####################################
+##               Import            ##
+#####################################
+import(stats)
+import(graphics)
+import(grDevices)
+import(utils)
+import(airGR)
+importFrom(xts, xts)
+import(dygraphs)
+import(shiny)
+importFrom(shinyjs, useShinyjs)
+importFrom(shinyjs, enable)
+importFrom(shinyjs, disable)
+import(markdown)
+importFrom(plotrix, boxed.labels)

@@ -1,0 +1,72 @@
+[
+    {
+        "name": "PM1",
+        "label": "PM1",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "PM25",
+        "label": "PM2.5",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "PM10",
+        "label": "PM10",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "TEMPERATURE",
+        "label": "Temperature",
+        "unit": "°C"
+    },
+    {
+        "name": "HUMIDITY",
+        "label": "Humidity",
+        "unit": "%"
+    },
+    {
+        "name": "PRESSURE",
+        "label": "Pressure",
+        "unit": "hPa"
+    },
+    {
+        "name": "WIND_SPEED",
+        "label": "Wind speed",
+        "unit": "km/h"
+    },
+    {
+        "name": "WIND_BEARING",
+        "label": "Wind bearing",
+        "unit": "°"
+    },
+    {
+        "name": "NO2",
+        "label": "NO₂",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "O3",
+        "label": "O₃",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "SO2",
+        "label": "SO₂",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "CO",
+        "label": "CO",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "H2S",
+        "label": "H₂S",
+        "unit": "µg/m³"
+    },
+    {
+        "name": "NO",
+        "label": "NO",
+        "unit": "µg/m³"
+    }
+]

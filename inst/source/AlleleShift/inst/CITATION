@@ -1,0 +1,17 @@
+
+bibentry(
+  bibtype = "article",
+  title = "AlleleShift: an R package to predict and visualize population-level changes in allele frequencies in response to climate change",
+  volume = "9",
+  pages = "e11534",
+  language = "en",
+  journal = "PeerJ",
+  author = c(
+    person("Roeland", "Kindt")
+  ),
+  year = "2020",
+
+  mheader = "To cite AlleleShift in publications use:"
+)
+
+

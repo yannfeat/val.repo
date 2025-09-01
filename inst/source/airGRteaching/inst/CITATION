@@ -1,0 +1,43 @@
+year    <- sub("-.*", "", meta$Date)
+version <- meta$Version
+note    <- sprintf("R package version %s", version)
+
+
+citHeader("To cite airGRteaching in publications use these two references:")
+
+bibentry(bibtype     = "Article",
+         author      = c(as.person("O. Delaigue"), as.person("P. Brigode"), as.person("G. Thirel"), as.person("L. Coron")),
+         title       = "{airGRteaching}: an open-source tool for teaching hydrological modeling with {R}",
+         booktitle   = "HIC 2018. 13th International Conference on Hydroinformatics",
+         journal     = "Hydrology and Earth System Sciences",
+         volume      = "27",
+         number      = "17",
+         pages       = "3293-3327",
+         year        = "2023",
+         url         = "https://hess.copernicus.org/articles/27/3293/2023/",
+         doi         = "10.5194/hess-27-3293-2023",
+         textVersion =
+           paste("Delaigue, O., Brigode, P., Thirel, G. and Coron, L.",
+                 "(2023).",
+                 "airGRteaching: an open-source tool for teaching hydrological modeling with R.",
+                 "Hydrology and Earth System Sciences 27, 3293–3327, ",
+                 "doi: 10.5194/hess-27-3293-2023.",
+                 sep = " ")
+)
+
+bibentry(bibtype     = "Manual",
+         title       = "{airGRteaching}: Teaching Hydrological Modelling with {GR} ({Shiny} Interface Included)",
+         author      = c(as.person("O. Delaigue"), as.person("L. Coron"), as.person("P. Brigode"), as.person("G. Thirel")),
+         journal     = "R News",
+         year        = year,
+         note        = note,
+         url         = "https://CRAN.R-project.org/package=airGRteaching",
+         doi         = "10.32614/CRAN.package.airGRteaching",
+         textVersion =
+           paste0("Delaigue, O., Coron, L., Brigode, P. and Thirel, G. (",
+                  year,
+                  "). airGRteaching: Teaching Hydrological Modelling with GR (Shiny Interface Included). ",
+                  note, ", ",
+                  "doi: 10.32614/CRAN.package.airGRteaching."
+                  )
+)

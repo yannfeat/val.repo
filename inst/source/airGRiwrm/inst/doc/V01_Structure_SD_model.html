@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="David Dorchies" />
+
+
+<title>Severn_01: Set up of a semi-distributed GR model network</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Severn_01: Set up of a semi-distributed GR
+model network</h1>
+<h4 class="author">David Dorchies</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(airGRiwrm)</span></code></pre></div>
+<pre><code>#&gt; Loading required package: airGR</code></pre>
+<pre><code>#&gt; 
+#&gt; Attaching package: &#39;airGRiwrm&#39;</code></pre>
+<pre><code>#&gt; The following objects are masked from &#39;package:airGR&#39;:
+#&gt; 
+#&gt;     Calibration, CreateCalibOptions, CreateInputsCrit,
+#&gt;     CreateInputsModel, CreateRunOptions, RunModel</code></pre>
+<p>The package <strong>airGRiwrm</strong> is a modeling tool for
+integrated water resources management based on the
+<strong>airGR</strong> package <span class="citation">(See Coron et al.
+2017)</span>.</p>
+<p>In a semi-distributed model, the catchment is divided into several
+sub-catchments. Each sub-catchment is an hydrological entity where a
+runfall-runoff model produces a flow time series at the outlet of the
+sub-catchment. Then, these flows are propagated from sub-catchment
+outlets thanks to a hydraulic function to model the flow at the outlet
+of the whole catchment. The aim of <strong>airGRiwrm</strong> is to
+organize the structure and schedule the execution of the hydrological
+and hydraulic sub-models contained in the semi-distributed model.</p>
+<p>In this vignette, we show how to prepare observation data for the
+model.</p>
+<div id="description-of-the-example-used-in-this-tutorial" class="section level2">
+<h2>Description of the example used in this tutorial</h2>
+<p>The example of this tutorial takes place on the Severn River in the
+United Kingdom. The data set comes from the CAMELS GB database <span class="citation">(see Coxon et al. 2020)</span>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">data</span>(Severn)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>Severn<span class="sc">$</span>BasinsInfo</span></code></pre></div>
+<pre><code>#&gt;   gauge_id                 gauge_name gauge_lat gauge_lon    area elev_mean
+#&gt; 1    54057       Severn at Haw Bridge     51.95     -2.23 9885.46       145
+#&gt; 2    54032      Severn at Saxons Lode     52.05     -2.20 6864.88       170
+#&gt; 3    54001          Severn at Bewdley     52.38     -2.32 4329.90       175
+#&gt; 4    54095         Severn at Buildwas     52.64     -2.53 3722.68       186
+#&gt; 5    54002            Avon at Evesham     52.09     -1.94 2207.95        99
+#&gt; 6    54029 Teme at Knightsford Bridge     52.20     -2.39 1483.65       212
+#&gt;   station_type flow_period_start flow_period_end bankfull_flow downstream_id
+#&gt; 1           VA        1971-07-01      2015-09-30           460          &lt;NA&gt;
+#&gt; 2           US        1970-10-01      2015-09-30           340         54057
+#&gt; 3           US        1970-10-01      2015-09-30           420         54032
+#&gt; 4           US        1984-03-01      2015-09-30           285         54001
+#&gt; 5           VA        1970-10-01      2015-09-30           125         54057
+#&gt; 6           FV        1970-10-01      2015-09-30           190         54032
+#&gt;   distance_downstream
+#&gt; 1                  NA
+#&gt; 2                  15
+#&gt; 3                  45
+#&gt; 4                  42
+#&gt; 5                  43
+#&gt; 6                  32</code></pre>
+</div>
+<div id="semi-distributed-network-description" class="section level2">
+<h2>Semi-distributed network description</h2>
+<p>The semi-distributed model comprises nodes. Each node, identified by
+an ID, represents a location where water is injected to or withdrawn
+from the network.</p>
+<p>The description of the topology consists, for each node, in providing
+several fields:</p>
+<ul>
+<li>the node ID,</li>
+<li>the ID of the first node located downstream (set to <code>NA</code>
+for the last downstream node (i.e. the outlet of the simulated
+catchment)),</li>
+<li>the distance (m) between these two nodes (set to <code>NA</code> for
+the last downstream node),</li>
+<li>an area (km<sup>2</sup>) related to the node in case a hydrological
+model is used (otherwise set to <code>NA</code>).</li>
+</ul>
+<p>Below, we constitute a <code>data.frame</code> bringing together all
+this information for the tutorial example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> Severn<span class="sc">$</span>BasinsInfo[, <span class="fu">c</span>(<span class="st">&quot;gauge_id&quot;</span>, <span class="st">&quot;downstream_id&quot;</span>, <span class="st">&quot;distance_downstream&quot;</span>, <span class="st">&quot;area&quot;</span>)]</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>nodes<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="st">&quot;RunModel_GR4J&quot;</span></span></code></pre></div>
+<p>The network description consists in a <code>GRiwrm</code> object that
+lists the nodes and describes the network diagram. It is a
+<code>data.frame</code> of class <code>GRiwrm</code> with specific
+column names:</p>
+<ul>
+<li><code>id</code>: the identifier of the node in the network,</li>
+<li><code>down</code>: the identifier of the next hydrological node
+downstream,</li>
+<li><code>length</code>: hydraulic distance to the next hydrological
+downstream node (m),</li>
+<li><code>model</code>: name of the hydrological model used (E.g.
+“RunModel_GR4J”). <code>NA</code> for other types of nodes,</li>
+<li><code>area</code>: area of the sub-catchment (km<sup>2</sup>). Used
+for hydrological model such as GR models. <code>NA</code> if not
+used.</li>
+</ul>
+<p>The <code>GRiwrm</code> function helps to create an object of class
+<code>GRiwrm</code>. It renames the columns of the
+<code>data.frame</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>griwrm <span class="ot">&lt;-</span> <span class="fu">CreateGRiwrm</span>(nodes, <span class="fu">list</span>(<span class="at">id =</span> <span class="st">&quot;gauge_id&quot;</span>, <span class="at">down =</span> <span class="st">&quot;downstream_id&quot;</span>, <span class="at">length =</span> <span class="st">&quot;distance_downstream&quot;</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>griwrm</span></code></pre></div>
+<pre><code>#&gt;      id  down length    area         model donor
+#&gt; 4 54095 54001     42 3722.68 RunModel_GR4J 54095
+#&gt; 5 54002 54057     43 2207.95 RunModel_GR4J 54002
+#&gt; 6 54029 54032     32 1483.65 RunModel_GR4J 54029
+#&gt; 3 54001 54032     45 4329.90 RunModel_GR4J 54001
+#&gt; 2 54032 54057     15 6864.88 RunModel_GR4J 54032
+#&gt; 1 54057  &lt;NA&gt;     NA 9885.46 RunModel_GR4J 54057</code></pre>
+<p>The diagram of the network structure is represented below with in
+blue the upstream nodes with a GR4J model and in green the intermediate
+nodes with an SD (GR4J + LAG) model.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">plot</span>(griwrm)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="observation-time-series" class="section level2">
+<h2>Observation time series</h2>
+<p>Observations (precipitation, potential evapotranspiration (PE) and
+flows) should be formatted in a separate data.frame with one column of
+data per sub-catchment.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>BasinsObs <span class="ot">&lt;-</span> Severn<span class="sc">$</span>BasinsObs</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">str</span>(BasinsObs)</span></code></pre></div>
+<pre><code>#&gt; List of 6
+#&gt;  $ 54001:&#39;data.frame&#39;:   11536 obs. of  4 variables:
+#&gt;   ..$ DatesR        : POSIXct[1:11536], format: &quot;1984-03-01&quot; &quot;1984-03-02&quot; ...
+#&gt;   ..$ precipitation : num [1:11536] 3.63 0.55 2.09 0.38 0.01 0.25 0.1 0 0.11 0.08 ...
+#&gt;   ..$ peti          : num [1:11536] 0.59 1.65 1.44 0.3 0.58 0.73 0.59 0.66 0.58 0.62 ...
+#&gt;   ..$ discharge_spec: num [1:11536] 0.77 0.77 0.76 0.74 0.72 0.69 0.64 0.6 0.59 0.54 ...
+#&gt;  $ 54002:&#39;data.frame&#39;:   11536 obs. of  4 variables:
+#&gt;   ..$ DatesR        : POSIXct[1:11536], format: &quot;1984-03-01&quot; &quot;1984-03-02&quot; ...
+#&gt;   ..$ precipitation : num [1:11536] 1.58 0.47 1.35 1.92 0.06 0 0.01 0 0.08 0.34 ...
+#&gt;   ..$ peti          : num [1:11536] 0.61 1.7 1.61 0.3 0.44 0.69 0.52 0.71 0.73 0.57 ...
+#&gt;   ..$ discharge_spec: num [1:11536] 0.62 0.63 0.56 0.52 0.52 0.54 0.5 0.48 0.46 0.45 ...
+#&gt;  $ 54029:&#39;data.frame&#39;:   11536 obs. of  4 variables:
+#&gt;   ..$ DatesR        : POSIXct[1:11536], format: &quot;1984-03-01&quot; &quot;1984-03-02&quot; ...
+#&gt;   ..$ precipitation : num [1:11536] 2.38 0.33 2.16 0.38 0.01 0.12 0.08 0.05 0.05 0.29 ...
+#&gt;   ..$ peti          : num [1:11536] 0.58 1.64 1.49 0.23 0.56 0.72 0.63 0.72 0.62 0.64 ...
+#&gt;   ..$ discharge_spec: num [1:11536] 0.79 0.79 0.73 0.7 0.68 0.63 0.61 0.59 0.57 0.57 ...
+#&gt;  $ 54032:&#39;data.frame&#39;:   11536 obs. of  4 variables:
+#&gt;   ..$ DatesR        : POSIXct[1:11536], format: &quot;1984-03-01&quot; &quot;1984-03-02&quot; ...
+#&gt;   ..$ precipitation : num [1:11536] 3.07 0.49 2.12 0.51 0.01 0.19 0.08 0.01 0.08 0.14 ...
+#&gt;   ..$ peti          : num [1:11536] 0.59 1.64 1.47 0.27 0.57 0.72 0.61 0.68 0.6 0.63 ...
+#&gt;   ..$ discharge_spec: num [1:11536] 0.84 0.83 0.81 0.79 0.78 0.73 0.65 0.61 0.6 0.57 ...
+#&gt;  $ 54057:&#39;data.frame&#39;:   11536 obs. of  4 variables:
+#&gt;   ..$ DatesR        : POSIXct[1:11536], format: &quot;1984-03-01&quot; &quot;1984-03-02&quot; ...
+#&gt;   ..$ precipitation : num [1:11536] 2.61 0.46 1.9 0.91 0.02 0.13 0.06 0.01 0.08 0.22 ...
+#&gt;   ..$ peti          : num [1:11536] 0.59 1.65 1.51 0.28 0.53 0.71 0.59 0.69 0.64 0.62 ...
+#&gt;   ..$ discharge_spec: num [1:11536] 0.66 0.67 0.64 0.64 0.63 0.61 0.56 0.52 0.51 0.5 ...
+#&gt;  $ 54095:&#39;data.frame&#39;:   11536 obs. of  4 variables:
+#&gt;   ..$ DatesR        : POSIXct[1:11536], format: &quot;1984-03-01&quot; &quot;1984-03-02&quot; ...
+#&gt;   ..$ precipitation : num [1:11536] 4.01 0.57 2 0.37 0.01 0.3 0.12 0 0.12 0.07 ...
+#&gt;   ..$ peti          : num [1:11536] 0.59 1.64 1.42 0.31 0.59 0.73 0.59 0.66 0.57 0.61 ...
+#&gt;   ..$ discharge_spec: num [1:11536] 0.9 0.9 0.94 0.87 0.86 0.81 0.76 0.73 0.7 0.69 ...</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>DatesR <span class="ot">&lt;-</span> BasinsObs[[<span class="dv">1</span>]]<span class="sc">$</span>DatesR</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>PrecipTot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">sapply</span>(BasinsObs, <span class="cf">function</span>(x) {x<span class="sc">$</span>precipitation}))</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>PotEvapTot <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">sapply</span>(BasinsObs, <span class="cf">function</span>(x) {x<span class="sc">$</span>peti}))</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>Qobs <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">sapply</span>(BasinsObs, <span class="cf">function</span>(x) {x<span class="sc">$</span>discharge_spec}))</span></code></pre></div>
+<p>These meteorological data consist in mean precipitation and PE for
+each basin. However, the model needs mean precipitation and PE at
+sub-basin scale. The function <code>ConvertMeteoSD</code> calculates
+these values for downstream sub-basins:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>Precip <span class="ot">&lt;-</span> <span class="fu">ConvertMeteoSD</span>(griwrm, PrecipTot)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>PotEvap <span class="ot">&lt;-</span> <span class="fu">ConvertMeteoSD</span>(griwrm, PotEvapTot)</span></code></pre></div>
+</div>
+<div id="generation-of-the-griwrminputsmodel-object" class="section level2">
+<h2>Generation of the GRiwrmInputsModel object</h2>
+<p>The <code>GRiwrmInputsModel</code> object is a list of
+<strong>airGR</strong> <code>InputsModel</code> objects. The identifier
+of the sub-basin is used as a key in the list which is ordered from
+upstream to downstream.</p>
+<p>The <strong>airGR</strong> <code>CreateInputsModel</code> function is
+extended in order to handle the <code>GRiwrm</code> object that
+describes the basin diagram:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>InputsModel <span class="ot">&lt;-</span> <span class="fu">CreateInputsModel</span>(griwrm, DatesR, Precip, PotEvap)</span></code></pre></div>
+<pre><code>#&gt; CreateInputsModel.GRiwrm: Processing sub-basin 54095...</code></pre>
+<pre><code>#&gt; CreateInputsModel.GRiwrm: Processing sub-basin 54002...</code></pre>
+<pre><code>#&gt; CreateInputsModel.GRiwrm: Processing sub-basin 54029...</code></pre>
+<pre><code>#&gt; CreateInputsModel.GRiwrm: Processing sub-basin 54001...</code></pre>
+<pre><code>#&gt; CreateInputsModel.GRiwrm: Processing sub-basin 54032...</code></pre>
+<pre><code>#&gt; CreateInputsModel.GRiwrm: Processing sub-basin 54057...</code></pre>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-coronSuiteLumpedGR2017" class="csl-entry">
+Coron, L., G. Thirel, O. Delaigue, C. Perrin, and V. Andréassian. 2017.
+<span>“The Suite of Lumped <span>GR</span> Hydrological Models in an
+<span>R</span> Package.”</span> <em>Environmental Modelling &amp;
+Software</em> 94 (August): 166–71. <a href="https://doi.org/10.1016/j.envsoft.2017.05.002">https://doi.org/10.1016/j.envsoft.2017.05.002</a>.
+</div>
+<div id="ref-coxonCatchmentAttributesHydrometeorological2020" class="csl-entry">
+Coxon, G., N. Addor, J. P. Bloomfield, J. Freer, M. Fry, J. Hannaford,
+N. J. K. Howden, et al. 2020. <span>“Catchment Attributes and
+Hydro-Meteorological Timeseries for 671 Catchments Across <span>Great
+Britain</span> (<span>CAMELS-GB</span>).”</span> <span>NERC
+Environmental Information Data Centre</span>. <a href="https://doi.org/10.5285/8344E4F3-D2EA-44F5-8AFA-86D2987543A9">https://doi.org/10.5285/8344E4F3-D2EA-44F5-8AFA-86D2987543A9</a>.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

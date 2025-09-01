@@ -1,0 +1,8 @@
+3daff536ea0eba79c26de5a092913f36 *DESCRIPTION
+d75a2c33a569fc1ccd9f85fe2c7431ef *NAMESPACE
+be2995e1174fb46a400ba4b86cef01cd *R/wgtRankCef.R
+05e13ec89ceb4b30b081acf7d50ea4c5 *build/partial.rdb
+444706be4313372f1c5d4df5050ce369 *data/alcoholSurv.rda
+2933d3ce95dad42a976d943bb0274c91 *man/alcoholSurv-package.Rd
+f28897c84ad27266eba4f289de4d0280 *man/alcoholSurv.Rd
+da3272567c8e4cb2cb8819a68583fc7e *man/wgtRankCef.Rd

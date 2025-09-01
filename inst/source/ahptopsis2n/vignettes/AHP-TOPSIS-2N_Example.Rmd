@@ -1,0 +1,85 @@
+---
+title: "AHP-TOPSIS-2N Example"
+author: "Raquel Dourado Coutinho, Marcos dos Santos"
+date: '`r Sys.Date()`'
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{AHP-TOPSIS-2N Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+##### Multicriteria Decision Analysis (MCDA) and the AHP-TOPSIS-2N method.
+The objective of MCDA is to assist in decisions with multiple criteria. Multicriteria methods can be useful in several problems in business and even in personal life. AHP-TOPSIS-2N is a hybrid method build from the AHP (Analytic Hierarchy Process) and TOPSIS-2N (Technique for Order of Preference by Similarity to Ideal Solution - with two normalizations).
+
+AHP-TOPSIS-2N uses the AHP to calculate the criteria weights and uses TOPSIS  twice to generate rankings, each time with a different kind of normalization. This can allow the comparison of results and the analysis of the robustness. A consistency ratio is calculated, and when it is higher than 10%, it is required to check judgments on criteria comparison.  
+
+
+## Example
+As an example, this vignette uses a case of row material supplier evaluation.
+The goal is to choose among A, B, and C suppliers based on the product cost, product quality (1 to 5), and the lead time.
+Below we have the decision matrix (alternatives x criteria).
+
+| Alternatives | Cost | Quality | Lead Time|
+|:------------:|-----:|--------:|---------:|
+|       A1     |  1100|    5    |    25    |
+|       A2     |   850|    3.5  |    10    |
+|       A3     |   950|    4    |    30    |
+
+
+After defining the decision matrix, it's time to define a matrix with a pairwise comparison of the criteria, using the Saaty scale (1-9). 
+
+
+|             | Cost | Quality | Lead Time|
+|:-----------:|-----:|--------:|---------:|
+|   Cost      |     1|    1    |    3     |
+|   Quality   |     1|    1    |    5     |
+|   Lead Time |   1/3|    1/5  |    1     |
+
+
+The criteria comparison matrix can be read like this: "Cost is so important as Quality, Cost has moderate importance over Lead Time, Quality has strong importance over Lead Time."
+
+
+
+```{r setup}
+library(ahptopsis2n)
+
+# define the decision matrix
+decision<-matrix(c(1100, 5, 25,
+                   850, 3.5, 10,
+                   950, 4, 30), ncol=3, byrow=TRUE)
+
+rownames(decision)<- c("A1", "A2", "A3")
+
+#define criteria matrix with pairwise comparison
+criteria<-matrix(c(1, 1, 3,
+                   1, 1, 5,
+                   1/3, 1/5, 1), ncol=3, byrow=TRUE)
+
+# define each criterion objective
+minmax<-c("min", "max", "min")
+
+# associate the objects to the function arguments and run the function
+ahptopsis2n(decision=decision, criteria=criteria, minmax=minmax)
+
+```
+As we can see, the result is a list with a consistency ratio and two data frames with priority sorting of the alternatives.
+
+### References
+
+
+De Souza, L. P., Gomes, C. F. S. and De Barros, A. P. (2018). Implementation of New Hybrid AHP–TOPSIS-2N Method in Sorting and Prioritizing of an it CAPEX Project Portfolio. International Journal of Information Technology & Decision Making. DOI: 10.1142/S0219622018500207.
+
+Saaty, T.L. The Analytic Hierarchy Process. McGraw-Hill, New York. (1980)
+

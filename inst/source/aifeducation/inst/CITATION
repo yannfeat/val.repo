@@ -1,0 +1,23 @@
+citHeader("To cite iotarelr in publications use:")
+
+bibentry(bibtype="Manual",
+title="AI for Education (aifeducation). A R package for educators and
+      reserachers of the educational and social sciences.",
+
+author=c(person(given="Florian",family="Berding"),
+         person(given="Yuliia",family="Tykhonova"),
+         person(given="Julia", family="Pargmann"),
+         person(given="Elisabeth", family="Riebenbauer"),
+         person(given="Karin", family="Rebmann"),
+         person(given="Andreas", family="Slopinski")
+         ),
+
+year="2024",
+
+url="https://fberding.github.io/aifeducation/index.html",
+
+textVersion="Florian Berding, Yuliia Tykhonova, Julia Pargmann, Elisabeth Riebenbauer,
+  Karin Rebmann, and Andreas Slopinski (2024). AI for Education (aifeducation).
+  A R package for educators and researchers of the educational and social sciences.
+  URL=https://fberding.github.io/aifeducation/index.html"
+)

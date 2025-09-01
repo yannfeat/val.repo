@@ -1,0 +1,9 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "allofus: An R Package to Facilitate Use of the All of Us Researcher Workbench",
+  author   = "Louisa H. Smith and Rob Cavanaugh",
+  journal = "Journal of the American Medical Informatics Association",
+  pages = "ocae198",
+  year     = "2024",
+  doi      = "10.1093/jamia/ocae198"
+)

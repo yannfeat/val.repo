@@ -1,0 +1,5 @@
+export("readAiff" ,"aiff2wav")
+
+importFrom("R.utils", "intToBin")
+importFrom("methods", "is", "new")
+importClassesFrom("tuneR", "Wave", "WaveMC")

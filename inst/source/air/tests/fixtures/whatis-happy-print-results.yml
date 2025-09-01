@@ -1,0 +1,76 @@
+http_interactions:
+- request:
+    method: POST
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      string: '{"model":"<<<api_model>>>","messages":[{"role":"system","content":"I
+        want you to act as an R code explanation expert. I want you to first explain
+        what the overall code does, then explain what each sub-expression of the code
+        does and finish with a simple example with its output, if possible. Do not
+        overexplain or write too much."},{"role":"user","content":"paste0(vector1,
+        vector2)"}]}'
+  response:
+    status: 200
+    headers:
+      date: Sat, 26 Jul 2025 06:34:46 GMT
+      content-type: application/json
+      access-control-expose-headers: X-Request-ID
+      openai-organization: user-itunupboadxzapmbyjlmrenx
+      openai-processing-ms: '6702'
+      openai-project: proj_bgJfD9iVOp7UpaM4r2jti756
+      openai-version: '2020-10-01'
+      x-envoy-upstream-service-time: '6705'
+      x-ratelimit-limit-requests: '500'
+      x-ratelimit-limit-tokens: '30000'
+      x-ratelimit-remaining-requests: '499'
+      x-ratelimit-remaining-tokens: '29925'
+      x-ratelimit-reset-requests: 120ms
+      x-ratelimit-reset-tokens: 150ms
+      x-request-id: req_825f2f8e768da95febac7f87b3980bbf
+      strict-transport-security: max-age=31536000; includeSubDomains; preload
+      cf-cache-status: DYNAMIC
+      x-content-type-options: nosniff
+      server: cloudflare
+      cf-ray: 9651df5fbc9b4a45-TPE
+      content-encoding: gzip
+      alt-svc: h3=":443"; ma=86400
+    body:
+      string: |
+        {
+          "id": "chatcmpl-BxSmOGzT7iFVTuvSXOuddIT2I6ah0",
+          "object": "chat.completion",
+          "created": 1753511680,
+          "model": "<<<api_model>>>",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Overall, the `paste0` function in R is used to concatenate two vectors, `vector1` and `vector2`, element-wise into a single character vector, with no separator between the values from the two vectors.\n\nHere is a break-down of what each part of the `paste0` expression does:\n\n- `paste0`: This is the function used for concatenation in R.\n- `vector1`: The first argument to `paste0`, this is the first vector of values you want to concatenate.\n- `vector2`: The second argument to `paste0`, this is the second vector of values you want to concatenate with the first.\n\nThe function concatenates corresponding elements from `vector1` and `vector2`. It is assumed that both vectors are of the same length or one of them is of length 1. If the lengths of the vectors are different and neither is of length 1, a warning is printed, and the values are recycled to match the length of the longest vector.\n\nExample & Output:\n\n```R\n# Define two vectors\nvector1 <- c(\"A\", \"B\", \"C\")\nvector2 <- c(\"1\", \"2\", \"3\")\n\n# Use paste0 to concatenate them element-wise\nresult <- paste0(vector1, vector2)\n\n# Print the result\nprint(result)\n```\n\nOutput:\n```\n[1] \"A1\" \"B2\" \"C3\"\n```\n\nIn this example, \"A\" is concatenated with \"1\", \"B\" with \"2\", and \"C\" with \"3\", resulting in a character vector with the combined values.",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 75,
+            "completion_tokens": 331,
+            "total_tokens": 406,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": null
+        }
+  recorded_at: 2025-07-26 06:34:46
+recorded_with: VCR-vcr/2.0.0

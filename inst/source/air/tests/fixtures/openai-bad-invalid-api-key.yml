@@ -1,0 +1,41 @@
+http_interactions:
+- request:
+    method: POST
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      string: '{"model":"<<<api_model>>>","messages":[{"role":"system","content":"I
+        want you to act as an R programming expert. I want you to answer only with
+        code, without triple backtics. Do not write explanations."},{"role":"user","content":"How
+        do I get the first element of a list?"}]}'
+  response:
+    status: 401
+    headers:
+      alt-svc: h3=":443"; ma=86400
+      cf-cache-status: DYNAMIC
+      cf-ray: 9651df310d9d4a45-TPE
+      content-length: '256'
+      content-type: application/json; charset=utf-8
+      date: Sat, 26 Jul 2025 06:34:32 GMT
+      server: cloudflare
+      set-cookie:
+      - __cf_bm=4HFI41rhIql.KhJGbWU3TGrragVQ37SoFElshjlqitc-1753511672-1.0.1.1-lML4qSM.jVzA.6.qrLPmkS0bJC302iQMfEMekiA6Y2PwvrkZ5ng8a88xpQ821hDyqtZOw2sRTWfX5jmAKgCmy7yUJ3Ne7250tnfZ4Jfrr8E;
+        path=/; expires=Sat, 26-Jul-25 07:04:32 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=EhpaPPT9XE2WCOlgGpp2Cmby8uiU2qBYDT63oYUrrow-1753511672657-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      strict-transport-security: max-age=31536000; includeSubDomains; preload
+      vary: Origin
+      x-content-type-options: nosniff
+      x-request-id: req_0591486ac5a54abeeb52d832bca80f1a
+    body:
+      string: |
+        {
+            "error": {
+                "message": "Incorrect API key provided: foobar. You can find your API key at https://platform.openai.com/account/api-keys.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_api_key"
+            }
+        }
+  recorded_at: 2025-07-26 06:34:32
+recorded_with: VCR-vcr/2.0.0

@@ -1,0 +1,3 @@
+exportPattern("^[[:alpha:]]+")
+importFrom(matlab,size,zeros,repmat)
+importFrom(stats,cor)

@@ -1,0 +1,10 @@
+e8da4b66ade1db5dfc9bc2ec276b34c3 *DESCRIPTION
+a9f01ceda1c7913481294fefde9e74e9 *NAMESPACE
+521e638a9288480d5911402eedf5c368 *R/aiff2wav.R
+67346b2d685bcdbf6230549d6f710f8a *R/readAiff.R
+d5164450a4a76e14afe145d39d110b68 *R/zzz.R
+2049ac74852117e040b9233c7091ce7c *build/partial.rdb
+d5610c0a4d4038d8edf049353037ea83 *inst/extdata/sample3.aif
+c6b1d170db89af26880619597b5b6b9d *man/AIFFtools-package.Rd
+d30961a1de6f2e07dc8b7f475f16a9ac *man/aiff2wav.Rd
+38a7889dd968c374f00e843cddf9811e *man/readAiff.Rd

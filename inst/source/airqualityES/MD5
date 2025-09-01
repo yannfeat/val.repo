@@ -1,0 +1,11 @@
+58f44ee7cb14ef4e3be2cdeeb2136cc0 *DESCRIPTION
+2a207a9258970c0ae6ab72a3b0c2d1e4 *NAMESPACE
+042ad4f43cea01c946f2703bdf1bb4db *R/airqES.R
+0ee02ac30850fbd806ee4389f29b618b *R/airquaityES.R
+2184106433342f63fd35d9b465ef5291 *R/stations.R
+82403bb034c378095d186773f6bf1877 *data/airqES.rda
+538a138367b9a87e8c8be65e90f9d135 *data/datalist
+aacb979195a6a1edf66c1168869e055a *data/stations.rda
+4d54ca4313f954bb8453c65c66c1cc60 *man/airqES.Rd
+62a718790ecf1cd4d6fcbbcafbc5ca18 *man/airqualityES.Rd
+26bbb7e0ad6aa4a96846b16e56d5c10f *man/stations.Rd

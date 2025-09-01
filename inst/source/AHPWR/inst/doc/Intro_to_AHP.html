@@ -1,0 +1,3116 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Luciane Ferreira Alcoforado and Orlando Celso Longo" />
+
+
+<title>Introduction to AHPWR package</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+<style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+border-bottom: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to AHPWR package</h1>
+<h3 class="subtitle">Academia da Força Aérea and Universidade Federal
+Fluminense</h3>
+<h4 class="author">Luciane Ferreira Alcoforado and Orlando Celso
+Longo</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AHPWR)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;kableExtra&#39; was built under R version 4.2.2</span></span></code></pre></div>
+<p>This is the introduction to our package AHPWR. All theory about this
+method is concerned about Saaty and Vargas (2012). The examples are
+inspired by this reference.</p>
+<div id="ahp" class="section level2">
+<h2>AHP</h2>
+<p>According to Saaty and Vargas (2012), The Analytic Hierarchy Process
+(AHP) is a basic approach to decision making. It is designed to cope
+with both the rational and the intuitive to select <strong>the
+best</strong> from a <strong>number of alternatives</strong> evaluated
+with respect to <strong>several criteria</strong>. In this process, the
+decision maker carries out simple <strong>pairwise comparison
+judgments</strong> which are then used to develop overall priorities for
+<strong>ranking the alternatives</strong>. The AHP both allows for
+inconsistency in the judgments and provides a means to improve
+consistency.</p>
+<p>The simplest form used to structure a decision problem is a hierarchy
+consisting of three levels: <strong>the goal of the decision</strong> at
+the top level, followed by a second level consisting of the
+<strong>criteria</strong> by which the <strong>alternatives</strong>,
+located in the third level, will be evaluated.</p>
+</div>
+<div id="a-tree-level-hierarchy" class="section level2">
+<h2>A tree level hierarchy</h2>
+<p>In the AHPWR package we can create the tree level hierarchy of the
+problem, as in the following example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#generic, c= 4 criteria and a = 3 alternatives</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">flow_chart</span>(<span class="at">names=</span><span class="cn">NULL</span>, <span class="at">c=</span><span class="dv">4</span>, <span class="at">a=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>You can change the graphics according to ggplot2 options:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#generic, c= 4 criteria and a = 3 alternatives</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fu">flow_chart</span>(<span class="at">names=</span><span class="cn">NULL</span>, <span class="at">c=</span><span class="dv">4</span>, <span class="at">a=</span><span class="dv">3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span>ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A tree level hierarchy&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#generic, c= 4 criteria and a = 3 alternatives</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fu">flow_chart</span>(<span class="at">names=</span><span class="cn">NULL</span>, <span class="at">c=</span><span class="dv">4</span>, <span class="at">a=</span><span class="dv">3</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span>ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A tree level hierarchy&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>)<span class="sc">+</span>ggplot2<span class="sc">::</span><span class="fu">theme_void</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#generic, c= 4 criteria and a = 3 alternatives</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>goal <span class="ot">=</span> <span class="st">&quot;Satisfation with House&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>criterios <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Size&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Yard&quot;</span>, <span class="st">&quot;Neighborhood&quot;</span> )</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>alternatives <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;house A&quot;</span>, <span class="st">&quot;house B&quot;</span>, <span class="st">&quot;house C&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>names <span class="ot">=</span> <span class="fu">c</span>(goal, criterios, alternatives)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fu">flow_chart</span>(names, <span class="at">c=</span><span class="dv">4</span>, <span class="at">a=</span><span class="dv">3</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span>ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A tree level hierarchy&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>)<span class="sc">+</span>ggplot2<span class="sc">::</span><span class="fu">theme_void</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="the-comparative-judment" class="section level2">
+<h2>The comparative judment</h2>
+<p>The next step is comparative judgment. The elements on the second
+level are arranged into a matrix and the family buying the house makes
+judgments about the relative importance of the elements with respect to
+the overall goal, Satisfaction with House.</p>
+<p>The questions to ask when comparing two criteria are of the following
+kind: of the two alternatives being compared, which is considered more
+important by the family and how much more important is it with respect
+to family satisfaction with the house, which is the overall goal?</p>
+<p>Paired comparison judgments in the AHP are applied to pairs of
+homogeneous elements. The fundamental scale of values to represent the
+intensities of judgments is shown in Table 1. This scale has been
+validated for effectiveness, not only in many applications by a number
+of people, but also through theoretical justification of what scale one
+must use in the comparison of homogeneous elements.</p>
+<table>
+<caption>
+Table 1: The fundamental Scale
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Intensity.of.importance
+</th>
+<th style="text-align:left;">
+Definicion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Equal Importance
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Weak
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Moderate importance
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Moderate plus
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Strong importance
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+Strong plus
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+Very strong or demonstrated importance
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+Very, very strong
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+Extreme importance
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here we will use the holistic judgment criterion proposed by Godoy
+(2014). It provides weights for each criterion using the Saaty scale:
+assuming that there are <span class="math inline">\(n\)</span> criteria,
+establish different weights for each of the criteria according to their
+importance, with <span class="math inline">\(w1\)</span> being the
+weight of criterion 1; <span class="math inline">\(w2\)</span> the
+weight of criterion 2 and so on.</p>
+<p>The judge, before assigning a holistic weight, should order the items
+from the most important to the least important and then establish the
+weights that should be different for each item and descending according
+to the established order, unless two consecutive items have the same
+importance, only in this case can they have the same weight. For
+example, if <span class="math inline">\(w1 &lt; w2 &lt; ... &lt;
+wn\)</span> so order the items are A1 is less important than A2 which is
+less important than A3 and so on ; or An is more important than An-1
+which is more important than An-2 and so on.</p>
+<p>The hierarchy matrix will be constructed by making <span class="math inline">\(a_{ij} = wi – wj +1\)</span> if <span class="math inline">\(wi &gt; wj\)</span> (ie, criterion <span class="math inline">\(i\)</span> has greater importance than criterion
+<span class="math inline">\(j\)</span>); <span class="math inline">\(aij
+= 1/(wj – wi +1)\)</span> if <span class="math inline">\(wi &lt;
+wj\)</span>.</p>
+<div id="example-1" class="section level3">
+<h3>Example 1:</h3>
+<p>The problem is to determine the best choice between two alternatives
+A1 = construction of a bridge connecting two points; A2 = construction
+of a tunnel connecting two points, based on the following criteria:
+C1-life cycle, C2-maintenance cost, C3-environmental impacts,
+C4-construction cost.</p>
+<p>Holistic Judgment:</p>
+<p>M1 - Criteria judgment matrix Weights attributed by the evaluators to
+each criterion: w1=2; w2 = 5; w3 = 2; w4 = 3, therefore, the order of
+importance of the criteria according to the judge is criterion 2
+followed by criterion 4 followed by both criterion 1 and 3 with the same
+importance.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;life cycle&quot;</span>, <span class="st">&quot;maintenance cost&quot;</span>, <span class="st">&quot;environmental impacts&quot;</span>, <span class="st">&quot;construction cost&quot;</span>) <span class="co">#criteria</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="co">#weights</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>m1</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       life cycle maintenance cost environmental impacts</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; life cycle                     1        0.2500000                     1</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; maintenance cost               4        1.0000000                     4</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; environmental impacts          1        0.2500000                     1</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; construction cost              2        0.3333333                     2</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       construction cost</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; life cycle                          0.5</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; maintenance cost                    3.0</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; environmental impacts               0.5</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; construction cost                   1.0</span></span></code></pre></div>
+<p>The table with all date about the matrix, the first line informs the
+weights assigned by the evaluators, the following lines up to the
+penultimate one show the comparison matrix between criteria or
+alternatives and the last line informs the priority vector and the CR
+consistency index.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">=</span> x</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>table<span class="ot">=</span><span class="fu">tabela_holistica</span>(<span class="at">pesos=</span>y)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>table</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ...1                  `life cycle` `maintenance cost` environm…¹ const…² CR   </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                        &lt;dbl&gt;              &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 weights                      2                  5          2       3     _    </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 life cycle                   1                  0.25       1       0.5   _    </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 maintenance cost             4                  1          4       3     _    </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 environmental impacts        1                  0.25       1       0.5   _    </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 construction cost            2                  0.333      2       1     _    </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 priority                     0.121              0.538      0.121   0.220 0.01 </span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with abbreviated variable names ¹​`environmental impacts`,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ²​`construction cost`</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(table)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+…1
+</th>
+<th style="text-align:right;">
+life cycle
+</th>
+<th style="text-align:right;">
+maintenance cost
+</th>
+<th style="text-align:right;">
+environmental impacts
+</th>
+<th style="text-align:right;">
+construction cost
+</th>
+<th style="text-align:left;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+weights
+</td>
+<td style="text-align:right;">
+2.0000000
+</td>
+<td style="text-align:right;">
+5.0000000
+</td>
+<td style="text-align:right;">
+2.0000000
+</td>
+<td style="text-align:right;">
+3.0000000
+</td>
+<td style="text-align:left;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+life cycle
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.2500000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.5000000
+</td>
+<td style="text-align:left;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+maintenance cost
+</td>
+<td style="text-align:right;">
+4.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.0000000
+</td>
+<td style="text-align:right;">
+3.0000000
+</td>
+<td style="text-align:left;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+environmental impacts
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.2500000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.5000000
+</td>
+<td style="text-align:left;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+construction cost
+</td>
+<td style="text-align:right;">
+2.0000000
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:right;">
+2.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:left;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+priority
+</td>
+<td style="text-align:right;">
+0.1209627
+</td>
+<td style="text-align:right;">
+0.5384703
+</td>
+<td style="text-align:right;">
+0.1209627
+</td>
+<td style="text-align:right;">
+0.2196042
+</td>
+<td style="text-align:left;">
+0.01
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can customize our table, highlighting the main information in
+gray:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(kableExtra)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">as.data.frame</span>(table), <span class="at">align =</span> <span class="st">&#39;c&#39;</span>, <span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">1</span>, <span class="at">italic =</span> <span class="cn">TRUE</span>, <span class="at">background =</span> <span class="st">&#39;gray&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">background =</span> <span class="st">&#39;yellow&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">6</span>, <span class="at">underline =</span> <span class="cn">TRUE</span>,  <span class="at">color =</span> <span class="st">&#39;black&#39;</span>,<span class="at">background =</span> <span class="st">&#39;gray&#39;</span>,<span class="at">bold =</span> <span class="cn">TRUE</span>,) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">column_spec</span>(<span class="dv">6</span>, <span class="at">background =</span> <span class="st">&#39;gray&#39;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">
+…1
+</th>
+<th style="text-align:center;">
+life cycle
+</th>
+<th style="text-align:center;">
+maintenance cost
+</th>
+<th style="text-align:center;">
+environmental impacts
+</th>
+<th style="text-align:center;">
+construction cost
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;font-style: italic;background-color: gray !important;">
+weights
+</td>
+<td style="text-align:center;font-style: italic;background-color: gray !important;">
+2.00
+</td>
+<td style="text-align:center;font-style: italic;background-color: gray !important;">
+5.00
+</td>
+<td style="text-align:center;font-style: italic;background-color: gray !important;">
+2.00
+</td>
+<td style="text-align:center;font-style: italic;background-color: gray !important;">
+3.00
+</td>
+<td style="text-align:center;font-style: italic;background-color: gray !important;background-color: gray !important;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+life cycle
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+1.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+0.25
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+1.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+0.50
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;background-color: gray !important;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+maintenance cost
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+4.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+1.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+4.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+3.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;background-color: gray !important;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+environmental impacts
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+1.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+0.25
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+1.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+0.50
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;background-color: gray !important;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+construction cost
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+2.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+0.33
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+2.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;">
+1.00
+</td>
+<td style="text-align:center;color: black !important;background-color: yellow !important;background-color: gray !important;">
+_
+</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight: bold;text-decoration: underline;color: black !important;background-color: gray !important;">
+priority
+</td>
+<td style="text-align:center;font-weight: bold;text-decoration: underline;color: black !important;background-color: gray !important;">
+0.12
+</td>
+<td style="text-align:center;font-weight: bold;text-decoration: underline;color: black !important;background-color: gray !important;">
+0.54
+</td>
+<td style="text-align:center;font-weight: bold;text-decoration: underline;color: black !important;background-color: gray !important;">
+0.12
+</td>
+<td style="text-align:center;font-weight: bold;text-decoration: underline;color: black !important;background-color: gray !important;">
+0.22
+</td>
+<td style="text-align:center;font-weight: bold;text-decoration: underline;color: black !important;background-color: gray !important;background-color: gray !important;">
+0.01
+</td>
+</tr>
+</tbody>
+</table>
+<p>M2 -Judgment matrix of alternatives in relation to criterion C1 -
+life cycle Weights assigned by evaluators for each Alternative: w1= 1,
+w2 = 3</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;bridge&quot;</span>, <span class="st">&quot;tunnel&quot;</span>) <span class="co">#criteria life cycle</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>) <span class="co">#weights</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>m2</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        bridge    tunnel</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge      1 0.3333333</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel      3 1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">=</span> x</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>table<span class="ot">=</span><span class="fu">tabela_holistica</span>(<span class="at">pesos=</span>y)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>table</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ...1     bridge tunnel CR   </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 weights    1     3     _    </span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 bridge     1     0.333 _    </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 tunnel     3     1     _    </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority   0.25  0.75  0</span></span></code></pre></div>
+<p>M3 -Judgment matrix of alternatives in relation to criterion C2 -
+maintenance cost Weights assigned by evaluators for each Alternative:
+w1= 1, w2 = 4</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;bridge&quot;</span>, <span class="st">&quot;tunnel&quot;</span>) <span class="co">#criteria maintenance cost</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>) <span class="co">#weights</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>m3</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        bridge tunnel</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge      1   0.25</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel      4   1.00</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">=</span> x</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>table<span class="ot">=</span><span class="fu">tabela_holistica</span>(<span class="at">pesos=</span>y)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>table</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ...1     bridge tunnel CR   </span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 weights     1     4    _    </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 bridge      1     0.25 _    </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 tunnel      4     1    _    </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority    0.2   0.8  0</span></span></code></pre></div>
+<p>M4 -Judgment matrix of alternatives in relation to criterion C3 -
+environmental impacts Weights assigned by evaluators for each
+Alternative: w1= 1, w2 = 2</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;bridge&quot;</span>, <span class="st">&quot;tunnel&quot;</span>) <span class="co">#criteria environmental impacts</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) <span class="co">#weights</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>m4</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        bridge tunnel</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge      1    0.5</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel      2    1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">=</span> x</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>table<span class="ot">=</span><span class="fu">tabela_holistica</span>(<span class="at">pesos=</span>y)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>table</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ...1     bridge tunnel CR   </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 weights   1      2     _    </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 bridge    1      0.5   _    </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 tunnel    2      1     _    </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority  0.333  0.667 0</span></span></code></pre></div>
+<p>M5 -Judgment matrix of alternatives in relation to criterion C4 -
+construction cost Weights assigned by evaluators for each Alternative:
+w1= 5, w2 = 3</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;bridge&quot;</span>, <span class="st">&quot;tunnel&quot;</span>) <span class="co">#criteria construction cost</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>) <span class="co">#weights</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>m5</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           bridge tunnel</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge 1.0000000      3</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel 0.3333333      1</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">=</span> x</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>table<span class="ot">=</span><span class="fu">tabela_holistica</span>(<span class="at">pesos=</span>y)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>table</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ...1     bridge tunnel CR   </span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 weights   5       3    _    </span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 bridge    1       3    _    </span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 tunnel    0.333   1    _    </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority  0.75    0.25 0</span></span></code></pre></div>
+</div>
+</div>
+<div id="consistency-index-and-ratio" class="section level2">
+<h2>Consistency index and ratio</h2>
+<p>If <span class="math inline">\(a_{ij}\)</span> represents the
+importance of alternative i over alternative j and <span class="math inline">\(a_{jk}\)</span> represents the importance of
+alternative j over alternative k and <span class="math inline">\(a_{ik}\)</span>, the importance of alternative i
+over alternative k, must equal <span class="math inline">\(a_{ij}a_{jk}\)</span> or <span class="math inline">\(a_{ij}a_{jk} = a_{ik}\)</span> for the judgments
+to be consistent.</p>
+<p>The consistency index of a matrix of comparisons is given by <span class="math inline">\(ic = (\lambda_{max} - n)/(n - 1)\)</span>. The
+consistency ratio (RC) is obtained by comparing the C.I. with the
+appropriate one of the following set of numbers (See Table 1.2) each of
+which is an average random consistency index derived from a sample of
+randomly generated reciprocal matrices using the scale 1/9, 1/8,…, 1,…,
+8, 9. If it is not less than 0.10, study the problem and revise the
+judgments.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#consistency index</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CI</span>(m1) </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.006873396</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">CI</span>(m2)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">CI</span>(m3)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">CI</span>(m4)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">CI</span>(m5)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#consistency ratio</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(m1) </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.007637107</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(m2)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(m3)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(m4)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(m5)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span></code></pre></div>
+<p>All the consistency ratio are less than 0.1, therefore all judgment
+matrices are considered consistent.</p>
+</div>
+<div id="priority-vectors" class="section level2">
+<h2>Priority vectors</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>lista <span class="ot">=</span> <span class="fu">list</span>(m1, m2, m3, m4, m5)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">calcula_prioridades</span>(lista)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1209627 0.5384703 0.1209627 0.2196042</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.25 0.75</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2 0.8</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.3333333 0.6666667</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.75 0.25</span></span></code></pre></div>
+<p>Each vector shows the weight of the criterio or alternative relative
+to the corresponding judgment matrix.</p>
+<p>For example, the first vector matches the m1 matrix, so it provides
+the relative weights of each criteria: 0.12 for criteria 1; 0.54 for
+criteria 2, 0.12 for criteria 3 and 0.22 for criteria 4. The second
+vector corresponds to the m2 matrix, so it provides the weights of each
+alternative when considering criterion 1: 0.25 for alternative 1 and
+0.75 for alternative 2, and so on.</p>
+</div>
+<div id="problem-has-only-one-level-of-criteria" class="section level2">
+<h2>Problem has only one level of criteria</h2>
+<p>Let be a problem with m alternatives, <span class="math inline">\(A_1, A_2, ..., A_m\)</span> and n criteria <span class="math inline">\(C_1, C_2, ..., C_n\)</span>.</p>
+<p>The first matrix produces <span class="math inline">\(P(C_i)\)</span>
+= priority of the ith criterion for i = 1, 2, …, n</p>
+<p>The second until n+1 matrix produces <span class="math inline">\(P(A_j|C_i)\)</span> = priority of the j-th
+alternative conditional on the i-th criterion in case the problem has
+only one level of criteria, j=1, 2, …, m and i=1, 2, …,n. In this
+case</p>
+<p><span class="math inline">\(P(A_j) =
+\sum_{i=1}^{n}P(A_j|C_i)P(C_i)\)</span>, <span class="math inline">\(j=1, 2, ...,m\)</span></p>
+<p>The function <strong>ahp_geral()</strong> will provide a table
+containing the marginal weights of each criterion, the conditional
+weights of each alternative given a certain criterion, the global
+weights of each alternative and a consistency ratio CR.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="15%" />
+<col width="15%" />
+<col width="7%" />
+<col width="15%" />
+<col width="4%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criteria</th>
+<th>Weights</th>
+<th>A1</th>
+<th>A2</th>
+<th>…</th>
+<th>Am</th>
+<th>CR</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Alternatives -&gt;</td>
+<td>1</td>
+<td><span class="math inline">\(P(A1)\)</span></td>
+<td><span class="math inline">\(P(A2)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am)\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C1\)</span></td>
+<td><span class="math inline">\(P(C1)\)</span></td>
+<td><span class="math inline">\(P(A1|C1)P(C1)\)</span></td>
+<td><span class="math inline">\(P(A2|C1)P(C1)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|C1)P(C1)\)</span></td>
+<td><span class="math inline">\(CR(M_1)\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(C2\)</span></td>
+<td><span class="math inline">\(P(C2)\)</span></td>
+<td><span class="math inline">\(P(A1|C2)P(C2)\)</span></td>
+<td><span class="math inline">\(P(A2|C2)P(C2)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|C2)P(C2)\)</span></td>
+<td><span class="math inline">\(CR(M_2)\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(Cn\)</span></td>
+<td><span class="math inline">\(P(Cn)\)</span></td>
+<td><span class="math inline">\(P(A1|Cn)P(Cn)\)</span></td>
+<td><span class="math inline">\(P(A2|Cn)P(Cn)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|Cn)P(Cn)\)</span></td>
+<td><span class="math inline">\(CR(M_{n+1}\)</span>)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Observe that</p>
+<p><span class="math inline">\(\sum_{j=1}^{m}P(A_j) =1\)</span>, <span class="math inline">\(\sum_{i=1}^{n}P(C_i) =1\)</span>, <span class="math inline">\(P(A_j) = \sum_{i=1}^{n}P(A_j|C_i)P(C_i)\)</span>,
+<span class="math inline">\(j=1, 2, ...,m\)</span></p>
+<p>The alternative with the highest priority value may be the decision
+maker’s final choice.</p>
+</div>
+<div id="hierarchic-synthesis-and-rank" class="section level2">
+<h2>Hierarchic Synthesis and Rank</h2>
+<p>Hierarchic synthesis is obtained by a process of weighting and adding
+down the hierarchy leading to a multilinear form.</p>
+<div id="example-2-problem-with-4-criteria-and-2-alternatives" class="section level3">
+<h3>Example 2: Problem with 4 criteria and 2 alternatives</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lista</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       life cycle maintenance cost environmental impacts</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; life cycle                     1        0.2500000                     1</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; maintenance cost               4        1.0000000                     4</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; environmental impacts          1        0.2500000                     1</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; construction cost              2        0.3333333                     2</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       construction cost</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; life cycle                          0.5</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; maintenance cost                    3.0</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; environmental impacts               0.5</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; construction cost                   1.0</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        bridge    tunnel</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge      1 0.3333333</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel      3 1.0000000</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        bridge tunnel</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge      1   0.25</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel      4   1.00</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        bridge tunnel</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge      1    0.5</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel      2    1.0</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           bridge tunnel</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bridge 1.0000000      3</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tunnel 0.3333333      1</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="fu">ahp_geral</span>(lista)</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 5</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Criteria        Weights      A      B      CR</span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 ---Alternatives   1     0.343  0.657  0.00764</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 --C1              0.121 0.0302 0.0907 0      </span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 --C2              0.538 0.108  0.431  0      </span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 --C3              0.121 0.0403 0.0806 0      </span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 --C4              0.220 0.165  0.0549 0</span></span></code></pre></div>
+</div>
+<div id="example-3-problem-with-5-criteria-and-3-alternatives" class="section level3">
+<h3>Example 3: Problem with 5 criteria and 3 alternatives</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(letters[<span class="dv">3</span>],<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="co">#criteria names C1, C2, ..., C5</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">2</span>) <span class="co">#judgments</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>m1<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(letters[<span class="dv">1</span>],<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="co">#alternatives names A1, A2, A3</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">4.4</span>,<span class="fl">5.2</span>,<span class="dv">3</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>m2<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>m3<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">4.9</span>,<span class="dv">5</span>,<span class="fl">3.3</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>m4<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">4.4</span>,<span class="fl">4.2</span>,<span class="fl">4.3</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>m5<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">5.4</span>,<span class="fl">5.2</span>,<span class="fl">5.7</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>m6<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>base<span class="ot">=</span><span class="fu">list</span>(m1, m2, m3, m4, m5, m6)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>base</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           c1 c2        c3  c4 c5</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c1 1.0000000  4 0.3333333 3.0  4</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c2 0.2500000  1 0.1666667 0.5  1</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c3 3.0000000  6 1.0000000 5.0  6</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c4 0.3333333  2 0.2000000 1.0  2</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c5 0.2500000  1 0.1666667 0.5  1</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1        a2  a3</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 0.5555556 2.4</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 1.8000000 1.0000000 3.2</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 0.4166667 0.3125000 1.0</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    a1        a2  a3</span></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1  1 0.3333333 0.5</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2  3 1.0000000 2.0</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3  2 0.5000000 1.0</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1        a2  a3</span></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 0.9090909 2.6</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 1.1000000 1.0000000 2.7</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 0.3846154 0.3703704 1.0</span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1  a2        a3</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 1.2 1.1000000</span></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 0.8333333 1.0 0.9090909</span></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 0.9090909 1.1 1.0000000</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[6]]</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1  a2        a3</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 1.2 0.7692308</span></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 0.8333333 1.0 0.6666667</span></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 1.3000000 1.5 1.0000000</span></span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a><span class="fu">calcula_prioridades</span>(base) <span class="co">#fornece somente os vetores prioridades</span></span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.25002869 0.06547834 0.50960586 0.10940877 0.06547834</span></span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.3237132 0.5272156 0.1490712</span></span>
+<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1634241 0.5396146 0.2969613</span></span>
+<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4046683 0.4366744 0.1586573</span></span>
+<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.3646121 0.3030041 0.3323838</span></span>
+<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[6]]</span></span>
+<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.3197529 0.2699673 0.4102798</span></span>
+<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(base,tabela_holistica) <span class="co">#fornece uma tabela com a matriz de comparação o vetor prioridade e o CR.</span></span>
+<span id="cb21-74"><a href="#cb21-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb21-75"><a href="#cb21-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        c1         c2        c3        c4         c5   CR</span></span>
+<span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       c1 1.0000000 4.00000000 0.3333333 3.0000000 4.00000000    _</span></span>
+<span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       c2 0.2500000 1.00000000 0.1666667 0.5000000 1.00000000    _</span></span>
+<span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       c3 3.0000000 6.00000000 1.0000000 5.0000000 6.00000000    _</span></span>
+<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       c4 0.3333333 2.00000000 0.2000000 1.0000000 2.00000000    _</span></span>
+<span id="cb21-80"><a href="#cb21-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       c5 0.2500000 1.00000000 0.1666667 0.5000000 1.00000000    _</span></span>
+<span id="cb21-81"><a href="#cb21-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 priority 0.2500287 0.06547834 0.5096059 0.1094088 0.06547834 0.02</span></span>
+<span id="cb21-82"><a href="#cb21-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-83"><a href="#cb21-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb21-84"><a href="#cb21-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2        a3   CR</span></span>
+<span id="cb21-85"><a href="#cb21-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 0.5555556 2.4000000    _</span></span>
+<span id="cb21-86"><a href="#cb21-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 1.8000000 1.0000000 3.2000000    _</span></span>
+<span id="cb21-87"><a href="#cb21-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 0.4166667 0.3125000 1.0000000    _</span></span>
+<span id="cb21-88"><a href="#cb21-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.3237132 0.5272156 0.1490712 0.01</span></span>
+<span id="cb21-89"><a href="#cb21-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-90"><a href="#cb21-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb21-91"><a href="#cb21-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2        a3   CR</span></span>
+<span id="cb21-92"><a href="#cb21-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 0.3333333 0.5000000    _</span></span>
+<span id="cb21-93"><a href="#cb21-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 3.0000000 1.0000000 2.0000000    _</span></span>
+<span id="cb21-94"><a href="#cb21-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 2.0000000 0.5000000 1.0000000    _</span></span>
+<span id="cb21-95"><a href="#cb21-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.1634241 0.5396146 0.2969613 0.01</span></span>
+<span id="cb21-96"><a href="#cb21-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-97"><a href="#cb21-97" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb21-98"><a href="#cb21-98" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2        a3 CR</span></span>
+<span id="cb21-99"><a href="#cb21-99" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 0.9090909 2.6000000  _</span></span>
+<span id="cb21-100"><a href="#cb21-100" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 1.1000000 1.0000000 2.7000000  _</span></span>
+<span id="cb21-101"><a href="#cb21-101" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 0.3846154 0.3703704 1.0000000  _</span></span>
+<span id="cb21-102"><a href="#cb21-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.4046683 0.4366744 0.1586573  0</span></span>
+<span id="cb21-103"><a href="#cb21-103" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-104"><a href="#cb21-104" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb21-105"><a href="#cb21-105" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2        a3 CR</span></span>
+<span id="cb21-106"><a href="#cb21-106" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 1.2000000 1.1000000  _</span></span>
+<span id="cb21-107"><a href="#cb21-107" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 0.8333333 1.0000000 0.9090909  _</span></span>
+<span id="cb21-108"><a href="#cb21-108" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 0.9090909 1.1000000 1.0000000  _</span></span>
+<span id="cb21-109"><a href="#cb21-109" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.3646121 0.3030041 0.3323838  0</span></span>
+<span id="cb21-110"><a href="#cb21-110" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-111"><a href="#cb21-111" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[6]]</span></span>
+<span id="cb21-112"><a href="#cb21-112" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2        a3 CR</span></span>
+<span id="cb21-113"><a href="#cb21-113" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 1.2000000 0.7692308  _</span></span>
+<span id="cb21-114"><a href="#cb21-114" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 0.8333333 1.0000000 0.6666667  _</span></span>
+<span id="cb21-115"><a href="#cb21-115" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 1.3000000 1.5000000 1.0000000  _</span></span>
+<span id="cb21-116"><a href="#cb21-116" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.3197529 0.2699673 0.4102798  0</span></span>
+<span id="cb21-117"><a href="#cb21-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-118"><a href="#cb21-118" aria-hidden="true" tabindex="-1"></a><span class="fu">ahp_geral</span>(base)</span>
+<span id="cb21-119"><a href="#cb21-119" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span id="cb21-120"><a href="#cb21-120" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Criteria        Weights      A      B      C         CR</span></span>
+<span id="cb21-121"><a href="#cb21-121" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span id="cb21-122"><a href="#cb21-122" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 ---Alternatives  1      0.359  0.441  0.201  0.0195    </span></span>
+<span id="cb21-123"><a href="#cb21-123" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 --C1             0.250  0.0809 0.132  0.0373 0.00863   </span></span>
+<span id="cb21-124"><a href="#cb21-124" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 --C2             0.0655 0.0107 0.0353 0.0194 0.00793   </span></span>
+<span id="cb21-125"><a href="#cb21-125" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 --C3             0.510  0.206  0.223  0.0809 0.000317  </span></span>
+<span id="cb21-126"><a href="#cb21-126" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 --C4             0.109  0.0399 0.0332 0.0364 0.00000660</span></span>
+<span id="cb21-127"><a href="#cb21-127" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 --C5             0.0655 0.0209 0.0177 0.0269 0.000147</span></span></code></pre></div>
+</div>
+</div>
+<div id="table" class="section level2">
+<h2>Table</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">=</span> <span class="fu">ahp_geral</span>(base)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">transforma_tabela</span>(table1)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Criteria        Weights A      B      C      CR   </span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 ---Alternatives 100%    35.87% 44.05% 20.08% 1.95%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 --C1            25%     8.09%  13.18% 3.73%  0.86%</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 --C2            6.55%   1.07%  3.53%  1.94%  0.79%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 --C3            50.96%  20.62% 22.25% 8.09%  0.03%</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 --C4            10.94%  3.99%  3.32%  3.64%  0%   </span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 --C5            6.55%   2.09%  1.77%  2.69%  0.01%</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formata_tabela</span>(table1)</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:left;">
+Criteria
+</th>
+<th style="text-align:center;">
+Weights
+</th>
+<th style="text-align:center;">
+A
+</th>
+<th style="text-align:center;">
+B
+</th>
+<th style="text-align:center;">
+C
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">—Alternatives</span>
+</td>
+<td style="text-align:center;">
+<span>100% </span>
+</td>
+<td style="text-align:center;">
+<span>35.87%</span>
+</td>
+<td style="text-align:center;">
+<span style="font-weight: bold; font-size: 130%">44.05%</span>
+</td>
+<td style="text-align:center;">
+<span>20.08%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.95%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C1 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b0e4c6; border-radius: 4px; color: black; display: block">25%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #79adf0; border-radius: 4px; color: black; display: block">8.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #4d91e5; border-radius: 4px; color: black; display: block">13.18%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9fc5f9; border-radius: 4px; color: black; display: block">3.73%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.86%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C2 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #def7e9; border-radius: 4px; color: black; display: block">6.55%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b6d4ff; border-radius: 4px; color: black; display: block">1.07%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a0c6f9; border-radius: 4px; color: black; display: block">3.53%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #aecffd; border-radius: 4px; color: black; display: block">1.94%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.79%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C3 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #71ca97; border-radius: 4px; color: black; display: block">50.96%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #0e68d6; border-radius: 4px; color: black; display: block">20.62%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #0060d3; border-radius: 4px; color: black; display: block">22.25%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #79adf0; border-radius: 4px; color: black; display: block">8.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.03%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C4 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #d3f2e0; border-radius: 4px; color: black; display: block">10.94%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9cc4f8; border-radius: 4px; color: black; display: block">3.99%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a2c7fa; border-radius: 4px; color: black; display: block">3.32%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9fc5f9; border-radius: 4px; color: black; display: block">3.64%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0%
+</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C5 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #def7e9; border-radius: 4px; color: black; display: block">6.55%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #adcefc; border-radius: 4px; color: black; display: block">2.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #afd0fd; border-radius: 4px; color: black; display: block">1.77%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a8cbfb; border-radius: 4px; color: black; display: block">2.69%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.01%</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formata_tabela</span>(table1, <span class="at">cores =</span> <span class="st">&quot;GRAY&quot;</span>)</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:left;">
+Criteria
+</th>
+<th style="text-align:center;">
+Weights
+</th>
+<th style="text-align:center;">
+A
+</th>
+<th style="text-align:center;">
+B
+</th>
+<th style="text-align:center;">
+C
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">—Alternatives</span>
+</td>
+<td style="text-align:center;">
+<span>100% </span>
+</td>
+<td style="text-align:center;">
+<span>35.87%</span>
+</td>
+<td style="text-align:center;">
+<span style="font-weight: bold; font-size: 130%">44.05%</span>
+</td>
+<td style="text-align:center;">
+<span>20.08%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">1.95%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C1 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #7d7d7d; border-radius: 4px; color: white; display: block">25%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #838383; border-radius: 4px; color: white; display: block">8.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #707070; border-radius: 4px; color: white; display: block">13.18%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #949494; border-radius: 4px; color: white; display: block">3.73%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">0.86%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C2 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">6.55%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">1.07%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #949494; border-radius: 4px; color: white; display: block">3.53%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9a9a9a; border-radius: 4px; color: white; display: block">1.94%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">0.79%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C3 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #4f4f4f; border-radius: 4px; color: white; display: block">50.96%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #555555; border-radius: 4px; color: white; display: block">20.62%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #4f4f4f; border-radius: 4px; color: white; display: block">22.25%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #838383; border-radius: 4px; color: white; display: block">8.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">0.03%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C4 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #969696; border-radius: 4px; color: white; display: block">10.94%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #939393; border-radius: 4px; color: white; display: block">3.99%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #959595; border-radius: 4px; color: white; display: block">3.32%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #949494; border-radius: 4px; color: white; display: block">3.64%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">0%
+</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C5 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">6.55%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9a9a9a; border-radius: 4px; color: white; display: block">2.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9b9b9b; border-radius: 4px; color: white; display: block">1.77%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #979797; border-radius: 4px; color: white; display: block">2.69%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9e9e9e; border-radius: 4px; color: white; display: block">0.01%</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formata_tabela</span>(table1, <span class="at">cores =</span> <span class="st">&quot;WHITE&quot;</span>)</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:left;">
+Criteria
+</th>
+<th style="text-align:center;">
+Weights
+</th>
+<th style="text-align:center;">
+A
+</th>
+<th style="text-align:center;">
+B
+</th>
+<th style="text-align:center;">
+C
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">—Alternatives</span>
+</td>
+<td style="text-align:center;">
+<span>100% </span>
+</td>
+<td style="text-align:center;">
+<span>35.87%</span>
+</td>
+<td style="text-align:center;">
+<span style="font-weight: bold; font-size: 130%">44.05%</span>
+</td>
+<td style="text-align:center;">
+<span>20.08%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">1.95%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C1 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">25%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">8.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">13.18%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">3.73%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">0.86%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C2 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">6.55%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">1.07%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">3.53%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">1.94%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">0.79%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C3 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">50.96%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">20.62%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">22.25%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">8.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">0.03%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C4 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">10.94%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">3.99%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">3.32%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">3.64%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">0%
+</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C5 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">6.55%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">2.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">1.77%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">2.69%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #ffffff; border-radius: 4px; color: black; display: block">0.01%</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ranque</span>(table1)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Ranque Alternativas Pesos</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      1 B            0.441</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      2 A            0.359</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      3 C            0.201</span></span></code></pre></div>
+</div>
+<div id="criteria-and-sub-criteria" class="section level2">
+<h2>Criteria and sub-criteria</h2>
+<p>When the problem has one level of criteria and a second level of
+subcriteria, it will be necessary to map the hierarchical structure as
+follows:</p>
+<p>Let <span class="math inline">\(n\)</span> be the number of criteria
+in the problem with <span class="math inline">\(m\)</span> alternatives
+and <span class="math inline">\(n_{i}\)</span> the number of
+sub-criteria of the ith criterion, so let’s define the mapping vector
+<span class="math inline">\(map = c(n_1, n_2, ..., n_n)\)</span>.</p>
+<p>This mapping must match the list of paired matrices <span class="math inline">\(M_1, M_2, ..., M_h\)</span>, as follows:</p>
+<ul>
+<li>M1 must be an <span class="math inline">\(nxn\)</span> matrix
+comparing criteria</li>
+<li>If <span class="math inline">\(n_1=0\)</span> M2 must be an <span class="math inline">\(mxm\)</span> matrix comparing the alternatives; if
+not there should be a <span class="math inline">\(n_ixn_i\)</span>
+matrix comparing the sub-criteria in the light of criterion 1 and a
+sequence of <span class="math inline">\(n_1\)</span> <span class="math inline">\(mxm\)</span> matrices comparing the alternatives
+in the light of each sub-criterion of the current criterion, in this
+case there will be <span class="math inline">\(n_1+1\)</span> matrices:
+<span class="math inline">\(M_2, M_3, ..., M_{n1+2}\)</span></li>
+<li>For <span class="math inline">\(i, i=1,...,n\)</span>, if <span class="math inline">\(n_i=0\)</span> the next matrix must be an <span class="math inline">\(mxm\)</span> matrix comparing the alternatives; if
+not there should be a <span class="math inline">\(n_ixn_i\)</span>
+matrix comparing the sub-criteria in the light of criterion i and a
+sequence of <span class="math inline">\(n_i\)</span> <span class="math inline">\(mxm\)</span> matrices comparing the alternatives
+in the light of each sub-criterion of the current criterion, in this
+case there will be <span class="math inline">\(n_i+1\)</span> matrices:
+<span class="math inline">\(M_{i1}, M_{i2}, ..., M_{ini+1}\)</span></li>
+</ul>
+<p>For example suppose a problem with n=5 criteria, m=2 alternatives and
+<span class="math inline">\(n_1=0, n_2=2, n_3=4, n_4=0, n_5=0\)</span>
+the number of sub-criterion for each corresponding criterion. So,</p>
+<p>M1 will be a 5x5 matrix comparing all five criteria</p>
+<p>M2 will be a 2x2 matrix comparing all two alternatives in the light
+of criterion 1 because n1=0</p>
+<p>M3 will be a 2x2 matrix comparing all two sub-criteria of criteria 2,
+because n2=2</p>
+<p>M4 will be a 2x2 matrix comparing all two alternatives in the light
+of sub-criterion 1 of criteria 2</p>
+<p>M5 will be a 2x2 matrix comparing all two alternatives in the light
+of sub-criterion 2 of criteria 2</p>
+<p>M6 will be a 4x4 matrix comparing all four sub-criteria of criteria
+3, because n3=4</p>
+<p>M7 will be a 2x2 matrix comparing all two alternatives in the light
+of sub-criterion 1 of criteria 3</p>
+<p>M8 will be a 2x2 matrix comparing all two alternatives in the light
+of sub-criterion 2 of criteria 3</p>
+<p>M9 will be a 2x2 matrix comparing all two alternatives in the light
+of sub-criterion 3 of criteria 3</p>
+<p>M10 will be a 2x2 matrix comparing all two alternatives in the light
+of sub-criterion 4 of criteria 3</p>
+<p>M11 will be a 2x2 matrix comparing all two alternatives in the light
+of criterion 4 because n4=0</p>
+<p>M12 will be a 2x2 matrix comparing all two alternatives in the light
+of criterion 5 because n5=0</p>
+<p><strong>It is extremely important that the list of matrices be in
+this order because the method takes this matched mapping into
+account.</strong></p>
+<div id="example-4-two-criteria-with-two-subcriteria" class="section level3">
+<h3>Example 4: two criteria with two subcriteria</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#two criteria, each with two subcriteria</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>map <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#x with names and y with holistic judgment</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(letters[<span class="dv">3</span>],<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="co">#2 criteria</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">7</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>m1<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co"># matrix compare two criteria</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;SC1&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>m2<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co"># matrix compare two subcriteria of criteria 1</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(letters[<span class="dv">1</span>],<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>m3<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co">#alternatives for subcriteria 1 - criteria 1</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">4.9</span>,<span class="dv">5</span>, <span class="dv">2</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>m4<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co">#alternatives for subcriteria 2 - criteria 1</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">4.4</span>,<span class="dv">8</span>, <span class="dv">6</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;SC2&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>m5<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co">#matrix compare two subcriteria of criteria 2</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">5.4</span>,<span class="fl">5.2</span>, <span class="dv">1</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">paste0</span>(letters[<span class="dv">1</span>],<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>m6<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co">#alternatives for subcriteria 1 - criteria 2</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="dv">9</span>,<span class="fl">5.2</span>, <span class="dv">3</span>)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>m7<span class="ot">=</span><span class="fu">matrix_ahp</span>(x,y) <span class="co">#alternatives for subcriteria 2 - criteria 2</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>base<span class="ot">=</span><span class="fu">list</span>(m1, m2, m3, m4, m5, m6, m7)</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>base</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    c1        c2</span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c1  1 0.3333333</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c2  3 1.0000000</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      SC11      SC12</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SC11    1 0.3333333</span></span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SC12    3 1.0000000</span></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    a1        a2   a3</span></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1  1 0.3333333 0.25</span></span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2  3 1.0000000 0.50</span></span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3  4 2.0000000 1.00</span></span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1        a2  a3</span></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 0.9090909 3.9</span></span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 1.1000000 1.0000000 4.0</span></span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 0.2564103 0.2500000 1.0</span></span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      SC21      SC22</span></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SC21  1.0 0.2173913</span></span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SC22  4.6 1.0000000</span></span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[6]]</span></span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1        a2  a3</span></span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 1.2000000 5.4</span></span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 0.8333333 1.0000000 5.2</span></span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 0.1851852 0.1923077 1.0</span></span>
+<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[7]]</span></span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           a1     a2  a3</span></span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a1 1.0000000 4.8000 7.0</span></span>
+<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a2 0.2083333 1.0000 3.2</span></span>
+<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a3 0.1428571 0.3125 1.0</span></span></code></pre></div>
+</div>
+</div>
+<div id="problem-has-two-levels-of-criteria" class="section level2">
+<h2>Problem has two levels of criteria</h2>
+<p>Let be a problem with m alternatives, <span class="math inline">\(A_1, A_2, ..., A_m\)</span>, n criteria <span class="math inline">\(C_1, C_2, ..., C_n\)</span> with n_k_i
+sub-criteria corresponding to the ith criterion.</p>
+<p>The first matrix produces <span class="math inline">\(P(C_i)\)</span>
+or <span class="math inline">\(P(SCi_k|C_i)\)</span> = priority of the
+ith criterion or kth subcriterion of ith criterion for <span class="math inline">\(i = 1, 2, ..., n\)</span> and <span class="math inline">\(k = 1, ..., n_{i}\)</span>.</p>
+<p>The next matrices produce comparisons of criteria versus alternatives
+or criteria versus subcriteria followed by comparisons of alternatives
+versus each subcriteria corresponding to the parent criteria, according
+to the established mapping, <span class="math inline">\(map = c(n_{k1},
+n_{k2}, ..., n_{kn})\)</span>. We will consider two situations:</p>
+<ul>
+<li>For each criterion i with <span class="math inline">\(n_{i}\)</span>
+&gt; 0 we will have <span class="math inline">\(n_i\)</span> subcriteria
+<span class="math inline">\(SC_{i1}, SC_{i2},...SC_{in_i}\)</span>:</li>
+</ul>
+<p><span class="math inline">\(C_i = SC_{i1}\cup SC_{i2}\cup...\cup
+SC_{in_i}\)</span></p>
+<p><span class="math inline">\(P(SC_{ik}) =
+P(SC_{ik}|C_i)P(C_i)\)</span>, <span class="math inline">\(k=1, 2,
+...,n_{i}, i=1,2,...n\)</span></p>
+<p><span class="math inline">\(P(C_i) =
+\sum_{k=1}^{n_{i}}P(SC_{ik})\)</span>, <span class="math inline">\(i=1,
+2, ...,n\)</span></p>
+<p><span class="math inline">\(P(A_j|C_i) =
+\sum_{k=1}^{n_i}P(Aj|SCik)P(SCik|Ci)\)</span></p>
+<p><span class="math inline">\(P(A_j) =
+\sum_{i=1}^{n}P(A_j|C_i)P(C_i)\)</span>, <span class="math inline">\(j=1, 2, ...,m\)</span></p>
+<ul>
+<li>For otherwise (each criterion i with <span class="math inline">\(n_{i}\)</span> = 0) we have the same expression
+for a one level of criterion:</li>
+</ul>
+<p><span class="math inline">\(P(A_j) =
+\sum_{i=1}^{n}P(A_j|C_i)P(C_i)\)</span>, <span class="math inline">\(j=1, 2, ...,m\)</span></p>
+<p>The function <strong>ahp_s()</strong> will provide a table containing
+the marginal weights of each criterion/subcriterion, the conditional
+weights of each alternative given a certain criterion/sucriterion and
+the global weights of each alternative.</p>
+<table>
+<colgroup>
+<col width="21%" />
+<col width="12%" />
+<col width="17%" />
+<col width="17%" />
+<col width="6%" />
+<col width="17%" />
+<col width="3%" />
+<col width="3%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criteria</th>
+<th>Weights</th>
+<th>A1</th>
+<th>A2</th>
+<th>…</th>
+<th>Am</th>
+<th>CR</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Alternatives -&gt;</td>
+<td>1</td>
+<td><span class="math inline">\(P(A1)\)</span></td>
+<td><span class="math inline">\(P(A2)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am)\)</span></td>
+<td><span class="math inline">\(CR(M_1)\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(SC_{11}\)</span></td>
+<td><span class="math inline">\(P(SC_{11}|C1)\)</span></td>
+<td><span class="math inline">\(P(A1|SC_{11})P(SC_{11}|C1)\)</span></td>
+<td><span class="math inline">\(P(A2|SC11)P(SC11|C1)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|SC11)P(SC11|C1)\)</span></td>
+<td><span class="math inline">\(CR(M_3)\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(SC_{12}\)</span></td>
+<td><span class="math inline">\(P(SC_{12}|C1)\)</span></td>
+<td><span class="math inline">\(P(A1|SC_{12})P(SC_{12}|C1)\)</span></td>
+<td><span class="math inline">\(P(A2|SC_{12})P(SC_{12}|C1)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|SC_{12})P(SC_{12}|C1)\)</span></td>
+<td><span class="math inline">\(CR(M_4)\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(SC_{1n_1}\)</span></td>
+<td><span class="math inline">\(P(SC_{1n_1}|C1)\)</span></td>
+<td><span class="math inline">\(P(A1|SC_{1n_1})P(SC_{1n_1}|C1)\)</span></td>
+<td><span class="math inline">\(P(A2|SC_{1n_1})P(SC_{1n_1}|C1)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|SC_{1n_1})P(SC_{1n_1}|C1)\)</span></td>
+<td><span class="math inline">\(CR(M_{2+n_1})\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C1\)</span></td>
+<td><span class="math inline">\(P(C1)\)</span></td>
+<td><span class="math inline">\(P(A1|C1)P(C1)\)</span></td>
+<td><span class="math inline">\(P(A2|C1)P(C1)\)</span></td>
+<td>…</td>
+<td><span class="math inline">\(P(Am|C1)P(C1)\)</span></td>
+<td><span class="math inline">\(CR(M_{2})\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Cn\)</span></td>
+<td><span class="math inline">\(P(Cn)\)</span></td>
+<td><span class="math inline">\(P(A1|Cn)P(Cn)\)</span></td>
+<td><span class="math inline">\(P(A2|Cn)P(Cn)\)</span></td>
+<td></td>
+<td><span class="math inline">\(P(Am|Cn)P(Cn)\)</span></td>
+<td><span class="math inline">\(CR(M_{1+n+n_1+...+n_n})\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Observe that</p>
+<p><span class="math inline">\(\sum_{j=1}^{m}P(A_j) =1\)</span>, <span class="math inline">\(\sum_{i=1}^{n}P(C_i) =1\)</span>, <span class="math inline">\(\sum_{k=1}^{n_i}P(SC_{ik}|Ci) =1\)</span>, <span class="math inline">\(P(C_i) = \sum_{k=1}^{n_{i}}P(SC_{ik})\)</span>,
+<span class="math inline">\(i=1, 2, ...,n\)</span> and <span class="math inline">\(P(A_j) = \sum_{i=1}^{n}P(A_j|C_i)P(C_i)\)</span>,
+<span class="math inline">\(j=1, 2, ...,m\)</span></p>
+<p>The alternative with the highest priority value may be the decision
+maker’s final choice.</p>
+</div>
+<div id="hierarchic-synthesis-and-rank-1" class="section level2">
+<h2>Hierarchic Synthesis and Rank</h2>
+<p>Hierarchic synthesis is obtained by a process of weighting and adding
+down the hierarchy leading to a multilinear form.</p>
+<div id="example-5-problem-with-2-criteria-two-subcriteria-and-3-alternatives" class="section level3">
+<h3>Example 5: Problem with 2 criteria, two subcriteria and 3
+alternatives</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Priority vector and CR</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">calcula_prioridades</span>(base) <span class="co">#fornece somente os vetores prioridades</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.25 0.75</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.25 0.75</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1219572 0.3196183 0.5584245</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4278814 0.4598156 0.1123030</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1785714 0.8214286</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[6]]</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.48757884 0.42637711 0.08604404</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[7]]</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.72429277 0.19608181 0.07962542</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(base,tabela_holistica) <span class="co">#fornece uma tabela com a matriz de comparação o vetor prioridade e o CR.</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1   c1        c2 CR</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       c1 1.00 0.3333333  _</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       c2 3.00 1.0000000  _</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 priority 0.25 0.7500000  0</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1 SC11      SC12 CR</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     SC11 1.00 0.3333333  _</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     SC12 3.00 1.0000000  _</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 priority 0.25 0.7500000  0</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2        a3   CR</span></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 0.3333333 0.2500000    _</span></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 3.0000000 1.0000000 0.5000000    _</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 4.0000000 2.0000000 1.0000000    _</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.1219572 0.3196183 0.5584245 0.02</span></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2       a3 CR</span></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 0.9090909 3.900000  _</span></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 1.1000000 1.0000000 4.000000  _</span></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 0.2564103 0.2500000 1.000000  _</span></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.4278814 0.4598156 0.112303  0</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[5]]</span></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1      SC21      SC22 CR</span></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     SC21 1.0000000 0.2173913  _</span></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     SC22 4.6000000 1.0000000  _</span></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 priority 0.1785714 0.8214286  0</span></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[6]]</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2         a3 CR</span></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 1.2000000 5.40000000  _</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 0.8333333 1.0000000 5.20000000  _</span></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 0.1851852 0.1923077 1.00000000  _</span></span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.4875788 0.4263771 0.08604404  0</span></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[7]]</span></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       ...1        a1        a2         a3   CR</span></span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       a1 1.0000000 4.8000000 7.00000000    _</span></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       a2 0.2083333 1.0000000 3.20000000    _</span></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       a3 0.1428571 0.3125000 1.00000000    _</span></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 priority 0.7242928 0.1960818 0.07962542 0.06</span></span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="fu">ahp_s</span>(base,map)</span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 6</span></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   criteria       Weithts     A1     A2     A3       CR</span></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Alternatives-&gt;   1     0.599  0.284  0.117  0       </span></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 --SC11           0.25  0.0305 0.0799 0.140  0.0158  </span></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 --SC12           0.75  0.321  0.345  0.0842 0.000469</span></span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 -C1              0.25  0.0879 0.106  0.0560 0       </span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 --SC21           0.179 0.0871 0.0761 0.0154 0.00200 </span></span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 --SC22           0.821 0.595  0.161  0.0654 0.0595  </span></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 -C2              0.75  0.512  0.178  0.0606 0</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">=</span> <span class="fu">ahp_s</span>(base,map)</span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a><span class="fu">transforma_tabela</span>(tb)</span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 6</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   criteria       Weithts A1     A2     A3     CR   </span></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;</span></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Alternatives-&gt; 100%    59.94% 28.41% 11.65% 0%   </span></span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 --SC11         25%     3.05%  7.99%  13.96% 1.58%</span></span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 --SC12         75%     32.09% 34.49% 8.42%  0.05%</span></span>
+<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 -C1            25%     8.79%  10.62% 5.6%   0%   </span></span>
+<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 --SC21         17.86%  8.71%  7.61%  1.54%  0.2% </span></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 --SC22         82.14%  59.5%  16.11% 6.54%  5.95%</span></span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 -C2            75%     51.15% 17.79% 6.06%  0%</span></span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a><span class="fu">formata_tabela</span>(tb)</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:left;">
+criteria
+</th>
+<th style="text-align:center;">
+Weithts
+</th>
+<th style="text-align:center;">
+A1
+</th>
+<th style="text-align:center;">
+A2
+</th>
+<th style="text-align:center;">
+A3
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Alternatives-&gt;
+</td>
+<td style="text-align:center;">
+<span>100% </span>
+</td>
+<td style="text-align:center;">
+<span style="font-weight: bold; font-size: 130%">59.94%</span>
+</td>
+<td style="text-align:center;">
+<span>28.41%</span>
+</td>
+<td style="text-align:center;">
+<span>11.65%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0%
+</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+–SC11
+</td>
+<td style="text-align:center;">
+<span style="background-color: #d1f2df; border-radius: 4px; color: black; display: block">25%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d0fd; border-radius: 4px; color: black; display: block">3.05%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a1c7fa; border-radius: 4px; color: black; display: block">7.99%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #8fbbf5; border-radius: 4px; color: black; display: block">13.96%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.58%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+–SC12
+</td>
+<td style="text-align:center;">
+<span style="background-color: #7dcea0; border-radius: 4px; color: black; display: block">75%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #5696e7; border-radius: 4px; color: black; display: block">32.09%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #4e92e5; border-radius: 4px; color: black; display: block">34.49%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a0c6f9; border-radius: 4px; color: black; display: block">8.42%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.05%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C1
+</td>
+<td style="text-align:center;">
+<span style="background-color: #d1f2df; border-radius: 4px; color: black; display: block">25%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9fc5f9; border-radius: 4px; color: black; display: block">8.79%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #99c1f8; border-radius: 4px; color: black; display: block">10.62%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a9cbfb; border-radius: 4px; color: black; display: block">5.6%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0%
+</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+–SC21
+</td>
+<td style="text-align:center;">
+<span style="background-color: #def7e9; border-radius: 4px; color: black; display: block">17.86%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9fc5f9; border-radius: 4px; color: black; display: block">8.71%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a2c7fa; border-radius: 4px; color: black; display: block">7.61%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b6d4ff; border-radius: 4px; color: black; display: block">1.54%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.2%
+</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+–SC22
+</td>
+<td style="text-align:center;">
+<span style="background-color: #71ca97; border-radius: 4px; color: black; display: block">82.14%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #0060d3; border-radius: 4px; color: black; display: block">59.5%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #88b6f3; border-radius: 4px; color: black; display: block">16.11%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a6c9fb; border-radius: 4px; color: black; display: block">6.54%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">5.95%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C2
+</td>
+<td style="text-align:center;">
+<span style="background-color: #7dcea0; border-radius: 4px; color: black; display: block">75%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #1a70d9; border-radius: 4px; color: black; display: block">51.15%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #82b3f2; border-radius: 4px; color: black; display: block">17.79%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a7cafb; border-radius: 4px; color: black; display: block">6.06%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0%
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="comparing-ahp_geral-and-ahp_s-with-one-level" class="section level2">
+<h2>Comparing ahp_geral and ahp_s with one level</h2>
+<p>The <strong>ahp_geral()</strong> function constructs the summary
+table equal from <strong>ahp_s</strong>, for problem with no
+subcriteria. Anyway, both produce the criteria and alternative weights,
+in this respect the functions return the same value when problem has one
+level of criteria. We recommend using ahp_s when the problem has
+subcriteria.</p>
+<div id="example-6" class="section level3">
+<h3>Example 6</h3>
+<p>Consider the problem with 6 criteria and 4 alternatives</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">3</span>) <span class="co">#holistcs weights for compare 6 criteria</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>p2<span class="ot">=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>) <span class="co">#holistcs weights for compare 4 alternatives for criterion 1</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>p3<span class="ot">=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">7</span>) <span class="co">#holistcs weights for compare 4 alternatives for criterion 2</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>p4<span class="ot">=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="co">#holistcs weights for compare 4 alternatives for criterion 3</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>p5<span class="ot">=</span><span class="fu">c</span>(<span class="fl">3.4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="co">#holistcs weights for compare 4 alternatives for criterion 4</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>p6<span class="ot">=</span><span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="fl">2.5</span>) <span class="co">#holistcs weights for compare 4 alternatives for criterion 5</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>p7<span class="ot">=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="fl">1.8</span>) <span class="co">#holistcs weights for compare 4 alternatives for criterion 6</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>x1<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;C&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;A&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x1,p1)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,p2)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,p3)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,p4)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,p5)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>m6 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,p6)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>m7 <span class="ot">=</span> <span class="fu">matrix_ahp</span>(x,p7)</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>base<span class="ot">=</span><span class="fu">list</span>(m1,m2, m3, m4, m5, m6, m7)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="fu">formata_tabela</span>(<span class="fu">ahp_geral</span>(base))</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:left;">
+Criteria
+</th>
+<th style="text-align:center;">
+Weights
+</th>
+<th style="text-align:center;">
+A
+</th>
+<th style="text-align:center;">
+B
+</th>
+<th style="text-align:center;">
+C
+</th>
+<th style="text-align:center;">
+D
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">—Alternatives</span>
+</td>
+<td style="text-align:center;">
+<span>100% </span>
+</td>
+<td style="text-align:center;">
+<span style="font-weight: bold; font-size: 130%">40.13%</span>
+</td>
+<td style="text-align:center;">
+<span>23.5%</span>
+</td>
+<td style="text-align:center;">
+<span>19.61%</span>
+</td>
+<td style="text-align:center;">
+<span>16.77%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.98%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C1 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #d7f4e3; border-radius: 4px; color: black; display: block">6.41%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d1fd; border-radius: 4px; color: black; display: block">1.03%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b5d3fe; border-radius: 4px; color: black; display: block">0.61%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #aaccfc; border-radius: 4px; color: black; display: block">1.78%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a0c6f9; border-radius: 4px; color: black; display: block">2.99%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.15%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C2 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b8e7cc; border-radius: 4px; color: black; display: block">15.96%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d0fd; border-radius: 4px; color: black; display: block">1.04%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #70a7ee; border-radius: 4px; color: black; display: block">8.4%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d0fd; border-radius: 4px; color: black; display: block">1.04%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #8ab8f4; border-radius: 4px; color: black; display: block">5.48%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.35%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C3 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9bdbb6; border-radius: 4px; color: black; display: block">25.04%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #4b90e5; border-radius: 4px; color: black; display: block">12.62%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a6cafb; border-radius: 4px; color: black; display: block">2.23%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #74aaef; border-radius: 4px; color: black; display: block">7.97%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a6cafb; border-radius: 4px; color: black; display: block">2.23%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.03%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C4 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #def7e9; border-radius: 4px; color: black; display: block">4.28%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b0d0fd; border-radius: 4px; color: black; display: block">1.17%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #abcdfc; border-radius: 4px; color: black; display: block">1.72%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b6d4ff; border-radius: 4px; color: black; display: block">0.5%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b2d1fe; border-radius: 4px; color: black; display: block">0.89%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.42%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C5 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #71ca97; border-radius: 4px; color: black; display: block">38.25%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #0060d3; border-radius: 4px; color: black; display: block">21.19%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #68a2ec; border-radius: 4px; color: black; display: block">9.27%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9cc3f8; border-radius: 4px; color: black; display: block">3.37%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #93bef6; border-radius: 4px; color: black; display: block">4.42%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.74%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="color: grey; font-weight: bold">–C6 </span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #cbefdb; border-radius: 4px; color: black; display: block">10.06%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9fc5f9; border-radius: 4px; color: black; display: block">3.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #afcffd; border-radius: 4px; color: black; display: block">1.28%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #8ebaf5; border-radius: 4px; color: black; display: block">4.96%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b3d2fe; border-radius: 4px; color: black; display: block">0.74%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">2.04%</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formata_tabela</span>(<span class="fu">ahp_s</span>(base, <span class="at">map=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)))</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:left;">
+criteria
+</th>
+<th style="text-align:center;">
+Weithts
+</th>
+<th style="text-align:center;">
+A1
+</th>
+<th style="text-align:center;">
+A2
+</th>
+<th style="text-align:center;">
+A3
+</th>
+<th style="text-align:center;">
+A4
+</th>
+<th style="text-align:center;">
+CR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Alternatives-&gt;
+</td>
+<td style="text-align:center;">
+<span>100% </span>
+</td>
+<td style="text-align:center;">
+<span style="font-weight: bold; font-size: 130%">40.13%</span>
+</td>
+<td style="text-align:center;">
+<span>23.5%</span>
+</td>
+<td style="text-align:center;">
+<span>19.61%</span>
+</td>
+<td style="text-align:center;">
+<span>16.77%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.98%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C1
+</td>
+<td style="text-align:center;">
+<span style="background-color: #d7f4e3; border-radius: 4px; color: black; display: block">6.41%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d1fd; border-radius: 4px; color: black; display: block">1.03%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b5d3fe; border-radius: 4px; color: black; display: block">0.61%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #aaccfc; border-radius: 4px; color: black; display: block">1.78%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a0c6f9; border-radius: 4px; color: black; display: block">2.99%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.15%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C2
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b8e7cc; border-radius: 4px; color: black; display: block">15.96%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d0fd; border-radius: 4px; color: black; display: block">1.04%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #70a7ee; border-radius: 4px; color: black; display: block">8.4%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b1d0fd; border-radius: 4px; color: black; display: block">1.04%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #8ab8f4; border-radius: 4px; color: black; display: block">5.48%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.35%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C3
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9bdbb6; border-radius: 4px; color: black; display: block">25.04%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #4b90e5; border-radius: 4px; color: black; display: block">12.62%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a6cafb; border-radius: 4px; color: black; display: block">2.23%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #74aaef; border-radius: 4px; color: black; display: block">7.97%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #a6cafb; border-radius: 4px; color: black; display: block">2.23%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.03%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C4
+</td>
+<td style="text-align:center;">
+<span style="background-color: #def7e9; border-radius: 4px; color: black; display: block">4.28%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b0d0fd; border-radius: 4px; color: black; display: block">1.17%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #abcdfc; border-radius: 4px; color: black; display: block">1.72%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b6d4ff; border-radius: 4px; color: black; display: block">0.5%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b2d1fe; border-radius: 4px; color: black; display: block">0.89%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">0.42%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C5
+</td>
+<td style="text-align:center;">
+<span style="background-color: #71ca97; border-radius: 4px; color: black; display: block">38.25%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #0060d3; border-radius: 4px; color: black; display: block">21.19%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #68a2ec; border-radius: 4px; color: black; display: block">9.27%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9cc3f8; border-radius: 4px; color: black; display: block">3.37%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #93bef6; border-radius: 4px; color: black; display: block">4.42%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">1.74%</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-C6
+</td>
+<td style="text-align:center;">
+<span style="background-color: #cbefdb; border-radius: 4px; color: black; display: block">10.06%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #9fc5f9; border-radius: 4px; color: black; display: block">3.09%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #afcffd; border-radius: 4px; color: black; display: block">1.28%</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #8ebaf5; border-radius: 4px; color: black; display: block">4.96%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #b3d2fe; border-radius: 4px; color: black; display: block">0.74%
+</span>
+</td>
+<td style="text-align:center;">
+<span style="background-color: #B0FFD5; border-radius: 4px; color: black; display: block">2.04%</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Alcoforado, L.F. (2021) Utilizando a Linguagem R: conceitos,
+manipulação, visualização, Modelagem e Elaboração de Relatório, Alta
+Books, Rio de Janeiro.</p>
+<p>Godoi, W.C. (2014). Método de construção das matrizes de julgamento
+paritário no AHP – método de julgamento holístico. Revista Gestão
+Industrial, ISSN 1808-0448 / v. 10, n. 03: p.474- 493, D.O.I:
+10.3895/gi.v10i3.1970</p>
+<p>Longo, O.C., Alcoforado, L.F., Levy, A (2022). Utilização do pacote
+AHP na tomada de decisão. In IX Xornada de Usuarios de R en Galicia,</p>
+<p>Oliveira, L.S., AHP, Github.com. (2020) URL = <a href="https://github.com/Lyncoln/AHP" class="uri">https://github.com/Lyncoln/AHP</a>, Acesso em
+20/09/2022.</p>
+<p>Oliveira, L.S., Alcoforado, L.F., Ross, S.D., Simão, A.S. (2019).
+Implementando a AHP com R. Anais do SER, ISSN 2526-7299, v.4, n.2. URL:
+<a href="https://periodicos.uff.br/anaisdoser/article/view/29331" class="uri">https://periodicos.uff.br/anaisdoser/article/view/29331</a></p>
+<p>Saaty, T.L., Vargas, L.G. (2012), Models, Methods, Concepts and
+Applications of the Analytic Hierarchy Process, Second Edition,
+Springer, New York.</p>
+<p>Triantaphyllou, E., Shu, B., Nieto Sanchez, S., Ray, T. (1998).
+Multi-Criteria Decision Making: An Opera-tions Research Approach.
+Encyclopedia of Electrical and Electronics Engineering, (J.G. Webster,
+Ed.), John Wiley &amp; Sons, New York, NY, Vol. 15, pp. 175-186.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

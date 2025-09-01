@@ -1,0 +1,10 @@
+year <- 2024
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Misc",
+         title = "{alcyon}: An R package for Spatial Network Analysis",
+         author = "Petros Koutsolampros",
+         year = year,
+         note = note,
+         version = meta$Version,
+         url = "https://github.com/spatialnous/alcyon")

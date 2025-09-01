@@ -1,0 +1,17 @@
+f64358f132288b479d4fb88dfac8d900 *DESCRIPTION
+6ef74d08305a2773deec6425d625cf72 *LICENSE
+f270598920834c622bf2f3400fe4e966 *NAMESPACE
+c3707403798a26e24a67ede6ba933eef *R/AirScreen-package.R
+f901e2c58d8574aade7e8b435867b275 *R/Air_methods.R
+81051bcc2cf1bedf378224b0a93e2877 *README.md
+cb4924f3573383fca290a0a8e2ca5294 *build/partial.rdb
+9f5e61011927fe41b9feed65e1eb146c *man/Air.Rd
+89ab7e1438be8e9b5e767732be623a42 *man/AirHOLP.Rd
+d9351efa61831dd8ab8a8c125708ad1e *man/AirOLS.Rd
+167510aad924d08b6d8a38b8ea1549e6 *man/AirScreen-package.Rd
+fb6b0382fd4e26e6e5f91e2d6a96bd67 *man/newton.Rd
+35160db31e016a80aad8ce3771e1a8c3 *man/rnormAR1.Rd
+010e3b594352312b066aa0b80ee0bd18 *man/rnormCS.Rd
+de34263b8fe371a5b10162f965c55ddf *man/summary.AirResult.Rd
+9f684d0ca8174a3bc9956ec1a83cc49a *tests/testthat.R
+b64693dc830d529441fe616c54011ef7 *tests/testthat/test-Air_methods.R

@@ -1,0 +1,342 @@
+---
+title: "allcontributors"
+author: "Mark Padgham"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+vignette: >
+  %\VignetteIndexEntry{allcontributors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r pkg-load, echo = FALSE, message = FALSE}
+library (allcontributors)
+```
+
+The main functionality of the [`allcontributors`
+package](https://github.com/ropensci/allcontributors) is described in the
+main [`README`](https://docs.ropensci.org/allcontributors/). This vignette
+provides a visual reference for the various options available for formatting
+contributors.
+
+
+## Default Grid Format
+
+The following represents the default format of contributors divided into three
+sections ("Code", "Issue Authors", and "Issue Contributors"), with each section
+formatted as a grid with seven columns (determined by the [`ncols`
+parameter](https://docs.ropensci.org/allcontributors/reference/add_contributors.html)).
+The images ("Avatars") are hyperlinked to the main github pages of each
+contributor, and the github names below them are linked to the contributions
+made to the package by each contributor. The following uses dummy avatars
+simply to reduce the compiled size of this vignette, and also uses dummy names
+for all except the first. (The names are dummy only in the sense of being
+entirely generic, although they actually do belong to real people - click to
+find out.)
+
+
+
+### Code
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/mpadge">
+<img src="https://github.com/identicons/0.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=mpadge">mpadge</a>
+</td>
+<td align="center">
+<a href="https://github.com/this-person">
+<img src="https://github.com/identicons/1.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=this-person">this-person</a>
+</td>
+<td align="center">
+<a href="https://github.com/that-person">
+<img src="https://github.com/identicons/2.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=that-person">that-person</a>
+</td>
+<td align="center">
+<a href="https://github.com/somebody">
+<img src="https://github.com/identicons/3.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=somebody">somebody</a>
+</td>
+<td align="center">
+<a href="https://github.com//somebody-else">
+<img src="https://github.com/identicons/4.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=somebody-else">somebody-else</a>
+</td>
+<td align="center">
+<a href="https://github.com/them">
+<img src="https://github.com/identicons/5.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=them">them</a>
+</td>
+<td align="center">
+<a href="https://github.com/others">
+<img src="https://github.com/identicons/6.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/commits?author=others">others</a>
+</td>
+</tr>
+
+</table>
+
+
+### Issue Authors
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/nobody">
+<img src="https://github.com/identicons/7.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anobody">nobody</a>
+</td>
+<td align="center">
+<a href="https://github.com/somebody">
+<img src="https://github.com/identicons/8.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Asomebody">somebody</a>
+</td>
+<td align="center">
+<a href="https://github.com/anybody">
+<img src="https://github.com/identicons/9.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Aanybody">anybody</a>
+</td>
+<td align="center">
+<a href="https://github.com/nope">
+<img src="https://github.com/identicons/10.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anope">nope</a>
+</td>
+<td align="center">
+<a href="https://github.com/yep">
+<img src="https://github.com/identicons/11.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Ayep">yep</a>
+</td>
+<td align="center">
+<a href="https://github.com/maybe">
+<img src="https://github.com/identicons/12.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Amaybe">maybe</a>
+</td>
+<td align="center">
+<a href="https://github.com/doubtful">
+<img src="https://github.com/identicons/13.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Adoubtful">doubtful</a>
+</td>
+</tr>
+
+</table>
+
+
+### Issue Contributors
+
+<table>
+
+<tr>
+
+<td align="center">
+<a href="https://github.com/here">
+<img src="https://github.com/identicons/14.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Ahere">here</a>
+</td>
+<td align="center">
+<a href="https://github.com/there">
+<img src="https://github.com/identicons/15.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Athere">there</a>
+</td>
+<td align="center">
+<a href="https://github.com/anywhere">
+<img src="https://github.com/identicons/16.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Aanywhere">anywhere</a>
+</td>
+<td align="center">
+<a href="https://github.com/somewhere">
+<img src="https://github.com/identicons/17.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asomewhere">somewhere</a>
+</td>
+<td align="center">
+<a href="https://github.com/nowhere">
+<img src="https://github.com/identicons/18.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Anowhere">nowhere</a>
+</td>
+<td align="center">
+<a href="https://github.com/sometime">
+<img src="https://github.com/identicons/19.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asometime">sometime</a>
+</td>
+<td align="center">
+<a href="https://github.com/later">
+<img src="https://github.com/identicons/20.png" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Alater">later</a>
+</td>
+
+</tr>
+
+</table>
+
+---
+
+## Section Organisation
+
+The default output shown above has three sections of "Code", "Issue Authors"
+and "Issue Contributors". The organisation of these sections can be controlled
+by the parameters `num_sections`, `type`, and `section_names`.
+
+The `type` parameter enables sections to be removed by reducing them from the
+default three referred to as `code`, `issues` (for those who open issues), and
+`discussion` (for those who contribute to issues). For example, passing `type =
+"code"` will only acknowledge direct contributions to code, while ignoring all
+those who contributed to issues only.
+
+The `num_sections` argument is provided for convenience, primarily in order to
+allow default formats to have either one, two, or three sections. Specifying
+`num_sections = 2` will by default collapse the "Issue Authors" and "Issue
+Contributors" sections into a single section named "Issues". (This section title
+may be renamed with the `section_names` parameter.) 
+
+## List Format 
+
+The `format` parameter of the [`add_contributors()`
+function](https://docs.ropensci.org/allcontributors/reference/add_contributors.html)
+accepts the three options of "grid", "list", or "text." With the three default
+section titles as shown above, the "list" option gives output that looks like this:
+
+
+### Code
+
+<ol>
+
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=mpadge">mpadge</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=this-person">this-person</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=that-person">that-person</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=somebody">somebody</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=somebody-else">somebody-else</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=them">them</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/commits?author=others">others</a></li>
+
+</ol>
+
+
+### Issue Authors
+
+<ol>
+
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anobody">nobody</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Asomebody">somebody</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Aanybody">anybody</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anope">nope</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Ayep">yep</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Amaybe">maybe</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Adoubtful">doubtful</a></li>
+
+</ol>
+
+
+### Issue Contributors
+
+<ol>
+
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Ahere">here</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Athere">there</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Aanywhere">anywhere</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asomewhere">somewhere</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Anowhere">nowhere</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asometime">sometime</a></li>
+<li><a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Alater">later</a></li>
+
+</ol>
+
+## Text Format 
+
+Finally, the text format enables contributors to be acknowledged as a single
+lines of text.
+
+
+### Code
+
+
+<a href="https://github.com/ropensci/allcontributors/commits?author=mpadge">mpadge</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=this-person">this-person</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=that-person">that-person</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=somebody">somebody</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=somebody-else">somebody-else</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=them">them</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=others">others</a> 
+
+
+
+### Issue Authors
+
+
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anobody">nobody</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Asomebody">somebody</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Aanybody">anybody</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anope">nope</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Ayep">yep</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Amaybe">maybe</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Adoubtful">doubtful</a> 
+
+
+### Issue Contributors
+
+
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Ahere">here</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Athere">there</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Aanywhere">anywhere</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asomewhere">somewhere</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Anowhere">nowhere</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asometime">sometime</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Alater">later</a>
+
+The shortest possible way of acknowledging your contributors would be like this:
+```{r short, eval = FALSE}
+add_contributors (num_sectons = 1, format = "text")
+```
+which would in this case convert the above into the single list of,
+
+<a href="https://github.com/ropensci/allcontributors/commits?author=mpadge">mpadge</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=this-person">this-person</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=that-person">that-person</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=somebody">somebody</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=somebody-else">somebody-else</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=them">them</a>, 
+<a href="https://github.com/ropensci/allcontributors/commits?author=others">others</a>,
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anobody">nobody</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Asomebody">somebody</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Aanybody">anybody</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Anope">nope</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Ayep">yep</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Amaybe">maybe</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+author%3Adoubtful">doubtful</a>,
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Ahere">here</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Athere">there</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Aanywhere">anywhere</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asomewhere">somewhere</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Anowhere">nowhere</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Asometime">sometime</a>, 
+<a href="https://github.com/ropensci/allcontributors/issues?q=is%3Aissue+commenter%3Alater">later</a>

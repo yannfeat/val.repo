@@ -1,0 +1,24 @@
+year    <- sub("-.*", "", meta$Date)
+version <- meta$Version
+note    <- sprintf("R package version %s", version)
+
+
+citHeader("To cite 'airGRdatasets' in publications use these the reference:")
+
+bibentry(bibtype     = "Manual",
+         title       = "{airGRdatasets}: Hydro-Meteorological Catchments Datasets for the '{airGR}' Packages",
+         author      = c(as.person("O. Delaigue"), as.person("P. Brigode"), as.person("G. Thirel")),
+         journal     = "R News",
+         year        = year,
+         note        = note,
+         url         = "https://CRAN.R-project.org/package=airGRdatasets",
+         doi         = "10.57745/3SPJ4B",
+         textVersion =
+           paste0("Delaigue, O., Brigode, P. and Thirel, G.(",
+                  year,
+                  "). airGRdatasets: Hydro-Meteorological Catchments Datasets for the 'airGR' Packages. ",
+                  note, ", ",
+                  "doi: 10.57745/3SPJ4B", ", ",
+                  "URL: https://CRAN.R-project.org/package=airGRdatasets."
+                  )
+)

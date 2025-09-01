@@ -1,0 +1,16 @@
+5066531d0144169f0543739e141233ee *DESCRIPTION
+093b18ff68eff755804d493f8a5b562a *NAMESPACE
+d145dadb822aee1fa782f56975a37c5e *R/albopictus.R
+88345458e1ef913dd96feef108ad1427 *R/spop.R
+bdc800d2c18a31b30dc1e137812e8044 *README.md
+dab40734ed1e3d0de3ddde4879386c5a *man/add-spop.Rd
+5b84a2b29dbb938faae8aa7ace2c6af9 *man/albopictus-package.Rd
+4426f4d8669212f05d0af71bf8d417c0 *man/dead-spop.Rd
+6d4ee4af480ed406addc91dd6687187e *man/developed-spop.Rd
+712a66901e606b1e82b344d7a0d22358 *man/devtable-spop.Rd
+0403118346ff7c4235aa555f30cf1491 *man/gamma_dist_prob.Rd
+3884e914ad8c16c42b0af98a4c0133d5 *man/iterate-spop.Rd
+6acb49be61e86d6be9efd6d57feabb0f *man/nbinom_dist_prob.Rd
+8f63d114c71985cd0a93915813889d48 *man/perturb-spop.Rd
+60c75ae725200cbf44c41d0db26b71e9 *man/size-spop.Rd
+ff155feca52161bf439c401516beb360 *man/spop.Rd

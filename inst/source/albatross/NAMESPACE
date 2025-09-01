@@ -1,0 +1,184 @@
+# bootstrap.R
+importFrom(stats, reorder)
+importFrom(utils, setTxtProgressBar, txtProgressBar)
+importFrom(multiway, congru, resign)
+
+# cubeapply.R
+importFrom(utils, txtProgressBar, getTxtProgressBar, setTxtProgressBar)
+importFrom(parallel, clusterMap, parLapply, parLapplyLB)
+
+# feem.R
+export(feem)
+S3method(feem, matrix)
+
+S3method(feem, character)
+S3method(feem, connection)
+
+importFrom(stats, reshape)
+S3method(feem, data.frame)
+
+S3method(as.data.frame, feem)
+
+importFrom(graphics, plot)
+importFrom(lattice, levelplot)
+S3method(plot, feem)
+
+S3method(`[`, feem)
+S3method(`[<-`, feem)
+S3method(t, feem)
+
+# feemcube.R
+export(feemcube)
+S3method(feemcube, array)
+S3method(feemcube, list)
+
+S3method(`[`, feemcube)
+S3method(`[<-`, feemcube)
+
+S3method(as.list, feemcube)
+S3method(as.data.frame, feemcube)
+
+importFrom(graphics, plot)
+importFrom(lattice, levelplot)
+S3method(plot, feemcube)
+
+# feemife.R
+export(feemife)
+importFrom(stats, setNames, splinefun)
+S3method(feemife, feemcube)
+S3method(feemife, feem)
+S3method(feemife, list)
+
+# feemlist.R
+export(feemlist)
+S3method(feemlist, character)
+S3method(feemlist, eemlist)
+S3method(feemlist, EEM)
+
+# feemscale.R
+export(feemscale)
+
+importFrom(stats, sd)
+S3method(feemscale, feem)
+
+S3method(feemscale, feemcube)
+S3method(feemscale, list)
+
+# feemscatter.R
+export(feemscatter)
+
+importFrom(pracma, pchip, kriging, interp1)
+importFrom(stats, predict, loess, dnorm)
+S3method(feemscatter, feem)
+
+S3method(feemscatter, feemcube)
+S3method(feemscatter, list)
+
+# grid.R
+export(feemgrid)
+S3method(feemgrid, feem)
+S3method(feemgrid, feemcube)
+S3method(feemgrid, list)
+
+# import.R
+importFrom(utils, read.table, type.convert)
+
+# indices.R
+export(feemindex)
+S3method(feemindex, feem)
+S3method(feemindex, feemcube)
+S3method(feemindex, list)
+
+# jackknife.R
+importFrom(pracma, pinv)
+importFrom(multiway, krprod, rescale)
+export(feemjackknife)
+
+importFrom(lattice, ltext, panel.abline, panel.xyplot, xyplot)
+importFrom(stats, quantile, resid)
+S3method(plot, feemjackknife)
+S3method(coef, feemjackknife)
+
+S3method(feemcube, feemjackknife)
+
+# parafac.R
+importFrom(multiway, parafac)
+export(feemparafac)
+
+importFrom(stats, fitted)
+S3method(fitted, feemparafac)
+
+importFrom(stats, residuals)
+S3method(residuals, feemparafac)
+
+importFrom(stats, coef)
+S3method(coef, feemparafac)
+
+importFrom(graphics, plot)
+importFrom(lattice, xyplot)
+S3method(plot, feemparafac)
+
+S3method(feemcube, feemparafac)
+
+S3method(print, feemparafac)
+
+importFrom(stats, reorder)
+S3method(reorder, feemparafac)
+
+importFrom(multiway, rescale)
+export(rescale) # oof
+S3method(rescale, feemparafac)
+
+# progress.R
+importFrom(utils, flush.console)
+
+# marine.R
+importFrom(grDevices, hcl)
+export(marine.colours)
+export(diverging.colours)
+
+# splithalf.R
+importFrom(utils, combn)
+export(feemsplithalf)
+
+S3method(print, feemsplithalf)
+
+S3method(coef, feemsplithalf)
+
+importFrom(graphics, plot)
+importFrom(lattice,
+	bwplot, trellis.par.get, xyplot,
+	panel.bwplot, panel.violin, panel.superpose, panel.polygon
+)
+importFrom(stats, aggregate)
+importFrom(grDevices, adjustcolor)
+S3method(plot, feemsplithalf)
+
+S3method(feemcube, feemsplithalf)
+
+# openfluor.R
+importFrom(utils, packageVersion, write.table)
+export(write.openfluor)
+
+# flame.R
+importFrom(CMLS, cmls)
+importFrom(stats, runif)
+export(feemflame)
+S3method(fitted, feemflame)
+S3method(residuals, feemflame)
+S3method(coef, feemflame)
+S3method(plot, feemflame)
+S3method(feemcube, feemflame)
+
+# resid.R
+S3method(plot, feem.resid)
+S3method(`[`, feem.resid)
+
+# absindex.R
+importFrom(stats, lm, nls, spline, NLSstRtAsymptote, sortedXyData)
+export(absindex)
+
+# corcondia.R
+importFrom(stats, optim)
+export(feemcorcondia)
+S3method(print, feemcorcondia)

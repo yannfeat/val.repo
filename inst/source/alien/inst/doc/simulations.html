@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Simulations</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Simulations</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This vignette describes the methodology used in Buba et al (2024) to
+simulate first records and evaluate models performance. For a more
+detailed explanation of the models used, as the scientific justification
+for the parameters, please refer to Buba et al (2024).</p>
+<blockquote>
+<p>Note: Buba et al (2024) uses a C++ script integerated to R using
+RcppArmadillo. These functions are currently not available within the
+alien package and will be added with the next release.</p>
+</blockquote>
+<p>We start by loading the alien package which will be used to: - Create
+the simulations. - Estimate the introduction rate.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(alien)</span></code></pre></div>
+<p>We begin by setting up the parameters:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>list_tsl <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">b0  =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,      <span class="co"># mean introduction rate of 0.3 sp/y</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>          <span class="dv">0</span>,       <span class="co"># mean introduction rate of  1  sp/y</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>          <span class="dv">1</span>),      <span class="co"># mean introduction rate of 2.7 sp/y</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="at">b1  =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.02</span>,   <span class="co"># annual decrease of  5%</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>          <span class="sc">-</span><span class="fl">0.01</span>,   <span class="co"># annual decrease of 10%</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>          <span class="sc">-</span><span class="fl">0.005</span>,  <span class="co"># annual decrease of 20%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>          <span class="dv">0</span>,       <span class="co"># constant introduction rate</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>          <span class="fl">0.005</span>,   <span class="co"># annual increase of  5% </span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>          <span class="fl">0.01</span>,    <span class="co"># annual increase of 10% </span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>          <span class="fl">0.02</span>),   <span class="co"># annual increase of 20% </span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  <span class="at">pi0 =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,      <span class="co"># annual observation probability of 0.017,   ~55 years delay</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>          <span class="sc">-</span><span class="dv">2</span>,      <span class="co"># annual observation probability of 0.119,   ~8 years delay</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>          <span class="dv">0</span>,       <span class="co"># annual observation probability of   0.5,   ~2 years delay</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>          <span class="dv">2</span>,       <span class="co"># annual observation probability of   0.88,  ~0.13 years delay</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>          <span class="dv">4</span>),      <span class="co"># annual observation probability of   0.98,  ~0.02 year delay</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="at">pi1 =</span> <span class="fu">c</span>( <span class="dv">0</span>,      <span class="co"># annual increase of     0% in probability of detection</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>           <span class="fl">0.5</span>,   <span class="co"># annual increase of  0.02% in probability of detection</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>           <span class="dv">1</span>,  <span class="co"># annual increase of   0.2% in probability of detection</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>           <span class="dv">2</span>), <span class="co"># effect of population size on detection probability</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="at">pi2 =</span> <span class="fu">c</span>( <span class="dv">0</span>,      <span class="co"># no effect of population size on detection probability</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>           <span class="fl">1e-7</span>,   <span class="co"># normal effect of population size on detection probability</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>           <span class="fl">0.001</span>), <span class="co"># effect of population size on detection probability</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">seq</span>(<span class="dv">30</span>,<span class="dv">200</span>,<span class="dv">15</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>)</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>df_tsl <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(list_tsl)</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>est_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0_est&quot;</span>, <span class="st">&quot;b1_est&quot;</span>, <span class="st">&quot;pi0_est&quot;</span>, <span class="st">&quot;pi1_est&quot;</span>, <span class="st">&quot;pi2_est&quot;</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>ses_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0_se&quot;</span>, <span class="st">&quot;b1_se&quot;</span>, <span class="st">&quot;pi0_se&quot;</span>, <span class="st">&quot;pi1_se&quot;</span>, <span class="st">&quot;pi2_se&quot;</span>)</span></code></pre></div>
+<p>To save time for the creation of this vignette, we will use a subset
+of just one parameter combination:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3333</span>) <span class="co"># Set a seed for replication</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>df_tsl <span class="ot">&lt;-</span> df_tsl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="dv">1</span>)</span></code></pre></div>
+<p>To demonstrate how <span class="math inline">\(lambda_t\)</span>
+looks like using these parameter combination, we can use the
+<code>calculate_lambda</code> function of the package which is currently
+not exported but can be called using
+<code>alien:::calculate_lambda</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(df_tsl[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]) <span class="co"># parameters</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">names</span>(params) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>,<span class="st">&quot;b1&quot;</span>,<span class="st">&quot;pi0&quot;</span>,<span class="st">&quot;pi1&quot;</span>, <span class="st">&quot;pi2&quot;</span>) <span class="co"># set names</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>time_span <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(df_tsl[<span class="dv">6</span>]) <span class="co"># time series length.</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>sampling_lambda <span class="ot">&lt;-</span> alien<span class="sc">:::</span><span class="fu">calculate_lambda</span>(<span class="at">mu =</span> <span class="sc">~</span> time,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>                                            <span class="at">pi =</span> <span class="sc">~</span> time,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>                                            <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq_len</span>(time_span)),</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>                                            <span class="at">beta =</span> params[<span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>,<span class="st">&quot;b1&quot;</span>)],</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>                                            <span class="at">gamma =</span> params[<span class="fu">c</span>(<span class="st">&quot;pi0&quot;</span>,<span class="st">&quot;pi1&quot;</span>)],</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>                                            <span class="at">growth_param =</span> params[<span class="st">&quot;pi2&quot;</span>],</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>                                            <span class="at">type =</span> <span class="st">&quot;exponential&quot;</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">seq_len</span>(time_span), <span class="at">y =</span> sampling_lambda)<span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span> </span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">&quot;\U03BB&quot;</span>[t]))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p>Now for the simulation. It is a nested loop with the following steps:
+1. Create a simulation of <span class="math inline">\(\lambda_t\)</span>
+using the parameters. Happens once for every parameter set. 2. Sample
+<span class="math inline">\(N_t\)</span> from <span class="math inline">\(\lambda_t\)</span> - here we set it to happen one
+time per parameter set instead of the 200 used in Buba et al (2024). To
+change it, increase the value of the variable
+<code>number_of_repetitions</code>. 3. Fit the naive model, Solow and
+Costello model, the constant detection model, and the sampling-proxy
+model to <span class="math inline">\(N_t\)</span>. 4. Summarizing
+results in the desired structure. 5. Return the parameters, the
+summarized results, and the full output of the models.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>list <span class="ot">&lt;-</span> <span class="fu">apply</span>(df_tsl,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> <span class="cf">function</span>(row) {</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                  <span class="co"># Defining variables and parameters:</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>                  params <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(row[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>                  <span class="fu">names</span>(params) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>,<span class="st">&quot;b1&quot;</span>,<span class="st">&quot;pi0&quot;</span>,<span class="st">&quot;pi1&quot;</span>, <span class="st">&quot;pi2&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>                  time_span <span class="ot">&lt;-</span> row[<span class="dv">6</span>] <span class="co"># time series length.</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                  <span class="co"># Create a faux sampling vector based on the time span to be used for our sampling_proxy</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>                  sampling_vector <span class="ot">&lt;-</span> <span class="fu">scale</span>(<span class="dv">1</span><span class="sc">:</span>time_span) <span class="sc">|&gt;</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>                  <span class="co"># Create lambda vector</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>                  sampling_lambda <span class="ot">&lt;-</span> alien<span class="sc">:::</span><span class="fu">calculate_lambda</span>(<span class="at">mu =</span> <span class="sc">~</span> time,</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>                                            <span class="at">pi =</span> <span class="sc">~</span> time,</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>                                            <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq_len</span>(time_span)),</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>                                            <span class="at">beta =</span> params[<span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>,<span class="st">&quot;b1&quot;</span>)],</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>                                            <span class="at">gamma =</span> params[<span class="fu">c</span>(<span class="st">&quot;pi0&quot;</span>,<span class="st">&quot;pi1&quot;</span>)],</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>                                            <span class="at">growth_param =</span> params[<span class="st">&quot;pi2&quot;</span>],</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>                                            <span class="at">type =</span> <span class="st">&quot;exponential&quot;</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>                  </span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>                  number_of_repetitions <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>                  </span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>                  result <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_len</span>(number_of_repetitions), <span class="cf">function</span>(iteration) {</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>                    <span class="co"># Creating an introduction</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>                    sampling_data <span class="ot">&lt;-</span> <span class="fu">rpois</span>(time_span, sampling_lambda)</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>                    <span class="co"># model fitting start</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>                    naive_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> sampling_data <span class="sc">~</span> <span class="fu">seq_len</span>(time_span), <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>                    guess_all <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">b0 =</span> <span class="dv">0</span>, <span class="at">b1 =</span> <span class="dv">0</span>, <span class="at">pi0 =</span> <span class="dv">0</span>, <span class="at">pi1 =</span> <span class="dv">0</span>, <span class="at">pi2 =</span> <span class="dv">0</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>                    snc_model <span class="ot">&lt;-</span> alien<span class="sc">::</span><span class="fu">snc</span>(<span class="at">y =</span> sampling_lambda, <span class="at">type =</span> <span class="st">&quot;exponential&quot;</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>                                            <span class="at">mu =</span> <span class="sc">~</span> time,</span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a>                                            <span class="at">pi =</span> <span class="sc">~</span> time, <span class="at">growth =</span> T,</span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>                                            <span class="at">init =</span> guess_all,</span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>                                            <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq_len</span>(time_span)),</span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>                                            <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">10000</span>))</span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>                    constant_detection_model <span class="ot">&lt;-</span> alien<span class="sc">::</span><span class="fu">snc</span>(<span class="at">y =</span> sampling_lambda, <span class="at">type =</span> <span class="st">&quot;exponential&quot;</span>,</span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>                                                           <span class="at">mu =</span> <span class="sc">~</span> time,</span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>                                                           <span class="at">pi =</span> <span class="sc">~</span> <span class="dv">1</span>, <span class="at">growth =</span> F,</span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>                                                           <span class="at">init =</span> guess_all[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>],</span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>                                                           <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq_len</span>(time_span)),</span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>                                                           <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">10000</span>))</span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>                    sampling_proxy_model <span class="ot">&lt;-</span> alien<span class="sc">::</span><span class="fu">snc</span>(<span class="at">y =</span> sampling_lambda, <span class="at">type =</span> <span class="st">&quot;exponential&quot;</span>,</span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>                                                       <span class="at">mu =</span> <span class="sc">~</span> time,</span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a>                                                       <span class="at">pi =</span> <span class="sc">~</span> sampling_vector, <span class="at">growth =</span> F,</span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a>                                                       <span class="at">init =</span> guess_all[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],</span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a>                                                       <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq_len</span>(time_span), <span class="at">sampling_vector =</span> sampling_vector),</span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a>                                                       <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">10000</span>))</span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a>                    <span class="co"># model fitting end</span></span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a>                    </span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a>                    <span class="co"># Summarize results start</span></span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a>                    naive_par <span class="ot">&lt;-</span>  <span class="fu">coefficients</span>(<span class="fu">summary</span>(naive_model))[,<span class="dv">1</span>] <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>() <span class="sc">|&gt;</span> <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(est_names[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a>                    naive_se <span class="ot">&lt;-</span>  <span class="fu">coefficients</span>(<span class="fu">summary</span>(naive_model))[,<span class="dv">2</span>] <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>() <span class="sc">|&gt;</span> <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(ses_names[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a>                    naive_convergence <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">converged =</span> naive_model<span class="sc">$</span>converged)</span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>                    naive_row <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(naive_par, naive_se, naive_convergence) <span class="sc">|&gt;</span></span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a>                      tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">method =</span> <span class="st">&quot;naive&quot;</span>)</span>
+<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a>                    list_of_rows <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">list</span>(snc_model, constant_detection_model, sampling_proxy_model), <span class="cf">function</span>(est) {</span>
+<span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a>                      method <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb5-67"><a href="#cb5-67" tabindex="-1"></a>                        <span class="fu">identical</span>(est, snc_model) <span class="sc">~</span> <span class="st">&quot;snc&quot;</span>,</span>
+<span id="cb5-68"><a href="#cb5-68" tabindex="-1"></a>                        <span class="fu">identical</span>(est, constant_detection_model) <span class="sc">~</span> <span class="st">&quot;snc_3p&quot;</span>,</span>
+<span id="cb5-69"><a href="#cb5-69" tabindex="-1"></a>                        <span class="fu">identical</span>(est, sampling_proxy_model) <span class="sc">~</span> <span class="st">&quot;snc_vec&quot;</span></span>
+<span id="cb5-70"><a href="#cb5-70" tabindex="-1"></a>                      )</span>
+<span id="cb5-71"><a href="#cb5-71" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" tabindex="-1"></a>                      <span class="cf">if</span> (<span class="fu">any</span>(<span class="fu">class</span>(est) <span class="sc">==</span> <span class="st">&quot;try-error&quot;</span>)){</span>
+<span id="cb5-73"><a href="#cb5-73" tabindex="-1"></a>                        est_row <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">11</span>)</span>
+<span id="cb5-74"><a href="#cb5-74" tabindex="-1"></a>                        <span class="fu">names</span>(est_row) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0_est&quot;</span>, <span class="st">&quot;b1_est&quot;</span>, <span class="st">&quot;pi0_est&quot;</span>,</span>
+<span id="cb5-75"><a href="#cb5-75" tabindex="-1"></a>                                            <span class="st">&quot;pi1_est&quot;</span>, <span class="st">&quot;pi2_est&quot;</span>, <span class="st">&quot;b0_se&quot;</span>, <span class="st">&quot;b1_se&quot;</span>,</span>
+<span id="cb5-76"><a href="#cb5-76" tabindex="-1"></a>                                            <span class="st">&quot;pi0_se&quot;</span>, <span class="st">&quot;pi1_se&quot;</span>, <span class="st">&quot;pi2_se&quot;</span>, <span class="st">&quot;converged&quot;</span>)</span>
+<span id="cb5-77"><a href="#cb5-77" tabindex="-1"></a>                        est_row <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(est_row) <span class="sc">|&gt;</span> tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">method =</span> method)</span>
+<span id="cb5-78"><a href="#cb5-78" tabindex="-1"></a>                      } <span class="cf">else</span> {</span>
+<span id="cb5-79"><a href="#cb5-79" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="#cb5-80" tabindex="-1"></a>                        par <span class="ot">&lt;-</span> est<span class="sc">$</span>coefficients<span class="sc">$</span>Estimate <span class="sc">|&gt;</span> <span class="st">`</span><span class="at">names&lt;-</span><span class="st">`</span>(est_names[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(est<span class="sc">$</span>coefficients)]) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>()</span>
+<span id="cb5-81"><a href="#cb5-81" tabindex="-1"></a>                        ses <span class="ot">&lt;-</span> est<span class="sc">$</span>coefficients<span class="sc">$</span><span class="st">`</span><span class="at">Std.Err</span><span class="st">`</span> <span class="sc">|&gt;</span> <span class="st">`</span><span class="at">names&lt;-</span><span class="st">`</span>(ses_names[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(est<span class="sc">$</span>coefficients)])  <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>()</span>
+<span id="cb5-82"><a href="#cb5-82" tabindex="-1"></a>                        convergence <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">converged =</span> est<span class="sc">$</span>convergence <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb5-83"><a href="#cb5-83" tabindex="-1"></a>                        est_row <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(par, ses, convergence) <span class="sc">|&gt;</span> tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">method =</span> method)</span>
+<span id="cb5-84"><a href="#cb5-84" tabindex="-1"></a>                      }</span>
+<span id="cb5-85"><a href="#cb5-85" tabindex="-1"></a>                    }</span>
+<span id="cb5-86"><a href="#cb5-86" tabindex="-1"></a>                    )</span>
+<span id="cb5-87"><a href="#cb5-87" tabindex="-1"></a></span>
+<span id="cb5-88"><a href="#cb5-88" tabindex="-1"></a>                    params <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(naive_row,</span>
+<span id="cb5-89"><a href="#cb5-89" tabindex="-1"></a>                                        dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(list_of_rows)) <span class="sc">|&gt;</span></span>
+<span id="cb5-90"><a href="#cb5-90" tabindex="-1"></a>                      tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">iteration =</span> iteration)</span>
+<span id="cb5-91"><a href="#cb5-91" tabindex="-1"></a></span>
+<span id="cb5-92"><a href="#cb5-92" tabindex="-1"></a>                    <span class="co"># summarize results end</span></span>
+<span id="cb5-93"><a href="#cb5-93" tabindex="-1"></a>                    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">params =</span> params,</span>
+<span id="cb5-94"><a href="#cb5-94" tabindex="-1"></a>                                <span class="at">full =</span> <span class="fu">list</span>(<span class="at">simulation =</span> sampling_data,</span>
+<span id="cb5-95"><a href="#cb5-95" tabindex="-1"></a>                                            <span class="at">estimates =</span> snc_model,</span>
+<span id="cb5-96"><a href="#cb5-96" tabindex="-1"></a>                                            <span class="at">estimates_3p =</span> constant_detection_model,</span>
+<span id="cb5-97"><a href="#cb5-97" tabindex="-1"></a>                                            <span class="at">estimates_vec =</span> sampling_proxy_model,</span>
+<span id="cb5-98"><a href="#cb5-98" tabindex="-1"></a>                                            <span class="at">perfect_detection =</span> <span class="fu">coefficients</span>(<span class="fu">summary</span>(naive_model))</span>
+<span id="cb5-99"><a href="#cb5-99" tabindex="-1"></a>                                )</span>
+<span id="cb5-100"><a href="#cb5-100" tabindex="-1"></a>                    )</span>
+<span id="cb5-101"><a href="#cb5-101" tabindex="-1"></a>                    )</span>
+<span id="cb5-102"><a href="#cb5-102" tabindex="-1"></a>                  })</span>
+<span id="cb5-103"><a href="#cb5-103" tabindex="-1"></a></span>
+<span id="cb5-104"><a href="#cb5-104" tabindex="-1"></a>                  simulation_estimates <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(purrr<span class="sc">::</span><span class="fu">map</span>(result, <span class="dv">1</span>))</span>
+<span id="cb5-105"><a href="#cb5-105" tabindex="-1"></a>                  full <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(result, <span class="dv">2</span>)</span>
+<span id="cb5-106"><a href="#cb5-106" tabindex="-1"></a></span>
+<span id="cb5-107"><a href="#cb5-107" tabindex="-1"></a>                  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">sim_params =</span> row,</span>
+<span id="cb5-108"><a href="#cb5-108" tabindex="-1"></a>                              <span class="at">estimates =</span> simulation_estimates,</span>
+<span id="cb5-109"><a href="#cb5-109" tabindex="-1"></a>                              <span class="at">full =</span> full))</span>
+<span id="cb5-110"><a href="#cb5-110" tabindex="-1"></a>                })</span>
+<span id="cb5-111"><a href="#cb5-111" tabindex="-1"></a><span class="co">#&gt; Warning in HelpersMG::SEfromHessian(a = optim_out[[&quot;hessian&quot;]]): Error in</span></span>
+<span id="cb5-112"><a href="#cb5-112" tabindex="-1"></a><span class="co">#&gt; Hessian matrix inversion</span></span>
+<span id="cb5-113"><a href="#cb5-113" tabindex="-1"></a><span class="co">#&gt; Warning in HelpersMG::SEfromHessian(a = optim_out[[&quot;hessian&quot;]]): Calculates the</span></span>
+<span id="cb5-114"><a href="#cb5-114" tabindex="-1"></a><span class="co">#&gt; Nearest Positive Definite Matrix. Use result with caution.</span></span></code></pre></div>
+<p>After this process, we can view a summary of the results.</p>
+<p>Here we have the estimate and standard error of each parameter
+denoted by <sub>parameter_est</sub> and <sub>parameter_se</sub>,
+respectively.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(list, <span class="dv">2</span>) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>() <span class="co"># for the summary of each iteration</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 13</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;   b0_est  b1_est b0_se   b1_se converged method  pi0_est pi1_est pi2_est pi0_se</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;lgl&gt;     &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 1 -0.943 0.00580 0.220 0.00207 TRUE      naive    NA     NA        NA     NA   </span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; 2 -1.00  0.00501 0.532 0.0224  TRUE      snc       0.351 -0.0127    3.65   9.80</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; 3 -1.00  0.00500 0.234 0.00220 TRUE      snc_3p    3.94  NA        NA     86.3 </span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; 4 -1.00  0.00509 0.276 0.00425 TRUE      snc_vec   1.74  -0.863    NA     27.9 </span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; # ℹ 3 more variables: pi1_se &lt;dbl&gt;, pi2_se &lt;dbl&gt;, iteration &lt;int&gt;</span></span></code></pre></div>
+<div id="non-monotonic-trends-in-detection" class="section level3">
+<h3>Non-monotonic trends in detection</h3>
+<p>To create a simulation of a non-monotonic trend in detection, it is
+necessary to create a faux proxy to simulate from.</p>
+<p>This can be done in multiple ways. In Buba et al (2024), an
+increasing sine vector is used. Here we demonstrate a 100 year
+increasing sine:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span><span class="sc">*</span>pi, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>) <span class="co"># This is done to maintain reproducability within time series lengths</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>c.norm <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>amp <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>sampling_vector <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> a<span class="sc">*</span><span class="fu">sin</span>(b<span class="sc">*</span>t)<span class="sc">+</span>c.norm<span class="sc">*</span>amp <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>sampling_vector <span class="ot">&lt;-</span> <span class="fu">scale</span>(sampling_vector) <span class="sc">|&gt;</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">y =</span> sampling_vector)<span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span> </span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sampling proxy value&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The next step is then to simulate <span class="math inline">\(\lambda_t\)</span> based on this proxy. This can
+be done easily using the <code>snc</code> function:</p>
+<blockquote>
+<p>We set the value of pi1 to be 0.2 since the <span class="math inline">\(\gamma_1\)</span> which we set earlier differs
+from that of <span class="math inline">\(\zeta_0\)</span></p>
+</blockquote>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>params[<span class="st">&quot;pi1&quot;</span>] <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>time_span <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>lambda_with_proxy <span class="ot">&lt;-</span> alien<span class="sc">:::</span><span class="fu">calculate_lambda</span>(<span class="at">mu =</span> <span class="sc">~</span> time,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                                            <span class="at">pi =</span> <span class="sc">~</span> sampling_vector,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                                            <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq_len</span>(time_span),</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>                                                              <span class="at">sampling_vector =</span> sampling_vector),</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>                                            <span class="at">beta =</span> params[<span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>,<span class="st">&quot;b1&quot;</span>)],</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>                                            <span class="at">gamma =</span> params[<span class="fu">c</span>(<span class="st">&quot;pi0&quot;</span>,<span class="st">&quot;pi1&quot;</span>)],</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>                                            <span class="at">growth_param =</span> params[<span class="st">&quot;pi2&quot;</span>],</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>                                            <span class="at">type =</span> <span class="st">&quot;exponential&quot;</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">y =</span> lambda_with_proxy)<span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span> </span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">&quot;\U03BB&quot;</span>[t]))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p>This process of creating a proxy and calculating a simulation <span class="math inline">\(\lambda\)</span> vecrtor based on it can then be
+place in Step 1 of the loop described above to create simulations of
+non-monotonic trends in detection.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

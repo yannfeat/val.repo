@@ -1,0 +1,5 @@
+export("alternative_trajectories", "function_hours", "hourly_grid",
+       "map_colors", "points_to_line",
+       "temporary_grid_search", "total_exposure",
+       "trajectories_tomtom")
+import("dplyr","htmltools","httr", "jsonlite", "leaflet", "htmlwidgets", "lubridate","sf")

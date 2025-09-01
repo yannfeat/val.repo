@@ -1,0 +1,11 @@
+bibentry(bibtype = "article",
+         title = "Multi-cohort transcriptomic subtyping of B-cell acute lymphoblastic leukemia",
+         author = c(person("Ville-Petteri", "Mäkinen"),
+	            person("Jacqueline", "Rehn"),
+                    person("James", "Breen"),
+                    person("David", "Yeung"),
+                    person("Deborah", "White")),
+        journal = "medRxiv",            
+        year = "2022",
+        doi = "10.1101/2022.02.17.22270919",
+        textVersion = "Ville-Petteri Mäkinen, Jacqueline Rehn, James Breen, David Yeung, Deborah L White; Multi-cohort transcriptomic subtyping of B-cell acute lymphoblastic leukemia, medRxiv, 2022, https://doi.org/10.1101/2022.02.17.22270919")

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Dmitry Shkolnik" />
+
+<meta name="date" content="2019-10-09" />
+
+<title>Introduction to the Airpotr Package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to the Airpotr Package</h1>
+<h4 class="author">Dmitry Shkolnik</h4>
+<h4 class="date">2019-10-09</h4>
+
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This package uses regularly updated open source airport data to provide convenience tools for working with airport name and location data. These tools include functions to:</p>
+<ul>
+<li>Lookup airports by name, IATA designation, or IACO designation and translate names into designations and vice-versa</li>
+<li>Lookup airports by city or coordinate location</li>
+<li>Lookup airports within vicinity of a specified location</li>
+<li>Calculate distances between pairs of airports</li>
+</ul>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>Airport data is from the <a href="https://openflights.org/data.html">OpenFlights Airport Database</a> made available under the <a href="https://opendatacommons.org/licenses/odbl/1.0/">Open Database License</a>.</p>
+<p>Disclaimer on the data from OpenFlights:</p>
+<blockquote>
+<p>This data is not suitable for navigation. OpenFlights does not assume any responsibility whatsoever for its accuracy, and consequently assumes no liability whatsoever for results obtained or loss or damage incurred as a result of application of the data. OpenFlights expressly disclaims all warranties, expressed or implied, including but not limited to implied warranties of merchantability and fitness for any particular purpose.</p>
+</blockquote>
+</div>
+<div id="lookup-functions" class="section level2">
+<h2>Lookup Functions</h2>
+<p>This packages primary use-case is to facilitate working with and translating structured airport data from one format into another.</p>
+<div id="airport_lookup" class="section level4">
+<h4>airport_lookup</h4>
+<p>The <code>airport_lookup()</code> function takes either an IATA code, an IACO code, or an airport name, and returns a translated value of selected output type.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">airport_lookup</span>(<span class="st">&quot;YVR&quot;</span>, <span class="dt">input_type =</span> <span class="st">&quot;IATA&quot;</span>, <span class="dt">output_type =</span> <span class="st">&quot;name&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; [1] &quot;Vancouver International Airport&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">airport_lookup</span>(<span class="st">&quot;Vancouver International Airport&quot;</span>, <span class="dt">input_type =</span> <span class="st">&quot;name&quot;</span>, <span class="dt">output_type =</span><span class="st">&quot;IATA&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; [1] &quot;YVR&quot;</span></a></code></pre></div>
+<p>If an input type is unknown or not provided, <code>airport_lookup</code> will attempt to guess the appropriate input type. Output type should always be specified; however.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">airport_lookup</span>(<span class="st">&quot;YVR&quot;</span>, <span class="dt">output_type =</span> <span class="st">&quot;city&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; [1] &quot;Vancouver&quot;</span></a></code></pre></div>
+</div>
+<div id="airport_detail" class="section level4">
+<h4>airport_detail</h4>
+<p>The <code>airport_detail</code> function returns all available information for an airport given an airport name, IATA code, or ICAO code as input. The input type can be manually specified, but if nothing is provided function will attempt to guess the correct input type. If no matches are returned, similarly named objects will be returned as suggestions with a warning.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">airport_detail</span>(<span class="st">&quot;YVR&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 1 x 17</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   `OpenFlights ID` Name  City  IATA  ICAO  Country `Country Code`</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;              &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         </span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 1              156 Vanc… Vanc… YVR   CYVR  Canada  124           </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; # … with 10 more variables: `Country Code (Alpha-2)` &lt;chr&gt;, `Country Code</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; #   (Alpha-3)` &lt;chr&gt;, Latitude &lt;dbl&gt;, Longitude &lt;dbl&gt;, Altitude &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; #   UTC &lt;dbl&gt;, DST &lt;chr&gt;, Timezone &lt;chr&gt;, Type &lt;chr&gt;, Source &lt;chr&gt;</span></a></code></pre></div>
+</div>
+<div id="airport_location" class="section level4">
+<h4>airport_location</h4>
+<p>The <code>airport_location</code> function returns longitude/latitude coordinate pairs for the location of an airport, using an airport name, IATA code, or ICAO code as input argument.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">airport_location</span>(<span class="st">&quot;CYVR&quot;</span>, <span class="dt">input_type =</span> <span class="st">&quot;ICAO&quot;</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; # A tibble: 1 x 2</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;   Latitude Longitude</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;      &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; 1     49.2     -123.</span></a></code></pre></div>
+</div>
+<div id="city_airports" class="section level4">
+<h4>city_airports</h4>
+<p>The <code>city_airports</code> function takes a city normal city name as an input argument and returns all airports associated with that city. Airports are typically associated with their local metropolitan area but some exceptions may be present in the data. If there are no matching results in the data for the city argument, a list of closely named alternatives will be suggested with a warning.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Display all airports serving a given city</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">city_airports</span>(<span class="st">&quot;Vancouver&quot;</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; # A tibble: 5 x 17</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;   `OpenFlights ID` Name  City  IATA  ICAO  Country `Country Code`</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;              &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 1              156 Vanc… Vanc… YVR   CYVR  Canada  124           </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 2             4107 Coal… Vanc… &quot;\\N&quot; CAQ3  Canada  124           </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 3             5500 Vanc… Vanc… CXH   CYHC  Canada  124           </span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; 4            12090 Vanc… Vanc… &quot;\\N&quot; CAM9  Canada  124           </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; 5            13022 Harb… Vanc… &quot;\\N&quot; CBC7  Canada  124           </span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; # … with 10 more variables: `Country Code (Alpha-2)` &lt;chr&gt;, `Country Code</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; #   (Alpha-3)` &lt;chr&gt;, Latitude &lt;dbl&gt;, Longitude &lt;dbl&gt;, Altitude &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; #   UTC &lt;dbl&gt;, DST &lt;chr&gt;, Timezone &lt;chr&gt;, Type &lt;chr&gt;, Source &lt;chr&gt;</span></a></code></pre></div>
+</div>
+</div>
+<div id="distance-functions" class="section level2">
+<h2>Distance Functions</h2>
+<p>This package also includes some convenience functions for working with distances between airports.</p>
+<div id="airport_distance" class="section level4">
+<h4>airport_distance</h4>
+<p>The <code>airport_distance</code> function takes two airport IATA codes as arguments and returns the great circle distance between the two airports. Distances are returned in kilometres. Distances are calculated using the Haversine formula which assumes a spherical earth.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">airport_distance</span>(<span class="st">&quot;YVR&quot;</span>,<span class="st">&quot;LHR&quot;</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; [1] 7580.963</span></a></code></pre></div>
+<p>While the Haversine formula is reasonably accurate for most uses, due to the Earth’s ellipsoidal nature, the Haversine formula may result in errors of up to 0.3% in some areas, particularly near the poles. If distance accuracy is critical, there are more robust distance measures implemented as options in the <a href="https://CRAN.R-project.org/package=geosphere">geosphere</a> package.</p>
+</div>
+<div id="airports_near_airport" class="section level4">
+<h4>airports_near_airport</h4>
+<p>Another common airport-related task is to locate airports in the vicinity of a city or specified location. This is easy to implement with the <code>airports_near_airport()</code> and <code>airports_around()</code> functions.</p>
+<p>The <code>airports_near_airport</code> function takes an airport name, IATA code, or IACO code as an input argument, and returns all other airports within a 100km radius by default. Other distance ranges can be specified by modifying the default <code>distance = 100</code> parameter.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">airports_near_airport</span>(<span class="st">&quot;YEG&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; # A tibble: 3 x 17</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;   `OpenFlights ID` Name  City  IATA  ICAO  Country `Country Code`</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;              &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 1               49 Edmo… Edmo… YEG   CYEG  Canada  124           </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; 2              131 Rock… Rock… YRM   CYRM  Canada  124           </span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 3              165 Edmo… Edmo… YXD   CYXD  Canada  124           </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; # … with 10 more variables: `Country Code (Alpha-2)` &lt;chr&gt;, `Country Code</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; #   (Alpha-3)` &lt;chr&gt;, Latitude &lt;dbl&gt;, Longitude &lt;dbl&gt;, Altitude &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; #   UTC &lt;dbl&gt;, DST &lt;chr&gt;, Timezone &lt;chr&gt;, Type &lt;chr&gt;, Source &lt;chr&gt;</span></a></code></pre></div>
+</div>
+<div id="airports_around" class="section level4">
+<h4>airports_around</h4>
+<p>The <code>airports_around</code> function takes three arguments, a latitude coordinate, a longitude coordinate and a specified distance in kilometres and lookups all airports within the specified radius around the input coordinates.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">airports_around</span>(<span class="dt">lat =</span> <span class="fl">49.2</span>, <span class="dt">lon =</span> <span class="dv">-123</span>, <span class="dt">distance =</span> <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; # A tibble: 5 x 17</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;   `OpenFlights ID` Name  City  IATA  ICAO  Country `Country Code`</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;              &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; 1              156 Vanc… Vanc… YVR   CYVR  Canada  124           </span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; 2             5500 Vanc… Vanc… CXH   CYHC  Canada  124           </span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; 3             7273 Boun… Boun… YDT   CZBB  Canada  124           </span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; 4            12090 Vanc… Vanc… &quot;\\N&quot; CAM9  Canada  124           </span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; 5            13022 Harb… Vanc… &quot;\\N&quot; CBC7  Canada  124           </span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; # … with 10 more variables: `Country Code (Alpha-2)` &lt;chr&gt;, `Country Code</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; #   (Alpha-3)` &lt;chr&gt;, Latitude &lt;dbl&gt;, Longitude &lt;dbl&gt;, Altitude &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; #   UTC &lt;dbl&gt;, DST &lt;chr&gt;, Timezone &lt;chr&gt;, Type &lt;chr&gt;, Source &lt;chr&gt;</span></a></code></pre></div>
+<p>This package does not include tools for working with online geocoding or gazeteer lookups by design to keep dependencies as minimal as possible and to work without needing an internet connection. Geocoding and coordinate lookup tools are available in a number of packages including <a href="https://CRAN.R-project.org/package=ggmap">ggmap</a>, <a href="https://cran.r-project.org/package=googleway">googleway</a>, <a href="https://cran.r-project.org/package=tmap">tmap</a>, <a href="https://github.com/hrbrmstr/nominatim">nominatim</a>, <a href="https://github.com/tarakc02/rmapzen">rmapzen</a>, and others. In order to locate airports near a specified named location such as a city name or address, first geocode the named location and then use the resulting coordinates as an input into <code>airports_around()</code>.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
