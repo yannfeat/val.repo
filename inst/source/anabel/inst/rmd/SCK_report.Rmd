@@ -1,0 +1,147 @@
+---
+title: "<img src=\"./anabel-logo.png\" style=\"float: right;width: 180px\"/>Single-cycle Kinetics" 
+params:
+  rprt_title: "Single-cycle Kinetics"
+  prev_plot: ""
+  kinetics: ""
+  method_params: ""
+  ids: NULL
+  fit_data: ""
+output: 
+  html_document:
+    df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: false
+---
+
+```{r, include = FALSE}
+library(dplyr)
+library(ggplot2)
+
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", width = 68)
+```
+
+# Summary report of SCK
+
+## Experiment input
+
+### Preview of randomly selected sensograms
+
+```{r Preview_Plot, warning=FALSE, error=FALSE, echo=FALSE, fig.align='center', fig.cap = "Sensogram of randomly chosen samples"}
+knitr::opts_chunk$set(echo = FALSE)
+rslts = nrow(params$kinetics) > 0
+params$prev_plot
+
+```
+
+### Input parameters 
+
+```{r InParams, comment=NA}
+str = params$method_params %>% strsplit("\n") %>% unlist
+for (i in 1:length(str)){
+  if(length(grep("^Fitting", str[i])) ==1) {
+    break
+  }else{cat(str[i])}
+  cat("\n")
+}
+```
+
+
+## Results
+
+```{r rslt_kntks_tbl, eval = rslts, warning=FALSE}
+df = params$kinetics
+ids = params$ids
+  if(!is.null(ids)){
+    for(i in ids){
+      df <- rbind(df, NA)
+      df$ID[nrow(df)] = i
+      df$FittingQ[nrow(df)] = "Failed"
+    }
+  }
+```
+
+### Fitting summary
+
+```{r rslt_kntks_plot, eval = rslts, fig.show = 'hold', out.width= '50%', warning=FALSE}
+par(mar = c(4, 4, .2, .1))
+df <- df %>% mutate(
+  Samples = case_when(
+    FittingQ == "Failed" ~ "Unsuccessful fitting",
+    FittingQ == "Warning" ~ "Successful fitting with warnings",
+    TRUE ~ "Successful fitting"
+  )
+)
+Type <- df %>% group_by(Samples) %>% summarize(Counts = n()) 
+df = merge(df, Type, by ="Samples", all.x = TRUE)
+
+Type = c("Successful fitting", "Successful fitting with warnings", "Unsuccessful fitting")
+if(any(!Type %in% unique(df$Samples))){
+  Type = Type[!Type %in% unique(df$Samples)]
+  df = bind_rows(df, data.frame(Samples = Type, Counts = 0))
+}
+
+ ggplot(data = df, aes(Samples, fill = Samples)) + geom_bar(col = "#64686A") + theme_minimal() + 
+  scale_fill_manual(values = c("Successful fitting" = "#D1E288", 
+                               "Successful fitting with warnings" = "#E8A5A3", 
+                               "Unsuccessful fitting" = "#F0F0F0")) + 
+  geom_text(data = df, aes(Samples, Counts, label = Counts), nudge_y = 31) + 
+  theme(legend.position = "none") + ggtitle("Fitting quality")
+
+ df = df[!is.na(df$ID),]
+ 
+df = df %>%  
+        mutate(
+                binder = case_when(
+                  log10(KD) <= -15 ~ "below fM",                            
+                  log10(KD) <= -12 ~ "fM",                           
+                  log10(KD) <= -9 ~ "pM",                            
+                  log10(KD) <= -6 ~ "nM",                            
+                  log10(KD) <= -3 ~ "uM",                            
+                  is.na(KD) | KD <= 0 ~ "no KD",                            
+                  TRUE ~ "other") 
+                )
+
+Counts_df <- df %>% 
+  group_by(binder) %>% count() %>%
+  mutate(ypos = cumsum(n)- 0.5*n )
+
+df = merge(df, Counts_df, by = "binder", all.x = TRUE)
+df$label <- paste0(df$binder, ": ", df$n)
+
+ggplot(df, aes(binder,fill=label)) + ggtitle("Value of binding affinity") + 
+  geom_bar(width=1, col = "white") + theme_void() + 
+  theme(legend.title = element_blank()) + labs(x = NULL, y = NULL) + coord_polar("y", start=0) +
+  scale_fill_manual(values = c("#A2C510", "#C61E19", "#99CFE9", 
+                               "#FBB800", "#958BB2","#F08000", "#6696B9"))
+
+```
+
+### Fitting results of randomly selected sensograms
+
+```{r rslt_fit_plot, eval = rslts, fig.show = 'hold', fig.align='center', fig.width=9, warning=FALSE}
+params$fit_data %>%
+  ggplot(aes(x = Time)) + geom_point(aes(y = Response, col = Name)) +
+  geom_line(aes(y = fit)) + theme_light() +
+  facet_wrap(~Name, ncol = 2) +
+  scale_color_manual(values = c(
+      "#A2C510", "#C61E19", "#99CFE9", "#FBB800", "#958BB2",
+      "#F08000", "#6696B9", "#B2B4B5", "#6B7B88", "#5C9B5B"
+    ))
+```
+
+> Check the pdf file for more compehensive output
+
+```{r rslt_kntks_empty, eval = !rslts}
+print("!!! Samples could not be fitted !!!")
+```
+
+#### Glossary
+
+```{r gloss, out.width= '50%'}
+df = openxlsx::read.xlsx("./tbls/glossary_sca.xlsx")
+df
+```
+

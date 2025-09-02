@@ -1,0 +1,103 @@
+---
+title: "Amelie Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+### Introduction
+
+This vignette describes the anomaly detection algorithm and provides some examples.
+
+
+### Description
+
+The anomaly detection problem is set up here as a binary classification task, where each observation $x$ is classified as anomalous (class `1`) or non-anomalous (class `0`). We assume that anomalies are much less frequent than normal observations.
+
+The scoring method is as follows. Given an observation $x$ consisting of features $\{x_1, ..., x_n\}$, compute the probability density $p(x)$ of the features. If the $p(x) < \epsilon$, where $\epsilon$ is a tuned parameter, the observation is classified as anomalous.
+
+### Concepts
+
+#### Univariate normal distribution
+
+In the univariate case, each of the features $x_i$ is assumed to be normally distributed with mean $\mu_i$ and variance $\sigma_i^2$: $x_i \sim \mathcal{N}(\mu_i,\sigma_i^2)$. 
+
+For a variable with mean $\mu$ and variance $\sigma^2$, the probability density is given by: 
+
+$$p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+	
+
+#### Parameter estimation
+
+The univariate normal distribution is parametrized by mean $\mu$ and variance $\sigma^2$. For a data set $\{x_1,x_2, ..., x_m\}$, the parameters are estimated using maximum likelihood:
+
+$$\mu = \frac{1}{m}\sum_{i=1}^{m}x_i$$
+$$\sigma^2 = \frac{1}{m}\sum_{i=1}^{m}(x_i-\mu)^2$$
+
+
+#### Density estimation
+
+For the univariate case, the joint probability density is calculated under the assumptions that features are independent of each other, and each feature is normally distributed. For a set of observations $\{x_1,x_2, ..., x_m\}$ where each observation $x_i \in R^n$, the joint probability then is a product of the individual densities: 
+
+$$p(x) = \prod_{j=1}^{n}p(x_j;\mu_j,\sigma_j^2)$$
+
+
+### Algorithm
+
+Using the above assumptions and definitions, the algorithm is implemented as follows:
+
+1. Given a data set $(x,y)$, split it into training and cross-validation sets, $\{x^{(1)},...,x^{(m)}\}$ and $\{(x_{cv}^{(1)},y_{cv}^{(1)}), ..., (x_{cv}^{(k)},y_{cv}^{(k)})\}$.
+    - The training set is not required to have any positive (anomalous) examples.
+    - It is a good idea to set aside a separate test data set before the call to `anode`, for final evaluation.
+2. Fit model $p(x)_{train}$ on training set.
+    a. Fit parameters $\mu$ and $\sigma^2$ for each feature.
+    b. Calculate $p(x)_{train}$ for each row in training set.
+3. Tune $\epsilon$ on cross-validation data set.
+    a. Pick starting value for $\epsilon$; $min(p(x)_{train})$ is used here.
+    b. Calculate $p(x)_{cv}$ for each row in CV set using $\mu$ and $\sigma^2$ from `step 2`.
+    c. For each row $i$ in CV set, predict $y = 1$ if $p(x_i) < \epsilon$ (anomaly), else predict $y=0$.
+    d. Evaluate prediction accuracy on CV set using a score (e.g., f1).
+    e. Update $\epsilon$ if the score improves. 
+    f. Stop when best $\epsilon$ value is found.
+4. Evaluate algorithm accuracy on the training set.
+    - Use $p(x)_{train}$ from `step 2` and $\epsilon$ from `step 3`.
+5. After training, evaluate algorithm accuracy on a separate test set.
+    - Compute $p(x_i)_{test}$ using $\mu$ and $\sigma^2$ from `step 2` and $\epsilon$ from `step 3`.
+
+
+### Multivariate anomaly detection algorithm
+
+It is possible to extend the above algorithm by using the multivariate version of the normal distribution. In this case, the features are not assumed to be independent, and $p$ is not a product of independent densities.
+
+For parameters $\mu \in R^n$ (vector of means) and $\Sigma \in R^{n * n}$ (covariance matrix), the multivariate probability density function is given by:
+
+$$p(x; \mu, \Sigma) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}e^{(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu))},$$
+Where $|\Sigma|$ is the determinant of $\Sigma$.
+
+Unlike the univariate version, the multivariate pdf approach automatically captures correlations between features. However, the latter approach is computationally more expensive due to having to compute the inverse of $\Sigma$. The univariate algorithm works even when the training set size is small. For the multivariate version, $\Sigma$ is non-invertible if the number of observations is smaller than the number of features or the data contains features that are linearly dependent on others.
+
+
+
+### Examples
+
+Create a small data set and train the algorithm using formula notation and matrix notation:
+```{r}
+library(amelie)
+x1 <- c(1,.2,3,1,1,.7,-2,-1)
+x2 <- c(0,.5,0,.4,0,1,-.3,-.1)
+x <- do.call(cbind,list(x1,x2))
+y <- c(0,0,0,0,0,0,1,1)
+dframe <- data.frame(x,y)
+
+df_fit <- ad(y ~ x1 + x2, dframe)
+
+mat_fit <- ad(x = x, y = y)
+
+```
+
+### References
+
+[Machine Learning Course](https://www.coursera.org/learn/machine-learning) - the package is based on anomaly detection lectures from Andrew Ng's Machine Learning course.
+

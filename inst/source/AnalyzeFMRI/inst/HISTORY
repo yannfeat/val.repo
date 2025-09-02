@@ -1,0 +1,402 @@
+2001-10-08
+----------
+
+Version 1.0-1 : Renamed version of AnalyzeIO with added functions and GUI to perform Spatial ICA on fMRI datasets.
+
+2001-08-29 
+----------
+
+Version 1.0-2 : 
+- Include facility to read/write unsigned char (1 byte) ANALYZE image format files. 
+- Slice selection for Spatial ICA
+- Improved plotting for Spatial ICA
+
+2001-09-08 
+----------
+
+Version 1.0-3 : 
+- Include facility to plot results out to jpeg files
+- Improve format of plotting
+
+
+2001-11-27
+----------
+
+Version 1.0-4 :
+- Checks for existence of .hdr and .img files are now made
+- New file finding GUI
+- small bugs removed from f.analyzeFMRI.gui() and f.spectral.summary()
+
+
+2001-12-06
+----------
+
+Version 1.0-5 :
+- all C functions have _JM appended to their names to stop clashes with symbols in other packages
+
+2002-03-26
+----------
+
+Version 1.0-6 :
+- C code tidied up
+- "r" and "w" changed to "rb" and "wb" in fopen calls
+- tests directory added to check read and write functions work on examples
+- proper error reporting used in C code (using error function)
+- README.win file added to inst that describes installation of the package binary for Windows
+
+2002-04-15
+----------
+
+Version 1.0-7 :
+
+- tcltk scripts updated to avoid use of deprecated $.tclvar 
+
+2002-09-09
+----------
+
+Version 1.0-8 :
+
+- .lib.loc references changed in preparation for 1.6.0 (with help from BDR)
+
+2004-06-08
+----------
+
+ Version 1.0-9
+
+-changed detection of blas & lapack, to be MacOS X compatible (no lsame in BLAS)
+
+2004-12-23
+----------
+
+ Version 1.1-0
+
+-implemented Brian's changes
+
+2005-06-17
+----------
+
+ Version 1.1-3
+
+-bug fix in function f.read.analyze.slice.at.all.timepoints discovered by Russell V. Lenth
+
+2005-10-04
+----------
+
+ Version 1.1-4
+
+-put continuation lines in fortran code to make compatible with default use of gfortran in R-2.2.0
+
+2006-05-02
+----------
+
+ Version 1.1-5
+
+-bug fixes in R functions cluster.threshold and f.read.analyze.ts
+-bug fix in C function create_data_matrix_JM
+
+2006-05-16
+----------
+
+ Version 1.1-6
+
+-Brian made changes to separate out slamc.f
+
+2007-10-18
+----------
+
+ Version 1.1-7
+
+-I (P.Lafaye de Micheaux) began to maintain this package.
+-modification of R function f.read.analyze.header to add the output value 'originator' : coordinates of the central voxel of the image
+-bug fix in C function read_analyze_header_wrap_JM: originator should begin at 253L ; originator was char[10] and is now int[5]
+-removing of compilation warnings in slapack.f
+
+2007-12-11
+----------
+
+ Version 1.1-8
+
+-modification of R function f.read.analyze.header to output all the components of the .hdr file (in basic Analyze 7.5 format but with originator field modified)
+-modification of R function f.basic.hdr.list.create : originator field was modified (In the basic format, this is meant to be 10 bytes of text. In SPM, this space is used to contain three short (two byte) integers.) from 10 char (1 byte) to 5 short int (2 bytes)
+-modification of R function f.write.list.to.hdr : L$originator from character to integer
+-modification of R function f.write.analyze: i added the 'originator' argument to the function (with rep(0,5) default value)
+-modification of C function write_analyze_header_wrap_JM : originator from char** to int* 
+
+2007-12-12
+----------
+
+ Version 1.1-9
+
+-I added the files niftiFMRI.c and niftiFMRI.R to be able to read the new NIFTI format for .hdr files
+-I completed the documentation of the outputs of f.read.analyze.header and f.read.nifti.header
+
+
+2008-02-26
+----------
+
+ Version 1.1-10
+
+- ICA.gui.R and AnalyzeFMRI.gui.R were modified to avoid use of deprecated tkcmd. I replaced tkcmd by tcl
+- size.of.header was replaced by sizeof.hdr both in the functions f.basic.hdr.list.create and f.write.list.to.hdr
+- Error in function f.read.nifti.header: srow_x,y and z were declared as single(1) which was incorrect. They are now defined as single(4)
+- The function write_nifti_header_wrap_JM was added to the file niftiFMRI.c. It is now possible to write .hdr files in NIFTI format.
+- The function read_nifti_magic_wrap was added to the file niftiFMRI.c. It is now possible to read a .hdr file and its format (ANALYZE or NIFTI) 
+  is determined automatically.
+- I added the functions f.nifti.file.summary , f.basic.hdr.nifti.list.create , f.write.list.to.hdr.nifti , f.write.nifti 
+  f.read.nifti.slice , f.read.nifti.tpt , f.read.nifti.slice.at.all.timepoints , f.read.nifti.ts , f.spectral.summary.nifti , 
+  f.read.nifti.volume , f.read.header , f.write.nii.array.to.img.2bytes , f.write.nii.array.to.img.8bit and f.write.nii.array.to.img.float 
+  to the file nifitFMRI.R
+- I added the documentation for the functions f.nifti.file.summary , f.basic.hdr.nifti.list.create , f.write.list.to.hdr.nifti , f.write.nifti ,
+  f.read.nifti.slice , f.read.nifti.tpt , f.read.nifti.slice.at.all.timepoints , f.read.nifti.ts , f.read.nifti.volume , f.spectral.summary.nifti
+  and f.read.header
+- Documentation for f.read.analyze.header and f.read.nifti.header was modified
+- I corrected an error in the Examples section of the file f.write.list.to.hdr
+- I modified the INDEX file
+- I added a nwritten and a nread int variable for the output of th C functions fread and fwrite.
+- I added the functions write2byteappend_JM , write8bitappend_JM , writefloatappend_JM to the file nifitFMRI.c
+
+
+
+2009-10-19
+----------
+
+ Version 1.1-11
+
+- Initialisation of some variables in nifitFMRI.c, slam.unused, sblas.unused and slapack.unused to prevent compiler warnings
+- I added function f.read.volume to read a NIFTI or ANALYZE volume file. The function autodetects the format type of the image file
+- I modified f.read.analyze.volume and f.read.nifti.volume to always return a 4D array
+- I corrected a mistake in the function f.basic.hdr.nifti.list.create where vox.offset and magic fields should reflect the fact that we are in .nii or .img/.hdr NIFTI format
+- I also modified the write_nifti_header_wrap_JM C function
+- modification of R function f.write.list.to.hdr : I added a function strcomplete to respect the length of some Analyze character fields
+- modification of R function f.write.list.to.hdr.nifti : I added a function strcomplete to respect the length of some Nifti character fields
+- modification of many fields in help file f.read.nifti.header
+- modification of example section from f.write.nifti help file
+- There was a bug when using f.write.nifti function to create a .nii file. It is now corrected.
+- Functions diminfo2fps and fps2diminfo added
+- Functions xyzt2st and st2xyzt added
+- I added a directory called niftidoc in the package that contains various documentation files about NIFTI fields
+- I added a function f.complete.hdr.nifti.list.create
+- I added a function magicfield
+- I added a function analyze2nifti
+- I added the functions threeDto4D, twoDto4D and fourDto2D
+- I added the functions R2Q, Q2R xyz2ijk and ijk2xyz
+- I modified f.read.nifti.header to take into account the cases when "" should be "\0" for example
+- I added the functions nifti.quatern.to.mat44, mat34.to.TRSZ, mat34.to.TZSR
+- I added the functions f.icast.fmri.gui, f.icast.fmri, centering, reduction, eigenvalues, ICAspat, ICAtemp
+- I added the function plot.volume
+- I modified the file man/EC.3D.Rd to suppress a WARNING on the CRAN
+
+2009-11-03
+----------
+
+ Version 1.1-12
+
+- I modified function threeDto4D to (better) check if the headers of all files are the same (depending if we are in NIFTI/Analyze format) 
+- I modified function threeDto4D to add a check on datatype and to write the correct number of bytes with readBin/writeBin
+- I modified "datatype" entry in f.read.nifti.header.Rd help file
+- I modified f.write.nifti function to allow max and min computations when there are NaN values (usefull since SPM uses NaN values as markers for voxels for which it has not calculated any statistics)
+- I modified f.write.nii.array.to.img.2bytes, f.write.nii.array.to.img.8bit and f.write.nii.array.to.img.float functions by adding NAOK=TRUE argument to .C calls (usefull since SPM uses NaN values as markers for voxels for which it has not calculated any statistics)
+- I modified analyze2nifti function: qform.code and sform.code now take 0 as default values (instead of 2 before). I also added a check to verify if the .mat file exists.
+- I added a citation file
+- I modified the help file threeDto4D.Rd to warn the user that this function outputs files in the format sent in
+- I  modified a few help files before my talk at useR 2010
+- I modified the file plot.volume.gui.R to add hscale and vscale factors, thus enabling the possibility to resize the drawing. 
+  This is particularly usefull for small laptop screens.
+- I modified the file plot.volume.gui.R to correct an error when the visualizer GUI is used with 2D images.
+- I modified the function R2Q() to add a qfac parameter. If not provided, we choose it to work with a proper rotation 
+  matrix.
+- I modified the f.read.header(), f.read.volume() and magicfield() functions to handle the NIFTI-x case (with x in 1...9)
+- I modified the file plot.volume.gui.R to add sliders for the anatomical images, and also to take into account the pixdim values
+- I modified the f.basic.hdr.list.create() function and its associated documentation to replace mat with X
+- I modified the C function read_nifti_header_wrap_JM, the R function f.read.nifit.header() and the associated help file to enable the reading of the extension field, but there is still a problem
+- I modified the functions mat34.to.TRSZ() and mat34.to.TZSR() to handle the case of improper rotations.
+
+2011-06-05
+----------
+
+ Version 1.1-13
+
+- I modified the file plot.volume.gui.R to correct a bug: the sliders did not move on the anatomical when you clicked on the functional (and vice versa)
+- In this same file, I also changed order <- -1 into order <- -1*sign(L$pixdim[2]) (in the function orientation()) and hdr.anat$pixdim[2] into abs(hdr.anat$pixdim[2])
+
+2011-10-19
+----------
+
+ Version 1.1-14
+
+- I changed the CITATION file
+- I modified line 190 of file spatial.mixture.R to: y <- vector(length = k + 2)
+  This was to suppress a warning at the compilation of the package.
+- I modified line 950 of file analyzeFMRI.R to: jpeg(filename = paste(file, ".comp.", i, ".jpeg", sep = ""), width = width, height = height)
+- removing of compilation warnings in slapack.f
+
+2012-04-05
+----------
+
+ Version 1.1-15
+
+- I changed the documentation of file 
+- I changed authors order to alphabetical
+- I removed file zzz.R
+- I added a default NAMESPACE file with useDynLib
+- I commented out a WRITE call in file slamc.f
+- I removed empty sections in Rd files
+- I commented out many lines with:  tkrreplot(img.fonc.palette)
+  in file plot.volume.gui.R
+- I added a warning when flip is not defined when one uses the GUI (in file f.plot.volume.gui.R)
+
+2013-03-19
+----------
+
+ Version 1.1-16
+
+- I modified files analyzeFMRI.R and niftiFMRI.R to replace the now deprecated function .path.pacage() with the new one path.package()
+- For this reason, I also had to modify the "Depends" entry in DESCRIPTION file from R (>= 2.3.0) to R (>= 2.13.0)
+
+2018-05-09
+----------
+
+ Version 1.1-17
+
+- I removed contents of Details Section in the xyz2ijk.Rd file
+- I modified the Details Section in file ijk2xyz.Rd
+- I modified file analyze2nifti.Rd
+- I modified file f.complete.hdr.nifti.list.create.Rd
+- I modified files fps2diminfo.Rd and diminfo2fps.Rd
+- I modified files st2xyzt.Rd and xyzt2st.Rd
+- I moved the function orientation() from the file plot.volume.gui.R to the file niftiFMRI.R
+- I added the function orientation() in the INDEX file
+- I added a help file for function orientation()
+- I modified the file plot.volume.gui.R: 1) so that all images are now displayed in a Neurological convention; 2) I added (on top of Visualizer) the full path name to the anatomical file being displayed; 3) I modified the flip variables to correct a bug in the orientation when both anatomical/functionnal were openned simultaneously; 4) I permuted the Coronal and Sagittal view to obtain the same ouput as mricron; 5) I corrected a bug in the display so now this seems similar to what mricron gives; 6) I added the scanner coordinates on bottom of visualizer; 7) I added the letter X, y or Z on the approproate sliders; 8) I moved the require of tcltk and tkrplot to the function f.plot.volume.gui; 9) I removed the local environment; 10) I increased the size of the Scanner coordinates pannel (coord.fonc) so that all the window does not change its size when one clicks on the brain; 11) I now deal with the array.fonc variable coming from the function f.plot.volume.gui(); 12) I added the argument na.rm=TRUE to all occurences of min() and max(); 13) I added a check of old ANALYZE format using the read_nifti_magic_wrap C function.
+- I modified the function f.plot.volume.gui() so that we can pass as an argument an array containing the MRI values.
+- I modified the functions ijk2xyz() and xyz2ijk() to add a orientation(L) to take into account the Radiological/Neurological storage of data.
+- DESCRIPTION file: I removed the period (.) at the end of the title; I changed my email address; I added tcltk and tkrplot in the Depends field; I removed an extraneous Depends field
+- Files inst/AnalyzeFMRI.gui.R, ICA.gui.R, ICAst.gui.R, plot.volume.gui.R: I commented the first line and I used tcltk:: everywhere
+- File plot.volume.gui.R: I used the tkrplot:: when necessary
+- niftiFMRI.R:  I removed the lines require(tcltk) || stop("tcltk support is absent") and  require("tkrplot") || stop("tkrplot support is absent")
+- NAMESPACE file: I added several importFrom entries and also the tkrplot import
+- Threshold.Bonferroni.R: I replaced everywhere 'type ==' with 'type[1] =='
+- File spatial.c: I added Free(vox_mat_vals);
+
+
+2019-05-15
+----------
+
+ Version 1.1-18
+
+- Change $(F77)) to $(FC) in src/Makevars.in
+- Change Depends: R (>= 3.6.0) in DESCRIPTION file
+- In analyzeFMRI.c: solved an error about function strncat (that was used to change file extension, e.g., to .img or .hdr)
+- Resolved warning issues [-Wunused-but-set-variable] in files niftiFMRI.c, spatial.filters.non.linear.c, analyzeFMRI.c
+
+2019-06-06
+----------
+
+ Version 1.1-19
+
+- Corrected "Nonconforming tab character" warnings in file spatial.filters.linear.f
+- Commented lines 1195--1203 in file analyzeFMRI.c since xerbla is now part of R
+- To solve "Warning: Obsolescent feature: Old-style character length at", I replaced CHARACTER *x NAME1,NAME2,.. with CHARACTER (LEN=x) :: NAME1,NAME2,.. in files lsame.f, sblas.f and slapack.f
+- To solve a NOTE of "checking for non-standard things in the check directory", I added \dontrun{} in files: analyze2nifti.Rd, f.basic.hdr.list.create.Rd, f.basic.hdr.nifti.list.create.Rd,
+f.write.list.to.hdr.nifti.Rd, f.complete.hdr.nifti.list.create.Rd, f.write.list.to.hdr.Rd, f.write.analyze.Rd, f.write.nifti.Rd
+
+2019-07-03
+----------
+
+ Version 1.1-20
+
+- Commented lines 565--570 in file slamc.unused
+- Changed LBETA = C + QTR into LBETA = INT(C + QTR) at line 255 of file slamc.unused to get rid of a compiler warning
+- Added at line 838: OLDY = ZERO in file slamc.unused to get rid of a compiler warning
+- Modified lines 136--140 in file analyzeFMRI.c to remove warning: note: type 'long int' should match type 'void'. Also, I modified lines 1282 and 1358 for the same reason
+- Created the new file wrapper.f for the same reason as above
+
+2019-11-10
+----------
+
+ Version 1.1-21
+
+- I added copyright holders in the DESCRIPTION file (request by Prof. B. Ripley)
+- In file analyzeFMRI.c, I solved "warning: ignoring return value of fread" by adding a nbfread integer.
+
+2020-12-13
+----------
+
+ Version 1.1-22
+
+- I added at line 2590 of file configure: #include <stdlib.h>
+- I added at line 2903 of file configure: void ${scopy_func}(){}
+- I added several sdot entries in file configure to avoid a compiler error
+- Replaced -V with -v in lines 1629 and 1630
+- In file AnalyzeFMRI.c, I addedd if (nbread == 0) warning("Nothing to read"); several times to prevent compiler WARNINGs
+- I changed in the CITATION file http to https
+
+2020-12-15
+----------
+
+ Version 1.1-23
+
+- I moved tkrplot to Suggests field in file DESCRIPTION (because B. Ripley wrote 
+  "Package tkrplot supports only two of the three graphical interfaces of Tk, not covering Aqua which is the only 
+   one currently available for arm64 Macs.")
+- I removed tkrplot in NAMESPACE file
+- I changed the source code for the function f.plot.volume.gui() in file niftiFMRI.R accordingly.
+- I modified file f.plot.volume.gui.Rd to indicate this
+
+2021-10-05
+----------
+
+ Version 1.1-24
+
+- I got new WARNINGS for "checking top-level files" about obsolete AC_TRY_LINK and AC_OUTPUT. I thus changed these functions in the file configure.ac (from new definitions taken here: https://www.gnu.org/software/autoconf/manual/autoconf-2.61/html_node/Obsolete-Macros.html#Obsolete-Macros)
+
+2025-07-11
+----------
+
+ Version 1.1-25
+
+- Previous version has been archived (by Ripley) on 2022-03-15 as check problems were not corrected despite months of notice.
+  I need to not use anymore the header S.h
+- In file spatial.filters.non.linear.c, I replaced S.h with R.h
+   which then resulted in errors such as: unknown type name ‘Sint’; did you mean ‘uint’
+   which I solved by replacing all occurences of Sint (resp., Sint*) with just int (resp., int*)
+- I also got this warning: 
+   analyzeFMRI.c:880:26: warning: format ‘%s’ expects argument of type ‘char *’, but argument 2 has type ‘short int *’ [-Wformat=]
+  which I solved by replacing this line with:
+  Rprintf("originator = %d %d %d %d %d \n",
+        (*head).originator[0],
+        (*head).originator[1],
+        (*head).originator[2],
+        (*head).originator[3],
+        (*head).originator[4]);
+- I corrected this: checkRd: (-1) f.read.nifti.header.Rd:153: Lost braces; missing escapes or markup?
+- I corrected this:
+  Package CITATION file contains call(s) to old-style personList() or
+   as.personList().  Please use c() on person objects instead.
+   Package CITATION file contains call(s) to old-style citEntry().  Please
+   use bibentry() instead.
+- I corrected several errors related to Calloc, Realloc and Free not existing anymore 
+- In file niftiFMRI.R, I corrected: if (class(array.fonc) == "array" & is.null(hdr.fonc))
+- In file analyzeFMRI.c, in function svd_JM, I initialised: int info = 0
+- To correct this Warning: Obsolescent feature: Computed GOTO at (1), I replaced in file slapack.unused all lines from 15593 to the end of the file by a new version created with gpt, with IF ELSEIF constructs instead of GOTO.
+- Possibly misspelled words in DESCRIPTION:    NIFTI (5:9, 24:142)    XQuartz (24:188)
+  I single quoted software names in both Title and Description fields of the DESCRIPTION file.
+- In file test.R, I modified this line: library(AnalyzeFMRI, quietly = TRUE)
+- I added a \value tag to files f.plot.ica.fmri.jpg.Rd and f.plot.ica.fmri.Rd
+- I modified (or deleted) examples in files centering.Rd, eigenvalues.Rd, reduction.Rd, threeDto4D.Rd, twoDto4D.Rd, fourDto2D.Rd, f.plot.volume.gui.Rd, ICAspat.Rd, ICAtemp.Rd, f.basic.hdr.list.create.Rd, f.basic.hdr.nifti.list.create.Rd, f.complete.hdr.nifti.list.create.Rd
+- I replaced \dontrun with \donttest (or removed it) in files analyze2nifti.Rd, f.basic.hdr.list.create.Rd, f.basic.hdr.nifti.list.create.Rd, f.complete.hdr.nifti.list.create.Rd, f.write.analyze.Rd, f.write.list.to.hdr.nifti.Rd, f.write.list.to.hdr.Rd
+- In file niftiFMRI.R, I added a verbose argument to functions f.spectral.summary.nifti(), xyzt2st(), magicfield(), f.icast.fmri() (and modified their man pages accordingly)
+- I added a with_dir() function (borrowed from the withr package)
+- I added an argument 'path.out=NULL' to functions f.write.analyze(), f.write.array.to.img.2bytes(), f.write.array.to.img.8bit(), f.write.array.to.img.float(), f.write.list.to.hdr(), f.write.list.to.hdr.nifti(), f.write.nifti(), f.write.nii.array.to.img.2bytes(), f.write.nii.array.to.img.8bit(), f.write.nii.array.to.img.float(), f.icast.fmri() and I updated the doc files accordingly
+- I added in files niftiFMRI.R, analyzeFMRI.R, analyzeFMRI.gui.R, plot.volume.gui.R, smoothing.examples.R, N2G.Spatial.Mixture.Rd, NonLinearSmoothArray.Rd: oldpar <- par(something) ...  par(oldpar)
+- I modified function f.ica.fmri.gui() in file AnalyzeFMRI.R so that the user can return a value
+- I modified file ICA.gui.R to stop writing to .GlobalEnv by default
+- I modified function f.icast.fmri.gui() in file niftiFMRI.R so that the user can return a value
+- I modified file ICAst.gui.R to stop writing to .GlobalEnv by default
+- In function f.ica.fmri, I replaced || with | in if(any(slices < 1 || slices>hdr$dim[4]))
+- I rewrote the function f.plot.volume.gui()
+- In file plot.volume.gui.R, I replaced every occurence of <<- with assign(), and used an environment
+
+
+
+

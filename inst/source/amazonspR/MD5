@@ -1,0 +1,15 @@
+4bb49b7a4a1cb7554c61350d2f80394b *DESCRIPTION
+c85c4446d3d0d271b247e5f9cfa7e2a1 *NAMESPACE
+7c3fd9dd0b617bf4404a78511fcfd101 *NEWS.md
+c3aa8b88de4174db978ca86f2a125d7a *R/fetch_amazonsp.R
+5bd0fdb64ed6d77ba7ce947a85d020f6 *R/my_amazonsp_data.R
+c6a4d4d11e9960049918401f340ba101 *README.md
+faa7af1f7e33a44b658b735e629d90e6 *build/vignette.rds
+14e6e0e040a51b1a8615338bb782f32a *data/my_amazonsp_data.RData
+5ff3546f635a16e96a106099da1a73e2 *inst/doc/tutorial.R
+651651d64a65936b902e0f65fbb4f69f *inst/doc/tutorial.Rmd
+a875929e48c5a88e566a864b1a00989a *inst/doc/tutorial.html
+82c39b2f047497b9d3f2411824ef16b4 *man/fetch_amazonsp.Rd
+7d29f6a279cd6cdc6361c7b27041286e *man/my_amazonsp_data.Rd
+14e6e0e040a51b1a8615338bb782f32a *vignettes/my_amazonsp_data.RData
+651651d64a65936b902e0f65fbb4f69f *vignettes/tutorial.Rmd

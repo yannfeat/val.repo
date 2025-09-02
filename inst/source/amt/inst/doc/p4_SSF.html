@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Johannes Signer" />
+
+<meta name="date" content="2025-08-23" />
+
+<title>Fitting Step-Selection Functions with amt</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Fitting Step-Selection Functions with
+<code>amt</code></h1>
+<h4 class="author">Johannes Signer</h4>
+<h4 class="date">2025-08-23</h4>
+
+
+
+<div id="about" class="section level2">
+<h2>About</h2>
+<p>This vignette briefly introduces how one can fit a Step-Selection
+Function (SSF) with the <code>amt</code> package. We will be using the
+example data of one red deer from northern Germany and one covariate: a
+forest cover map. For a more through discussion see also Fieberg et
+al. 2020<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+and supplement B.</p>
+</div>
+<div id="getting-the-data-ready" class="section level2">
+<h2>Getting the data ready</h2>
+<p>First we load the required libraries and the relocation data (called
+<code>deer</code>)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(amt)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;deer&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>deer</span></code></pre></div>
+<pre><code>## # A tibble: 826 × 4
+##          x_       y_ t_                  burst_
+##  *    &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;
+##  1 4314068. 3445807. 2008-03-30 00:01:47      1
+##  2 4314053. 3445768. 2008-03-30 06:00:54      1
+##  3 4314105. 3445859. 2008-03-30 12:01:47      1
+##  4 4314044. 3445785. 2008-03-30 18:01:24      1
+##  5 4313015. 3445858. 2008-03-31 00:01:23      1
+##  6 4312860. 3445857. 2008-03-31 06:01:45      1
+##  7 4312854. 3445856. 2008-03-31 12:01:11      1
+##  8 4312858. 3445858. 2008-03-31 18:01:55      1
+##  9 4312745. 3445862. 2008-04-01 00:01:24      1
+## 10 4312651. 3446024. 2008-04-01 06:00:54      1
+## # ℹ 816 more rows</code></pre>
+<p>In order to continue, we need a regular sampling rate. To check the
+current sampling rate, we use <code>summarize_sampling_rate</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">summarize_sampling_rate</span>(deer)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 9
+##     min    q1 median  mean    q3   max    sd     n unit 
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;
+## 1  5.96  6.00   6.01  11.5  6.02 3924.  137.   825 hour</code></pre>
+<p>The median sampling rate is 6h, which is what we aimed for.</p>
+<p>Next, we have to get the environmental covariates. A forest layer is
+included in the package. Note, that this a regular
+<code>SpatRast</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>sh_forest <span class="ot">&lt;-</span> <span class="fu">get_sh_forest</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>sh_forest</span></code></pre></div>
+<pre><code>## class       : SpatRaster 
+## size        : 720, 751, 1  (nrow, ncol, nlyr)
+## resolution  : 25, 25  (x, y)
+## extent      : 4304725, 4323500, 3437725, 3455725  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+## source(s)   : memory
+## name        : forest 
+## min value   :      0 
+## max value   :      1</code></pre>
+</div>
+<div id="prepare-data-for-ssf" class="section level2">
+<h2>Prepare Data for SSF</h2>
+<div id="steps" class="section level3">
+<h3>Steps</h3>
+<p>Before fitting a SSF we have to do some data preparation. First, we
+change from a point representation to a step representation, using the
+function <code>steps_by_burst</code>, which in contrast to the
+<code>steps</code> function accounts for bursts.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>ssf1 <span class="ot">&lt;-</span> deer <span class="sc">|&gt;</span> <span class="fu">steps_by_burst</span>()</span></code></pre></div>
+</div>
+<div id="controlrandom-steps" class="section level3">
+<h3>Control/random steps</h3>
+<p>The generic function <code>random_steps</code> provides a methods for
+a <code>track_xy*</code>, where each observed step is paired with
+<code>n_control</code> control steps (i.e., steps that share the same
+starting location but have different turn angles and step lengths). The
+distributions for drawing step lengths and turning angles are usually
+obtained by fitting known parametric distribution to the observed step
+length and turn angles.</p>
+<p>The function <code>random_steps</code> has seven arguments. For most
+use cases the defaults are just fine, but there might situation where
+the user wants to adjust some of the arguments. The arguments are:</p>
+<ol style="list-style-type: decimal">
+<li><code>x</code>: This is the <code>track_xy*</code> for which the
+random steps are created. That is, for each step in <code>x</code>
+<code>n_control</code> random steps are created.</li>
+<li><code>n_control</code>: The number of random steps that should be
+created for each observed step.</li>
+<li><code>sl_distr</code>: This is the distribution of the step lengths.
+By default a gamma distribution is fit to the observed step lengths of
+the <code>x</code>. But any <code>amt_distr</code> is suitable here. <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+<li><code>ta_distr</code>: This is the turn angle distribution, with the
+default being a von Mises distribution.</li>
+<li><code>rand_sl</code>: These are the random step lengths, by default
+1e5 random numbers from the distribution fitted in 3<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</li>
+<li><code>rand_ta</code>: These are the random turn angles, by default
+1e4 random numbers from the distribution fitted in 4.</li>
+<li><code>include_observed</code>: This argument is by default
+<code>TRUE</code> and indicates if the observed steps should be included
+or not.</li>
+</ol>
+<div id="the-default-situation" class="section level4">
+<h4>The default situation</h4>
+<p>In most situations the following code snippet should work<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>ssf1 <span class="ot">&lt;-</span> ssf1 <span class="sc">|&gt;</span> <span class="fu">random_steps</span>(<span class="at">n_control =</span> <span class="dv">15</span>)</span></code></pre></div>
+</div>
+<div id="a-exponential-distribution-for-step-lengths" class="section level4">
+<h4>A exponential distribution for step lengths</h4>
+<p><em>todo</em></p>
+</div>
+</div>
+<div id="extract-covariates" class="section level3">
+<h3>Extract covariates</h3>
+<p>As a last step, we have to extract the covariates at the end point of
+each step. We can do this with <code>extract_covariates</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>ssf1 <span class="ot">&lt;-</span> ssf1 <span class="sc">|&gt;</span> <span class="fu">extract_covariates</span>(sh_forest) </span></code></pre></div>
+<p>Since the forest layers is coded as <code>1 = forest</code> and
+<code>2 != forest</code>, we create a factor with appropriate levels. We
+also calculate the log of the step length and the cosine of the turn
+angle, which we may use later for a integrated step selection
+function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>ssf1 <span class="ot">&lt;-</span> ssf1 <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">forest =</span> <span class="fu">factor</span>(forest, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;forest&quot;</span>, <span class="st">&quot;non-forest&quot;</span>)), </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>         <span class="at">cos_ta =</span> <span class="fu">cos</span>(ta_), </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>        <span class="at">log_sl =</span> <span class="fu">log</span>(sl_)) </span></code></pre></div>
+</div>
+</div>
+<div id="fitting-ssf" class="section level2">
+<h2>Fitting SSF</h2>
+<p>Now all pieces are there to fit a SSF. We will use
+<code>fit_clogit</code>, which is a wrapper around
+<code>survival::clogit</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> ssf1 <span class="sc">|&gt;</span> <span class="fu">fit_clogit</span>(case_ <span class="sc">~</span> forest <span class="sc">+</span> <span class="fu">strata</span>(step_id_))</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> ssf1 <span class="sc">|&gt;</span> <span class="fu">fit_clogit</span>(case_ <span class="sc">~</span> forest <span class="sc">+</span> forest<span class="sc">:</span>cos_ta <span class="sc">+</span> forest<span class="sc">:</span>log_sl <span class="sc">+</span> log_sl <span class="sc">*</span> cos_ta <span class="sc">+</span> <span class="fu">strata</span>(step_id_))</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> ssf1 <span class="sc">|&gt;</span> <span class="fu">fit_clogit</span>(case_ <span class="sc">~</span> forest <span class="sc">+</span> forest<span class="sc">:</span>cos_ta <span class="sc">+</span> forest<span class="sc">:</span>log_sl <span class="sc">+</span> log_sl <span class="sc">+</span> cos_ta <span class="sc">+</span> <span class="fu">strata</span>(step_id_))</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">summary</span>(m0)</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(rep(1, 12096L), case_) ~ forest + strata(step_id_), 
+##     data = data, method = &quot;exact&quot;)
+## 
+##   n= 12096, number of events= 756 
+## 
+##                     coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+## forestnon-forest -0.5145    0.5978   0.1088 -4.727 2.28e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##                  exp(coef) exp(-coef) lower .95 upper .95
+## forestnon-forest    0.5978      1.673     0.483      0.74
+## 
+## Concordance= 0.529  (se = 0.007 )
+## Likelihood ratio test= 21.65  on 1 df,   p=3e-06
+## Wald test            = 22.34  on 1 df,   p=2e-06
+## Score (logrank) test = 22.44  on 1 df,   p=2e-06</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(rep(1, 12096L), case_) ~ forest + forest:cos_ta + 
+##     forest:log_sl + log_sl * cos_ta + strata(step_id_), data = data, 
+##     method = &quot;exact&quot;)
+## 
+##   n= 12096, number of events= 756 
+## 
+##                             coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+## forestnon-forest         0.83934   2.31483  0.32799  2.559 0.010497 *  
+## log_sl                   0.17416   1.19025  0.04958  3.513 0.000443 ***
+## cos_ta                  -0.20329   0.81604  0.20531 -0.990 0.322092    
+## forestnon-forest:cos_ta -0.31159   0.73228  0.11769 -2.648 0.008106 ** 
+## forestnon-forest:log_sl -0.25554   0.77450  0.05786 -4.416    1e-05 ***
+## log_sl:cos_ta            0.01656   1.01669  0.03450  0.480 0.631313    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##                         exp(coef) exp(-coef) lower .95 upper .95
+## forestnon-forest           2.3148     0.4320    1.2171    4.4026
+## log_sl                     1.1902     0.8402    1.0800    1.3117
+## cos_ta                     0.8160     1.2254    0.5457    1.2203
+## forestnon-forest:cos_ta    0.7323     1.3656    0.5814    0.9223
+## forestnon-forest:log_sl    0.7745     1.2912    0.6915    0.8675
+## log_sl:cos_ta              1.0167     0.9836    0.9502    1.0878
+## 
+## Concordance= 0.609  (se = 0.013 )
+## Likelihood ratio test= 90.25  on 6 df,   p=&lt;2e-16
+## Wald test            = 88.38  on 6 df,   p=&lt;2e-16
+## Score (logrank) test = 90.65  on 6 df,   p=&lt;2e-16</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(rep(1, 12096L), case_) ~ forest + forest:cos_ta + 
+##     forest:log_sl + log_sl + cos_ta + strata(step_id_), data = data, 
+##     method = &quot;exact&quot;)
+## 
+##   n= 12096, number of events= 756 
+## 
+##                             coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+## forestnon-forest         0.84859   2.33635  0.32724  2.593 0.009510 ** 
+## log_sl                   0.17369   1.18969  0.04956  3.505 0.000457 ***
+## cos_ta                  -0.11644   0.89008  0.09693 -1.201 0.229614    
+## forestnon-forest:cos_ta -0.31497   0.72981  0.11750 -2.681 0.007348 ** 
+## forestnon-forest:log_sl -0.25707   0.77331  0.05776 -4.451 8.56e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##                         exp(coef) exp(-coef) lower .95 upper .95
+## forestnon-forest           2.3363     0.4280    1.2302    4.4370
+## log_sl                     1.1897     0.8406    1.0796    1.3111
+## cos_ta                     0.8901     1.1235    0.7361    1.0763
+## forestnon-forest:cos_ta    0.7298     1.3702    0.5797    0.9188
+## forestnon-forest:log_sl    0.7733     1.2931    0.6905    0.8660
+## 
+## Concordance= 0.609  (se = 0.013 )
+## Likelihood ratio test= 90.02  on 5 df,   p=&lt;2e-16
+## Wald test            = 87.6  on 5 df,   p=&lt;2e-16
+## Score (logrank) test = 89.63  on 5 df,   p=&lt;2e-16</code></pre>
+<div id="interpretation-of-coefficients" class="section level3">
+<h3>Interpretation of coefficients</h3>
+<p>See the discussion in Fieberg et al 2021.</p>
+</div>
+</div>
+<div id="a-note-on-piping" class="section level2">
+<h2>A note on piping</h2>
+<p>All steps described above, could easily be wrapped into one piped
+workflow:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> deer <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">steps_by_burst</span>() <span class="sc">|&gt;</span> <span class="fu">random_steps</span>(<span class="at">n =</span> <span class="dv">15</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">extract_covariates</span>(sh_forest) <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">forest =</span> <span class="fu">factor</span>(forest, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;forest&quot;</span>, <span class="st">&quot;non-forest&quot;</span>)), </span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>         <span class="at">cos_ta =</span> <span class="fu">cos</span>(ta_), </span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>         <span class="at">log_sl =</span> <span class="fu">log</span>(sl_)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>  <span class="fu">fit_clogit</span>(case_ <span class="sc">~</span> forest <span class="sc">+</span> forest<span class="sc">:</span>cos_ta <span class="sc">+</span> forest<span class="sc">:</span>sl_ <span class="sc">+</span> sl_ <span class="sc">*</span> cos_ta <span class="sc">+</span> <span class="fu">strata</span>(step_id_))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(rep(1, 12096L), case_) ~ forest + forest:cos_ta + 
+##     forest:sl_ + sl_ * cos_ta + strata(step_id_), data = data, 
+##     method = &quot;exact&quot;)
+## 
+##   n= 12096, number of events= 756 
+## 
+##                               coef  exp(coef)   se(coef)      z Pr(&gt;|z|)    
+## forestnon-forest        -0.1036793  0.9015144  0.1407961 -0.736  0.46150    
+## sl_                      0.0006758  1.0006760  0.0001538  4.394 1.11e-05 ***
+## cos_ta                  -0.3355283  0.7149603  0.1098064 -3.056  0.00225 ** 
+## forestnon-forest:cos_ta -0.2134928  0.8077580  0.1183237 -1.804  0.07118 .  
+## forestnon-forest:sl_    -0.0009751  0.9990253  0.0001986 -4.909 9.14e-07 ***
+## sl_:cos_ta               0.0003849  1.0003850  0.0001271  3.027  0.00247 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##                         exp(coef) exp(-coef) lower .95 upper .95
+## forestnon-forest           0.9015     1.1092    0.6841    1.1880
+## sl_                        1.0007     0.9993    1.0004    1.0010
+## cos_ta                     0.7150     1.3987    0.5765    0.8866
+## forestnon-forest:cos_ta    0.8078     1.2380    0.6406    1.0186
+## forestnon-forest:sl_       0.9990     1.0010    0.9986    0.9994
+## sl_:cos_ta                 1.0004     0.9996    1.0001    1.0006
+## 
+## Concordance= 0.603  (se = 0.013 )
+## Likelihood ratio test= 105.2  on 6 df,   p=&lt;2e-16
+## Wald test            = 107.8  on 6 df,   p=&lt;2e-16
+## Score (logrank) test = 116.5  on 6 df,   p=&lt;2e-16</code></pre>
+</div>
+<div id="session" class="section level2">
+<h2>Session</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value
+##  version  R version 4.5.1 (2025-06-13)
+##  os       macOS Sequoia 15.6
+##  system   aarch64, darwin20
+##  ui       X11
+##  language (EN)
+##  collate  C
+##  ctype    en_US.UTF-8
+##  tz       Europe/Berlin
+##  date     2025-08-23
+##  pandoc   3.4 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
+##  quarto   1.6.40 @ /usr/local/bin/quarto
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package      * version date (UTC) lib source
+##  amt          * 0.3.0.0 2025-08-23 [1] local
+##  backports      1.5.0   2024-05-23 [3] CRAN (R 4.5.0)
+##  boot           1.3-31  2024-08-28 [3] CRAN (R 4.5.1)
+##  bslib          0.9.0   2025-01-30 [3] CRAN (R 4.5.0)
+##  cachem         1.1.0   2024-05-16 [3] CRAN (R 4.5.0)
+##  checkmate      2.3.3   2025-08-18 [3] CRAN (R 4.5.0)
+##  circular       0.5-1   2024-08-29 [3] CRAN (R 4.5.0)
+##  class          7.3-23  2025-01-01 [3] CRAN (R 4.5.1)
+##  classInt       0.4-11  2025-01-08 [3] CRAN (R 4.5.0)
+##  cli            3.6.5   2025-04-23 [3] CRAN (R 4.5.0)
+##  codetools      0.2-20  2024-03-31 [3] CRAN (R 4.5.1)
+##  data.table     1.17.8  2025-07-10 [3] CRAN (R 4.5.0)
+##  DBI            1.2.3   2024-06-02 [3] CRAN (R 4.5.0)
+##  digest         0.6.37  2024-08-19 [3] CRAN (R 4.5.0)
+##  dplyr        * 1.1.4   2023-11-17 [3] CRAN (R 4.5.0)
+##  e1071          1.7-16  2024-09-16 [3] CRAN (R 4.5.0)
+##  evaluate       1.0.4   2025-06-18 [3] CRAN (R 4.5.0)
+##  farver         2.1.2   2024-05-13 [3] CRAN (R 4.5.0)
+##  fastmap        1.2.0   2024-05-15 [3] CRAN (R 4.5.0)
+##  fitdistrplus   1.2-4   2025-07-03 [3] CRAN (R 4.5.0)
+##  generics       0.1.4   2025-05-09 [3] CRAN (R 4.5.0)
+##  ggforce        0.5.0   2025-06-18 [3] CRAN (R 4.5.0)
+##  ggplot2      * 3.5.2   2025-04-09 [3] CRAN (R 4.5.0)
+##  ggraph       * 2.2.1   2024-03-07 [3] CRAN (R 4.5.0)
+##  ggrepel        0.9.6   2024-09-07 [3] CRAN (R 4.5.0)
+##  glue           1.8.0   2024-09-30 [3] CRAN (R 4.5.0)
+##  graphlayouts   1.2.2   2025-01-23 [3] CRAN (R 4.5.0)
+##  gridExtra      2.3     2017-09-09 [3] CRAN (R 4.5.0)
+##  gtable         0.3.6   2024-10-25 [3] CRAN (R 4.5.0)
+##  htmltools      0.5.8.1 2024-04-04 [3] CRAN (R 4.5.0)
+##  igraph         2.1.4   2025-01-23 [3] CRAN (R 4.5.0)
+##  jquerylib      0.1.4   2021-04-26 [3] CRAN (R 4.5.0)
+##  jsonlite       2.0.0   2025-03-27 [3] CRAN (R 4.5.0)
+##  KernSmooth     2.23-26 2025-01-01 [3] CRAN (R 4.5.1)
+##  knitr        * 1.50    2025-03-16 [3] CRAN (R 4.5.0)
+##  labeling       0.4.3   2023-08-29 [3] CRAN (R 4.5.0)
+##  lattice        0.22-7  2025-04-02 [3] CRAN (R 4.5.1)
+##  lifecycle      1.0.4   2023-11-07 [3] CRAN (R 4.5.0)
+##  lubridate    * 1.9.4   2024-12-08 [3] CRAN (R 4.5.0)
+##  magrittr       2.0.3   2022-03-30 [3] CRAN (R 4.5.0)
+##  MASS           7.3-65  2025-02-28 [3] CRAN (R 4.5.1)
+##  Matrix         1.7-3   2025-03-11 [3] CRAN (R 4.5.1)
+##  memoise        2.0.1   2021-11-26 [3] CRAN (R 4.5.0)
+##  mvtnorm        1.3-3   2025-01-10 [3] CRAN (R 4.5.0)
+##  pillar         1.11.0  2025-07-04 [3] CRAN (R 4.5.0)
+##  pkgconfig      2.0.3   2019-09-22 [3] CRAN (R 4.5.0)
+##  polyclip       1.10-7  2024-07-23 [3] CRAN (R 4.5.0)
+##  proxy          0.4-27  2022-06-09 [3] CRAN (R 4.5.0)
+##  purrr          1.1.0   2025-07-10 [3] CRAN (R 4.5.0)
+##  R6             2.6.1   2025-02-15 [3] CRAN (R 4.5.0)
+##  rbibutils      2.3     2024-10-04 [3] CRAN (R 4.5.0)
+##  RColorBrewer   1.1-3   2022-04-03 [3] CRAN (R 4.5.0)
+##  Rcpp           1.1.0   2025-07-02 [3] CRAN (R 4.5.0)
+##  Rdpack         2.6.4   2025-04-09 [3] CRAN (R 4.5.0)
+##  rlang          1.1.6   2025-04-11 [3] CRAN (R 4.5.0)
+##  rmarkdown      2.29    2024-11-04 [3] CRAN (R 4.5.0)
+##  rstudioapi     0.17.1  2024-10-22 [3] CRAN (R 4.5.0)
+##  sass           0.4.10  2025-04-11 [3] CRAN (R 4.5.0)
+##  scales         1.4.0   2025-04-24 [3] CRAN (R 4.5.0)
+##  sessioninfo    1.2.3   2025-02-05 [3] CRAN (R 4.5.0)
+##  sf             1.0-21  2025-05-15 [3] CRAN (R 4.5.0)
+##  survival       3.8-3   2024-12-17 [3] CRAN (R 4.5.1)
+##  terra          1.8-60  2025-07-21 [3] CRAN (R 4.5.0)
+##  tibble         3.3.0   2025-06-08 [3] CRAN (R 4.5.0)
+##  tidygraph    * 1.3.1   2024-01-30 [3] CRAN (R 4.5.0)
+##  tidyr          1.3.1   2024-01-24 [3] CRAN (R 4.5.0)
+##  tidyselect     1.2.1   2024-03-11 [3] CRAN (R 4.5.0)
+##  timechange     0.3.0   2024-01-18 [3] CRAN (R 4.5.0)
+##  tweenr         2.0.3   2024-02-26 [3] CRAN (R 4.5.0)
+##  units          0.8-7   2025-03-11 [3] CRAN (R 4.5.0)
+##  utf8           1.2.6   2025-06-08 [3] CRAN (R 4.5.0)
+##  vctrs          0.6.5   2023-12-01 [3] CRAN (R 4.5.0)
+##  viridis        0.6.5   2024-01-29 [3] CRAN (R 4.5.0)
+##  viridisLite    0.4.2   2023-05-02 [3] CRAN (R 4.5.0)
+##  withr          3.0.2   2024-10-28 [3] CRAN (R 4.5.0)
+##  xfun           0.53    2025-08-19 [3] CRAN (R 4.5.0)
+##  yaml           2.3.10  2024-07-26 [3] CRAN (R 4.5.0)
+## 
+##  [1] /private/var/folders/ln/h3zng0fs2pq7mhn_hzn0d8x00000gn/T/RtmpvmiLWg/Rinst1761f5e417fe9
+##  [2] /private/var/folders/ln/h3zng0fs2pq7mhn_hzn0d8x00000gn/T/RtmpfKQTmf/temp_libpath16445556b59c1
+##  [3] /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library
+##  * ── Packages attached to the search path.
+## 
+## ──────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://www.biorxiv.org/content/10.1101/2020.11.12.379834v4" class="uri">https://www.biorxiv.org/content/10.1101/2020.11.12.379834v4</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>See also <code>?fit_distr</code>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Note, this possible because of the <a href="https://en.wikipedia.org/wiki/Glivenko%E2%80%93Cantelli_theorem">Glivenko-Cantelli
+theorem</a> and works as long as the sample from the original
+distribution (the sample you provide here) is large enough.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>And how it was implemented in <code>amt</code> up to
+version 0.0.6. This <strong>should</strong> be backward compatible and
+not break existing code.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

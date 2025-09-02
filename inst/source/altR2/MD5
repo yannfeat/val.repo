@@ -1,0 +1,10 @@
+15c9f6a5b523e4ebaa5fa9f7fd3d5d14 *DESCRIPTION
+1bda543666a47b486e42cc6ce23b3444 *NAMESPACE
+e7887ce671beb4346dc4971363d6e125 *NEWS.md
+cc4ad687d91df5e8f1dc76efb4ea6276 *R/altR2.R
+0bee4aacd3d59fd171c66b31e6e43de8 *man/altR2.Rd
+673f38c2c35a47a02ebda7ca838048d3 *man/estimate_adj_R2.Rd
+fcee3de8d2d325c3a971d5b1a017e3d8 *tests/testthat.R
+5ea6ff7233afa03a147cc285c2879371 *tests/testthat/setup-main.R
+55268ed1b69b94ea129441f8b14fbec8 *tests/testthat/test-main.R
+121c11b22531b77c5a1aa50047a3819a *tests/testthat/test-wrongInputs.R

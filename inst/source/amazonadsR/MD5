@@ -1,0 +1,15 @@
+29c056f76a53aedeac61eec8756b73e1 *DESCRIPTION
+09ccc150f5d2ab5b24e06eb7316ea53e *NAMESPACE
+e681a0846b0d87c4538aafa3559ed9f7 *NEWS.md
+d7303a8a56d9799673c64bff502a5306 *R/fetch_amazonads.R
+c257d1fbfb56c8905e307c54bcfe0268 *R/my_amazonads_data.R
+15c739eef73cf98000087a3544313f6b *README.md
+77001896a77d1cb481ff42b2a5411b1a *build/vignette.rds
+e60c90c9e2b240b3cb5cc0c7044c84ea *data/my_amazonads_data.RData
+589721fc29f625933ea55d61de502365 *inst/doc/tutorial.R
+92ef1eed11b34dfe90ab998623078203 *inst/doc/tutorial.Rmd
+1c753548e73832f8a98ee1aa27897cbc *inst/doc/tutorial.html
+a444465c67aa05aa8bc5e42e266dc46c *man/fetch_amazonads.Rd
+76efabc1f171cedc4d765d58c5c16846 *man/my_amazonads_data.Rd
+e60c90c9e2b240b3cb5cc0c7044c84ea *vignettes/my_amazonads_data.RData
+92ef1eed11b34dfe90ab998623078203 *vignettes/tutorial.Rmd

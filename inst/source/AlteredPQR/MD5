@@ -1,0 +1,16 @@
+b304105f3986d2a0e831b8268d61fb71 *DESCRIPTION
+2503cf7d2c9cb9de7fa70901c73089aa *NAMESPACE
+4fd096a51951466f57c70e50d6e31b08 *R/AlteredPQR_RB.R
+3775f717a1f02b3c63961a6e7e53e0e9 *R/CorShift.R
+5f5bec861181be4652c1645cc93dacea *R/globals.R
+cb59a6a19b5069263745b9d769511a56 *build/vignette.rds
+bf7b1216e3357fdea623550e55788775 *data/int_pairs.RData
+eb5f8809b10064483f6a21c6e9507b14 *data/quant_data_all.RData
+5574e501260c074d73293cf9e1c2da07 *inst/doc/AlteredPQR.R
+e6b6f494e5a4109779ba26bc4b576d33 *inst/doc/AlteredPQR.Rnw
+7e1ed3166562269454f753b8dfa78aed *inst/doc/AlteredPQR.pdf
+ecc8794ef92da6f08bcc4d7780e380b0 *man/AlteredPQR_RB.Rd
+cad3a60f12a5699eef07f414b5507da1 *man/CorShift.Rd
+292656ebedc04d266c6818c3b9380f37 *man/int_pairs_data.Rd
+3f7e862b34d2fbf910925e76dffd2d02 *man/quant_data_all_data.Rd
+e6b6f494e5a4109779ba26bc4b576d33 *vignettes/AlteredPQR.Rnw

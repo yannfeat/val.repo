@@ -1,0 +1,86 @@
+---
+title: "Article 5: Custom input land units"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Article 5: Custom input land units}
+  %\usepackage[UTF-8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+ALUES comes with two datasets for input land units. These are the land units of Marinduque, Philippines; and, Lao Cai, Vietnam. However, users will likely have their own region of interest. As such, this article will illustrate how to prepare the data.
+
+For any region of interest, users must specify the properties of the land units into three categories:
+
+- terrain and soil
+- water
+- temperature
+
+Note that both terrain and soil factors must be specified as one dataframe, not separate. Suppose there are 5 units under study, the three characteristics can be specified as follows:
+
+## Terrain and soil
+Suppose for terrain, we want to target the following factors: Flood and SlopeD; and, suppose for soil we have CFragm and SoilDpt. The dataframe can be prepared as follows:
+```{r}
+terrain_input <- data.frame(
+  Flood = c(1, 2, 2, 2, 3),
+  SlopeD = c(3, 4, 5, 1, 2),
+  CFragm = c(10, 30, 50, 60, 40),
+  SoilDpt = c(45, 60, 90, 70, 30)
+)
+```
+**Note: the column names must be the same with the naming convention used by the crop requirements datasets.**
+
+So that, if this input is assessed for avocado, then the suitability score for these land units are computed as follows:
+```{r}
+library(ALUES)
+AVOCADOTerrain
+AVOCADOSoil
+avocado_suit <- suit("avocado", terrain=terrain_input)
+head(avocado_suit[["terrain"]][["Suitability Score"]])
+head(avocado_suit[["terrain"]][["Suitability Class"]])
+head(avocado_suit[["soil"]][["Suitability Score"]])
+head(avocado_suit[["soil"]][["Suitability Class"]])
+```
+
+## Water
+For water characteristics, suppose the average rainfall for 3 land units were recorded for four months with the following data:
+```{r}
+water_input <- data.frame(
+  Apr = c(150, 140, 120),
+  May = c(70, 90, 100),
+  Jun = c(85, 90, 105)
+)
+water_input
+```
+Note that when specifying the factors for water chacteristics, the month must be specified in three characters (correct case) only, that is, it shouldn't be specified as January, February, etc. 
+
+The suitability scores for rainfed bunded rice water requirement are computed as follows:
+```{r}
+RICEBRWater
+water_suit <- suit("ricebr", water=water_input, sow_month=1)
+water_suit
+```
+Setting the `sow_month=1` indicates that the factors for `RICEBRWater`'s `WmAv1` correspond to January, `WmAv2` to February, `WmAv3` to March, and `WmAv4` to April. Thus, the only factors that were targetted by the `water_input` is April. So that, setting the `sow_month=3`, would make `WmAv1` of `RICEBRWater` as March, `WmAv2` as April, etc. This in turn targets the months April to Jun.
+```{r}
+water_suit <- suit("ricebr", water=water_input, sow_month=3)
+water_suit
+```
+
+## Temperature
+Another characteristics that can be targetted is the temperature.
+```{r}
+temp_input <- data.frame(
+  Sep = c(34.2, 35.5, 33.4),
+  Oct = c(32.5, 34.2, 32.0),
+  Nov = c(30.3, 32.2, 31.1)
+)
+RICEBRTemp
+temp_suit <- suit("ricebr", temp=temp_input, sow_month=9)
+```
+The `RICEBRTemp` crop requirement has factor `TmAv2`, which is the mean temperature for the 2nd month. Thus, setting the sowing month to 9 suggest that the sowing month started at September, and thus sets `TmAv2` to October. Hence, the factor that was targetted by the input land units is the October as seen below:
+```{r}
+temp_suit
+```

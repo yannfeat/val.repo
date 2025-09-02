@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Introduction</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h2>Introduction</h2>
+
+<p>The <code>suit</code> function is used for computing the suitability score and class of the land units for a given target crop. The function has the following usage:</p>
+
+<pre><code class="r">suit(
+  crop,
+  terrain = NULL,
+  water = NULL,
+  temp = NULL,
+  mf = &quot;triangular&quot;,
+  sow_month = NULL,
+  minimum = NULL,
+  maximum = &quot;average&quot;,
+  interval = NULL,
+  sigma = NULL
+)
+</code></pre>
+
+<p>Check the documentation for details of the arguments. This article will focus on how to use this function. To evaluate the suitability score of Marinduque land units for terrain, soil, water and temperature characteristics, simply run the <code>suit</code> function for each of these characteristics. That is,</p>
+
+<pre><code class="r">library(ALUES)
+banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT)
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<pre><code class="r">names(banana_suit)
+</code></pre>
+
+<pre><code>## [1] &quot;terrain&quot; &quot;soil&quot;
+</code></pre>
+
+<p>The warning above simply tells the user that one of the factor, CECc, in the target crop requirement, has parameter intervals for all suitability classes equal to 16, and the package used this value as the maximum constant for computing the suitability scores. For more, please refer to the <strong>Article 2: Methodology used in ALUES</strong> of the documentation.</p>
+
+<p>The <code>suit</code> function returns a list of output of target characteristics, in this case <code>&quot;terrain&quot;</code> and <code>&quot;soil&quot;</code>. To access the output, simply run the following:</p>
+
+<pre><code class="r">banana_suit[[&quot;terrain&quot;]]
+banana_suit[[&quot;soil&quot;]]
+</code></pre>
+
+<p>Each of these are lists, with the following names:</p>
+
+<pre><code class="r">names(banana_suit[[&quot;soil&quot;]])
+</code></pre>
+
+<pre><code>## [1] &quot;Factors Evaluated&quot;       &quot;Suitability Score&quot;      
+## [3] &quot;Suitability Class&quot;       &quot;Factors&#39; Minimum Values&quot;
+## [5] &quot;Factors&#39; Maximum Values&quot; &quot;Factors&#39; Weights&quot;       
+## [7] &quot;Crop Evaluated&quot;          &quot;Warning&quot;
+</code></pre>
+
+<p>So that, to access the factors evaluated, simply run the following:</p>
+
+<pre><code class="r">banana_suit[[&quot;soil&quot;]][[&quot;Factors Evaluated&quot;]]
+</code></pre>
+
+<pre><code>## [1] &quot;CFragm&quot; &quot;CECc&quot;   &quot;pHH2O&quot;  &quot;SoilTe&quot;
+</code></pre>
+
+<h2>Targetting Crop</h2>
+
+<p>There are 56 crops available in ALUES, and what we&#39;ve illustrated above are for banana only. Other crops are listed below:</p>
+
+<pre><code class="r">d &lt;- utils::data(package = &quot;ALUES&quot;)
+alues_data &lt;- d$results[, &quot;Item&quot;]
+crop_data &lt;- regmatches(alues_data, gregexpr(paste0(&quot;^[A-Z]{2,}&quot;, collapse = &quot;|&quot;), alues_data))
+crop_data &lt;- unique(unlist(lapply(crop_data, function(x) substr(x, 1, nchar(x)-1))))
+crop_data
+</code></pre>
+
+<pre><code>##  [1] &quot;ALFALFA&quot;    &quot;AVOCADO&quot;    &quot;BAMBOO&quot;     &quot;BANANA&quot;     &quot;BARLEY&quot;    
+##  [6] &quot;BEANCA&quot;     &quot;BEANS&quot;      &quot;CABBAGE&quot;    &quot;CARROTS&quot;    &quot;CASHEW&quot;    
+## [11] &quot;CASSAVA&quot;    &quot;CHICKPEA&quot;   &quot;CINNAMON&quot;   &quot;CITRUS&quot;     &quot;COCOA&quot;     
+## [16] &quot;COCONUT&quot;    &quot;COFFEEAR&quot;   &quot;COFFEERO&quot;   &quot;COTTON&quot;     &quot;COWPEA&quot;    
+## [21] &quot;CUCUMBER&quot;   &quot;GROUNDNUTS&quot; &quot;GUAVA&quot;      &quot;LONGAN&quot;     &quot;MAIZE&quot;     
+## [26] &quot;MANGO&quot;      &quot;MILLETS&quot;    &quot;OILPALM&quot;    &quot;OLIVES&quot;     &quot;ONION&quot;     
+## [31] &quot;PAPAYA&quot;     &quot;PEACH&quot;      &quot;PEAR&quot;       &quot;PEA&quot;        &quot;PEPPERGR&quot;  
+## [36] &quot;PERSIMMON&quot;  &quot;PINEAPPLE&quot;  &quot;PLUM&quot;       &quot;POTATOSW&quot;   &quot;POTATO&quot;    
+## [41] &quot;RICEBR&quot;     &quot;RICEIW&quot;     &quot;RICENF&quot;     &quot;RICEUR&quot;     &quot;RUBBER&quot;    
+## [46] &quot;SAFFLOWER&quot;  &quot;SESAME&quot;     &quot;SORGHUM&quot;    &quot;SOYA&quot;       &quot;SUGARCANE&quot; 
+## [51] &quot;SUNFLOWER&quot;  &quot;TEA&quot;        &quot;TOBACCO&quot;    &quot;TOMATO&quot;     &quot;WATERMELON&quot;
+## [56] &quot;WHEAT&quot;
+</code></pre>
+
+<p>These are the names for the input string for the <code>suit</code> function. For example, to target sweet potato the input string is not <code>&quot;sweet potato&quot;</code> but rather <code>potatosw</code>. That is,</p>
+
+<pre><code class="r">potato_suit1 &lt;- suit(&quot;sweet potato&quot;, terrain=MarinduqueLT)
+</code></pre>
+
+<pre><code>## Error in suit(&quot;sweet potato&quot;, terrain = MarinduqueLT): Input crop=&#39;sweet potato&#39; is not available in the database, see docs for list of ALUES data.
+</code></pre>
+
+<pre><code class="r">potato_suit2 &lt;- suit(&quot;potatosw&quot;, terrain=MarinduqueLT)
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<h2>Targetting Crop Factors</h2>
+
+<p>The idea of evaluating a land unit is to match quality of the land against the standard value of the target factor. Therefore, if the crop does not include the factor you are targeting, then there won&#39;t be any matching to be done. For example, the land units evaluated above are those in Marindque, which has the following soil and terrain characteristics:</p>
+
+<pre><code class="r">head(MarinduqueLT)
+</code></pre>
+
+<pre><code>##        Lat      Lon CECc pHH2O CFragm SoilTe
+## 1 121.8792 13.52084   12    53     11     12
+## 2 121.8875 13.52084   12    52      9     12
+## 3 121.8958 13.52084   12    53     10     12
+## 4 121.9375 13.52084   12    52     10     12
+## 5 121.9458 13.52084   12    54     12     12
+## 6 121.9542 13.52084   13    54     11     12
+</code></pre>
+
+<p>The crop that we are trying to target is banana. The <code>suit</code> function simply require the user to input a string name for the target crop, and the function will look for the corresponding crop datasets. For example, for banana these are the crop requirements datasets for the four characteristics:</p>
+
+<pre><code class="r">BANANATerrain
+</code></pre>
+
+<pre><code>##       code s3_a s2_a s1_a s1_b s2_b s3_b  wts
+## 1   Slope1  6.0    4    2 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+## 2   Slope2 16.0    8    4 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+## 3   Slope3 30.0   16    8 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+## 4    Flood  2.5    2    1 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    1
+## 5 Drainage  4.0    3    2 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    2
+## 6   SlopeD  3.0    2    1 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    1
+</code></pre>
+
+<pre><code class="r">BANANASoil
+</code></pre>
+
+<pre><code>##       code s3_a s2_a  s1_a s1_b s2_b s3_b wts
+## 1   CFragm 55.0 35.0  15.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 2  SoilDpt 50.0 75.0 100.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   2
+## 3    CaCO3 15.0 10.0   0.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 4     Gyps 10.0  4.0   0.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 5     CECc 16.0 16.0  16.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 6       BS 19.9 20.0  35.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 7   SumBCs  2.8  2.8   4.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 8    pHH2O  4.5  5.2   5.6  7.5    8  8.2   3
+## 9       OC  0.7  0.8   1.5 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   2
+## 10   ECedS  6.0  4.0   2.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 11     ESP 12.0  8.0   4.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   3
+## 12  SoilTe  2.0  4.0   9.0 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   2
+</code></pre>
+
+<pre><code class="r">BANANAWater
+</code></pre>
+
+<pre><code>##       code s3_a s2_a s1_a s1_b s2_b s3_b  wts
+## 1     WyAv 1000 1250 1500 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+## 2 WmDryLen    6    4    3 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+</code></pre>
+
+<pre><code class="r">BANANATemp
+</code></pre>
+
+<pre><code>##        code s3_a s2_a s1_a s1_b s2_b s3_b  wts
+## 1   TyMaxAv   14   16   18 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    2
+## 2   TmMinXm    2    8   15 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    2
+## 3 TmMinXmAb   -2    0    8 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+</code></pre>
+
+<p>These datasets are used by the <code>suit</code> function depending on the specified characteristics of the input land units. So for <code>banana_suit</code> object above, the target crop datasets were <code>BANANATerrain</code> and <code>BANANASoil</code> since the input land unit specified is <code>terrain=MarinduqueLT</code>. However, input land unit only targetted the soil factors and not the terrain factors, since none of the factors in <code>MarinduqueLT</code> matched with the factors in <code>BANANATerrain</code>. That is why, accessing the output for the terrain characteristics for the <code>banana_suit</code> object will return the following:</p>
+
+<pre><code class="r">banana_suit[[&quot;terrain&quot;]]
+</code></pre>
+
+<pre><code>## [1] &quot;Error: No factor(s) to be evaluated, since none matches with the crop requirements. If water or temp characteristics was specified then maybe you forgot to specify the sow_month argument, read doc for suit.&quot;
+</code></pre>
+
+<h2>Targetting Multiple Characteristics</h2>
+
+<p>The example above only targetted the terrain and soil characteristics, but the <code>suit</code> function allows user to also target water and temp simultaneously. This is done as follows:</p>
+
+<pre><code class="r">banana_multi &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT, water=MarinduqueWater, temp=MarinduqueTemp, sow_month=2)
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<pre><code class="r">names(banana_multi)
+</code></pre>
+
+<pre><code>## [1] &quot;terrain&quot; &quot;soil&quot;    &quot;water&quot;   &quot;temp&quot;
+</code></pre>
+
+<p>It is necessary to specify the sowing month when specifying the water and temperature characteristics of the input land units. In this case, we are saying that the first sowing month for both water and temperature characteristics correspond to February. No factors were targetted by input land unit for banana for terrain, water and temperature characteristics.</p>
+
+<pre><code class="r">banana_suit[[&quot;terrain&quot;]]
+</code></pre>
+
+<pre><code>## [1] &quot;Error: No factor(s) to be evaluated, since none matches with the crop requirements. If water or temp characteristics was specified then maybe you forgot to specify the sow_month argument, read doc for suit.&quot;
+</code></pre>
+
+<pre><code class="r">banana_suit[[&quot;water&quot;]]
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">banana_suit[[&quot;temp&quot;]]
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">lapply(banana_suit[[&quot;soil&quot;]], function(x) head(x))
+</code></pre>
+
+<pre><code>## $`Factors Evaluated`
+## [1] &quot;CFragm&quot; &quot;CECc&quot;   &quot;pHH2O&quot;  &quot;SoilTe&quot;
+## 
+## $`Suitability Score`
+##      CFragm   CECc pHH2O SoilTe
+## 1 0.8533333 0.7500     0   0.96
+## 2 0.8800000 0.7500     0   0.96
+## 3 0.8666667 0.7500     0   0.96
+## 4 0.8666667 0.7500     0   0.96
+## 5 0.8400000 0.7500     0   0.96
+## 6 0.8533333 0.8125     0   0.96
+## 
+## $`Suitability Class`
+##   CFragm CECc pHH2O SoilTe
+## 1     S1   S1     N     S1
+## 2     S1   S1     N     S1
+## 3     S1   S1     N     S1
+## 4     S1   S1     N     S1
+## 5     S1   S1     N     S1
+## 6     S1   S1     N     S1
+## 
+## $`Factors&#39; Minimum Values`
+## CFragm   CECc  pHH2O SoilTe 
+##      0      0      0      0 
+## 
+## $`Factors&#39; Maximum Values`
+## CFragm   CECc  pHH2O SoilTe 
+##  75.00  16.00   8.94  12.50 
+## 
+## $`Factors&#39; Weights`
+## [1] 3 3 3 2
+## 
+## $`Crop Evaluated`
+## [1] &quot;BANANASoil&quot;
+## 
+## $Warning
+## [1] &quot;maximum is set to 16 for factor CECc since all parameter intervals are equal.&quot;
+</code></pre>
+
+<p>Only the head (first six) of the output of the items in the soil characteristics are shown.</p>
+
+<h2>Membership Function</h2>
+
+<p>There are three membership functions (MFs) available in the <code>suit</code> function, namely <em>triangular</em>, <em>trapezoidal</em> and <em>Gaussian</em>. For example, the following computes the suitability scores and classes using trapezoidal MF.</p>
+
+<pre><code class="r">banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT, mf=&quot;trapezoidal&quot;)
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Score&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm   CECc pHH2O SoilTe
+## 1      1 0.7500     0      1
+## 2      1 0.7500     0      1
+## 3      1 0.7500     0      1
+## 4      1 0.7500     0      1
+## 5      1 0.7500     0      1
+## 6      1 0.8125     0      1
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Class&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm CECc pHH2O SoilTe
+## 1     S1   S1     N     S1
+## 2     S1   S1     N     S1
+## 3     S1   S1     N     S1
+## 4     S1   S1     N     S1
+## 5     S1   S1     N     S1
+## 6     S1   S1     N     S1
+</code></pre>
+
+<h2>Intervals</h2>
+
+<p>Another option available in the <code>suit</code> function is the <code>interval</code>. By default, ALUES uses an equally spaced suitability class intervals for deriving the suitability class. That is, for N [0, 0.25), S3 [0.25, 0.50), S2 [0.50, 0.75), and S1 [0.75, 1].</p>
+
+<h3>Custom Intervals</h3>
+
+<p>Users can modify the default equally spaced intervals, for example:</p>
+
+<pre><code class="r">banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT, mf=&quot;trapezoidal&quot;, interval=c(0, 0.3, 0.6, 0.9, 1))
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Score&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm   CECc pHH2O SoilTe
+## 1      1 0.7500     0      1
+## 2      1 0.7500     0      1
+## 3      1 0.7500     0      1
+## 4      1 0.7500     0      1
+## 5      1 0.7500     0      1
+## 6      1 0.8125     0      1
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Class&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm CECc pHH2O SoilTe
+## 1     S1   S2     N     S1
+## 2     S1   S2     N     S1
+## 3     S1   S2     N     S1
+## 4     S1   S2     N     S1
+## 5     S1   S2     N     S1
+## 6     S1   S2     N     S1
+</code></pre>
+
+<p>The above code sets the new suitability class intervals into: N [0, 0.3), S3 [0.3, 0.6), S2 [0.6, 0.9), and S1 [0.9, 1].</p>
+
+<h3>Unbias Intervals</h3>
+
+<p>The problem with the fixed interval is that the said intervals does not take into account the shape of the membership function and the spacing of the parameter interval limits (<em>See</em> Article 2 for parameter intervals). Custom intervals might be able to capture this if the user computed the interval limits manually, but ALUES provides an option just for this, by setting <code>interval=&quot;unbias&quot;</code>. That is,</p>
+
+<pre><code class="r">banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT, mf=&quot;trapezoidal&quot;, interval=&quot;unbias&quot;)
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Score&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm   CECc pHH2O SoilTe
+## 1      1 0.7500     0      1
+## 2      1 0.7500     0      1
+## 3      1 0.7500     0      1
+## 4      1 0.7500     0      1
+## 5      1 0.7500     0      1
+## 6      1 0.8125     0      1
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Class&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm CECc pHH2O SoilTe
+## 1     S1    N     N     S1
+## 2     S1    N     N     S1
+## 3     S1    N     N     S1
+## 4     S1    N     N     S1
+## 5     S1    N     N     S1
+## 6     S1    N     N     S1
+</code></pre>
+
+<p>By setting the <code>interval=&quot;unbias&quot;</code>, the <code>suit</code> function will generate a different likely unequally spaced suitability class intervals, but the interval limits are mathematically correct, in terms of the mapping of the parameter interval limits to suitability class limits via the membership function.</p>
+
+<h2>Maximum and Minimum</h2>
+
+<p>Another parameter that can be set for <code>suit</code> are the <code>minimum</code> and <code>maximum</code>. These are the constants used by the membership function for computing the suitability score.</p>
+
+<pre><code class="r">banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT, mf=&quot;trapezoidal&quot;, interval=&quot;unbias&quot;)
+</code></pre>
+
+<pre><code>## Warning in suitability(terrain, crop_soil, mf = mf, sow_month = NULL, minimum
+## = minimum, : maximum is set to 16 for factor CECc since all parameter intervals
+## are equal.
+</code></pre>
+
+<pre><code class="r">banana_suit[[&quot;soil&quot;]][[&quot;Factors Evaluated&quot;]]
+</code></pre>
+
+<pre><code>## [1] &quot;CFragm&quot; &quot;CECc&quot;   &quot;pHH2O&quot;  &quot;SoilTe&quot;
+</code></pre>
+
+<p>From the above result, there are four factors targetted by the input land unit, these are CFragm, CECc, pHH2O and SoilTe. Suppose we know the maximum value that these factors can take, say 60 for CFragm, 20 for CECc, 9 for pHH2O, and 10 for SoilTe. We can specify these as follows:</p>
+
+<pre><code class="r">banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT, mf=&quot;trapezoidal&quot;, interval=&quot;unbias&quot;, maximum=c(60, 20, 9, 10))
+banana_suit
+</code></pre>
+
+<pre><code>## $terrain
+## [1] &quot;Error: No factor(s) to be evaluated, since none matches with the crop requirements. If water or temp characteristics was specified then maybe you forgot to specify the sow_month argument, read doc for suit.&quot;
+## 
+## $soil
+## [1] &quot;Error: maximum length should be equal to the number of factors in the input land units.&quot;
+</code></pre>
+
+<p>The result gave us an error. We understand the error for terrain characteristics, but for soil it says the argument maximum must be equal in length with the target factors specified in the input land units dataset. We know that there should be 4 factors, but upon checking we see that the <code>MarinduqueLT</code> also have Lon and Lat columns, which ALUES assumes to be a target factor as well. Indeed, we need to exclude these columns (those that are not the target factors) when specifying <code>minimum</code> or <code>maximum</code> constants. Thus, it should be:</p>
+
+<pre><code class="r">MarinduqueLT2 &lt;- MarinduqueLT[, 3:ncol(MarinduqueLT)]
+banana_suit &lt;- suit(&quot;banana&quot;, terrain=MarinduqueLT2, mf=&quot;trapezoidal&quot;, interval=&quot;unbias&quot;, maximum=c(60, 20, 9, 10))
+head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Score&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm   CECc pHH2O SoilTe
+## 1      0 0.7500     0      0
+## 2      1 0.7500     0      0
+## 3      0 0.7500     0      0
+## 4      0 0.7500     0      0
+## 5      0 0.7500     0      0
+## 6      0 0.8125     0      0
+</code></pre>
+
+<pre><code class="r">head(banana_suit[[&quot;soil&quot;]][[&quot;Suitability Class&quot;]])
+</code></pre>
+
+<pre><code>##   CFragm CECc pHH2O SoilTe
+## 1      N    N     N      N
+## 2     S1    N     N      N
+## 3      N    N     N      N
+## 4      N    N     N      N
+## 5      N    N     N      N
+## 6      N    N     N      N
+</code></pre>
+
+<h2>Sigma of Gaussian</h2>
+
+<p>The <code>sigma</code> argument is used to specify scale of the Gaussian membership function. That is, it is only applicable for <code>mf=&quot;gaussian&quot;</code>.</p>
+
+</body>
+
+</html>

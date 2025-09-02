@@ -1,0 +1,38 @@
+---
+title: "Getting Started"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Getting Started}
+  %\usepackage[UTF-8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Show me the code
+To evaluate the soil characteristics of the land units of Marinduque, Philippines, for farming banana, use the `suit` function as follows:
+```{r}
+library(ALUES)
+suit_banana <- suit("banana", terrain=MarinduqueLT)
+head(suit_banana[["soil"]]$`Suitability Score`)
+head(suit_banana[["soil"]]$`Suitability Class`)
+```
+To compute the overall suitability of the land units by averaging across factors, use the `overall_suit` as follows:
+```{r}
+osuit <- overall_suit(suit_banana[["soil"]], method="average")
+head(osuit)
+```
+## Show me the speed
+The elapsed time for computing the suitability scores and classes were recorded for the land units of Marinduque, which has 881 units (or observations) in total; and, for the region of Lao Cai, Vietnam, which has 2928 land units.
+```{r}
+library(microbenchmark)
+microbenchmark(
+  suppressWarnings(suit("banana", terrain=MarinduqueLT, interval="unbias"))
+)
+microbenchmark(
+  suppressWarnings(suit("banana", terrain=LaoCaiLT, interval="unbias"))
+)
+```

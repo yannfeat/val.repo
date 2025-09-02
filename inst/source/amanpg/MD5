@@ -1,0 +1,14 @@
+d862e8760ada035be95e6ff964e44dd9 *DESCRIPTION
+1fbceda7e3affe66bf30388b632265bf *LICENSE
+8b54e5a89fbda3af5e077053d40bec76 *NAMESPACE
+b7f16c05f54ca354403abe899a9dea72 *R/SPCA.R
+6c3bfd6c9a60dc6ee42d00968491e1b4 *README.md
+a0fc41738301f4de4ec350669f743e47 *build/vignette.rds
+8a5601afb81b9c8517d4b28bfd8f1a5f *inst/doc/An-Introduction-to-amanpg.R
+6f61dfe038c7b1ca4f931a533ff006e8 *inst/doc/An-Introduction-to-amanpg.Rmd
+ad59d429244b52725b7aee4e9017cbd2 *inst/doc/An-Introduction-to-amanpg.pdf
+f62099ba3d95d576cd65c6d2b55a4d67 *inst/extdata/a.RDS
+c892a868ff5907183f5c59fd9f73bb6c *man/normalize.Rd
+b3374548c4c7bb4d6362446be9a62846 *man/prox.l1.Rd
+16762f64e3eefdcd4e8fb7c3aed05ad9 *man/spca.amanpg.Rd
+6f61dfe038c7b1ca4f931a533ff006e8 *vignettes/An-Introduction-to-amanpg.Rmd

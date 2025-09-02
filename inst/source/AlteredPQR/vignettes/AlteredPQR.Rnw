@@ -1,0 +1,89 @@
+%\VignetteIndexEntry{Vignette for the AlteredPQR package}
+\documentclass[a4paper]{article}
+\date{\today}
+\title{Vignette for the AlteredPQR package}
+\author{Marija Buljan}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+The package infers changes in protein complex states from quantitative proteomics data. It takes information on known stable protein interactions (i.e. protein subunits of the same complex) and assesses how their protein quantitative ratios change between different conditions. It reports protein pairs for which relative protein quantities to each other have been significantly altered in the tested condition when compared to their reference levels.
+
+% Running the package
+\section{Example run.}
+Load the \textbf{AlteredPQR} R package before starting the analysis. \newline
+
+<<>>= 
+library(AlteredPQR)
+@
+
+The package provides example datasets, which can be used to run the functions AlteredPQR\_RB and () and CorShift(). \newline
+
+<<>>= 
+data("int_pairs", package = "AlteredPQR")
+data("quant_data_all", package = "AlteredPQR")
+@
+
+%Running the *AlteredPQR\_RB()* function
+\subsection{AlteredPQR\_RB() function}
+
+The function takes as an input:  \newline
+(i) a list of protein pairs that can form stable interactions, such as within protein complexes. An example dataset is avialable with the package: \textbf{int\_pairs}, but a different dataset can be imported by the user in the object of the same name. As a default, we use uniprot protein identifiers. \newline
+(ii) a data matrix with quantiative proteomics measurements in which rows represent uniprot protein identifiers, and columns samples. To run the function, the user needs to define which columns contain reference measurements, and which test measurments that will be investigated for the presence of outliers. In the example dataset available with the package \textbf{quant\_data\_all}, reference measuremnts are in the columns 1:23. The remaining columns are investigated for the presence of outliers. \newline
+
+<<>>= 
+cols_with_reference_data = 1:23
+@
+
+Now we are ready to run the function Altered\_PQR\_RB(). RB stands for 'reference based', as we need to have data for the background (reference) distribution of values. Here, we run it with the default parameters and save results in the object \textit{RepresentativePairs}. \newline
+
+<<>>= 
+RepresentativePairs = AlteredPQR_RB()
+@
+
+The object stores information on significant outliers. It lists protein pairs identified as outliers, the AlteredPQR score, samples in which their log ratio values were outliers compared to reference samples, direction in which their log ratio moved compared to reference samples and it provides information on whether single or both proteins contributed to the trend (i.e. outlier signal). \newline
+
+<<>>= 
+head (RepresentativePairs)
+@
+
+In addition, the function has the following parameters that can be modified by the user: \newline
+\textbf{modif\_z\_score\_threshold} \textit{(default 3.5)} - a threshold to start considering values as outliers \newline
+\textbf{fraction\_of\_samples\_threshold} \textit{(default 0.10)} - a fraction of test samples that need to be classifed as outlier for the protein pair to be listed \newline
+\textbf{modif} \textit{(default 1)} - the higher the value it is, more strict it is for an individual protein to be considered to contribute to the outlier signal \newline
+\textbf{filter\_variable\_in\_ref\_set} \textit{(default "NO")} - should protein pairs that have highly variable ratios in reference samples be excluded \newline
+\textbf{write\_table} \textit{(default "NO")} - should the results be saved in the text file \newline
+\textbf{print\_recomm} \textit{(default "NO")} - does the user wish to have information on the distribution of modified z-scores in all investigated test samples and, based on this, recommended thresholds for the proteomics dataset provided by the user \newline
+
+%Running the *AlteredPQR\_RB()* function
+\subsection{CorShift() function}
+
+The function compares correlation values of studied protein pairs between two sample groups and it takes as an input: \newline
+(i) a list of protein pairs that can form stable interactions, such as within protein complexes. An example dataset is avialable with the package: \textbf{int\_pairs}, but a different dataset can be imported by the user in the object of the same name. As a default, we use uniprot protein identifiers. \newline
+(ii) a data matrix with quantiative proteomics measurements in which rows represent uniprot protein identifiers, and columns samples. To run the function, the user needs to define which columns contain measurements for each of the two sample groups that will be compared. In the example dataset available with the package (\textbf{quant\_data\_all}), measurements for the group A are in the columns 1:23 and measurements for the group B are in the remaining 18 columns. \newline
+
+<<>>= 
+samplesGroupA = 1:23
+samplesGroupB = (1+23):(23+18)
+@
+
+With a dataset on investigated protein pairs and a data matrix with quantitative proteomic measurments (example sets: \textbf{int\_pairs} and \textbf{quant\_data\_all}), we are ready to run the function CorShift(). Here, we run it with the default parameters and save results in the object \textit{Cor\_results}.  
+
+<<>>= 
+cor_results = CorShift()
+@
+
+The object lists protein pairs whose correlation values between the two sets of samples strongly differ. It provides information on the Pearson correlation scores and associated p-values in the two groups of samples, it summarizes how many samples from the two groups had measurements for both proteins and could be use for the analysis, and it calculates difference in correlation values between the two groups of samples. \newline
+
+<<>>= 
+head (cor_results)
+@
+
+In addition, the function has the following parameters that can be modified by the user: \newline
+\textbf{shift\_threshold} \textit{(default 0.6)} - a threshold to list pairs with a strong change in correlation values between the two sample groups \newline
+\textbf{writeTable} \textit{(default F)} - if "writeTable = T", the resulting table will be saved as a text file protCorrelationShift.txt \newline
+\textbf{min\_cor\_in\_samples} \textit{(default 0.6)} - minimum Pearson correlation value the two proteins need to have in order to consider them as correlating in one of the sample groups \newline
+\textbf{cor\_signif} \textit{(default 0.01)} - p-value threshold for the Pearson correlation of the two proteins in order to consider them as significantly correlating in one of the sample groups \newline
+
+
+\end{document}

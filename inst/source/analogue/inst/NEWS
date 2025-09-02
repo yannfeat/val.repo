@@ -1,0 +1,58 @@
+# analogue News
+
+## Version 0.18-1
+
+  * Updated reference output for examples following release of vegan 2.7.1.
+
+## Version 0.18-0
+
+  * `distance()` gains new method `"metric.mixed"`, which is a modification of
+    existing method `"mixed"` except that ordinal variables are now converted to
+    ranks and handled as quantitative variables in Gower's mixed coefficient.
+
+  * `distance()` method `"mixed"` now also handles ordinal data via the
+    extensions to Gower's general distance coefficient in Podani (1999, *Taxon*
+    **48**, 331--340).
+
+  * Both changes were improved by discussions with, and new code and fixes to my
+    buggy C code by, Jari Oksanen. See Issue #15.
+  
+  * Fixes to example reference output due to a vegan update.
+
+## Version 0.17-6
+
+ * Fixes for CRAN related to digits in printed output.
+
+## Version 0.17-5
+
+ * Fixes for CRAN
+
+## Version 0.17-4
+
+ * Fixes for CRAN
+
+## Version 0.17-3
+
+ * Fix keywords in `weightedCor()`.
+
+## Version 0.17-2
+
+ * `V12.122` The data were stored as proportions but treated as percentages in examples. To better match the `ImbrieKipp` training set, `V12.122` was converted to percentages. Reported by Richard Telford #22.
+
+## Version 0.17-1
+
+ * `prcurve` modified to use package **princurve** version >= 2.0.2.
+ 
+ * `join()` had a serious bug that caused the columns to be labelled incorrectly when a `type = "left"`join was used, if the columns weren't in the same order in the data frames to be merged. Issue #16
+
+ * `Stratiplot()` gained argument `labelValues`, which allows for custom labelling of variables in a plot. A vector of expressions can be supplied for fancy labelling such as that required for isotopes, equations, sub/superscripts, greek characters, etc.
+ 
+ * The `Climate` data set had incorrectly-named columns and was missing some variables. The NAMPD is now updated to version 1.7-3 and the name and missing data issues have been fixed. Reported by Simon Goring in Issue #17.
+
+## Version 1.17-0
+
+* `Stratiplot()` now draws a plot on the current device and returns a `"trellis"` object *invisibly*. This fixes #13 and prevents a blank page being drawn in devices such as `pdf()`.
+
+* `Stratiplot()` now handles a matrix as argument `x` via an S3 method for class `"matrix"`.
+
+* `tran()` add a `"none"` transformation which just returns its input. This is useful if you are writing code and comparing transformations and need to temporarily turn them off.

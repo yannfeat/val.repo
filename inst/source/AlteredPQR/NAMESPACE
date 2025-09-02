@@ -1,0 +1,10 @@
+export(AlteredPQR_RB)
+export(CorShift)
+
+importFrom("stats", "cor", "cor.test", "density", "mad", "median", "quantile")
+importFrom("utils", "write.table")
+importFrom("utils", "globalVariables")
+importFrom("utils", "write.table")
+importFrom("utils", "Sweave")
+importFrom("graphics", "plot")
+

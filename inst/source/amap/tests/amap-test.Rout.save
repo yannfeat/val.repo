@@ -1,0 +1,1371 @@
+
+R Under development (unstable) (2024-10-18 r87246) -- "Unsuffered Consequences"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+> library(amap)
+> 
+>  set.seed(1234)
+> 
+> data(USArrests)
+> 
+>   METHODS <- c("euclidean", "maximum", "manhattan", "canberra", 
++                "binary","pearson","correlation","spearman","kendall",
++                "abspearson","abscorrelation")
+>   METHODSLINKS <- c("ward", "single", "complete", "average", "mcquitty", 
++                     "median", "centroid","centroid2","ward.D2")
+> 
+> 
+> 
+> for (mymethod in METHODS) {		    
++     d = Dist(USArrests, method = mymethod)
++   
++     k  = Kmeans(USArrests, centers = 4, method = mymethod)
++     print(k)
++     for (mylink in METHODSLINKS)
++     {
++ 	cat(mylink)
++ 	cat(mymethod)
++ 	hc <- hcluster(USArrests,link = mylink, method =  mymethod, nbproc=4)
++ 	print(hc)
++     }
++ }
+K-means clustering with 4 clusters of sizes 10, 20, 6, 14
+
+Cluster means:
+     Murder  Assault UrbanPop     Rape
+1 11.540000 253.1000 70.30000 29.26000
+2  4.270000  87.5500 59.75000 14.39000
+3 12.266667 305.0000 65.00000 26.90000
+4  8.214286 173.2857 70.64286 22.84286
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             1              1              3              4              1 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             4              2              1              3              4 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             2              2              1              2              2 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             2              2              1              2              3 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             4              1              2              1              4 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             2              2              1              2              4 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             3              1              3              2              2 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             4              4              2              4              3 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             2              4              4              2              2 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             4              4              2              2              4 
+
+Within cluster sum of squares by cluster:
+[1]  257.4792 1248.4420  988.9111  318.6684
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardeuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : euclidean 
+Number of objects: 50 
+
+singleeuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : euclidean 
+Number of objects: 50 
+
+completeeuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : euclidean 
+Number of objects: 50 
+
+averageeuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : euclidean 
+Number of objects: 50 
+
+mcquittyeuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : euclidean 
+Number of objects: 50 
+
+medianeuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : euclidean 
+Number of objects: 50 
+
+centroideuclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : euclidean 
+Number of objects: 50 
+
+centroid2euclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : euclidean 
+Number of objects: 50 
+
+ward.D2euclidean
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : euclidean 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 20, 14, 4, 12
+
+Cluster means:
+     Murder  Assault UrbanPop     Rape
+1  4.270000  87.5500 59.75000 14.39000
+2  8.214286 173.2857 70.64286 22.84286
+3 11.950000 316.5000 68.00000 26.70000
+4 11.766667 257.9167 68.41667 28.93333
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             4              4              3              2              4 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             2              1              4              3              2 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             1              1              4              1              1 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             1              1              4              1              3 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             2              4              1              4              2 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              1              4              1              2 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             4              4              3              1              1 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             2              2              1              2              4 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              2              2              1              1 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             2              2              1              1              2 
+
+Within cluster sum of squares by cluster:
+[1] 1193.7025  150.9388  529.0000  444.5069
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardmaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : maximum 
+Number of objects: 50 
+
+singlemaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : maximum 
+Number of objects: 50 
+
+completemaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : maximum 
+Number of objects: 50 
+
+averagemaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : maximum 
+Number of objects: 50 
+
+mcquittymaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : maximum 
+Number of objects: 50 
+
+medianmaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : maximum 
+Number of objects: 50 
+
+centroidmaximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : maximum 
+Number of objects: 50 
+
+centroid2maximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : maximum 
+Number of objects: 50 
+
+ward.D2maximum
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : maximum 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 10, 14, 16, 10
+
+Cluster means:
+     Murder  Assault UrbanPop     Rape
+1  5.590000 112.4000 65.60000 17.27000
+2  8.214286 173.2857 70.64286 22.84286
+3 11.812500 272.5625 68.31250 28.37500
+4  2.950000  62.7000 53.90000 11.51000
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             3              3              3              2              3 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             2              1              3              3              2 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             4              1              3              1              4 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             1              1              3              4              3 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             2              3              4              3              2 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              1              3              4              2 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             3              3              3              4              1 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             2              2              1              2              3 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             4              2              2              1              4 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             2              2              4              4              2 
+
+Within cluster sum of squares by cluster:
+[1]  901.2004  997.6573 1239.9202  522.5796
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardmanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : manhattan 
+Number of objects: 50 
+
+singlemanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : manhattan 
+Number of objects: 50 
+
+completemanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : manhattan 
+Number of objects: 50 
+
+averagemanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : manhattan 
+Number of objects: 50 
+
+mcquittymanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : manhattan 
+Number of objects: 50 
+
+medianmanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : manhattan 
+Number of objects: 50 
+
+centroidmanhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : manhattan 
+Number of objects: 50 
+
+centroid2manhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : manhattan 
+Number of objects: 50 
+
+ward.D2manhattan
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : manhattan 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 12, 9, 18, 11
+
+Cluster means:
+     Murder   Assault UrbanPop     Rape
+1  2.791667  82.08333 56.16667 10.70833
+2 14.077778 251.11111 58.55556 22.78889
+3  6.255556 136.00000 68.61111 19.43333
+4 10.600000 258.63636 76.45455 34.38182
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             2              4              4              3              4 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             4              1              3              4              2 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             3              1              4              3              1 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             3              3              2              1              2 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             3              4              1              2              4 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             3              3              4              1              3 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             4              4              2              1              3 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             3              3              3              1              2 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              2              2              3              1 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             3              3              1              1              3 
+
+Within cluster sum of squares by cluster:
+[1] 0.11262798 0.13928224 0.09135594 0.05188101
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardcanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : canberra 
+Number of objects: 50 
+
+singlecanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : canberra 
+Number of objects: 50 
+
+completecanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : canberra 
+Number of objects: 50 
+
+averagecanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : canberra 
+Number of objects: 50 
+
+mcquittycanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : canberra 
+Number of objects: 50 
+
+mediancanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : canberra 
+Number of objects: 50 
+
+centroidcanberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : canberra 
+Number of objects: 50 
+
+centroid2canberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : canberra 
+Number of objects: 50 
+
+ward.D2canberra
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : canberra 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 50, 0, 0, 0
+
+Cluster means:
+  Murder Assault UrbanPop   Rape
+1  7.788  170.76    65.54 21.232
+2    NaN     NaN      NaN    NaN
+3    NaN     NaN      NaN    NaN
+4    NaN     NaN      NaN    NaN
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             1              1              1              1              1 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             1              1              1              1              1 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             1              1              1              1              1 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             1              1              1              1              1 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             1              1              1              1              1 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              1              1              1              1 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             1              1              1              1              1 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             1              1              1              1              1 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              1              1              1              1 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             1              1              1              1              1 
+
+Within cluster sum of squares by cluster:
+[1] 0 0 0 0
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardbinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : binary 
+Number of objects: 50 
+
+singlebinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : binary 
+Number of objects: 50 
+
+completebinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : binary 
+Number of objects: 50 
+
+averagebinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : binary 
+Number of objects: 50 
+
+mcquittybinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : binary 
+Number of objects: 50 
+
+medianbinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : binary 
+Number of objects: 50 
+
+centroidbinary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : binary 
+Number of objects: 50 
+
+centroid2binary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : binary 
+Number of objects: 50 
+
+ward.D2binary
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : binary 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 18, 17, 3, 12
+
+Cluster means:
+     Murder   Assault UrbanPop     Rape
+1  7.461111 170.27778 68.33333 23.23333
+2  4.082353  91.41176 66.23529 14.93529
+3 14.500000 291.66667 45.66667 18.56667
+4 11.850000 253.66667 65.33333 27.81667
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             4              4              4              4              1 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             1              2              4              4              4 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             2              1              1              2              2 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             2              1              4              2              4 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             2              4              2              3              1 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              2              1              2              2 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             4              1              3              2              2 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             1              1              2              1              3 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              4              1              2              2 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             1              1              1              2              1 
+
+Within cluster sum of squares by cluster:
+[1] 8.690482e-07 1.216409e-03 6.242583e-08 4.003559e-06
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardpearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : pearson 
+Number of objects: 50 
+
+singlepearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : pearson 
+Number of objects: 50 
+
+completepearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : pearson 
+Number of objects: 50 
+
+averagepearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : pearson 
+Number of objects: 50 
+
+mcquittypearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : pearson 
+Number of objects: 50 
+
+medianpearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : pearson 
+Number of objects: 50 
+
+centroidpearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : pearson 
+Number of objects: 50 
+
+centroid2pearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : pearson 
+Number of objects: 50 
+
+ward.D2pearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : pearson 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 14, 19, 11, 6
+
+Cluster means:
+     Murder   Assault UrbanPop     Rape
+1  9.414286 218.92857 74.57143 28.82143
+2  5.026316 115.78947 64.47368 15.96842
+3 13.309091 267.63636 57.81818 25.51818
+4  2.616667  54.83333 62.00000 12.33333
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             3              3              1              3              1 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             1              2              1              3              3 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             4              2              1              2              4 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             2              2              3              2              3 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             2              1              4              3              1 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             2              2              1              4              2 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             3              1              3              4              2 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             2              1              2              2              3 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             2              1              1              2              2 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             1              2              2              4              1 
+
+Within cluster sum of squares by cluster:
+[1] 3.390500e-06 2.347051e-05 9.996126e-07 8.814207e-06
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardcorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : correlation 
+Number of objects: 50 
+
+singlecorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : correlation 
+Number of objects: 50 
+
+completecorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : correlation 
+Number of objects: 50 
+
+averagecorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : correlation 
+Number of objects: 50 
+
+mcquittycorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : correlation 
+Number of objects: 50 
+
+mediancorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : correlation 
+Number of objects: 50 
+
+centroidcorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : correlation 
+Number of objects: 50 
+
+centroid2correlation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : correlation 
+Number of objects: 50 
+
+ward.D2correlation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : correlation 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 50, 0, 0, 0
+
+Cluster means:
+  Murder Assault UrbanPop   Rape
+1  7.788  170.76    65.54 21.232
+2    NaN     NaN      NaN    NaN
+3    NaN     NaN      NaN    NaN
+4    NaN     NaN      NaN    NaN
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             1              1              1              1              1 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             1              1              1              1              1 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             1              1              1              1              1 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             1              1              1              1              1 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             1              1              1              1              1 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              1              1              1              1 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             1              1              1              1              1 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             1              1              1              1              1 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              1              1              1              1 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             1              1              1              1              1 
+
+Within cluster sum of squares by cluster:
+[1] 0 0 0 0
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardspearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : spearman 
+Number of objects: 50 
+
+singlespearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : spearman 
+Number of objects: 50 
+
+completespearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : spearman 
+Number of objects: 50 
+
+averagespearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : spearman 
+Number of objects: 50 
+
+mcquittyspearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : spearman 
+Number of objects: 50 
+
+medianspearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : spearman 
+Number of objects: 50 
+
+centroidspearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : spearman 
+Number of objects: 50 
+
+centroid2spearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : spearman 
+Number of objects: 50 
+
+ward.D2spearman
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : spearman 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 50, 0, 0, 0
+
+Cluster means:
+  Murder Assault UrbanPop   Rape
+1  7.788  170.76    65.54 21.232
+2    NaN     NaN      NaN    NaN
+3    NaN     NaN      NaN    NaN
+4    NaN     NaN      NaN    NaN
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             1              1              1              1              1 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             1              1              1              1              1 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             1              1              1              1              1 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             1              1              1              1              1 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             1              1              1              1              1 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              1              1              1              1 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             1              1              1              1              1 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             1              1              1              1              1 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              1              1              1              1 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             1              1              1              1              1 
+
+Within cluster sum of squares by cluster:
+[1] 0 0 0 0
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardkendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : kendall 
+Number of objects: 50 
+
+singlekendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : kendall 
+Number of objects: 50 
+
+completekendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : kendall 
+Number of objects: 50 
+
+averagekendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : kendall 
+Number of objects: 50 
+
+mcquittykendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : kendall 
+Number of objects: 50 
+
+mediankendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : kendall 
+Number of objects: 50 
+
+centroidkendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : kendall 
+Number of objects: 50 
+
+centroid2kendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : kendall 
+Number of objects: 50 
+
+ward.D2kendall
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : kendall 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 6, 12, 13, 19
+
+Cluster means:
+     Murder   Assault UrbanPop     Rape
+1  2.616667  54.83333 62.00000 12.33333
+2  4.791667 109.25000 66.58333 16.05833
+3  6.753846 149.84615 64.92308 20.66923
+4 12.021053 260.52632 66.42105 27.69474
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             4              4              4              4              4 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             3              2              4              4              4 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             1              3              4              2              1 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             2              3              4              2              4 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             2              4              1              4              3 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             3              2              4              1              2 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             4              4              4              1              2 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             3              3              2              3              4 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             2              4              3              2              2 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             3              3              3              1              3 
+
+Within cluster sum of squares by cluster:
+[1] 1.765606e-06 9.227279e-06 3.860314e-06 5.013077e-06
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : abspearson 
+Number of objects: 50 
+
+singleabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : abspearson 
+Number of objects: 50 
+
+completeabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : abspearson 
+Number of objects: 50 
+
+averageabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : abspearson 
+Number of objects: 50 
+
+mcquittyabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : abspearson 
+Number of objects: 50 
+
+medianabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : abspearson 
+Number of objects: 50 
+
+centroidabspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : abspearson 
+Number of objects: 50 
+
+centroid2abspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : abspearson 
+Number of objects: 50 
+
+ward.D2abspearson
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : abspearson 
+Number of objects: 50 
+
+K-means clustering with 4 clusters of sizes 20, 20, 6, 4
+
+Cluster means:
+     Murder   Assault UrbanPop     Rape
+1  5.020000 117.95000    64.60 16.63500
+2 10.990000 235.60000    71.40 27.73500
+3  2.616667  54.83333    62.00 12.33333
+4 13.375000 284.50000    46.25 25.05000
+
+Clustering vector:
+       Alabama         Alaska        Arizona       Arkansas     California 
+             2              4              2              2              2 
+      Colorado    Connecticut       Delaware        Florida        Georgia 
+             2              1              2              2              2 
+        Hawaii          Idaho       Illinois        Indiana           Iowa 
+             3              1              2              1              3 
+        Kansas       Kentucky      Louisiana          Maine       Maryland 
+             1              1              2              1              2 
+ Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+             1              2              3              4              2 
+       Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+             1              1              2              3              1 
+    New Mexico       New York North Carolina   North Dakota           Ohio 
+             2              2              4              3              1 
+      Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+             1              1              1              1              4 
+  South Dakota      Tennessee          Texas           Utah        Vermont 
+             1              2              2              1              1 
+      Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+             2              1              1              3              2 
+
+Within cluster sum of squares by cluster:
+[1] 1.718668e-05 1.726487e-05 8.814207e-06 1.552004e-08
+
+Available components:
+
+[1] "cluster"  "centers"  "withinss" "size"    
+wardabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+singleabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : single 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+completeabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : complete 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+averageabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : average 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+mcquittyabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : mcquitty 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+medianabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : median 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+centroidabscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+centroid2abscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : centroid2 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+ward.D2abscorrelation
+Call:
+hcluster(x = USArrests, method = mymethod, link = mylink, nbproc = 4)
+
+Cluster method   : ward.D2 
+Distance         : abscorrelation 
+Number of objects: 50 
+
+Warning messages:
+1: did not converge in 10 iterations 
+2: empty cluster: try a better set of initial centers 
+3: empty cluster: try a better set of initial centers 
+4: empty cluster: try a better set of initial centers 
+5: did not converge in 10 iterations 
+> 
+>   COMMONDIST <- c("euclidean", "maximum", "manhattan", "canberra", 
++                "binary")
+>   COMMONLINKS <- c( "single", "complete", "average", "mcquitty", 
++                     "median", "centroid","ward.D2")
+> 
+> for (mymethod in COMMONDIST) {		    
++    d = dist(USArrests,method = mymethod)
++    d2 = Dist(USArrests,method = mymethod)
++    cat("test",mymethod)
++    stopifnot(floor(d * 1000) == floor(d2*1000))
++ }
+test euclideantest maximumtest manhattantest canberratest binary> d = dist(USArrests)
+> for(mylink in COMMONLINKS){
++   cat("test",mylink)
++   h = hclust(d, method = mylink)
++   hc = hcluster(USArrests,link = mylink)
++   stopifnot(h$order == hc$order)
++   stopifnot(floor(h$height * 1000) == floor(hc$height*1000))
++ }
+test singletest completetest averagetest mcquittytest mediantest centroidtest ward.D2> 
+> hc <- hcluster(USArrests, nbproc=1)
+> print(hc)
+
+Call:
+hcluster(x = USArrests, nbproc = 1)
+
+Cluster method   : complete 
+Distance         : euclidean 
+Number of objects: 50 
+
+>     
+> 
+> 
+> 
+> 
+> 
+> KERNELS = c("gaussien", "quartic", "triweight", "epanechikov" , 
++ "cosinus", "uniform")
+> 
+> for(myKernel in KERNELS) {
++   myacp = acprob(USArrests, kernel = myKernel);
++   print(myacp)
++ } 
+
+Standard deviations:
+   Comp 1    Comp 2    Comp 3    Comp 4 
+1.5533005 1.0238885 0.5964794 0.4279277 
+
+Eigen values:
+[1] 3.2817172 1.0106413 0.4610868 0.3944977
+
+Standard deviations:
+   Comp 1    Comp 2    Comp 3    Comp 4 
+1.5533005 1.0238885 0.5964794 0.4279277 
+
+Eigen values:
+[1] 3.2817172 1.0106413 0.4610868 0.3944977
+
+Standard deviations:
+   Comp 1    Comp 2    Comp 3    Comp 4 
+1.5533005 1.0238885 0.5964794 0.4279277 
+
+Eigen values:
+[1] 3.2817172 1.0106413 0.4610868 0.3944977
+
+Standard deviations:
+   Comp 1    Comp 2    Comp 3    Comp 4 
+1.5533005 1.0238885 0.5964794 0.4279277 
+
+Eigen values:
+[1] 3.2817172 1.0106413 0.4610868 0.3944977
+
+Standard deviations:
+   Comp 1    Comp 2    Comp 3    Comp 4 
+1.5533005 1.0238885 0.5964794 0.4279277 
+
+Eigen values:
+[1] 3.2817172 1.0106413 0.4610868 0.3944977
+
+Standard deviations:
+   Comp 1    Comp 2    Comp 3    Comp 4 
+1.5533005 1.0238885 0.5964794 0.4279277 
+
+Eigen values:
+[1] 3.2817172 1.0106413 0.4610868 0.3944977
+> 
+> 
+> 
+> d <-2 * matrix(c(9,  8,  5,  7,  7,  2
++      ,  8,  9,  2,  5,  1,  7
++      ,  5,  2,  9,  8,  7,  1
++      ,  7,  5,  8,  9,  3,  2
++      ,  7,  1,  7,  3,  9,  6
++      ,  2,  7,  1,  2,  6,  9),ncol=6,byrow=TRUE) - 9
+> 
+> pop(d)
+Upper bound     (half cost)   : 39 
+Final partition (half cost)   : 25 
+Number of classes             : 2 
+Forward move count            : 124 
+Backward move count           : 124 
+Constraints evaluations count : 248 
+Number of local optima        : 2 
+
+  Individual class
+1          1     1
+2          2     2
+3          3     1
+4          4     1
+5          5     1
+6          6     2
+> 
+> 
+> 
+> 
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  0.214   0.153   0.310 

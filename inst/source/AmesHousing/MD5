@@ -1,0 +1,17 @@
+d47955355f2ab6baa83791ba975396d3 *DESCRIPTION
+b7e9567f78bbeb97c97b165d5216514e *NAMESPACE
+6fd49eff8a00c2d7bd124e3abe1569db *NEWS.md
+4069d2d146a1c1ba2b32c1ff7f175f4d *R/ames_raw.R
+70a538805f6903c4198e9e21c4fa5e2a *R/make_ames.R
+ec521c8d96cad962c4d7b4e16b505e78 *R/misc.R
+e606b5fbae82240721b329fd5280ce72 *data/ames_geo.rda
+899b76ebbab9424b663f79b6ba60e9b8 *data/ames_new.rda
+a5fd5b21981155f57032611a42289dc3 *data/ames_raw.rda
+6507f6397a839aaaee226fb4ddaf382d *data/ames_school_districts_sf.rda
+e5389f431c815e3807784dc7851b1285 *data/ames_schools_geo.rda
+92a9a9deca598a3cf56450fd879ad8c7 *data/datalist
+05735b3c44fc91247ff84296ebf72591 *data/hood_levels.rda
+715b36987d9bf6bae3c43645a70f1eb1 *man/ames_raw.Rd
+c9a2f80d4f234fb26313991cef37644d *man/ames_schools.Rd
+31cb50a6aa4d7af26a45cff048054d58 *man/make_ames.Rd
+3e1c0add05498c851293738792b7d045 *man/reexports.Rd
