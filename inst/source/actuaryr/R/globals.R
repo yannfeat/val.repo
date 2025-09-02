@@ -1,1 +1,0 @@
-utils::globalVariables(c("Power", "PowerX", "PowerY", "ColTypeX", "ColTypeY"))

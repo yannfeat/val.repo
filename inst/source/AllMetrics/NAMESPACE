@@ -1,3 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-export(all_metrics)
-importFrom("stats", "embed")

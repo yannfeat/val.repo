@@ -1,9 +1,0 @@
-ab23c03ddcd6a615988165ce5d067b4f *DESCRIPTION
-8860a7b9df5ac134e60d124e2726edb2 *NAMESPACE
-9a41f123afed71a4cb455b9ccafe7557 *R/BID.R
-3cca29bd51fc728a1564e89608839862 *R/CopriEndpt.R
-deb87dc0cb1c5362536d71d235ad15a5 *man/BioInfo.Power.Rd
-e7b9741396ff7870a2d822969b61a4f9 *man/CopriEndpt.Power.Rd
-e1051c29e0309bfd284c475a01e9ba7f *man/OneArm.CondPower.Rd
-41a924af006ab7220a0505f2125cf930 *man/TwoArms.CondPower.Rd
-e65927d34f82671af41e652191b4aefb *man/TwoGrpCopriEndpt.SimPower.Rd

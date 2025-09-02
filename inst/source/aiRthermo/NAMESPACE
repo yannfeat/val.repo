@@ -1,6 +1,0 @@
-export(saturation_pressure_H2O,latent_heat_H2O,gamma_saturated,Kindex,TTindex,Sindex,LIindex,CAPE_CIN,adiabatic_ascent,find_lcl,export_constants,AnyAdiabaticDown,moistCp,moistCv,densityDry,densityH2Ov,densityMoistAir,w2Td,w2q,q2w,bruntVaisallaOmegaSquared,virtual_temperature,saturation_mixing_ratio,C2K,parcelState,K2C,PT2Theta,PTheta2T,TTheta2P,rh2shum,dewpointdepression2rh,q2e,e2w,TTdP2rh,rh2w,boltonTLCL,moistAdiabaticLapseRate,equivalentPotentialTemperature,PW,export_lines,stuve_diagram)
-useDynLib(aiRthermo, .registration = TRUE)
-importFrom("grDevices", "recordPlot", "rgb")
-importFrom("graphics", "abline", "axis", "box", "grid", "mtext", "par","plot", "text")
-importFrom("stats", "na.omit")
-importFrom("utils", "data")

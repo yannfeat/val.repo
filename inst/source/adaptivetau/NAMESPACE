@@ -1,2 +1,0 @@
-useDynLib(adaptivetau, .registration = TRUE)
-export(ssa.adaptivetau, ssa.exact, ssa.maketrans)

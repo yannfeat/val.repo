@@ -1,9 +1,0 @@
-75d321e5acc4ba22f4179cecee6347b9 *DESCRIPTION
-5f74566cfe0f401f4bb9a2782b816a3f *NAMESPACE
-c77908aaf714b556e729fcce83eaefa6 *R/fisher.R
-8d16fa1519e5f9a1b2d6db51ddb1b340 *R/lancaster.R
-5ef51b51545aa0bdd799b7704bb570f2 *R/sidak.R
-62107241762e04fc85a127f52a4cd056 *README.md
-170482ad116b92b7ee87c6aa22562cb0 *man/fisher.Rd
-f4c6402c40bdef3193917c74718f832b *man/lancaster.Rd
-81d9a5d579e51e0b746ce7402ada2068 *man/sidak.Rd

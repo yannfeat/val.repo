@@ -1,3 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-import(stabledist, nnls, mvtnorm, nlme)
-importFrom("stats", "nlm", "optimize", "rweibull", "rexp", "runif", "uniroot", "dnorm")

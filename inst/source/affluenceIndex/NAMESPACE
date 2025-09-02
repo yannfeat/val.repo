@@ -1,3 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-import(stats)
-importFrom(spatstat.univar, weighted.median, weighted.quantile)

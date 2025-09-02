@@ -1,9 +1,0 @@
-d3c482148fa9d0679146c7f6c69067e9 *DESCRIPTION
-df390c53434517b304ac5db487184641 *NAMESPACE
-6bb790febd0f1abf6cd01e912600a055 *R/ahptopsis2n.R
-acc607657a94447a35d8203ee13a6bd8 *build/vignette.rds
-0e2a8d5b17ca392b9e48bbb6502d0e88 *inst/doc/AHP-TOPSIS-2N_Example.R
-e4f520cc2b59e65813f0c1b2818a02fb *inst/doc/AHP-TOPSIS-2N_Example.Rmd
-7b2dcf70f8bed3801722d29a7cb64dd4 *inst/doc/AHP-TOPSIS-2N_Example.html
-a74002ceddeb6074268c564bd5c43878 *man/ahptopsis2n.Rd
-e4f520cc2b59e65813f0c1b2818a02fb *vignettes/AHP-TOPSIS-2N_Example.Rmd

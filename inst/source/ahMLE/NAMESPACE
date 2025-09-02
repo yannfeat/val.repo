@@ -1,9 +1,0 @@
-useDynLib(ahMLE, .registration=TRUE)
-import(survival, stats, utils, invGauss)
-importFrom(Rcpp, evalCpp )
-importFrom(Matrix, rankMatrix)
-
-
-
-export("ah", 
-       "Calc_Cbeta")
