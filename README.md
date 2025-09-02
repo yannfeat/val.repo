@@ -8,7 +8,7 @@ associated website, published via GitHub Pages.
 
 val.repo provides a repository that users can point to without
 installing the pharmapkgs R package. This can be achieved by setting the
-repository to the pharmapkgs repository hosted on GitHub.
+repository to the val.repo repository hosted on GitHub.
 
 ### Using the Repository
 
@@ -85,7 +85,6 @@ directly yet.
 
 ``` r
 options(available_packages_filters = list(function(pkg) pkg[is.na(pkg[, "Imports"]),]))
-head(available.packages())
 nrow(available.packages())
 #> [1] 4203
 ```
