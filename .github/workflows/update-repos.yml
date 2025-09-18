@@ -40,7 +40,7 @@ jobs:
                 echo "License: MIT" >> DESCRIPTION
                 echo "Encoding: UTF-8" >> DESCRIPTION
                 echo "LazyData: true" >> DESCRIPTION
-                echo "Remotes: pharmaR/pharmapkgs" >> DESCRIPTION
+                echo "Remotes: yannfeat/pharmapkgs" >> DESCRIPTION
                 echo "Imports: pharmapkgs" >> DESCRIPTION
                   
             - uses: r-lib/actions/setup-r-dependencies@v2
@@ -53,11 +53,6 @@ jobs:
                   rm DESCRIPTION
 
             - uses: quarto-dev/quarto-actions/setup@v2
-
-            - name: Add .gitignore
-              run: |
-                echo ".gitignore" > .gitignore
-                echo "inst/source" >> .gitignore
 
             - name: Unpack existing reports
               working-directory: src/contrib/Meta
